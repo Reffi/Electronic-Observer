@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.ShipSimulationExternalParameters"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="160">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ComboBox 
+            DisplayMemberPath="Display" 
+            SelectedValue="{Binding Engagement, Mode=TwoWay}" 
+            SelectionChanged="ParameterChange" 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="EngagementSelect"
+            HorizontalContentAlignment="Center" />
+
+        <ComboBox 
+            DisplayMemberPath="Display" 
+            SelectedValue="{Binding Fleet, Mode=TwoWay}" 
+            SelectionChanged="ParameterChange" 
+            Grid.Row="1" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="FleetTypeSelect"
+            HorizontalContentAlignment="Center" />
+
+        <ComboBox 
+            DisplayMemberPath="Display" 
+            SelectedValue="{Binding Formation, Mode=TwoWay}" 
+            SelectionChanged="ParameterChange" 
+            Grid.Row="2" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="FormationSelect" 
+            HorizontalContentAlignment="Center" />
+        
+        <ComboBox 
+            SelectedValue="{Binding FleetID, Mode=TwoWay}" 
+            SelectionChanged="ParameterChange" 
+            Grid.Row="3" 
+            Grid.Column="0" 
+            x:Name="FleetSelect" 
+            HorizontalContentAlignment="Center" />
+
+        <ComboBox 
+            SelectedValue="{Binding Position, Mode=TwoWay}" 
+            SelectionChanged="ParameterChange" 
+            Grid.Row="3" 
+            Grid.Column="1" 
+            x:Name="FleetPositionSelect"
+            HorizontalContentAlignment="Center" />
+
+        <CheckBox 
+            IsChecked="{Binding NightRecon, Mode=TwoWay}" 
+            Checked="ParameterChange" 
+            Unchecked="ParameterChange" 
+            Grid.Row="4" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="NightReconSelect" 
+            Content="Night Recon"/>
+
+        <CheckBox 
+            IsChecked="{Binding Flare, Mode=TwoWay}" 
+            Checked="ParameterChange" 
+            Unchecked="ParameterChange" 
+            Grid.Row="5" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="FlareSelect" 
+            Content="Flare"/>
+
+        <CheckBox 
+            IsChecked="{Binding Searchlight, Mode=TwoWay}"
+            Checked="ParameterChange" 
+            Unchecked="ParameterChange" 
+            Grid.Row="6" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            x:Name="SearchlightSelect" 
+            Content="Searchlight"/>
+
+    </Grid>
+</UserControl>

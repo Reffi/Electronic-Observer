@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.BattleStatDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="160">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="SeparatorDisplay" Foreground="Yellow" Padding="-5" Margin="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Separator, FallbackValue=test}" HorizontalContentAlignment="Center" />
+
+        <Label x:Name="AttackNameDisplay" Padding="-5" Margin="0" Grid.Column="0" Content="{Binding AttackName, FallbackValue=test}" HorizontalContentAlignment="Center" />
+        <Label x:Name="ValueDisplay" Padding="-5" Margin="0" Grid.Column="1" Content="{Binding Value, FallbackValue=test}" HorizontalContentAlignment="Center" />
+
+    </Grid>
+</UserControl>

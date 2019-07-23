@@ -4,6 +4,8 @@ namespace ElectronicObserver.Data
 {
 	public enum EquipmentTypes
 	{
+        Unknown = 0,
+
 		/// <summary>小口径主砲</summary>
 		MainGunSmall = 1,
 

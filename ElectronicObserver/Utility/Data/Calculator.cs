@@ -4,6 +4,8 @@ using ElectronicObserver.Utility.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -2348,21 +2350,27 @@ namespace ElectronicObserver.Utility.Data
         Laser,
 
         /// <summary> 連続射撃 </summary>
+        [Display(Name = "Double Attack")]
         DoubleShelling,
 
         /// <summary> カットイン(主砲/副砲) </summary>
+        [Display(Name = "Main-Secondary")]
         CutinMainSub,
 
         /// <summary> カットイン(主砲/電探) </summary>
+        [Display(Name = "Main-Radar")]
         CutinMainRadar,
 
         /// <summary> カットイン(主砲/徹甲弾) </summary>
+        [Display(Name = "Main-AP")]
         CutinMainAP,
 
         /// <summary> カットイン(主砲/主砲) </summary>
+        [Display(Name = "Main-Main")]
         CutinMainMain,
 
         /// <summary> 空母カットイン </summary>
+        [Display(Name = "Carrier Cut-In")]
         CutinAirAttack,
 
         /// <summary> Nelson Touch </summary>
@@ -2517,7 +2525,199 @@ namespace ElectronicObserver.Utility.Data
     {
         None = 0,
 
-        LateModelTorpedoSubmarineEquipment,
-        LateModelTorpedo2,
+		LateModelTorpedoSubmarineEquipment,
+		LateModelTorpedo2,
+	}
+
+    public enum FleetType
+    {
+        Single,
+        [Display(Name = "Carrier Task Force")]
+        Carrier,
+        [Display(Name = "Surface Task Force")]
+        Surface,
+        [Display(Name = "Transport Combined Fleet")]
+        Transport
+    }
+
+    public enum FormationType
+    {
+        [Display(Name= "Line Ahead")]
+        LineAhead = 1,
+        [Display(Name = "Double Line")]
+        DoubleLine = 2,
+        Diamond = 3,
+        Echelon = 4,
+        [Display(Name = "Line Abreast")]
+        LineAbreast = 5,
+        Vanguard = 6,
+        /// <summary>
+        /// Anchor
+        /// </summary>
+        [Display(Name = "First Patrol Formation")]
+        FirstPatrolFormation = 11,
+        /// <summary>
+        /// Torpedo
+        /// </summary>
+        [Display(Name = "Second Patrol Formation")]
+        SecondPatrolFormation = 12,
+        /// <summary>
+        /// Turtle
+        /// </summary>
+        [Display(Name = "Third Patrol Formation")]
+        ThirdPatrolFormation = 13,
+        /// <summary>
+        /// Chicken Foot
+        /// </summary>
+        [Display(Name = "Fourth Patrol Formation")]
+        FourthPatrolFormation = 14
+    }
+
+    public enum EngagementTypes
+    {
+        Parallel = 1,
+        [Display(Name = "Head-on")]
+        HeadOn = 2,
+        [Display(Name = "T Advantage")]
+        TAdvantage = 3,
+        [Display(Name = "T Disadvantage")]
+        TDisadvantage = 4
+    }
+
+    public enum FitCategories
+    {
+        /// <summary>
+        /// currently everything that's not a BB gun
+        /// </summary>
+        Unknown,
+        /// <summary>
+        /// 30.5(kai), 35.6(p, dazzle(kai), kai, ni), 38(kai), 38.1(kai)
+        /// </summary>
+        smallBBGun,
+        /// <summary>
+        /// 381(kai)
+        /// </summary>
+        pastaBBGun,
+        /// <summary>
+        /// 38 quad(kai)
+        /// </summary>
+        baguetteBBGun,
+        /// <summary>
+        /// burger(gfcs)
+        /// </summary>
+        burgerBBGun,
+        /// <summary>
+        /// Nelson(afct, fcr)
+        /// </summary>
+        nelsonBBGun,
+        /// <summary>
+        /// 41(p, kai, ni(triple))
+        /// </summary>
+        mediumBBGun,
+        /// <summary>
+        /// 46(p, kai)
+        /// </summary>
+        largeBBGun,
+        /// <summary>
+        /// 51(p)
+        /// </summary>
+        veryLargeBBGun
+    }
+
+    public enum ShipClasses
+    {
+        Unknown = 0,
+        Ayanami = 1,
+        深海棲艦 = 1,
+        Ise = 2,
+        加賀型,
+        球磨型,
+        暁型,
+        Kongou,
+        古鷹型,
+        高雄型,
+        最上型,
+        初春型,
+        祥鳳型,
+        吹雪型,
+        青葉型,
+        赤城型,
+        千歳型,
+        川内型,
+        蒼龍型,
+        朝潮型,
+        Nagato,
+        長良型,
+        天龍型,
+        島風型,
+        白露型,
+        飛鷹型,
+        飛龍型,
+        扶桑型,
+        鳳翔型,
+        睦月型,
+        妙高型,
+        陽炎型,
+        利根型,
+        龍驤型,
+        翔鶴型,
+        夕張型,
+        海大VI型,
+        巡潜乙型改二,
+        Yamato,
+        夕雲型,
+        巡潜乙型,
+        巡潜3型,
+        阿賀野型,
+        霧の艦隊,
+        大鳳型,
+        潜特型伊400型潜水艦,
+        特種船丙型,
+        三式潜航輸送艇,
+        Bismarck,
+        Z1型,
+        工作艦,
+        大鯨型,
+        龍鳳型,
+        大淀型,
+        雲龍型,
+        秋月型,
+        AdmiralHipper級,
+        香取型,
+        UボートIXC型,
+        VVeneto,
+        秋津洲型,
+        改風早型,
+        Maestrale級,
+        瑞穂型,
+        GrafZeppelin級,
+        Zara級,
+        Iowa,
+        神風型,
+        QueenElizabeth,
+        Aquila級,
+        Lexington級,
+        CTeste級,
+        巡潜甲型改二,
+        神威型,
+        Gangut,
+        占守型,
+        春日丸級,
+        大鷹型,
+        択捉型,
+        ArkRoyal級,
+        Richelieu,
+        GuglielmoMarconi級,
+        Ташкент級,
+        J級,
+        Casablanca級,
+        Essex級,
+        日振型,
+        呂号潜水艦,
+        JohnCButler級,
+        Nelson,
+        Gotland級,
+        日進型,
+        Fletcher級
     }
 }

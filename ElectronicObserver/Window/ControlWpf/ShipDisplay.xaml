@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.ShipDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="750" d:DesignWidth="500">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <local:ShipStatsDisplay Grid.Column="1"  />
+
+            <Image 
+                x:Name="ShipImage" 
+                Grid.Column="0" 
+                RenderOptions.BitmapScalingMode="HighQuality"
+                UseLayoutRounding="True"
+                MouseLeftButtonUp="ShowShipSelection"/>
+
+            <Label x:Name="ShipName" 
+                   Grid.Column="0" 
+                   Grid.Row="0" 
+                   MouseLeftButtonDown="ShowShipSelection"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Center">
+
+                <TextBlock 
+                    Text="{Binding Name, FallbackValue='（なし）'}" 
+                    TextWrapping="WrapWithOverflow"
+                    TextAlignment="Center"
+                />
+            </Label>
+
+        </Grid>
+
+        <local:EquipmentDisplay x:Name="EquipmentDisplay" Grid.Row="1" Grid.ColumnSpan="2" />
+
+        <Grid 
+            x:Name="ShipSelectionOverlay"
+            Visibility="Hidden"
+            Grid.Row="0" 
+            RowSpan="2"
+            >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                MouseLeftButtonDown="CloseShipSelection"
+                Opacity="0.01" 
+                Background="{DynamicResource MaterialDesignPaper}" />
+
+            <local:ShipSelection 
+                x:Name="ShipSelect" 
+                Grid.Column="1" 
+                BorderThickness="1"
+                Opacity="0.9" 
+                Background="{DynamicResource MaterialDesignPaper}"
+                BorderBrush="DodgerBlue"/>
+        </Grid>
+
+        <Grid 
+            x:Name="EquipmentSelectionOverlay"
+            Visibility="Hidden"
+            Grid.Row="0" 
+            RowSpan="2"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                MouseLeftButtonDown="CloseEquipmentSelection"
+                Opacity="0.01" 
+                Background="{DynamicResource MaterialDesignPaper}" />
+
+            <local:EquipmentSelection 
+                x:Name="EquipmentSelect" 
+                Grid.Column="1" 
+                BorderThickness="1"
+                Opacity="0.9" 
+                Background="{DynamicResource MaterialDesignPaper}"
+                BorderBrush="DodgerBlue"/>
+        </Grid>
+    </Grid>
+</UserControl>

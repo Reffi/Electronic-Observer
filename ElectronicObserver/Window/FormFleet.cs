@@ -411,7 +411,9 @@ namespace ElectronicObserver.Window
 				Equipments.AutoSize = true;
 				Equipments.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 				Equipments.Visible = false;
-				Equipments.ResumeUpdate();
+                Equipments.Cursor = Cursors.Help;
+                Equipments.MouseDown += Equipments_MouseDown;
+                Equipments.ResumeUpdate();
 
 				ConfigurationChanged(parent);
 
@@ -630,8 +632,19 @@ namespace ElectronicObserver.Window
 				}
 			}
 
+            private void Equipments_MouseDown(object sender, MouseEventArgs e)
+            {
+                if (Level.Tag is int id && id != -1)
+                {
+                    if ((e.Button & MouseButtons.Right) != 0)
+                    {
+                        new DialogShipSimulation(id).Show(Parent);
+                    }
+                }
+            }
 
-			private string GetEquipmentString(ShipData ship)
+
+            private string GetEquipmentString(ShipData ship)
 			{
 				StringBuilder sb = new StringBuilder();
 

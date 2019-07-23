@@ -1194,8 +1194,17 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-		#endregion
+        #endregion
 
-	}
+        public static class Softcap
+        {
+            public const int DayShelling = 180;
+            public const int NightBattle = 300;
+            public const int ASW = 150;
+            public const int Support = 150;
+            public const int Airstrike = 150;
+            public const int Torpedo = 150;
+        }
+    }
 
 }
