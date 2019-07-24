@@ -2573,17 +2573,6 @@ namespace ElectronicObserver.Utility.Data
         FourthPatrolFormation = 14
     }
 
-    public enum EngagementTypes
-    {
-        Parallel = 1,
-        [Display(Name = "Head-on")]
-        HeadOn = 2,
-        [Display(Name = "T Advantage")]
-        TAdvantage = 3,
-        [Display(Name = "T Disadvantage")]
-        TDisadvantage = 4
-    }
-
     public enum FitCategories
     {
         /// <summary>

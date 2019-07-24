@@ -21,6 +21,6 @@ namespace ElectronicObserver.Utility.Extension_Methods
                 .GetMember(enumValue.ToString())
                 .First()?
                 .GetCustomAttribute<DisplayAttribute>()?
-                .Name ?? enumValue.ToString();
+                .GetName() ?? enumValue.ToString();
     }
 }

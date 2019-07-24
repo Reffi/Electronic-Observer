@@ -275,6 +275,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifierRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\EngagementTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EngagementTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Data\EngagementTypes.cs" />
     <Compile Include="Utility\DynamicTranslator.cs" />
     <Compile Include="Utility\Helpers\ExtensionMethods.cs" />
     <Compile Include="Utility\Helpers\Observable.cs" />
@@ -869,6 +875,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NotifierRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\EngagementTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EngagementTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\ConfigRes.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1213,6 +1223,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
