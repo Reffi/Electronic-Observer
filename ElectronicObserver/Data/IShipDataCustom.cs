@@ -25,6 +25,7 @@ namespace ElectronicObserver.Data
         ShipClasses ShipClass { get; }
         bool IsMarried { get; }
         bool IsInstallation { get; }
+        bool IsSubmarine { get; }
         IEnumerable<int> EquippableCategories { get; }
         int EquipmentSlotCount { get; }
         bool IsExpansionSlotAvailable { get; }

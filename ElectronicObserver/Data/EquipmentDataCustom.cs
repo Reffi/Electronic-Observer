@@ -115,14 +115,21 @@ namespace ElectronicObserver.Data
 
         public FitCategories FitCategory { get; private set; }
 
-        public EquipmentDataCustom(EquipmentData equip)
+        public EquipmentDataCustom(EquipmentData equip) : this(equip.MasterEquipment)
         {
             _equip = equip;
-            _equipMaster = _equip.MasterEquipment;
 
             Level = equip.Level;
-            _id = equip.EquipmentID;
             Proficiency = equip.AircraftLevel;
+        }
+
+        public EquipmentDataCustom(EquipmentDataMaster equip)
+        {
+            _equipMaster = equip;
+
+            Level = 0;
+            _id = equip.EquipmentID;
+            Proficiency = 0;
 
             BaseFirepower = _equipMaster.Firepower;
             BaseTorpedo = _equipMaster.Torpedo;
@@ -135,15 +142,7 @@ namespace ElectronicObserver.Data
             BaseAA = _equipMaster.AA;
             Range = _equipMaster.Range;
 
-            SetFitCategory(equip.MasterEquipment);
-        }
-
-        public EquipmentDataCustom(EquipmentDataMaster equip)
-        {
-            _equipMaster = equip;
-
-            Level = 0;
-            _id = equip.EquipmentID;
+            SetFitCategory(equip);
         }
 
 
@@ -368,6 +367,15 @@ namespace ElectronicObserver.Data
             _ => false
         };
 
+        public bool IsGun =>
+            CategoryType == EquipmentTypes.MainGunSmall ||
+            CategoryType == EquipmentTypes.MainGunMedium ||
+            CategoryType == EquipmentTypes.MainGunLarge ||
+            CategoryType == EquipmentTypes.MainGunLarge2 ||
+            CategoryType == EquipmentTypes.SecondaryGun;
+
+        public bool IsTorpedo => CategoryType == EquipmentTypes.Torpedo || CategoryType == EquipmentTypes.SubmarineTorpedo;
+
         public bool IsAntiSubmarineAircraft => BaseASW > 0 && (CategoryType switch
         {
             EquipmentTypes.CarrierBasedBomber => true,
@@ -400,5 +408,20 @@ namespace ElectronicObserver.Data
             ID == 237 || // 634 skilled
             ID == 322 || // k2 634
             ID == 323;   // k2 634 skilled
+
+        public bool IsSwordfish =>
+            ID == 242 || // Swordfish
+            ID == 243 || // Swordfish Mk.II(熟練)
+            ID == 244;   // Swordfish Mk.III(熟練)
+
+        public bool IsNightAviationPersonnel =>
+            ID == 258 ||       // 夜間作戦航空要員
+            ID == 259;         // 夜間作戦航空要員+熟練甲板員
+
+        public bool IsNightCapableBomber => false;
+        public bool IsNightCapableAttacker => false;
+        public bool IsNightFighter         => false;
+        public bool IsNightBomber          => false;
+        public bool IsNightAttacker        => false;
     }
 }

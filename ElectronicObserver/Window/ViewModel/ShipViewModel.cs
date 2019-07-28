@@ -68,6 +68,9 @@ namespace ElectronicObserver.Window.ViewModel
                 _synergies = new VisibleFits();
                 _ship.Equipment = value;
                 EquipmentViewModel[] evms = new EquipmentViewModel[6];
+
+
+
                 for (int i = 0; i<6; i++)
                 {
                     if (_equipment?[i] == value[i])

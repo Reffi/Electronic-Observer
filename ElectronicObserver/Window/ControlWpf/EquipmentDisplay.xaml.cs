@@ -32,7 +32,7 @@ namespace ElectronicObserver.Window.ControlWpf
                     equipmentDisplays[i].IsEnabled = slotEnabled;
                     equipmentDisplays[i].Equip = _shipViewModel.EquipmentViewModels[i];
                     if(i < 5)
-                        equipmentDisplays[i].SlotSize = _shipViewModel.Aircraft[i];
+                        equipmentDisplays[i].SlotSize = _shipViewModel.Aircraft?[i] ?? 0;
                 }
             }
         }

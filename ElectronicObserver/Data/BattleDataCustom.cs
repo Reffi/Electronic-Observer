@@ -9,8 +9,13 @@ namespace ElectronicObserver.Data
 {
     public class BattleDataCustom
     {
-        public Damage Damage { get; }
-        public Accuracy Accuracy { get; }
+        private Random rng = new Random();
+
+        // figure out better naming so property type and name aren't the same
+        public Damage Damage { get; set; }
+        public Accuracy Accuracy { get; set; }
+        public Evasion Evasion { get; set; }
+        public HitRate HitRate { get; set; }
 
         public EngagementTypes Engagement { get; set; }
 
@@ -23,6 +28,9 @@ namespace ElectronicObserver.Data
         public DayAttackKind DayAttack { get; set; }
         public NightAttackKind NightAttack { get; set; }
 
+        public IShipDataCustom Attacker { get; set; }
+        public IShipDataCustom Defender { get; set; }
+
         public BattleDataCustom(FleetDataCustom playerFleet, FleetDataCustom abyssalFleet, 
             EngagementTypes engagement = EngagementTypes.Parallel)
         {
@@ -31,18 +39,58 @@ namespace ElectronicObserver.Data
 
             Engagement = engagement;
 
-            Random rng = new Random();
-            IEnumerable<IShipDataCustom> shellingOrder = PlayerFleet.MainFleet
+            MockStuff();
+        }
+
+        private void MockStuff()
+        {
+            IEnumerable<IShipDataCustom> shellingOrder = MakeShellingOrder(PlayerFleet.MainFleet);
+            IEnumerable<IShipDataCustom> enemyShellingOrder = MakeShellingOrder(AbyssalFleet.MainFleet);
+
+            Attacker = shellingOrder.First();
+            Defender = enemyShellingOrder.FirstOrDefault();
+
+            Damage = new Damage(Attacker, Defender,
+                this, PlayerFleet, AbyssalFleet);
+
+            Accuracy = new Accuracy(Attacker, PlayerFleet, this);
+
+            if (Defender == null)
+                return;
+
+            Evasion = new Evasion(Defender, AbyssalFleet);
+            HitRate = new HitRate(Accuracy, Evasion, Defender.Condition);
+        }
+
+        // stupid even if it's just mock
+        public IEnumerable<DayAttackKind> PossibleDayAttacks => (Attacker, Defender) switch
+        {
+            (_, _) when Defender.IsSubmarine => Attacker.AswAttacks,
+
+            _ => Attacker.DayAttacks
+        };
+
+        public IEnumerable<DayAttackKind> PossibleAswAttacks => (Attacker, Defender) switch
+        {
+            (_, _) when Defender.IsSubmarine && Attacker.AswAttacks.Any() => Attacker.AswAttacks,
+
+            _ => Enumerable.Empty<DayAttackKind>()
+        };
+
+        public IEnumerable<NightAttackKind> PossibleNightAttacks => (Attacker, Defender) switch
+        {
+            (_, _) when Defender.IsSubmarine => Enumerable.Empty<NightAttackKind>(),
+
+            _ => Attacker.NightAttacks.Take(1)
+        };
+
+        private IEnumerable<IShipDataCustom> MakeShellingOrder(IEnumerable<IShipDataCustom> fleet) =>
+            fleet
                 .GroupBy(ship => ship.BaseRange)
                 .OrderByDescending(group => group.Key) // order range groups from longest to shortest
                 .Select(group => group.OrderBy(ship => rng.Next())) // random order within each range group
                 .SelectMany(shipList => shipList) // flatten groups
                 .ToList();
-
-            Damage = new Damage(shellingOrder.First(), battle: this, attackerFleet: playerFleet, 
-                defenderFleet: abyssalFleet);
-            Accuracy = new Accuracy(shellingOrder.First(), playerFleet, this);
-        }
 
         public double EngagementMod => Engagement switch
         {

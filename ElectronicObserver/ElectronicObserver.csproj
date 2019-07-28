@@ -206,6 +206,7 @@
     <Compile Include="Data\EquipmentDataMaster.cs" />
     <Compile Include="Data\EquipmentType.cs" />
     <Compile Include="Data\EquipmentTypes.cs" />
+    <Compile Include="Data\Evasion.cs" />
     <Compile Include="Data\FitBonus.cs" />
     <Compile Include="Data\FleetDataCustom.cs" />
     <Compile Include="Data\FleetManager.cs" />
@@ -214,6 +215,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FleetRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Data\HitRate.cs" />
     <Compile Include="Data\IDDictionary.cs" />
     <Compile Include="Data\IEquipmentDataCustom.cs" />
     <Compile Include="Data\IIdentifiable.cs" />

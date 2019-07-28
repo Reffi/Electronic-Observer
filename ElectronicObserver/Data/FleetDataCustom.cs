@@ -280,25 +280,16 @@ namespace ElectronicObserver.Data
 
 
 
-        public double ShellingEvasionMod()
+        public double ShellingEvasionMod => Formation switch
         {
-            switch (Formation)
-            {
-                case FormationType.LineAhead:
-                case FormationType.DoubleLine:
-                default:
-                    return 1;
+            FormationType.LineAhead => 1,
+            FormationType.DoubleLine => 1,
+            FormationType.Diamond => 1.1,
+            FormationType.Echelon => 1.2,
+            FormationType.LineAbreast => 1.3,
 
-                case FormationType.Diamond:
-                    return 1.1;
-
-                case FormationType.Echelon:
-                    return 1.2;
-
-                case FormationType.LineAbreast:
-                    return 1.3;
-            }
-        }
+            _ => 1
+        };
 
         public double TorpedoEvasionMod()
         {
@@ -320,51 +311,28 @@ namespace ElectronicObserver.Data
             }
         }
 
-        public double AswEvasionMod()
+        public double AswEvasionMod => Formation switch
         {
-            switch (Formation)
-            {
-                case FormationType.LineAhead:
-                case FormationType.DoubleLine:
-                case FormationType.Diamond:
-                default:
-                    return 1;
+            FormationType.LineAhead => 1,
+            FormationType.DoubleLine => 1,
+            FormationType.Diamond => 1,
+            FormationType.LineAbreast => 1.1,
+            FormationType.Echelon => 1.3,
 
-                case FormationType.Echelon:
-                    return 1.3;
+            _ => 1
+        };
 
-                case FormationType.LineAbreast:
-                    return 1.1;
-            }
-        }
-
-        public double NightEvasionMod()
+        public double NightEvasionMod => Formation switch
         {
-            switch (Formation)
-            {
-                case FormationType.LineAhead:
-                case FormationType.DoubleLine:
-                case FormationType.Diamond:
-                default:
-                    return 1;
+            FormationType.LineAhead => 1,
+            FormationType.DoubleLine => 1,
+            FormationType.Diamond => 1,
+            FormationType.Echelon => 1.1,
+            FormationType.LineAbreast => 1.2,
 
-                case FormationType.Echelon:
-                    return 1.1;
+            _ => 1
+        };
 
-                case FormationType.LineAbreast:
-                    return 1.2;
-            }
-        }
-
-        public double AirstrikeEvasionMod()
-        {
-            switch (Formation)
-            {
-                // they should be all 1
-                default:
-                    return 1;
-            }
-        }
-        
+        public double AirstrikeEvasionMod => 1;
     }
 }

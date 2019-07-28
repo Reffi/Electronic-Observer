@@ -234,6 +234,34 @@ namespace ElectronicObserver.Data
 
             EvasionMin = ship.Evasion.GetParameter(1);
             EvasionMax = ship.Evasion.GetParameter(99);
+
+            Level = ship.IsSubmarine && ship.IsAbyssalShip ? 50 : 1;
+            HP = ship.HPMax;
+            BaseArmor = ship.ArmorMax;
+            BaseEvasion = ScaledStat(EvasionMin, EvasionMax);
+            Aircraft = ship.Aircraft.ToArray();
+            BaseSpeed = ship.Speed;
+            BaseRange = ship.Range;
+
+            Condition = 49;
+            BaseFirepower = ship.FirepowerMax;
+            BaseTorpedo = ship.TorpedoMax;
+            BaseAA = ship.AAMax;
+            BaseASW = ScaledStat(ASWMin, ASWMax);
+            BaseLoS = ScaledStat(LoSMin, LoSMax);
+            BaseLuck = ship.LuckMin;
+
+
+            List<IEquipmentDataCustom> equip = ship.DefaultSlot?
+               .Select(id => id == -1 ? null : new EquipmentDataCustom(
+                   KCDatabase.Instance.MasterEquipments.Values.First(eq => eq.ID == id)))
+               .ToList<IEquipmentDataCustom>() ?? new List<IEquipmentDataCustom>();
+
+            while(equip.Count < 6)
+                equip.Add(null);
+
+            Equipment = equip.ToArray();
+
         }
 
         private int ScaledStat(int min, int max)
@@ -283,15 +311,16 @@ namespace ElectronicObserver.Data
         {
             IEnumerable<NightAttackKind> nightAttacks = new List<NightAttackKind>();
 
-            if (ShipType == ShipTypes.AircraftCarrier ||
-                ShipType == ShipTypes.ArmoredAircraftCarrier ||
-                ShipType == ShipTypes.LightAircraftCarrier)
-                return CarrierNightAttacks();
-
             if (ShipType == ShipTypes.Destroyer)
                 nightAttacks = nightAttacks.Concat(DestroyerNightAttacks());
 
-            nightAttacks = nightAttacks.Concat(RegularNightAttacks());
+            if (ShipType == ShipTypes.AircraftCarrier ||
+                ShipType == ShipTypes.ArmoredAircraftCarrier ||
+                ShipType == ShipTypes.LightAircraftCarrier)
+                nightAttacks = nightAttacks.Concat(CarrierNightAttacks());
+
+            nightAttacks = nightAttacks.Concat(SpecialNightAttacks());
+            nightAttacks = nightAttacks.Concat(NormalNightAttacks());
 
             return nightAttacks;
         }
@@ -423,7 +452,7 @@ namespace ElectronicObserver.Data
             return aswAttacks;
         }
 
-        private List<NightAttackKind> RegularNightAttacks()
+        private List<NightAttackKind> SpecialNightAttacks()
         {
             List<NightAttackKind> nightAttacks = new List<NightAttackKind>();
 
@@ -467,11 +496,6 @@ namespace ElectronicObserver.Data
             if(mainGunCount+secondaryCount > 1)
                 nightAttacks.Add(NightAttackKind.DoubleShelling);
 
-            if(torpedoCount > 0)
-                nightAttacks.Add(NightAttackKind.Torpedo);
-            else
-                nightAttacks.Add(NightAttackKind.NormalAttack);
-
             return nightAttacks;
         }
 
@@ -479,6 +503,46 @@ namespace ElectronicObserver.Data
         {
             List<NightAttackKind> nightAttacks = new List<NightAttackKind>();
 
+            if (ShipType != ShipTypes.Destroyer)
+                return nightAttacks;
+
+            int mainGunCount = 0;
+            int torpedoCount = 0;
+            int radarCount = 0;
+            int skilledLookoutsCount = 0;
+
+            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            {
+                switch (equip.CategoryType)
+                {
+                    case EquipmentTypes.MainGunSmall:
+                    case EquipmentTypes.MainGunMedium:
+                    case EquipmentTypes.MainGunLarge:
+                    case EquipmentTypes.MainGunLarge2:
+                        mainGunCount++;
+                        break;
+
+                    case EquipmentTypes.Torpedo:
+                        torpedoCount++;
+                        break;
+
+                    case EquipmentTypes.RadarSmall:
+                    case EquipmentTypes.RadarLarge:
+                    case EquipmentTypes.RadarLarge2:
+                        radarCount++;
+                        break;
+
+                    case EquipmentTypes.SurfaceShipPersonnel:
+                        skilledLookoutsCount++;
+                        break;
+                }
+            }
+
+            if(torpedoCount > 0 && skilledLookoutsCount > 0 && radarCount > 0)
+                nightAttacks.Add(NightAttackKind.CutinTorpedoPicket);
+
+            if(mainGunCount > 0 && torpedoCount > 0 && radarCount > 0)
+                nightAttacks.Add(NightAttackKind.CutinTorpedoRadar);
 
             return nightAttacks;
         }
@@ -487,26 +551,50 @@ namespace ElectronicObserver.Data
         {
             List<NightAttackKind> nightAttacks = new List<NightAttackKind>();
 
-            nightAttacks.Add(NightAttackKind.CutinAirAttack);
+            if(HasNightPersonel)
+                nightAttacks.Add(NightAttackKind.CutinAirAttack);
 
-            nightAttacks.Add(NightAttackKind.AirAttack);
-
-            nightAttacks.Add(NightAttackKind.Shelling);
+            if (HasNightPersonel || (IsArkRoyal && HasSwordfish))
+            {
+                nightAttacks.Add(NightAttackKind.AirAttack);
+            }
 
             return nightAttacks;
+        }
+
+        private List<NightAttackKind> NormalNightAttacks()
+        {
+            List<NightAttackKind> attacks = new List<NightAttackKind>();
+
+            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            {
+                if (equip.IsGun)
+                    break;
+
+                if (equip.IsTorpedo)
+                {
+                    attacks.Add(NightAttackKind.Torpedo);
+                    break;
+                }
+            }
+
+            attacks.Add(NightAttackKind.Shelling);
+
+            return attacks;
         }
 
 
 
 
-        public string Name => _ship?.Name ?? _shipMaster.Name;
-        public int SortID => _ship?.MasterShip.SortID ?? _shipMaster.SortID;
+        public string Name => _shipMaster.Name;
+        public int SortID => _shipMaster.SortID;
 
-        public int ShipID => _ship?.ShipID ?? _shipMaster.ShipID;
+        public int ShipID => _shipMaster.ShipID;
 
+        // DropID
         public int MasterID => _ship?.MasterID ?? -1;
 
-        public ShipDataMaster MasterShip => _ship?.MasterShip ?? _shipMaster;
+        public ShipDataMaster MasterShip => _shipMaster;
 
         public int EquipmentSlotCount => _ship?.SlotSize ?? _shipMaster.SlotSize;
 
@@ -514,15 +602,17 @@ namespace ElectronicObserver.Data
 
         public string NameWithLevel => $"{MasterShip.Name} Lv. {Level}";
 
-        public ShipClasses ShipClass => (ShipClasses)(_ship?.MasterShip.ShipClass ?? _shipMaster.ShipClass);
+        public ShipClasses ShipClass => (ShipClasses)_shipMaster.ShipClass;
 
-        public ShipTypes ShipType => _ship?.MasterShip.ShipType ?? _shipMaster.ShipType;
+        public ShipTypes ShipType => _shipMaster.ShipType;
 
-        public string ShipTypeName => _ship?.MasterShip.ShipTypeName ?? _shipMaster.ShipTypeName;
+        public string ShipTypeName => _shipMaster.ShipTypeName;
 
         public bool IsMarried => Level > 99;
 
         public bool IsInstallation => false;
+
+        public bool IsSubmarine => _shipMaster.IsSubmarine;
 
         public bool CanAttackSubmarine => ShipType switch
         {
@@ -541,12 +631,76 @@ namespace ElectronicObserver.Data
 
             _ => false
         };
-
         private bool DepthChargeCondition => BaseASW > 0;
-        private bool HasAswAircraft => Equipment.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
+        private bool HasAswAircraft => Equipment.Where(eq => eq != null).Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
 
+        private List<double> CvnciMods()
+        {
+            // this is terrible and out of place
+            // make each mod its own NightAttackKind?
 
-        public IEnumerable<int> EquippableCategories => _ship?.MasterShip.EquippableCategories ?? _shipMaster.EquippableCategories;
+            List<double> cvnciMods = new List<double>();
+
+            int nightCapableBomber = 0;
+            int nightCapableAttacker = 0;
+            int nightFighter = 0;
+            int nightBomber = 0;
+            int nightAttacker = 0;
+
+            foreach (IEquipmentDataCustom equip in Equipment)
+            {
+                switch (equip.CategoryType)
+                {
+                    case EquipmentTypes.CarrierBasedFighter when equip.IsNightFighter:
+                        nightFighter++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedBomber when equip.IsNightCapableBomber:
+                        nightCapableBomber++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedBomber when equip.IsNightBomber:
+                        nightBomber++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedTorpedo when equip.IsNightCapableAttacker:
+                        nightCapableAttacker++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedTorpedo when equip.IsNightAttacker:
+                        nightAttacker++;
+                        break;
+                }
+            }
+
+            if (nightFighter > 1 && nightAttacker > 0)
+                cvnciMods.Add(1.25);
+
+            // there are fancier ways to do this but lets keep it simple
+            if (nightFighter > 0 && nightBomber > 0 ||
+                nightFighter > 0 && nightAttacker > 0 ||
+                nightBomber > 0 && nightAttacker > 0)
+                cvnciMods.Add(1.2);
+
+            if (nightFighter > 0 &&
+                nightFighter + nightAttacker + nightBomber + nightCapableBomber + nightCapableAttacker > 2)
+                cvnciMods.Add(1.18);
+
+            return cvnciMods;
+        }
+
+        private bool HasNightPersonel => Equipment.Where(eq => eq != null)
+                                             .Any(eq => eq.IsNightAviationPersonnel) ||
+                                         ShipID == 545 || // Saratoga Mk.II
+                                         ShipID == 599;   // Akagi k2e
+
+        private bool IsArkRoyal =>
+            ShipID == 515 ||
+            ShipID == 393;
+
+        private bool HasSwordfish => Equipment.Where(eq => eq != null).Any(eq => eq.IsSwordfish);
+
+        public IEnumerable<int> EquippableCategories => _shipMaster.EquippableCategories;
 
 
 

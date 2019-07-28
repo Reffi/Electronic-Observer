@@ -35,10 +35,21 @@ namespace ElectronicObserver.Data
         EquipmentTypes CategoryType { get; }
         FitCategories FitCategory { get; }
         bool CountsForAswDamage { get; }
+
+        bool IsGun { get; }
+        bool IsTorpedo { get; }
         bool IsAntiSubmarineAircraft { get; }
         bool IsDepthCharge { get; }
         bool IsSpecialDepthChargeProjector { get; }
         bool IsZuiun { get; }
+        bool IsSwordfish { get; }
+        bool IsNightAviationPersonnel { get; }
+
+        bool IsNightCapableBomber { get; }
+        bool IsNightCapableAttacker { get; }
+        bool IsNightFighter { get; }
+        bool IsNightBomber { get; }
+        bool IsNightAttacker { get; }
 
         FitBonusCustom CurrentFitBonus { get; set; }
     }

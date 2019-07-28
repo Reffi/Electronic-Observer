@@ -29,10 +29,10 @@ namespace ElectronicObserver.Data
         private int _attackerFleetIndex;
         private int _defenderFleetIndex;
 
-        private double Capped => CapDamage(_precapBase * _precapMods);
+        private double Capped => Cap(_precapBase * _precapMods);
         private double Postcap => Math.Floor(Capped * _critMod) * _postcapMods;
-        private double Min => Math.Floor((Postcap - _defender.BaseArmor) * _ammoMod);
-        private double Max => Math.Floor((Postcap - _defender.BaseArmor) * _ammoMod);
+        private double Min => Math.Floor((Postcap - (_defender?.BaseArmor ?? 0) * 1.3) * _ammoMod);
+        private double Max => Math.Floor((Postcap - (_defender?.BaseArmor ?? 0) * 0.7) * _ammoMod);
 
         public double ShellingCapped
         {
@@ -94,6 +94,87 @@ namespace ElectronicObserver.Data
                 return Postcap;
             }
         }
+        public double ShellingMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.DayShelling;
+                _precapBase = _attacker.ShipType switch
+                    {
+                    ShipTypes.AircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.ArmoredAircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.LightAircraftCarrier => PrecapBaseShellingCarrier,
+
+                    _ => PrecapBaseShelling
+                    };
+                _precapMods = PrecapModsShelling;
+                _critMod = 1;
+                _postcapMods = PostcapModsShelling;
+
+                return Min;
+            }
+        }
+        public double ShellingMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.DayShelling;
+                _precapBase = _attacker.ShipType switch
+                    {
+                    ShipTypes.AircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.ArmoredAircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.LightAircraftCarrier => PrecapBaseShellingCarrier,
+
+                    _ => PrecapBaseShelling
+                    };
+                _precapMods = PrecapModsShelling;
+                _critMod = 1;
+                _postcapMods = PostcapModsShelling;
+
+                return Max;
+            }
+        }
+        public double ShellingCritMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.DayShelling;
+                _precapBase = _attacker.ShipType switch
+                    {
+                    ShipTypes.AircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.ArmoredAircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.LightAircraftCarrier => PrecapBaseShellingCarrier,
+
+                    _ => PrecapBaseShelling
+                    };
+                _precapMods = PrecapModsShelling;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsShelling;
+
+                return Min;
+            }
+        }
+        public double ShellingCritMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.DayShelling;
+                _precapBase = _attacker.ShipType switch
+                    {
+                    ShipTypes.AircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.ArmoredAircraftCarrier => PrecapBaseShellingCarrier,
+                    ShipTypes.LightAircraftCarrier => PrecapBaseShellingCarrier,
+
+                    _ => PrecapBaseShelling
+                    };
+                _precapMods = PrecapModsShelling;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsShelling;
+
+                return Max;
+            }
+        }
+
 
         // need opening and closing cause midget upgrades?
         public double TorpedoCapped
@@ -175,6 +256,59 @@ namespace ElectronicObserver.Data
                 return Postcap;
             }
         }
+        public double AswMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.ASW;
+                _precapBase = PrecapBaseASW;
+                _precapMods = PrecapModsASW;
+                _critMod = 1;
+                _postcapMods = PostcapModsASW;
+
+                return Min;
+            }
+        }
+        public double AswMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.ASW;
+                _precapBase = PrecapBaseASW;
+                _precapMods = PrecapModsASW;
+                _critMod = 1;
+                _postcapMods = PostcapModsASW;
+
+                return Max;
+            }
+        }
+        public double AswCritMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.ASW;
+                _precapBase = PrecapBaseASW;
+                _precapMods = PrecapModsASW;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsASW;
+
+                return Min;
+            }
+        }
+        public double AswCritMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.ASW;
+                _precapBase = PrecapBaseASW;
+                _precapMods = PrecapModsASW;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsASW;
+
+                return Max;
+            }
+        }
+
 
         public double NightCapped
         {
@@ -215,6 +349,58 @@ namespace ElectronicObserver.Data
                 return Postcap;
             }
         }
+        public double NightMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.NightBattle;
+                _precapBase = PrecapBaseNight;
+                _precapMods = PrecapModsNight;
+                _critMod = 1;
+                _postcapMods = PostcapModsNight;
+
+                return Min;
+            }
+        }
+        public double NightMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.NightBattle;
+                _precapBase = PrecapBaseNight;
+                _precapMods = PrecapModsNight;
+                _critMod = 1;
+                _postcapMods = PostcapModsNight;
+
+                return Max;
+            }
+        }
+        public double NightCritMin
+        {
+            get
+            {
+                _cap = Constants.Softcap.NightBattle;
+                _precapBase = PrecapBaseNight;
+                _precapMods = PrecapModsNight;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsNight;
+
+                return Min;
+            }
+        }
+        public double NightCritMax
+        {
+            get
+            {
+                _cap = Constants.Softcap.NightBattle;
+                _precapBase = PrecapBaseNight;
+                _precapMods = PrecapModsNight;
+                _critMod = CritMod;
+                _postcapMods = PostcapModsNight;
+
+                return Max;
+            }
+        }
 
         public Damage(IShipDataCustom attacker, IShipDataCustom defender = null, BattleDataCustom battle = null, 
             FleetDataCustom attackerFleet = null, FleetDataCustom defenderFleet = null)
@@ -229,6 +415,8 @@ namespace ElectronicObserver.Data
 
             _attacker = attacker;
             _defender = defender;
+
+            _ammoMod = 1;
         }
 
 
@@ -370,7 +558,7 @@ namespace ElectronicObserver.Data
             bool sub = false;
             bool radar = false;
 
-            foreach (IEquipmentDataCustom eq in _attacker.Equipment)
+            foreach (IEquipmentDataCustom eq in _attacker.Equipment.Where(e => e != null))
             {
                 switch (eq.CategoryType)
                 {
@@ -462,7 +650,7 @@ namespace ElectronicObserver.Data
             return sonar_dcp * (1 + sonar_dc + dcp_dc);
         }
 
-        private double CapDamage(double damage)
+        private double Cap(double damage)
         {
             if (damage > _cap)
                 damage = _cap + Math.Sqrt(damage - _cap);
