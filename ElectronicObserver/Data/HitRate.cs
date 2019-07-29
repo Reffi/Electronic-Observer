@@ -11,8 +11,8 @@ namespace ElectronicObserver.Data
         private const int MinHitRate = 10;
         private const int MaxHitRate = 97;
 
-        private Accuracy _accuracy;
-        private Evasion _evasion;
+        private IAccuracy _accuracy;
+        private IEvasion _evasion;
 
         private double _accuracyValue;
         private double _evasionValue;
@@ -33,6 +33,16 @@ namespace ElectronicObserver.Data
                 return Capped;
             }
         }
+        public double Shelling
+        {
+            get
+            {
+                _accuracyValue = _accuracy.DayShelling;
+                _evasionValue = _evasion?.Shelling ?? 0;
+
+                return Postcap;
+            }
+        }
 
         public double AswCapped
         {
@@ -42,6 +52,16 @@ namespace ElectronicObserver.Data
                 _evasionValue = _evasion?.ASW ?? 0;
 
                 return Capped;
+            }
+        }
+        public double ASW
+        {
+            get
+            {
+                _accuracyValue = _accuracy.ASW;
+                _evasionValue = _evasion?.ASW ?? 0;
+
+                return Postcap;
             }
         }
 
@@ -55,8 +75,18 @@ namespace ElectronicObserver.Data
                 return Capped;
             }
         }
+        public double Night
+        {
+            get
+            {
+                _accuracyValue = _accuracy.Night;
+                _evasionValue = _evasion?.Night ?? 0;
 
-        public HitRate(Accuracy accuracy, Evasion evasion, int defenderCondition)
+                return Postcap;
+            }
+        }
+
+        public HitRate(IAccuracy accuracy, IEvasion evasion, int defenderCondition)
             => (_accuracy, _evasion, _defenderCondition) = (accuracy, evasion, defenderCondition);
 
         private double MoraleMod => _defenderCondition switch

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicObserver.Data
 {
-    public class Evasion
+    public class Evasion : IEvasion
     {
         private IShipDataCustom _ship;
         private FleetDataCustom _fleet;

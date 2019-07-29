@@ -7,7 +7,7 @@ using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Data
 {
-    public class Accuracy
+    public class Accuracy : IAccuracy
     {
         private IShipDataCustom _ship;
         private FleetDataCustom _fleet;
