@@ -15,11 +15,10 @@
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-
-            <local:ShipStatsDisplay Grid.Column="1"  />
 
             <Image 
                 x:Name="ShipImage" 
@@ -27,6 +26,8 @@
                 RenderOptions.BitmapScalingMode="HighQuality"
                 UseLayoutRounding="True"
                 MouseLeftButtonUp="ShowShipSelection"/>
+
+            <Label Grid.Column="0" Height="Auto" VerticalAlignment="Top" Content="{Binding ShipID}"></Label>
 
             <Label x:Name="ShipName" 
                    Grid.Column="0" 
@@ -41,6 +42,13 @@
                     TextAlignment="Center"
                 />
             </Label>
+
+            <local:ShipStatsDisplay Grid.Column="1"  />
+
+            <local:SynergyStatDisplay
+                x:Name="SynergyDisplay"
+                Grid.Column="2"
+                />
 
         </Grid>
 

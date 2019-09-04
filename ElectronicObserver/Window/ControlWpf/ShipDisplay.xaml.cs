@@ -64,7 +64,7 @@ namespace ElectronicObserver.Window.ControlWpf
 
             //_ship.Equipment[_currentEquipmentSlot.SlotIndex] = args.Equip;
 
-            IEquipmentDataCustom[] newEquip = new IEquipmentDataCustom[6];
+            EquipmentDataCustom[] newEquip = new EquipmentDataCustom[6];
 
             for (int i = 0; i < 6; i++)
             {
@@ -89,9 +89,9 @@ namespace ElectronicObserver.Window.ControlWpf
             e.Handled = true;
         }
 
-        private IShipDataCustom _ship;
+        private ShipDataCustom _ship;
 
-        public IShipDataCustom Ship
+        public ShipDataCustom Ship
         {
             get => _ship;
             set
@@ -106,11 +106,18 @@ namespace ElectronicObserver.Window.ControlWpf
                 _viewModel.Ship = _ship;
                 DataContext = ViewModel;
 
+                SynergyDisplay.SynergyViewModel = _viewModel.SynergyViewModel;
+
                 EquipmentDisplay.Ship = _viewModel;
                 EquipmentSelect.EquippableCategories = _ship.EquippableCategories.Cast<EquipmentTypes>();
 
+
+                string resourceType = _ship.IsAbyssal
+                    ? KCResourceHelper.ResourceTypeShipFull
+                    : KCResourceHelper.ResourceTypeShipAlbumZoom;
+
                 string link = KCResourceHelper.GetShipImagePath(value.ShipID, false,
-                    KCResourceHelper.ResourceTypeShipAlbumZoom);
+                    resourceType);
 
                 if (link == null)
                 {
@@ -130,9 +137,9 @@ namespace ElectronicObserver.Window.ControlWpf
             }
         }
 
-        private IEnumerable<IShipDataCustom> _ships;
+        private IEnumerable<ShipDataCustom> _ships;
 
-        public IEnumerable<IShipDataCustom> Ships
+        public IEnumerable<ShipDataCustom> Ships
         {
             get => _ships;
             set
@@ -142,9 +149,9 @@ namespace ElectronicObserver.Window.ControlWpf
             }
         }
 
-        private IEnumerable<IEquipmentDataCustom> _equipments;
+        private IEnumerable<EquipmentDataCustom> _equipments;
 
-        public IEnumerable<IEquipmentDataCustom> Equipments
+        public IEnumerable<EquipmentDataCustom> Equipments
         {
             get => _equipments;
             set

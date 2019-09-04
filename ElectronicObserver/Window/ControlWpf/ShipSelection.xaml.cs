@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElectronicObserver.Data;
-using ElectronicObserver.Utility.Extension_Methods;
+using ElectronicObserver.Utility.Helpers;
 
 namespace ElectronicObserver.Window.ControlWpf
 {
@@ -50,8 +50,8 @@ namespace ElectronicObserver.Window.ControlWpf
         }
 
 
-        private IEnumerable<IShipDataCustom> _ships;
-        public IEnumerable<IShipDataCustom> Ships
+        private IEnumerable<ShipDataCustom> _ships;
+        public IEnumerable<ShipDataCustom> Ships
         {
             get => _ships;
             set

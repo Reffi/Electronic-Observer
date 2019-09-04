@@ -11,13 +11,12 @@ namespace ElectronicObserver.Data
 
         double AccuracyFitBonus { get; }
         double NightAccuracyFitBonus { get; }
-        IEquipmentDataCustom[] Equipment { get; set; }
+        EquipmentDataCustom[] Equipment { get; set; }
         FitBonusCustom FitBonus { get; }
 
 
         int Firepower { get; }
         int Torpedo { get; }
-        int NightPower { get; }
 
 
         int ShipID { get; }
@@ -53,5 +52,40 @@ namespace ElectronicObserver.Data
         int BaseLoS { get; set; }
         int BaseLuck { get; set; }
         int BaseNightPower { get; }
+    }
+
+    public interface IShipDamageData : IShipEquipmentData
+    {
+        int BaseFirepower { get; set; }
+        int BaseTorpedo { get; set; }
+        int BaseASW { get; }
+
+        int Firepower { get; }
+        int Torpedo { get; }
+        int NightPower { get; }
+
+        double EquipmentFirepower { get; }
+        double EquipmentTorpedo { get; }
+        double EquipmentBombing { get; }
+        double EquipmentAswDamage { get; }
+        double EquipmentNightPower { get; }
+
+        ShipTypes ShipType { get; }
+        IEnumerable<DayAttackKind> AswAttacks { get; }
+    }
+
+    public interface IShipEquipmentData
+    {
+        int MainGunCount { get; }
+        int SecondaryGunCount { get; }
+        int RadarCount { get; }
+        int ApShellCount { get; }
+
+        int SonarCount { get; }
+        int SmallSonarCount { get; }
+        int LargeSonarCount { get; }
+        int DepthChargeCount { get; }
+        int DepthChargeProjectorCount { get; }
+        int SpecialDepthChargeProjectorCount { get; }
     }
 }

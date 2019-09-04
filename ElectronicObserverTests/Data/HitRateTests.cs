@@ -1,86 +1,68 @@
 ﻿using ElectronicObserver.Data;
+using ElectronicObserver.Data.HitRate;
+using ElectronicObserver.Data.Mocks;
 using Xunit;
 
 namespace ElectronicObserverTests.Data
 {
-    public class MockAccuracy : IAccuracy
-    {
-        public double DayShelling { get; }
-        public double Night { get; }
-        public double ASW { get; }
-
-        public MockAccuracy(double shelling, double night, double asw)
-        {
-            DayShelling = shelling;
-            Night = night;
-            ASW = asw;
-        }
-    }
-
-    public class MockEvasion : IEvasion
-    {
-        public double Shelling { get; }
-        public double Night { get; }
-        public double ASW { get; }
-
-        public MockEvasion(double shelling, double night, double asw)
-        {
-            Shelling = shelling;
-            Night = night;
-            ASW = asw;
-        }
-    }
-
     public class HitRateTests
     {
+        MockHitRateDefender NormalMoraleShip = new MockHitRateDefender
+        {
+            Condition = 49
+        };
+
         [Fact]
         public void HitRateTest()
         {
-            MockAccuracy Accuracy = new MockAccuracy(200, 90, 80);
-            MockEvasion Evasion = new MockEvasion(50, 30, 10);
-            int defenderEvasion = 49;
+            MockAccuracy accuracy = new MockAccuracy
+            {
+                Total = 200
+            };
+            MockEvasion evasion = new MockEvasion
+            {
+                Postcap = 50
+            };
 
-            HitRate hitRate = new HitRate(Accuracy, Evasion, defenderEvasion);
+            HitRate hitRate = new HitRate(accuracy, evasion, NormalMoraleShip);
 
-            Assert.Equal(151, hitRate.ShellingCapped);
-            Assert.Equal(61, hitRate.NightCapped);
-            Assert.Equal(71, hitRate.AswCapped);
-
-            Assert.Equal(97, hitRate.Shelling);
-            Assert.Equal(61, hitRate.Night);
-            Assert.Equal(71, hitRate.ASW);
+            Assert.Equal(151, hitRate.Capped);
+            Assert.Equal(97, hitRate.Postcap);
         }
 
         [Fact]
         public void MinHitRateTest()
         {
-            MockAccuracy Accuracy = new MockAccuracy(0, 0, 0);
-            MockEvasion Evasion = new MockEvasion(9999, 9999, 9999);
-            int defenderEvasion = 49;
+            MockAccuracy accuracy = new MockAccuracy
+            {
+                Total = 0
+            };
+            MockEvasion evasion = new MockEvasion
+            {
+                Postcap = 9999
+            };
 
-            HitRate hitRate = new HitRate(Accuracy, Evasion, defenderEvasion);
+            HitRate hitRate = new HitRate(accuracy, evasion, NormalMoraleShip);
 
-            Assert.Equal(11, hitRate.ShellingCapped);
-            Assert.Equal(11, hitRate.NightCapped);
-            Assert.Equal(11, hitRate.AswCapped);
-
-            Assert.Equal(11, hitRate.Shelling);
-            Assert.Equal(11, hitRate.Night);
-            Assert.Equal(11, hitRate.ASW);
+            Assert.Equal(11, hitRate.Capped);
+            Assert.Equal(11, hitRate.Postcap);
         }
 
         [Fact]
         public void MaxHitRateTest()
         {
-            MockAccuracy Accuracy = new MockAccuracy(9999, 9999, 9999);
-            MockEvasion Evasion = new MockEvasion(0, 0, 0);
-            int defenderEvasion = 49;
+            MockAccuracy accuracy = new MockAccuracy
+            {
+                Total = 9999
+            };
+            MockEvasion evasion = new MockEvasion
+            {
+                Postcap = 0
+            };
 
-            HitRate hitRate = new HitRate(Accuracy, Evasion, defenderEvasion);
+            HitRate hitRate = new HitRate(accuracy, evasion, NormalMoraleShip);
 
-            Assert.Equal(97, hitRate.Shelling);
-            Assert.Equal(97, hitRate.Night);
-            Assert.Equal(97, hitRate.ASW);
+            Assert.Equal(97, hitRate.Postcap);
         }
     }
 }

@@ -46,8 +46,6 @@ namespace ElectronicObserver.Window.ControlWpf
             // down the visual tree, we can set the data context of a container and intercept
             // the data context’s inheritance.
             (Content as FrameworkElement).DataContext = this;
-
-            
         }
 
 

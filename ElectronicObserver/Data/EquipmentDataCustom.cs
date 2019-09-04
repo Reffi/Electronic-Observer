@@ -6,10 +6,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ElectronicObserver.Data.Damage;
+using ElectronicObserver.Data.HitRate;
 
 namespace ElectronicObserver.Data
 {
-    public class EquipmentDataCustom : IEquipmentDataCustom
+    public class EquipmentDataCustom : IShellingDamageAttackerEquipment, ICarrierShellingDamageEquipment,
+        IAswDamageAttackerEquipment, INightDamageAttackerEquipment, ICarrierNightDamageEquipment,
+        IShellingAccuracyEquipment, IAswAccuracyEquipment, INightAccuracyEquipment, IEvasionEquipment,
+        ITorpedoEvasionEquipment, IEquipmentDataCustom
     {
         private int _id;
 
@@ -39,41 +44,49 @@ namespace ElectronicObserver.Data
             get => _baseFirepower;
             set => _baseFirepower = value;
         }
+
         public int BaseTorpedo
         {
             get => _baseTorpedo;
             set => _baseTorpedo = value;
         }
+
         public int BaseAA
         {
             get => _baseAA;
             set => _baseAA = value;
         }
+
         public int BaseArmor
         {
             get => _baseArmor;
             set => _baseArmor = value;
         }
+
         public int BaseASW
         {
             get => _baseASW;
             set => _baseASW = value;
         }
+
         public int BaseEvasion
         {
             get => _baseEvasion;
             set => _baseEvasion = value;
         }
+
         public int BaseLoS
         {
             get => _baseLoS;
             set => _baseLoS = value;
         }
+
         public int BaseAccuracy
         {
             get => _baseAccuracy;
             set => _baseAccuracy = value;
         }
+
         public int BaseBombing
         {
             get => _baseBombing;
@@ -86,6 +99,7 @@ namespace ElectronicObserver.Data
             get => _level;
             set => _level = value;
         }
+
         public int Proficiency
         {
             get => _proficiency;
@@ -111,6 +125,8 @@ namespace ElectronicObserver.Data
         public double AswAccuracy => BaseAccuracy + BaseAswAccuracy + UpgradeAswAccuracy;
         public double NightPower => BaseNightPower + UpgradeNightPower;
         public double ASW => BaseASW + UpgradeASW;
+        public double Evasion => BaseEvasion; // + UpgradeEvasion;
+        public double TorpedoEvasion => UpgradeTorpedoEvasion;
 
 
         public FitCategories FitCategory { get; private set; }
@@ -147,7 +163,7 @@ namespace ElectronicObserver.Data
 
 
         private double UpgradeFirepower => CategoryType switch
-            {
+        {
             EquipmentTypes.MainGunSmall => SqrtUpgrade(),
             EquipmentTypes.MainGunMedium => SqrtUpgrade(),
             EquipmentTypes.APShell => SqrtUpgrade(),
@@ -181,27 +197,27 @@ namespace ElectronicObserver.Data
             EquipmentTypes.DepthCharge when IsDepthChargeProjector => SqrtUpgrade(0.75),
 
             _ => 0
-            };
+        };
 
         private double UpgradeTorpedo => CategoryType switch
-            {
+        {
             EquipmentTypes.Torpedo => LinearUpgrade(1.2),
             EquipmentTypes.AAGun => LinearUpgrade(1.2),
             EquipmentTypes.SubmarineTorpedo => LinearUpgrade(1.2),
 
             _ => 0
-            };
+        };
 
         private double UpgradeASW => CategoryType switch
-            {
+        {
             EquipmentTypes.DepthCharge => SqrtUpgrade(2 / 3.0),
             EquipmentTypes.Sonar => SqrtUpgrade(2 / 3.0),
 
             _ => 0
-            };
+        };
 
-        private double UpgradeNightPower => CategoryType switch
-            {
+        public double UpgradeNightPower => CategoryType switch
+        {
             EquipmentTypes.MainGunSmall => SqrtUpgrade(),
             EquipmentTypes.MainGunMedium => SqrtUpgrade(),
             EquipmentTypes.MainGunLarge => SqrtUpgrade(),
@@ -229,17 +245,21 @@ namespace ElectronicObserver.Data
 
             EquipmentTypes.SecondaryGun => SqrtUpgrade(),
 
+            EquipmentTypes.CarrierBasedFighter => SqrtUpgrade(),
+            EquipmentTypes.CarrierBasedTorpedo => SqrtUpgrade(),
+            EquipmentTypes.CarrierBasedBomber => SqrtUpgrade(),
+
             _ => 0
-            };
+        };
 
         private double UpgradeAccuracy => CategoryType switch
-            {
-            EquipmentTypes.RadarSmall  when IsSurfaceRadar => SqrtUpgrade(1.7),
-            EquipmentTypes.RadarLarge  when IsSurfaceRadar => SqrtUpgrade(1.7),
+        {
+            EquipmentTypes.RadarSmall when IsSurfaceRadar => SqrtUpgrade(1.7),
+            EquipmentTypes.RadarLarge when IsSurfaceRadar => SqrtUpgrade(1.7),
             EquipmentTypes.RadarLarge2 when IsSurfaceRadar => SqrtUpgrade(1.7),
 
-            EquipmentTypes.RadarSmall  => SqrtUpgrade(),
-            EquipmentTypes.RadarLarge  => SqrtUpgrade(),
+            EquipmentTypes.RadarSmall => SqrtUpgrade(),
+            EquipmentTypes.RadarLarge => SqrtUpgrade(),
             EquipmentTypes.RadarLarge2 => SqrtUpgrade(),
 
             EquipmentTypes.MainGunSmall => SqrtUpgrade(),
@@ -253,14 +273,14 @@ namespace ElectronicObserver.Data
             EquipmentTypes.SearchlightLarge => SqrtUpgrade(),
 
             _ => 0
-            };
+        };
 
         private double UpgradeAswAccuracy => CategoryType switch
-            {
+        {
             _ when IsSonar => SqrtUpgrade(1.3),
 
             _ => 0
-            };
+        };
 
         private int BaseAswAccuracy => IsSonar ? BaseASW * 2 : 0;
 
@@ -282,13 +302,13 @@ namespace ElectronicObserver.Data
             {
                 case 231: // 30.5
                 case 232: // kai
-                case 7:   // 35.6
+                case 7: // 35.6
                 case 103: // p
                 case 104: // dazzle
                 case 289: // dazzle kai
                 case 328: // kai
                 case 329: // ni
-                case 76:  // 38 (Bisko)
+                case 76: // 38 (Bisko)
                 case 114: // kai
                 case 190: // 38.1 (Warspite)
                 case 192: // kai
@@ -346,7 +366,9 @@ namespace ElectronicObserver.Data
 
         public bool IsSurfaceRadar => _equip?.MasterEquipment.IsSurfaceRadar ?? _equipMaster.IsSurfaceRadar;
 
-        public bool IsSonar => _equip?.MasterEquipment.IsSonar ?? _equipMaster.IsSonar;
+        public bool IsSonar => IsSmallSonar || IsLargeSonar;
+        public bool IsSmallSonar => CategoryType == EquipmentTypes.Sonar;
+        public bool IsLargeSonar => CategoryType == EquipmentTypes.SonarLarge;
 
         public bool IsDepthChargeProjector =>
             _equip?.MasterEquipment.IsDepthChargeProjector ?? _equipMaster.IsDepthChargeProjector;
@@ -367,19 +389,30 @@ namespace ElectronicObserver.Data
             _ => false
         };
 
-        public bool IsGun =>
+        public bool IsMainGun =>
             CategoryType == EquipmentTypes.MainGunSmall ||
             CategoryType == EquipmentTypes.MainGunMedium ||
             CategoryType == EquipmentTypes.MainGunLarge ||
-            CategoryType == EquipmentTypes.MainGunLarge2 ||
-            CategoryType == EquipmentTypes.SecondaryGun;
+            CategoryType == EquipmentTypes.MainGunLarge2;
 
-        public bool IsTorpedo => CategoryType == EquipmentTypes.Torpedo || CategoryType == EquipmentTypes.SubmarineTorpedo;
+        public bool IsSecondaryGun => CategoryType == EquipmentTypes.SecondaryGun;
+
+        public bool IsGun => IsMainGun || IsSecondaryGun;
+
+        public bool IsRadar =>
+            CategoryType == EquipmentTypes.RadarSmall ||
+            CategoryType == EquipmentTypes.RadarLarge ||
+            CategoryType == EquipmentTypes.RadarLarge2;
+
+        public bool IsApShell => CategoryType == EquipmentTypes.APShell;
+
+        public bool IsTorpedo =>
+            CategoryType == EquipmentTypes.Torpedo || CategoryType == EquipmentTypes.SubmarineTorpedo;
 
         public bool IsAntiSubmarineAircraft => BaseASW > 0 && (CategoryType switch
         {
             EquipmentTypes.CarrierBasedBomber => true,
-            EquipmentTypes.CarrierBasedTorpedo=> true,
+            EquipmentTypes.CarrierBasedTorpedo => true,
             EquipmentTypes.SeaplaneBomber => true,
             EquipmentTypes.Autogyro => true,
             EquipmentTypes.ASPatrol => true,
@@ -392,36 +425,55 @@ namespace ElectronicObserver.Data
         });
 
         public bool IsDepthCharge =>
-            ID == 226 ||       // 九五式爆雷
-            ID == 227;         // 二式爆雷
+            ID == 226 || // 九五式爆雷
+            ID == 227; // 二式爆雷
 
         public bool IsSpecialDepthChargeProjector =>
-            ID == 287 ||       // 爆雷 三式爆雷投射機 集中配備
-            ID == 288;         // 爆雷 試製15cm9連装対潜噴進砲
+            ID == 287 || // 爆雷 三式爆雷投射機 集中配備
+            ID == 288 || // 爆雷 試製15cm9連装対潜噴進砲
+            ID == 346 || // 二式12cm迫撃砲改
+            ID == 347; // 二式12cm迫撃砲改 集中配備
 
         public bool IsZuiun =>
-            ID == 26  || // zuiun
-            ID == 79  || // 634
-            ID == 80  || // 12
-            ID == 81  || // 12 634
+            ID == 26 || // zuiun
+            ID == 79 || // 634
+            ID == 80 || // 12
+            ID == 81 || // 12 634
             ID == 207 || // 631
             ID == 237 || // 634 skilled
             ID == 322 || // k2 634
-            ID == 323;   // k2 634 skilled
+            ID == 323; // k2 634 skilled
 
         public bool IsSwordfish =>
             ID == 242 || // Swordfish
             ID == 243 || // Swordfish Mk.II(熟練)
-            ID == 244;   // Swordfish Mk.III(熟練)
+            ID == 244; // Swordfish Mk.III(熟練)
 
         public bool IsNightAviationPersonnel =>
-            ID == 258 ||       // 夜間作戦航空要員
-            ID == 259;         // 夜間作戦航空要員+熟練甲板員
+            ID == 258 || // 夜間作戦航空要員
+            ID == 259; // 夜間作戦航空要員+熟練甲板員
 
-        public bool IsNightCapableBomber => false;
-        public bool IsNightCapableAttacker => false;
-        public bool IsNightFighter         => false;
-        public bool IsNightBomber          => false;
-        public bool IsNightAttacker        => false;
+        public bool IsNightAircraft => IsNightFighter ||
+                                       IsNightBomber ||
+                                       IsNightAttacker;
+
+        public bool IsNightCapableAircraft => IsNightCapableBomber ||
+                                              IsNightCapableAttacker;
+
+        public bool IsNightCapableBomber => ID == 154 || // 零戦62型(爆戦/岩井隊)
+                                            ID == 320; // 彗星一二型(三一号光電管爆弾搭載機)
+
+        public bool IsNightCapableAttacker => IsSwordfish;
+
+        public bool IsNightFighter => ID == 254 || // F6F-3N
+                                      ID == 255 || // F6F-5N
+                                      ID == 338 || // 烈風改二戊型
+                                      ID == 339; // 烈風改二戊型(一航戦/熟練)
+
+        public bool IsNightBomber => false;
+
+        public bool IsNightAttacker => ID == 257 || // TBM-3D
+                                       ID == 344 || // 九七式艦攻改 試製三号戊型(空六号電探改装備機)
+                                       ID == 345; // 九七式艦攻改(熟練) 試製三号戊型(空六号電探改装備機)
     }
 }

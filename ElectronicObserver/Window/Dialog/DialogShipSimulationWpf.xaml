@@ -29,14 +29,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:ShipDisplay x:Name="ShipDisplay" Grid.Column="0"/>
+        <controls:ShipDisplay x:Name="AttackerDisplay" Grid.Column="0"/>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -58,6 +58,11 @@
                 Height="200"
                 Width="150"
                 VerticalAlignment="Top"/>
+
+            <controls:ExtraDamageBonusDisplay
+                x:Name="BonusParameters"
+                Grid.Column="1"
+                 />
 
             <controls:ShipSimulationExternalParameters 
                 x:Name="EnemyExternalParameters" 
@@ -152,7 +157,7 @@
 
 
 
-        <controls:ShipDisplay x:Name="EnemyShipDisplay" Grid.Column="2"/>
+        <controls:ShipDisplay x:Name="DefenderDisplay" Grid.Column="2"/>
 
     </Grid>
 </UserControl>

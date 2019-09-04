@@ -8,14 +8,14 @@
              d:DesignHeight="30" d:DesignWidth="160">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="SeparatorDisplay" Foreground="Yellow" Padding="-5" Margin="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Separator, FallbackValue=test}" HorizontalContentAlignment="Center" />
+        <Label x:Name="SeparatorDisplay" Foreground="Yellow" Padding="-5" Margin="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Separator}" HorizontalContentAlignment="Center" />
 
-        <Label x:Name="AttackNameDisplay" Padding="-5" Margin="0" Grid.Column="0" Content="{Binding AttackName, FallbackValue=test}" HorizontalContentAlignment="Center" />
-        <Label x:Name="ValueDisplay" Padding="-5" Margin="0" Grid.Column="1" Content="{Binding Value, FallbackValue=test}" HorizontalContentAlignment="Center" />
+        <Label x:Name="AttackNameDisplay" Padding="-5" Margin="0" Grid.Column="0" Content="{Binding AttackName}" HorizontalAlignment="Left" />
+        <Label x:Name="ValueDisplay" Padding="-5" Margin="0" Grid.Column="1" Content="{Binding Value}" HorizontalAlignment="Right" />
 
     </Grid>
 </UserControl>

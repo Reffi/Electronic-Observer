@@ -24,9 +24,9 @@ namespace ElectronicObserver.Window.ControlWpf
     {
         public class EquipmentSelectRoutedEventArgs : RoutedEventArgs
         {
-            public IEquipmentDataCustom Equip { get; set; }
+            public EquipmentDataCustom Equip { get; set; }
 
-            public EquipmentSelectRoutedEventArgs(RoutedEvent routedEvent, IEquipmentDataCustom equip) : base(routedEvent)
+            public EquipmentSelectRoutedEventArgs(RoutedEvent routedEvent, EquipmentDataCustom equip) : base(routedEvent)
             {
                 Equip = equip;
             }
@@ -41,14 +41,14 @@ namespace ElectronicObserver.Window.ControlWpf
             remove { RemoveHandler(EquipmentSelectionEvent, value); }
         }
 
-        public IEquipmentDataCustom Equip { get; set; }
+        public EquipmentDataCustom Equip { get; set; }
 
         public EquipmentSelectionItem()
         {
             InitializeComponent();
         }
 
-        public EquipmentSelectionItem(IEquipmentDataCustom equip) : this()
+        public EquipmentSelectionItem(EquipmentDataCustom equip) : this()
         {
             Equip = equip;
 

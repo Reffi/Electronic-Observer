@@ -87,7 +87,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _los, value);
             }
         }
-        public int? Accuracy
+        public int Accuracy
         {
             get => _equip.CurrentFitBonus.Accuracy;
             set
@@ -97,10 +97,10 @@ namespace ElectronicObserver.Window.ViewModel
             }
         }
 
-        public FitBonusViewModel(IShipDataCustom ship, IEquipmentDataCustom equip, bool educatedFitGuessing)
+        public FitBonusViewModel(IShipDataCustom ship, IEquipmentDataCustom equip)
         {
             _equip = equip;
-            _currentFitBonus = new FitBonusCustom(ship, equip, educatedFitGuessing);
+            _currentFitBonus = new FitBonusCustom(ship, equip);
         }
     }
 }

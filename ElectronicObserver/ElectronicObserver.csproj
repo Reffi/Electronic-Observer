@@ -135,9 +135,18 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Accuracy.cs" />
+    <Compile Include="Data\Damage\CarrierNightDamage.cs" />
+    <Compile Include="Data\Damage\CarrierShellingDamage.cs" />
+    <Compile Include="Data\HitRate\AswAccuracy.cs" />
+    <Compile Include="Data\HitRate\AswEvasion.cs" />
+    <Compile Include="Data\HitRate\EvasionBase.cs" />
+    <Compile Include="Data\HitRate\HitRate.cs" />
+    <Compile Include="Data\HitRate\NightAccuracy.cs" />
+    <Compile Include="Data\HitRate\NightEvasion.cs" />
+    <Compile Include="Data\HitRate\ShellingAccuracy.cs" />
     <Compile Include="Data\AdmiralData.cs" />
     <Compile Include="Data\ArsenalData.cs" />
+    <Compile Include="Data\Damage\AswDamage.cs" />
     <Compile Include="Data\AttackKindData.cs" />
     <Compile Include="Data\BaseAirCorpsData.cs" />
     <Compile Include="Data\BaseAirCorpsSquadron.cs" />
@@ -201,14 +210,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConstantsRes.en.resx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Damage.cs" />
+    <Compile Include="Data\Damage\DamageBase.cs" />
+    <Compile Include="Data\Damage\NightDamage.cs" />
+    <Compile Include="Data\Damage\TorpedoDamage.cs" />
     <Compile Include="Data\DockData.cs" />
     <Compile Include="Data\EquipmentData.cs" />
     <Compile Include="Data\EquipmentDataCustom.cs" />
     <Compile Include="Data\EquipmentDataMaster.cs" />
     <Compile Include="Data\EquipmentType.cs" />
     <Compile Include="Data\EquipmentTypes.cs" />
-    <Compile Include="Data\Evasion.cs" />
+    <Compile Include="Data\Damage\ExtraDamageBonus.cs" />
     <Compile Include="Data\FitBonus.cs" />
     <Compile Include="Data\FleetDataCustom.cs" />
     <Compile Include="Data\FleetManager.cs" />
@@ -217,11 +228,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FleetRes.resx</DependentUpon>
     </Compile>
-    <Compile Include="Data\HitRate.cs" />
-    <Compile Include="Data\IAccuracy.cs" />
+    <Compile Include="Data\HitRate\ShellingEvasion.cs" />
+    <Compile Include="Data\HitRate\TorpedoEvasion.cs" />
+    <Compile Include="Data\IAccuracyData.cs" />
+    <Compile Include="Data\IAttackData.cs" />
     <Compile Include="Data\IDDictionary.cs" />
     <Compile Include="Data\IEquipmentDataCustom.cs" />
-    <Compile Include="Data\IEvasion.cs" />
     <Compile Include="Data\IIdentifiable.cs" />
     <Compile Include="Data\IShipDataCustom.cs" />
     <Compile Include="Data\KCDatabase.cs" />
@@ -231,6 +243,15 @@
     <Compile Include="Data\MaterialData.cs" />
     <Compile Include="Data\MissionClearCondition.cs" />
     <Compile Include="Data\MissionData.cs" />
+    <Compile Include="Data\Mocks\CarrierNightDamage.cs" />
+    <Compile Include="Data\Mocks\CarrierShellingDamage.cs" />
+    <Compile Include="Data\Mocks\HitRate.cs" />
+    <Compile Include="Data\Mocks\AswDamage.cs" />
+    <Compile Include="Data\Mocks\Battle.cs" />
+    <Compile Include="Data\Mocks\NightDamage.cs" />
+    <Compile Include="Data\Mocks\ShellingAccuracy.cs" />
+    <Compile Include="Data\Mocks\ShellingDamage.cs" />
+    <Compile Include="Data\Mocks\TorpedoDamage.cs" />
     <Compile Include="Data\QuestData.cs" />
     <Compile Include="Data\QuestManager.cs" />
     <Compile Include="Data\APIWrapper.cs" />
@@ -261,6 +282,7 @@
     <Compile Include="Data\RelocationData.cs" />
     <Compile Include="Data\ResponseWrapper.cs" />
     <Compile Include="Data\CompassData.cs" />
+    <Compile Include="Data\Damage\ShellingDamage.cs" />
     <Compile Include="Data\ShipDataCustom.cs" />
     <Compile Include="Data\ShipGraphicData.cs" />
     <Compile Include="Data\ShipGroupData.cs" />
@@ -281,12 +303,53 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NotifierRes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\DayAttackKind.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DayAttackKind.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\DialogShipSimulationWpf.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DialogShipSimulationWpf.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\EngagementTypes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EngagementTypes.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\EquipmentTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EquipmentTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\FleetPositionDetail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FleetPositionDetail.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\FleetType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FleetType.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\FormationType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormationType.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\NightAttackKind.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NightAttackKind.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\ShipTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipTypes.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Data\EngagementTypes.cs" />
+    <Compile Include="Utility\Data\FleetPositionDetail.cs" />
     <Compile Include="Utility\DynamicTranslator.cs" />
     <Compile Include="Utility\Helpers\ExtensionMethods.cs" />
     <Compile Include="Utility\Helpers\Observable.cs" />
@@ -306,6 +369,9 @@
     </Compile>
     <Compile Include="Window\ControlWpf\EquipmentSelectionItem.xaml.cs">
       <DependentUpon>EquipmentSelectionItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ControlWpf\ExtraDamageBonusDisplay.xaml.cs">
+      <DependentUpon>ExtraDamageBonusDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\ControlWpf\ShipDisplay.xaml.cs">
       <DependentUpon>ShipDisplay.xaml</DependentUpon>
@@ -327,6 +393,9 @@
     </Compile>
     <Compile Include="Window\ControlWpf\Stat.xaml.cs">
       <DependentUpon>Stat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window\ControlWpf\SynergyStatDisplay.xaml.cs">
+      <DependentUpon>SynergyStatDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\Dialog\ConfigRes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -846,6 +915,7 @@
     <Compile Include="Window\Support\CustomFloatWindowFactory.cs" />
     <Compile Include="Window\Support\WindowPlacementManager.cs" />
     <Compile Include="Window\ViewModel\EquipmentViewModel.cs" />
+    <Compile Include="Window\ViewModel\SynergyViewModel.cs" />
     <Compile Include="Window\ViewModel\FitBonusViewModel.cs" />
     <Compile Include="Window\ViewModel\ShipViewModel.cs" />
     <EmbeddedResource Include="Data\ConstantsRes.en.resx">
@@ -881,9 +951,41 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NotifierRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\DayAttackKind.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DayAttackKind.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\DialogShipSimulationWpf.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DialogShipSimulationWpf.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\EngagementTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EngagementTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\EquipmentTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EquipmentTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FleetPositionDetail.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FleetPositionDetail.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FleetType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FleetType.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FormationType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormationType.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\NightAttackKind.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NightAttackKind.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ShipTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShipTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\ConfigRes.en.resx">
       <SubType>Designer</SubType>
@@ -1196,6 +1298,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Window\ControlWpf\ExtraDamageBonusDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Window\ControlWpf\ShipDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1221,6 +1327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Window\ControlWpf\Stat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window\ControlWpf\SynergyStatDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

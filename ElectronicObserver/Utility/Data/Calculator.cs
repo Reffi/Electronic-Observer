@@ -2340,85 +2340,103 @@ namespace ElectronicObserver.Utility.Data
     public enum DayAttackKind
     {
         /// <summary> 不明 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "Unknown")]
         Unknown = -1,
 
 
         /// <summary> 通常攻撃 (API上でのみ使用されます) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "NormalAttack")]
         NormalAttack,
 
         /// <summary> レーザー攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "Laser")]
         Laser,
 
         /// <summary> 連続射撃 </summary>
-        [Display(Name = "Double Attack")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "DoubleShelling")]
         DoubleShelling,
 
         /// <summary> カットイン(主砲/副砲) </summary>
-        [Display(Name = "Main-Secondary")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "CutinMainSub")]
         CutinMainSub,
 
         /// <summary> カットイン(主砲/電探) </summary>
-        [Display(Name = "Main-Radar")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "CutinMainRadar")]
         CutinMainRadar,
 
         /// <summary> カットイン(主砲/徹甲弾) </summary>
-        [Display(Name = "Main-AP")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "CutinMainAP")]
         CutinMainAP,
 
         /// <summary> カットイン(主砲/主砲) </summary>
-        [Display(Name = "Main-Main")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "CutinMainMain")]
         CutinMainMain,
 
         /// <summary> 空母カットイン </summary>
-        [Display(Name = "Carrier Cut-In")]
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "CutinAirAttack")]
         CutinAirAttack,
 
         /// <summary> Nelson Touch </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "SpecialNelson")]
         SpecialNelson = 100,
 
         /// <summary> 一斉射かッ…胸が熱いな！ </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "SpecialNagato")]
         SpecialNagato = 101,
 
         /// <summary> 長門、いい？ いくわよ！ 主砲一斉射ッ！ </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "SpecialMutsu")]
         SpecialMutsu = 102,
 
         /// <summary> 瑞雲立体攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "ZuiunMultiAngle")]
         ZuiunMultiAngle = 200,
 
         /// <summary> 海空立体攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "SeaAirMultiAngle")]
         SeaAirMultiAngle = 201,
 
 
         /// <summary> 砲撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "Shelling")]
         Shelling = 1000,
 
         /// <summary> 空撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "AirAttack")]
         AirAttack,
 
         /// <summary> 爆雷攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "DepthCharge")]
         DepthCharge,
 
         /// <summary> 雷撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "Torpedo")]
         Torpedo,
 
 
         /// <summary> ロケット攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "Rocket")]
         Rocket = 2000,
 
 
         /// <summary> 揚陸攻撃(大発動艇) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "LandingDaihatsu")]
         LandingDaihatsu = 3000,
 
         /// <summary> 揚陸攻撃(特大発動艇) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "LandingTokuDaihatsu")]
         LandingTokuDaihatsu,
 
         /// <summary> 揚陸攻撃(大発動艇(八九式中戦車&陸戦隊)) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "LandingDaihatsuTank")]
         LandingDaihatsuTank,
 
         /// <summary> 揚陸攻撃(特二式内火艇) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "LandingAmphibious")]
         LandingAmphibious,
 
         /// <summary> 揚陸攻撃(特大発動艇+戦車第11連隊) </summary>
+        [Display(ResourceType = typeof(Properties.DayAttackKind), Name = "LandingTokuDaihatsuTank")]
         LandingTokuDaihatsuTank,
 
     }
@@ -2430,76 +2448,99 @@ namespace ElectronicObserver.Utility.Data
     public enum NightAttackKind
     {
         /// <summary> 不明 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "Unknown")]
         Unknown = -1,
 
 
         /// <summary> 通常攻撃 (API上でのみ使用されます) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "NormalAttack")]
         NormalAttack,
 
         /// <summary> 連続攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "DoubleShelling")]
         DoubleShelling,
 
         /// <summary> カットイン(主砲/魚雷) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinMainTorpedo")]
         CutinMainTorpedo,
 
         /// <summary> カットイン(魚雷/魚雷) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinTorpedoTorpedo")]
         CutinTorpedoTorpedo,
 
         /// <summary> カットイン(主砲/主砲/副砲) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinMainSub")]
         CutinMainSub,
 
         /// <summary> カットイン(主砲/主砲/主砲) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinMainMain")]
         CutinMainMain,
 
         /// <summary> 空母カットイン </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinAirAttack")]
         CutinAirAttack,
 
         /// <summary> 駆逐カットイン(主砲/魚雷/電探) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinTorpedoRadar")]
         CutinTorpedoRadar,
 
         /// <summary> 駆逐カットイン(魚雷/見張員/電探) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "CutinTorpedoPicket")]
         CutinTorpedoPicket,
 
         /// <summary> Nelson Touch </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "SpecialNelson")]
         SpecialNelson = 100,
 
         /// <summary> 一斉射かッ…胸が熱いな！ </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "SpecialNagato")]
         SpecialNagato = 101,
 
         /// <summary> 長門、いい？ いくわよ！ 主砲一斉射ッ！ </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "SpecialMutsu")]
         SpecialMutsu = 102,
 
 
         /// <summary> 砲撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "Shelling")]
         Shelling = 1000,
 
         /// <summary> 空撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "AirAttack")]
         AirAttack,
 
         /// <summary> 爆雷攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "DepthCharge")]
         DepthCharge,
 
         /// <summary> 雷撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "Torpedo")]
         Torpedo,
 
 
         /// <summary> ロケット攻撃 </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "Rocket")]
         Rocket = 2000,
 
 
         /// <summary> 揚陸攻撃(大発動艇) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "LandingDaihatsu")]
         LandingDaihatsu = 3000,
 
         /// <summary> 揚陸攻撃(特大発動艇) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "LandingTokuDaihatsu")]
         LandingTokuDaihatsu,
 
         /// <summary> 揚陸攻撃(大発動艇(八九式中戦車&陸戦隊)) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "LandingDaihatsuTank")]
         LandingDaihatsuTank,
 
         /// <summary> 揚陸攻撃(特二式内火艇) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "LandingAmphibious")]
         LandingAmphibious,
 
         /// <summary> 揚陸攻撃(特大発動艇+戦車第11連隊) </summary>
+        [Display(ResourceType = typeof(Properties.NightAttackKind), Name = "LandingTokuDaihatsuTank")]
         LandingTokuDaihatsuTank,
 
     }
@@ -2529,47 +2570,71 @@ namespace ElectronicObserver.Utility.Data
 		LateModelTorpedo2,
 	}
 
+    /// <summary>
+    /// todo how to name these?
+    /// </summary>
+    public enum CvnciKind
+    {
+        Unknown,
+        /// <summary>
+        /// 1.25
+        /// </summary>
+        FFA,
+        /// <summary>
+        /// 1.2
+        /// </summary>
+        Pair,
+        /// <summary>
+        /// 1.18
+        /// </summary>
+        Other
+    }
+
     public enum FleetType
     {
+        [Display(ResourceType = typeof(Properties.FleetType), Name = "Single")]
         Single,
-        [Display(Name = "Carrier Task Force")]
+        [Display(ResourceType = typeof(Properties.FleetType), Name = "Carrier")]
         Carrier,
-        [Display(Name = "Surface Task Force")]
+        [Display(ResourceType = typeof(Properties.FleetType), Name = "Surface")]
         Surface,
-        [Display(Name = "Transport Combined Fleet")]
+        [Display(ResourceType = typeof(Properties.FleetType), Name = "Transport")]
         Transport
     }
 
     public enum FormationType
     {
-        [Display(Name= "Line Ahead")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "LineAhead")]
         LineAhead = 1,
-        [Display(Name = "Double Line")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "DoubleLine")]
         DoubleLine = 2,
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "Diamond")]
         Diamond = 3,
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "Echelon")]
         Echelon = 4,
-        [Display(Name = "Line Abreast")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "LineAbreast")]
         LineAbreast = 5,
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "Vanguard")]
         Vanguard = 6,
         /// <summary>
         /// Anchor
         /// </summary>
-        [Display(Name = "First Patrol Formation")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "FirstPatrolFormation")]
         FirstPatrolFormation = 11,
         /// <summary>
         /// Torpedo
         /// </summary>
-        [Display(Name = "Second Patrol Formation")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "SecondPatrolFormation")]
         SecondPatrolFormation = 12,
         /// <summary>
         /// Turtle
         /// </summary>
-        [Display(Name = "Third Patrol Formation")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "ThirdPatrolFormation")]
         ThirdPatrolFormation = 13,
         /// <summary>
         /// Chicken Foot
         /// </summary>
-        [Display(Name = "Fourth Patrol Formation")]
+        [Display(ResourceType = typeof(Properties.FormationType), Name = "FourthPatrolFormation")]
         FourthPatrolFormation = 14
     }
 

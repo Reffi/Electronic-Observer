@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             xmlns:properties="clr-namespace:ElectronicObserver.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="160">
     <Grid Margin="5">
@@ -51,21 +52,16 @@
             Grid.ColumnSpan="2" 
             x:Name="FormationSelect" 
             HorizontalContentAlignment="Center" />
-        
+
+
         <ComboBox 
-            SelectedValue="{Binding FleetID, Mode=TwoWay}" 
+            DisplayMemberPath="Display" 
+            SelectedValue="{Binding PositionDetails, Mode=TwoWay}" 
             SelectionChanged="ParameterChange" 
             Grid.Row="3" 
             Grid.Column="0" 
-            x:Name="FleetSelect" 
-            HorizontalContentAlignment="Center" />
-
-        <ComboBox 
-            SelectedValue="{Binding Position, Mode=TwoWay}" 
-            SelectionChanged="ParameterChange" 
-            Grid.Row="3" 
-            Grid.Column="1" 
-            x:Name="FleetPositionSelect"
+            Grid.ColumnSpan="2" 
+            x:Name="FleetPositionDetails"
             HorizontalContentAlignment="Center" />
 
         <CheckBox 
@@ -76,7 +72,7 @@
             Grid.Column="0" 
             Grid.ColumnSpan="2" 
             x:Name="NightReconSelect" 
-            Content="Night Recon"/>
+            Content="{x:Static properties:DialogShipSimulationWpf.NightRecon}"/>
 
         <CheckBox 
             IsChecked="{Binding Flare, Mode=TwoWay}" 
@@ -86,7 +82,7 @@
             Grid.Column="0" 
             Grid.ColumnSpan="2" 
             x:Name="FlareSelect" 
-            Content="Flare"/>
+            Content="{x:Static properties:DialogShipSimulationWpf.Flare}"/>
 
         <CheckBox 
             IsChecked="{Binding Searchlight, Mode=TwoWay}"
@@ -96,7 +92,7 @@
             Grid.Column="0" 
             Grid.ColumnSpan="2" 
             x:Name="SearchlightSelect" 
-            Content="Searchlight"/>
+            Content="{x:Static properties:DialogShipSimulationWpf.Searchlight}"/>
 
     </Grid>
 </UserControl>

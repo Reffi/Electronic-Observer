@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElectronicObserver.Data;
-using ElectronicObserver.Utility.Extension_Methods;
+using ElectronicObserver.Utility.Helpers;
 using ElectronicObserver.Window.ViewModel;
 
 namespace ElectronicObserver.Window.ControlWpf
@@ -78,8 +78,8 @@ namespace ElectronicObserver.Window.ControlWpf
             }
         }
 
-        private IEnumerable<IEquipmentDataCustom> _equips;
-        public IEnumerable<IEquipmentDataCustom> Equips
+        private IEnumerable<EquipmentDataCustom> _equips;
+        public IEnumerable<EquipmentDataCustom> Equips
         {
             get => _equips;
             set => _equips = value;

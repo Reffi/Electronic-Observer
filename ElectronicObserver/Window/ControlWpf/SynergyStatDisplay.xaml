@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.SynergyStatDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="80">
+
+    <Border CornerRadius="7" Padding="3" Margin="2" Background="#424242">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <Label Content="シナジー" HorizontalAlignment="Center" />
+            <local:Stat StatName="火力" BaseStat="{Binding Firepower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" />
+            <local:Stat StatName="雷装" BaseStat="{Binding Torpedo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" />
+            <local:Stat StatName="対空" BaseStat="{Binding AA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" />
+            <local:Stat StatName="装甲" BaseStat="{Binding Armor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" />
+            <local:Stat StatName="対潜" BaseStat="{Binding ASW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" />
+            <local:Stat StatName="回避" BaseStat="{Binding Evasion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" />
+            <local:Stat StatName="索敵" BaseStat="{Binding LoS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" />
+        </Grid>
+    </Border>
+</UserControl>

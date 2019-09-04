@@ -2,14 +2,14 @@
 
 namespace ElectronicObserver.Data
 {
-    public interface IEquipmentDataCustom
+    public interface IEquipmentDataCustom: IEquipmentDamageData
     {
         string Name { get; }
         int ID { get; }
 
 
-        int BaseFirepower { get; set; }
-        int BaseTorpedo { get; set; }
+        /*int BaseFirepower { get; set; }
+        int BaseTorpedo { get; set; }*/
         int BaseAA { get; set; }
         int BaseArmor { get; set; }
         int BaseASW { get; set; }
@@ -36,14 +36,24 @@ namespace ElectronicObserver.Data
         FitCategories FitCategory { get; }
         bool CountsForAswDamage { get; }
 
+
+        FitBonusCustom CurrentFitBonus { get; set; }
+    }
+
+    public interface IEquipmentDamageData: IEquipmentTypeData
+    {
+        int BaseFirepower { get; set; }
+        int BaseTorpedo { get; set; }
+    }
+
+    public interface IEquipmentTypeData
+    {
+        bool IsMainGun { get; }
+        bool IsSecondaryGun { get; }
+        bool IsRadar { get; }
+        bool IsApShell { get; }
         bool IsGun { get; }
         bool IsTorpedo { get; }
-        bool IsAntiSubmarineAircraft { get; }
-        bool IsDepthCharge { get; }
-        bool IsSpecialDepthChargeProjector { get; }
-        bool IsZuiun { get; }
-        bool IsSwordfish { get; }
-        bool IsNightAviationPersonnel { get; }
 
         bool IsNightCapableBomber { get; }
         bool IsNightCapableAttacker { get; }
@@ -51,6 +61,18 @@ namespace ElectronicObserver.Data
         bool IsNightBomber { get; }
         bool IsNightAttacker { get; }
 
-        FitBonusCustom CurrentFitBonus { get; set; }
+        bool IsZuiun { get; }
+        bool IsSwordfish { get; }
+        bool IsNightAviationPersonnel { get; }
+
+        bool IsAntiSubmarineAircraft { get; }
+
+        bool IsSonar { get; }
+        bool IsSmallSonar { get; }
+        bool IsLargeSonar { get; }
+        bool IsDepthCharge { get; }
+        bool IsDepthChargeProjector { get; }
+        bool IsSpecialDepthChargeProjector { get; }
+        
     }
 }

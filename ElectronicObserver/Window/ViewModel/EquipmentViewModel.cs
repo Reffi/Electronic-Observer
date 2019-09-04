@@ -156,6 +156,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _proficiency, value);
             }
         }
+        public int SlotSize { get; set; }
 
 
         private FitBonusViewModel _currentFitBonus;

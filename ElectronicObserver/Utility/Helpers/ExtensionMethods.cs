@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using ElectronicObserver.Data;
-using System.ComponentModel.DataAnnotations;
 
-namespace ElectronicObserver.Utility.Extension_Methods
+namespace ElectronicObserver.Utility.Helpers
 { 
     // I have no better name right now
     public static class ExtensionMethods

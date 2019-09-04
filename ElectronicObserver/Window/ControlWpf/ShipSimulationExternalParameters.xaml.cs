@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ElectronicObserver.Utility.Data;
-using ElectronicObserver.Utility.Extension_Methods;
 using ElectronicObserver.Utility.Helpers;
 using ElectronicObserver.Window.Dialog;
 
@@ -38,28 +37,13 @@ namespace ElectronicObserver.Window.ControlWpf
 
         public class ExternalParameters : Observable
         {
-            private int _fleetID;
-            private int _position;
             private ComboboxEnumItem<EngagementTypes> _engagement;
             private ComboboxEnumItem<FormationType> _formation;
             private ComboboxEnumItem<FleetType> _fleet;
+            private ComboboxEnumItem<FleetPositionDetail> _positionDetails;
             private bool _nightRecon;
             private bool _flare;
             private bool _searchlight;
-
-            public int FleetID
-            {
-                get => _fleetID;
-                set => SetField(ref _fleetID, value);
-                // ParameterChange(this, new RoutedEventArgs());
-                //RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent, this));
-            }
-
-            public int Position
-            {
-                get => _position;
-                set => SetField(ref _position, value);
-            }
 
             public ComboboxEnumItem<EngagementTypes> Engagement
             {
@@ -77,6 +61,12 @@ namespace ElectronicObserver.Window.ControlWpf
             {
                 get => _fleet;
                 set => SetField(ref _fleet, value);
+            }
+
+            public ComboboxEnumItem<FleetPositionDetail> PositionDetails
+            {
+                get => _positionDetails;
+                set => SetField(ref _positionDetails, value);
             }
 
             public bool NightRecon
@@ -100,17 +90,11 @@ namespace ElectronicObserver.Window.ControlWpf
             /*public IEnumerable<FormationType> Formations =>
                 Enum.GetValues(typeof(FormationType)).Cast<FormationType>();*/
 
-            public ExternalParameters(int fleetID = 1, int position = 1,
-                EngagementTypes engagement = EngagementTypes.Parallel,
-                FormationType formation = FormationType.LineAhead,
-                FleetType fleet = FleetType.Single, bool nightRecon = false, bool flare = false,
-                bool searchlight = false)
+            public ExternalParameters(EngagementTypes engagement = EngagementTypes.Parallel,
+                FormationType formation = FormationType.LineAhead, FleetType fleet = FleetType.Single, 
+                FleetPositionDetail positiionDetail = FleetPositionDetail.MainFlag, bool nightRecon = false, 
+                bool flare = false, bool searchlight = false)
             {
-                FleetID = fleetID;
-                Position = position;
-                /*Engagement = engagement;
-                Formation = new ComboboxEnumItem<FormationType>(formation);
-                Fleet = fleet;*/
                 NightRecon = nightRecon;
                 Flare = flare;
                 Searchlight = searchlight;
@@ -141,6 +125,11 @@ namespace ElectronicObserver.Window.ControlWpf
                 .Select(x => new ComboboxEnumItem<FleetType>(x))
                 .ToList();
 
+            List<ComboboxEnumItem<FleetPositionDetail>> positionDetails = Enum.GetValues(typeof(FleetPositionDetail))
+                .Cast<FleetPositionDetail>()
+                .Select(x => new ComboboxEnumItem<FleetPositionDetail>(x))
+                .ToList();
+
             FormationSelect.Items.Clear();
             FormationSelect.ItemsSource = formations;
 
@@ -150,26 +139,25 @@ namespace ElectronicObserver.Window.ControlWpf
             FleetTypeSelect.Items.Clear();
             FleetTypeSelect.ItemsSource = fleets;
 
-            FleetSelect.Items.Clear();
-            FleetSelect.ItemsSource = new[] {1, 2, 3, 4};
-
-            FleetPositionSelect.Items.Clear();
-            FleetPositionSelect.ItemsSource = new[] {1, 2, 3, 4, 5, 6, 7};
+            FleetPositionDetails.Items.Clear();
+            FleetPositionDetails.ItemsSource = positionDetails;
 
             _externalParameters.Formation = formations.Single(x => x.Member == FormationType.LineAhead);
             _externalParameters.Fleet = fleets.Single(x => x.Member == FleetType.Single);
             _externalParameters.Engagement = engagements.Single(x => x.Member == EngagementTypes.Parallel);
+            _externalParameters.PositionDetails = positionDetails.Single(x => x.Member == FleetPositionDetail.MainFlag);
+
+
 
             DataContext = _externalParameters;
         }
 
-        public ShipSimulationExternalParameters(int fleetID = 1, int position = 1,
-            EngagementTypes engagement = EngagementTypes.Parallel,
-            FormationType formation = FormationType.LineAhead,
-            FleetType fleet = FleetType.Single, bool nightRecon = false, bool flare = false,
-            bool searchlight = false)
+        public ShipSimulationExternalParameters(EngagementTypes engagement = EngagementTypes.Parallel,
+            FormationType formation = FormationType.LineAhead, FleetType fleet = FleetType.Single,
+            FleetPositionDetail positiionDetail = FleetPositionDetail.MainFlag, bool nightRecon = false, 
+            bool flare = false, bool searchlight = false)
         {
-            _externalParameters = new ExternalParameters(fleetID, position, engagement, formation, fleet,
+            _externalParameters = new ExternalParameters(engagement, formation, fleet, positiionDetail,
                 nightRecon, flare, searchlight);
             DataContext = _externalParameters;
         }

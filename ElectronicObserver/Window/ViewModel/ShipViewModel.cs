@@ -11,7 +11,7 @@ using ElectronicObserver.Window.ControlWpf;
 
 namespace ElectronicObserver.Window.ViewModel
 {
-    public class ShipViewModel: Observable
+    public class ShipViewModel : Observable
     {
         private int _level;
         private int _hp;
@@ -32,16 +32,18 @@ namespace ElectronicObserver.Window.ViewModel
         private int _baseNightPower;
 
 
-        private IShipDataCustom _ship;
+        private ShipDataCustom _ship;
         private ObservableCollection<EquipmentViewModel> _equipmentViewModels;
+        private SynergyViewModel _synergies;
 
-        private VisibleFits _synergies;
-
-        public IShipDataCustom Ship
+        public ShipDataCustom Ship
         {
             get => _ship;
             set
             {
+                // todo why is this displayed wrong if it gets initialized after the ship
+                _synergies = new SynergyViewModel(value);
+                _synergies.PropertyChanged += EquipmentStatChange;
                 _ship = value;
                 Equipment = _ship.Equipment;
             }
@@ -58,20 +60,20 @@ namespace ElectronicObserver.Window.ViewModel
 
         }
 
-        private IEquipmentDataCustom[] _equipment;
+        public SynergyViewModel SynergyViewModel => _synergies;
 
-        public IEquipmentDataCustom[] Equipment
+        private EquipmentDataCustom[] _equipment;
+
+        public EquipmentDataCustom[] Equipment
         {
             get => _ship.Equipment;
             set
             {
-                _synergies = new VisibleFits();
+                // _synergies = new VisibleFits();
                 _ship.Equipment = value;
                 EquipmentViewModel[] evms = new EquipmentViewModel[6];
 
-
-
-                for (int i = 0; i<6; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (_equipment?[i] == value[i])
                         continue;
@@ -82,11 +84,13 @@ namespace ElectronicObserver.Window.ViewModel
                         continue;
                     }
 
-                    FitBonusViewModel fbvm = new FitBonusViewModel(_ship, value[i], true);
+                    FitBonusViewModel fbvm = new FitBonusViewModel(_ship, value[i]);
                     fbvm.PropertyChanged += EquipmentStatChange;
 
                     evms[i] = new EquipmentViewModel(value[i]);
                     evms[i].CurrentFitBonus = fbvm;
+                    if (i < Aircraft.Length)
+                        evms[i].SlotSize = Aircraft[i];
                     evms[i].PropertyChanged += EquipmentStatChange;
                 }
 
@@ -97,6 +101,7 @@ namespace ElectronicObserver.Window.ViewModel
             }
         }
 
+        public int ShipID => _ship.ShipID;
         public string Name => _ship.Name;
 
         public int Level
@@ -114,6 +119,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(BaseAccuracy));
             }
         }
+
         public int HP
         {
             get => _ship.HP;
@@ -125,6 +131,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _hp, value);
             }
         }
+
         public int BaseArmor
         {
             get => _ship.BaseArmor;
@@ -136,6 +143,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseArmor, value);
             }
         }
+
         public int BaseEvasion
         {
             get => _ship.BaseEvasion;
@@ -149,6 +157,7 @@ namespace ElectronicObserver.Window.ViewModel
         }
 
         public int[] Aircraft => _ship.Aircraft;
+
         public int BaseSpeed
         {
             get => _ship.BaseSpeed;
@@ -160,6 +169,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseSpeed, value);
             }
         }
+
         public int BaseRange
         {
             get => _ship.BaseRange;
@@ -171,6 +181,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseRange, value);
             }
         }
+
         public double BaseAccuracy => _ship.BaseAccuracy;
 
 
@@ -187,6 +198,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _condition, value);
             }
         }
+
         public int BaseFirepower
         {
             get => _ship.BaseFirepower;
@@ -201,6 +213,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(DisplayNightPower));
             }
         }
+
         public int BaseTorpedo
         {
             get => _ship.BaseTorpedo;
@@ -215,6 +228,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(DisplayNightPower));
             }
         }
+
         public int BaseAA
         {
             get => _ship.BaseAA;
@@ -227,6 +241,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(DisplayAA));
             }
         }
+
         public int BaseASW
         {
             get => _ship.BaseASW;
@@ -239,6 +254,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(DisplayASW));
             }
         }
+
         public int BaseLoS
         {
             get => _ship.BaseLoS;
@@ -251,6 +267,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(DisplayLoS));
             }
         }
+
         public int BaseLuck
         {
             get => _ship.BaseLuck;
@@ -263,6 +280,7 @@ namespace ElectronicObserver.Window.ViewModel
                 OnPropertyChanged(nameof(BaseAccuracy));
             }
         }
+
         public int BaseNightPower => _ship.BaseNightPower;
 
 
@@ -270,36 +288,47 @@ namespace ElectronicObserver.Window.ViewModel
 
 
 
-
-        public int DisplayArmor => BaseArmor 
-                                   + EquipmentViewModels
-                                       .Where(x => x != null)
-                                       .Sum(x => x.BaseArmor + x.CurrentFitBonus.Armor);
-        public int DisplayEvasion => BaseEvasion 
-                                     + EquipmentViewModels
-                                         .Where(x => x != null)
-                                         .Sum(x => x.BaseEvasion + x.CurrentFitBonus.Evasion);
-        public double DisplayAccuracy => BaseAccuracy 
-                                         + EquipmentViewModels
-                                             .Where(x => x != null)
-                                             .Sum(x => x.BaseAccuracy);
-
         public int DisplayFirepower => BaseFirepower
-                                       + EquipmentViewModels
-                                           .Where(x => x != null)
-                                           .Sum(x => x.BaseFirepower + x.CurrentFitBonus.Firepower);
+                                       + EquipmentViewModels.Where(x => x != null)
+                                           .Sum(x => x.BaseFirepower + x.CurrentFitBonus.Firepower)
+                                       + SynergyViewModel.Firepower;
+
         public int DisplayTorpedo => BaseTorpedo
                                      + EquipmentViewModels.Where(x => x != null)
-                                         .Sum(x => x.BaseTorpedo + x.CurrentFitBonus.Torpedo);
+                                         .Sum(x => x.BaseTorpedo + x.CurrentFitBonus.Torpedo)
+                                     + SynergyViewModel.Torpedo;
+
         public int DisplayAA => BaseAA
                                 + EquipmentViewModels.Where(x => x != null)
-                                    .Sum(x => x.BaseAA + x.CurrentFitBonus.AA);
-        public int DisplayASW => BaseASW 
+                                    .Sum(x => x.BaseAA + x.CurrentFitBonus.AA)
+                                + SynergyViewModel.AA;
+
+        public int DisplayArmor => BaseArmor
+                                   + EquipmentViewModels.Where(x => x != null)
+                                       .Sum(x => x.BaseArmor + x.CurrentFitBonus.Armor)
+                                   + SynergyViewModel.Armor;
+
+        public int DisplayASW => BaseASW
                                  + EquipmentViewModels.Where(x => x != null)
-                                     .Sum(x => x.BaseASW + x.CurrentFitBonus.ASW);
+                                     .Sum(x => x.BaseASW + x.CurrentFitBonus.ASW)
+                                 + SynergyViewModel.ASW;
+
+        public int DisplayEvasion => BaseEvasion
+                                     + EquipmentViewModels.Where(x => x != null)
+                                         .Sum(x => x.BaseEvasion + x.CurrentFitBonus.Evasion)
+                                     + SynergyViewModel.Evasion;
+
         public int DisplayLoS => BaseLoS
                                  + EquipmentViewModels.Where(x => x != null)
-                                     .Sum(x => x.BaseLoS + x.CurrentFitBonus.LoS);
+                                     .Sum(x => x.BaseLoS + x.CurrentFitBonus.LoS)
+                                 + SynergyViewModel.LoS;
+
+
+
+        public double DisplayAccuracy => BaseAccuracy
+                                         + EquipmentViewModels.Where(x => x != null)
+                                             .Sum(x => x.BaseAccuracy);
+
         public int DisplayNightPower => DisplayFirepower + DisplayTorpedo;
 
 
@@ -310,7 +339,7 @@ namespace ElectronicObserver.Window.ViewModel
 
         }
 
-        public ShipViewModel(IShipDataCustom ship)
+        public ShipViewModel(ShipDataCustom ship)
         {
             Ship = ship;
         }
@@ -325,7 +354,7 @@ namespace ElectronicObserver.Window.ViewModel
 
             return value;
         }
-        
+
         private void EquipmentStatChange(object sender, PropertyChangedEventArgs e)
         {
             // optimization point

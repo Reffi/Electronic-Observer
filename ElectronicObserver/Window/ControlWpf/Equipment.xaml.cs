@@ -59,24 +59,24 @@ namespace ElectronicObserver.Window.ControlWpf
                 // DataContext must be set for this method
                 SetDisplayStats();
 
-                string link = KCResourceHelper
+                /*string link = KCResourceHelper
                     .GetEquipmentImagePath(_equipViewModel.ID, KCResourceHelper.ResourceTypeEquipmentCard);
-
-                if (link == null)
+                    */
+                //if (link == null)
                 {
                     //EquipName.Content = _equip.Name;
                     EquipName.Visibility = Visibility.Visible;
-                    EquipImage.Source = null;
+                    // EquipImage.Source = null;
                     return;
                 }
 
                 EquipName.Visibility = Visibility.Hidden;
 
-                using FileStream stream = new FileStream(link, FileMode.Open, FileAccess.Read);
+                // using FileStream stream = new FileStream(link, FileMode.Open, FileAccess.Read);
 
                 // there should be a better way to find the image path
-                Uri test = new Uri(stream.Name);
-                EquipImage.Source = new BitmapImage(test);
+                // Uri test = new Uri(stream.Name);
+                // EquipImage.Source = new BitmapImage(test);
             }
         }
 
@@ -194,7 +194,7 @@ namespace ElectronicObserver.Window.ControlWpf
 
         private void EmptyEquip()
         {
-            EquipImage.Source = null;
+            // EquipImage.Source = null;
 
             BindingOperations.ClearAllBindings(StatDisplay0);
             BindingOperations.ClearAllBindings(StatDisplay1);

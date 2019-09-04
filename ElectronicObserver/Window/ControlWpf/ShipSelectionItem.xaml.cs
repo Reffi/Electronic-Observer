@@ -23,9 +23,9 @@ namespace ElectronicObserver.Window.ControlWpf
     {
         public class ShipSelectRoutedEventArgs : RoutedEventArgs
         {
-            public IShipDataCustom Ship { get; set; }
+            public ShipDataCustom Ship { get; set; }
 
-            public ShipSelectRoutedEventArgs(RoutedEvent routedEvent, IShipDataCustom ship) : base(routedEvent)
+            public ShipSelectRoutedEventArgs(RoutedEvent routedEvent, ShipDataCustom ship) : base(routedEvent)
             {
                 Ship = ship;
             }
@@ -40,18 +40,18 @@ namespace ElectronicObserver.Window.ControlWpf
             remove { RemoveHandler(ShipSelectionEvent, value); }
         }
 
-        public IShipDataCustom Ship { get; set; }
+        public ShipDataCustom Ship { get; set; }
 
         public ShipSelectionItem()
         {
             InitializeComponent();
         }
 
-        public ShipSelectionItem(IShipDataCustom ship) : this()
+        public ShipSelectionItem(ShipDataCustom ship) : this()
         {
             Ship = ship;
 
-            ShipItem.Content = $" {Ship.Name} Lv. {Ship.Level}";
+            ShipItem.Content = $"{Ship.ShipID} {Ship.Name} Lv. {Ship.Level}";
         }
 
         void ItemOnClick(object sender, RoutedEventArgs e)
