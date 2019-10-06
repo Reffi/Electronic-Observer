@@ -89,33 +89,33 @@ namespace ElectronicObserver.Data
             }
         }
 
-		/// <summary>
-		/// 装備のレアリティを表す文字列を取得します。
-		/// </summary>
-		public static string GetEquipmentRarity(int value)
-		{
-			switch (value)
-			{
-				case 0:
-					return "コモン";
-				case 1:
-					return "レア";
-				case 2:
-					return "ホロ";
-				case 3:
-					return "Sホロ";
-				case 4:
-					return "SSホロ";
-				case 5:
-					return "SSホロ'";
-				case 6:
-					return "SSホロ+";
+        /// <summary>
+        /// 装備のレアリティを表す文字列を取得します。
+        /// </summary>
+        public static string GetEquipmentRarity(int value)
+        {
+            switch (value)
+            {
+                case 0:
+                    return "コモン";
+                case 1:
+                    return "レア";
+                case 2:
+                    return "ホロ";
+                case 3:
+                    return "Sホロ";
+                case 4:
+                    return "SSホロ";
+                case 5:
+                    return "SSホロ'";
+                case 6:
+                    return "SSホロ+";
                 case 7:
                     return "SS++";
-				default:
-					return "不明";
-			}
-		}
+                default:
+                    return "不明";
+            }
+        }
 
         /// <summary>
         /// 装備のレアリティの画像インデックスを取得します。
@@ -184,7 +184,8 @@ namespace ElectronicObserver.Data
         /// <param name="isLandBase">陸上基地かどうか。</param>
         /// <param name="isEscaped">退避中かどうか。</param>
         /// <returns></returns>
-        public static string GetDamageState(double hprate, bool isPractice = false, bool isLandBase = false, bool isEscaped = false)
+        public static string GetDamageState(double hprate, bool isPractice = false, bool isLandBase = false,
+            bool isEscaped = false)
         {
 
             if (isEscaped)
@@ -250,7 +251,7 @@ namespace ElectronicObserver.Data
                 case ShipTypes.LightAircraftCarrier:
                     return "CVL";
                 case ShipTypes.Battlecruiser:
-                    return "FBB";    // ? FBB, CC?
+                    return "FBB"; // ? FBB, CC?
                 case ShipTypes.Battleship:
                     return "BB";
                 case ShipTypes.AviationBattleship:
@@ -264,7 +265,7 @@ namespace ElectronicObserver.Data
                 case ShipTypes.SubmarineAircraftCarrier:
                     return "SSV";
                 case ShipTypes.Transport:
-                    return "AP";    // ? AO?
+                    return "AP"; // ? AO?
                 case ShipTypes.SeaplaneTender:
                     return "AV";
                 case ShipTypes.AmphibiousAssaultShip:
@@ -443,7 +444,7 @@ namespace ElectronicObserver.Data
                 case 2:
                     return ConstantsRes.NightBattle;
                 case 3:
-                    return ConstantsRes.NightDayBattle;       // 対通常?
+                    return ConstantsRes.NightDayBattle; // 対通常?
                 case 4:
                     return ConstantsRes.AirBattle;
                 case 5:
@@ -451,7 +452,7 @@ namespace ElectronicObserver.Data
                 case 6:
                     return ConstantsRes.AirRaid;
                 case 7:
-                    return ConstantsRes.NightDayBattle;       // 対連合
+                    return ConstantsRes.NightDayBattle; // 対連合
                 case 8:
                     return "Radar";
                 default:
@@ -832,7 +833,7 @@ namespace ElectronicObserver.Data
                 case DayAttackKind.LandingTokuDaihatsuTank:
                     return "Amphibious Attack(Toku Daihatsu+Tank)";
                 default:
-                    return $"{ConstantsRes.Unknown}({(int)id})";
+                    return $"{ConstantsRes.Unknown}({(int) id})";
             }
         }
 
@@ -890,7 +891,7 @@ namespace ElectronicObserver.Data
                 case NightAttackKind.LandingTokuDaihatsuTank:
                     return "Amphibious Attack (Toku Daihatsu+Tank)";
                 default:
-                    return $"{ConstantsRes.Unknown}({(int)id})";
+                    return $"{ConstantsRes.Unknown}({(int) id})";
             }
         }
 
@@ -911,7 +912,8 @@ namespace ElectronicObserver.Data
                 case 3:
                     return ConstantsRes.HA2 + " (Akizuki)";
                 case 4:
-                    return ConstantsRes.BigGun + "/" + ConstantsRes.Type3 + "/" + ConstantsRes.AADirector + "/" + ConstantsRes.Radar;
+                    return ConstantsRes.BigGun + "/" + ConstantsRes.Type3 + "/" + ConstantsRes.AADirector + "/" +
+                           ConstantsRes.Radar;
                 case 5:
                     return ConstantsRes.HAAAD + " x2/" + ConstantsRes.Radar;
                 case 6:
@@ -975,7 +977,7 @@ namespace ElectronicObserver.Data
                 case 37:
                     return "5inch Single Gun Mk.30 Kai x2 (Johnston)";
                 default:
-                    return $"{ConstantsRes.Unknown}({(int)id})";
+                    return $"{ConstantsRes.Unknown}({(int) id})";
             }
         }
 
@@ -1109,15 +1111,15 @@ namespace ElectronicObserver.Data
         {
             switch (id)
             {
-                case 1:     //デイリー
+                case 1: //デイリー
                     return ConstantsRes.Daily;
-                case 2:     //ウィークリー
+                case 2: //ウィークリー
                     return ConstantsRes.Weekly;
-                case 3:     //マンスリー
+                case 3: //マンスリー
                     return ConstantsRes.Monthly;
-                case 4:     //単発
+                case 4: //単発
                     return "1";
-                case 5:     //その他(輸送5/空母3)
+                case 5: //その他(輸送5/空母3)
                     return ConstantsRes.QuestOther;
                 default:
                     return ConstantsRes.Question;
@@ -1142,7 +1144,7 @@ namespace ElectronicObserver.Data
                 case 4:
                     return ConstantsRes.Expedition;
                 case 5:
-                    return ConstantsRes.Supply;        //入渠も含むが、文字数の関係
+                    return ConstantsRes.Supply; //入渠も含むが、文字数の関係
                 case 6:
                     return ConstantsRes.Construction;
                 case 7:
@@ -1199,6 +1201,7 @@ namespace ElectronicObserver.Data
         #endregion
 
         #region Servers
+
         public class KCServer
         {
             public int Num { get; set; }
@@ -1342,6 +1345,8 @@ namespace ElectronicObserver.Data
             }
         }
 
+        #endregion
+
         public static class Softcap
         {
             public const int DayShelling = 180;
@@ -1353,6 +1358,5 @@ namespace ElectronicObserver.Data
         }
     }
 
-        #endregion
-    }
+
 }
