@@ -5,6 +5,8 @@ namespace ElectronicObserver.Data
 {
 	public enum ShipTypes
 	{
+        Unknown,
+
         /// <summary>海防艦</summary>
         [Display(ResourceType = typeof(Properties.ShipTypes), Name = "Escort")]
         Escort = 1,

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using ElectronicObserver.Data;
+using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Utility.Helpers
 { 

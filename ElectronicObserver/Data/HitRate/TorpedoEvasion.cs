@@ -7,30 +7,21 @@ using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Data.HitRate
 {
-    public interface ITorpedoEvasionShip<out TEquipType> : IEvasionShip<TEquipType>
-        where TEquipType : ITorpedoEvasionEquipment
-    {
-        ShipTypes ShipType { get; }
-    }
-
     public interface ITorpedoEvasionEquipment : IEvasionEquipment
     {
         double TorpedoEvasion { get; }
     }
 
-    public interface ITorpedoEvasionFleet
-    {
-        FormationType Formation { get; }
-    }
-
     class TorpedoEvasion : EvasionBase
     {
         private IEvasionShip<ITorpedoEvasionEquipment> Ship { get; }
-        private ITorpedoEvasionFleet Fleet { get; }
+        private IEvasionFleet Fleet { get; }
 
-        public TorpedoEvasion(IEvasionShip<ITorpedoEvasionEquipment> ship, ITorpedoEvasionFleet fleet)
+        public TorpedoEvasion(IEvasionShip<ITorpedoEvasionEquipment> ship, IEvasionFleet fleet)
             : base(ship)
         {
+            Ship = ship;
+            Fleet = fleet;
         }
 
         protected override double PrecapMods => FleetMod;

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ElectronicObserver.Resource;
 
 namespace ElectronicObserver.Utility.Data
 {

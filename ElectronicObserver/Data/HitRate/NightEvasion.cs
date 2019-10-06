@@ -13,11 +13,6 @@ namespace ElectronicObserver.Data.HitRate
         ShipTypes ShipType { get; }
     }
 
-    public interface INightEvasionFleet
-    {
-        FormationType Formation { get; }
-    }
-
     public interface INightEvasionBattle
     {
         bool ActivatedSearchlight { get; }
@@ -26,11 +21,11 @@ namespace ElectronicObserver.Data.HitRate
     class NightEvasion: EvasionBase
     {
         private INightEvasionShip<IEvasionEquipment> Ship { get; }
-        private INightEvasionFleet Fleet { get; }
+        private IEvasionFleet Fleet { get; }
         private INightEvasionBattle Battle { get; }
 
-        public NightEvasion(INightEvasionShip<IEvasionEquipment> ship, INightEvasionFleet fleet, INightEvasionBattle battle) 
-            : base(ship)
+        public NightEvasion(INightEvasionShip<IEvasionEquipment> ship, IEvasionFleet fleet, 
+            INightEvasionBattle battle) : base(ship)
         {
             Ship = ship;
             Fleet = fleet;

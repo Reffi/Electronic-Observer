@@ -68,6 +68,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\AntiInstallationDamageTests.cs" />
     <Compile Include="Data\CarrierNightDamageTests.cs" />
     <Compile Include="Data\DamageTests.cs" />
     <Compile Include="Data\HitRateTests.cs" />

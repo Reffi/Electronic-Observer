@@ -7,17 +7,12 @@ using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Data.HitRate
 {
-    public interface IAswEvasionFleet
-    {
-        FormationType Formation { get; }
-    }
-
     class AswEvasion: EvasionBase
     {
         private IEvasionShip<IEvasionEquipment> Ship { get; }
-        private IAswEvasionFleet Fleet { get; }
+        private IEvasionFleet Fleet { get; }
 
-        public AswEvasion(IEvasionShip<IEvasionEquipment> ship, IAswEvasionFleet fleet) : base(ship)
+        public AswEvasion(IEvasionShip<IEvasionEquipment> ship, IEvasionFleet fleet) : base(ship)
         {
             Fleet = fleet;
         }

@@ -49,5 +49,38 @@
         public double b13 { get; set; }
 
         public double b14 { get; set; }
+
+        public static ExtraDamageBonus operator +(ExtraDamageBonus a, ExtraDamageBonus b) => new ExtraDamageBonus
+        {
+            a1 = a.a1 * b.a1,
+            a2 = a.a2 * b.a2,
+            a3 = a.a3 * b.a3,
+            a4 = a.a4 * b.a4,
+            a5 = a.a5 * b.a5,
+            a6 = a.a6 * b.a6,
+            a7 = a.a7 * b.a7,
+            a8 = a.a8 * b.a8,
+            a9 = a.a9 * b.a9,
+            a10 = a.a10 * b.a10,
+            a11 = a.a11 * b.a11,
+            a12 = a.a12 * b.a12,
+            a13 = a.a13 * b.a13,
+            a14 = a.a14 * b.a14,
+
+            b1 = a.b1 + b.b1,
+            b2 = a.b2 + b.b2,
+            b3 = a.b3 + b.b3,
+            b4 = a.b4 + b.b4,
+            b5 = a.b5 + b.b5,
+            b6 = a.b6 + b.b6,
+            b7 = a.b7 + b.b7,
+            b8 = a.b8 + b.b8,
+            b9 = a.b9 + b.b9,
+            b10 = a.b10 + b.b10,
+            b11 = a.b11 + b.b11,
+            b12 = a.b12 + b.b12,
+            b13 = a.b13 + b.b13,
+            b14 = a.b14 + b.b14
+        };
     }
 }

@@ -9,42 +9,33 @@ namespace ElectronicObserver.Data
 {
     public class AttackKindData
     {
-        private DayAttackKind DayAttack { get; }
-        private NightAttackKind NightAttack { get; }
+        public Enum Value { get; }
 
-        public AttackKindData(DayAttackKind attackKind) =>
-            (DayAttack, NightAttack) = (attackKind, NightAttackKind.Unknown);
+        public AttackKindData(DayAttackKind attackKind) => Value = attackKind;
 
-        public AttackKindData(NightAttackKind attackKind) =>
-            (DayAttack, NightAttack) = (DayAttackKind.Unknown, attackKind);
+        public AttackKindData(NightAttackKind attackKind) => Value = attackKind;
 
-        public bool CanAttackSubmarines => DayAttack == DayAttackKind.DepthCharge ||
-                                           DayAttack == DayAttackKind.AirAttack ||
-                                           NightAttack == NightAttackKind.DepthCharge ||
-                                           NightAttack == NightAttackKind.AirAttack;
+        public AttackKindData(CvnciKind attackKind) => Value = attackKind;
 
-        public bool CanAttackInstallations => InternalCanAttackInstallations();
-        private bool InternalCanAttackInstallations()
+        public bool CanHitSubmarine => Value switch
         {
-            if (DayAttack != DayAttackKind.Unknown)
-                return DayAttack switch
-                {
-                    DayAttackKind.Torpedo => false,
+            DayAttackKind.DepthCharge => true,
+            DayAttackKind.AirAttack => true,
+            NightAttackKind.DepthCharge => true,
+            NightAttackKind.AirAttack => true,
 
-                    _ => true
-                };
+            _ => false
+        };
 
-            if (NightAttack != NightAttackKind.Unknown)
-                return NightAttack switch
-                {
-                    NightAttackKind.CutinTorpedoTorpedo => false,
-                    NightAttackKind.CutinMainTorpedo => false,
-                    NightAttackKind.Torpedo => false,
+        public bool CanHitInstallation => Value switch
+        {
+            DayAttackKind.Torpedo => false,
 
-                    _ => true
-                };
+            NightAttackKind.CutinTorpedoTorpedo => false,
+            NightAttackKind.CutinMainTorpedo => false,
+            NightAttackKind.Torpedo => false,
 
-            return false;
-        }
+            _ => true
+        };
     }
 }

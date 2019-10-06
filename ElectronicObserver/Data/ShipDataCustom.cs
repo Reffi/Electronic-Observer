@@ -5,6 +5,7 @@ using System.Linq;
 using ElectronicObserver.Data.Damage;
 using ElectronicObserver.Data.HitRate;
 using ElectronicObserver.Utility.Helpers;
+using ElectronicObserver.Window.Dialog;
 
 namespace ElectronicObserver.Data
 {
@@ -20,7 +21,7 @@ namespace ElectronicObserver.Data
         INightDamageDefender, ICarrierShellingDamageDefender, ICarrierNightDamageDefender,
         IShellingAccuracyShip<EquipmentDataCustom>, IAswAccuracyShip<EquipmentDataCustom>,
         INightAccuracyShip<EquipmentDataCustom>, INightEvasionShip<EquipmentDataCustom>,
-        ITorpedoEvasionShip<EquipmentDataCustom>, IHitRateDefender, IShipDataCustom
+        IHitRateDefender, IShipDataCustom, IAntiInstallationAttacker<EquipmentDataCustom>, IInstallation
     {
         private int _level;
         private int _hp;
@@ -352,6 +353,8 @@ namespace ElectronicObserver.Data
             Equipment = equip.ToArray();
 
             Synergies = new FitBonusCustom(new VisibleFits());
+
+            InstallationType = GetInstallationType(ship);
         }
 
 
@@ -362,6 +365,122 @@ namespace ElectronicObserver.Data
 
             return min + (int) ((max - min) * _level / 99.0);
         }
+
+        private InstallationType GetInstallationType(ShipDataMaster ship) => ship.ShipID switch
+        {
+            // 飛行場姫
+            1556 => InstallationType.SoftSkin,
+            1631 => InstallationType.SoftSkin,
+            1632 => InstallationType.SoftSkin,
+            1633 => InstallationType.SoftSkin,
+            1650 => InstallationType.SoftSkin,
+            1651 => InstallationType.SoftSkin,
+            1652 => InstallationType.SoftSkin,
+            1889 => InstallationType.SoftSkin,
+            1890 => InstallationType.SoftSkin,
+            1891 => InstallationType.SoftSkin,
+            1892 => InstallationType.SoftSkin,
+            1893 => InstallationType.SoftSkin,
+            1894 => InstallationType.SoftSkin,
+
+            // 港湾棲姫
+            1573 => InstallationType.SoftSkin,
+            1613 => InstallationType.SoftSkin,
+
+            // 北方棲姫
+            1581 => InstallationType.SoftSkin,
+            1582 => InstallationType.SoftSkin,
+            1587 => InstallationType.SoftSkin,
+            1588 => InstallationType.SoftSkin,
+            1589 => InstallationType.SoftSkin,
+            1590 => InstallationType.SoftSkin,
+
+            // 中間棲姫
+            1583 => InstallationType.SoftSkin,
+            1584 => InstallationType.SoftSkin,
+
+            // 港湾水鬼
+            1605 => InstallationType.SoftSkin,
+            1606 => InstallationType.SoftSkin,
+            1607 => InstallationType.SoftSkin,
+            1608 => InstallationType.SoftSkin,
+
+            // 泊地水鬼
+            1609 => InstallationType.SoftSkin,
+            1610 => InstallationType.SoftSkin,
+            1611 => InstallationType.SoftSkin,
+            1612 => InstallationType.SoftSkin,
+
+            // リコリス棲姫
+            1679 => InstallationType.SoftSkin,
+            1680 => InstallationType.SoftSkin,
+            1681 => InstallationType.SoftSkin,
+            1682 => InstallationType.SoftSkin,
+            1683 => InstallationType.SoftSkin,
+
+            // 離島棲鬼 - todo verify this
+            1574 => InstallationType.IsolatedIsland,
+            1634 => InstallationType.IsolatedIsland,
+            1635 => InstallationType.IsolatedIsland,
+            1636 => InstallationType.IsolatedIsland,
+
+            // 離島棲姫
+            1668 => InstallationType.IsolatedIsland,
+            1669 => InstallationType.IsolatedIsland,
+            1670 => InstallationType.IsolatedIsland,
+            1671 => InstallationType.IsolatedIsland,
+
+            // 集積地棲姫
+            1653 => InstallationType.SupplyDepot,
+            1654 => InstallationType.SupplyDepot,
+            1655 => InstallationType.SupplyDepot,
+            1656 => InstallationType.SupplyDepot,
+            1657 => InstallationType.SupplyDepot,
+            1658 => InstallationType.SupplyDepot,
+
+            // 集積地夏姫
+            1753 => InstallationType.SupplyDepot,
+            1754 => InstallationType.SupplyDepot,
+
+            // 集積地棲姫 バカンスmode
+            1809 => InstallationType.SupplyDepot,
+            1810 => InstallationType.SupplyDepot,
+            1811 => InstallationType.SupplyDepot,
+            1812 => InstallationType.SupplyDepot,
+            1813 => InstallationType.SupplyDepot,
+            1814 => InstallationType.SupplyDepot,
+
+            // 中枢棲姫
+            1684 => InstallationType.Central,
+            1685 => InstallationType.Central,
+            1686 => InstallationType.Central,
+            1687 => InstallationType.Central,
+            1688 => InstallationType.Central,
+            1689 => InstallationType.Central,
+
+            // 港湾夏姫
+            1699 => InstallationType.HarbourSummer,
+            1700 => InstallationType.HarbourSummer,
+            1701 => InstallationType.HarbourSummer,
+            1702 => InstallationType.HarbourSummer,
+            1703 => InstallationType.HarbourSummer,
+            1704 => InstallationType.HarbourSummer,
+
+            // 北端上陸姫
+            1725 => InstallationType.NorthernmostLanding,
+            1726 => InstallationType.NorthernmostLanding,
+            1727 => InstallationType.NorthernmostLanding,
+
+            // 泊地水鬼 バカンスmode
+            1815 => InstallationType.AnchorageVacation,
+            1816 => InstallationType.AnchorageVacation,
+            1817 => InstallationType.AnchorageVacation,
+            1818 => InstallationType.AnchorageVacation,
+            1819 => InstallationType.AnchorageVacation,
+            1820 => InstallationType.AnchorageVacation,
+
+            _ => InstallationType.None
+        };
 
         public double NightAccuracyFitBonus => 0;
 
@@ -645,7 +764,7 @@ namespace ElectronicObserver.Data
             /*if (HasNightPersonel)
                 nightAttacks.Add(NightAttackKind.CutinAirAttack);*/
 
-            if (HasNightPersonel || (IsArkRoyal && HasSwordfish))
+            if (HasNightPersonnel || (IsArkRoyal && HasSwordfish))
             {
                 nightAttacks.Add(NightAttackKind.AirAttack);
             }
@@ -671,7 +790,7 @@ namespace ElectronicObserver.Data
         {
             List<CvnciKind> cvncis = new List<CvnciKind>();
 
-            if (!HasNightPersonel)
+            if (!HasNightPersonnel)
                 return cvncis;
 
             int nightCapableBomber = 0;
@@ -745,6 +864,8 @@ namespace ElectronicObserver.Data
 
         public ShipTypes ShipType => _shipMaster.ShipType;
 
+        public InstallationType InstallationType { get; }
+
         // todo localize enum
         public string ShipTypeName => _shipMaster.ShipTypeName;
 
@@ -780,7 +901,7 @@ namespace ElectronicObserver.Data
 
         private bool HasAswAircraft => Equipment.Where(eq => eq != null).Any(eq => eq.IsAntiSubmarineAircraft);
 
-        private bool HasNightPersonel => Equipment.Where(eq => eq != null)
+        private bool HasNightPersonnel => Equipment.Where(eq => eq != null)
                                              .Any(eq => eq.IsNightAviationPersonnel) ||
                                          ShipID == 545 || // Saratoga Mk.II
                                          ShipID == 599; // Akagi k2e

@@ -1,4 +1,5 @@
-﻿using ElectronicObserver.Data;
+﻿using System;
+using ElectronicObserver.Data;
 using ElectronicObserver.Utility.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,6 @@ namespace ElectronicObserver.Window.Dialog
     /// </summary>
     public partial class DialogShipSimulationWpf : UserControl
     {
-        // todo fix switch expression indents once R# fixes it
-
         public static readonly RoutedEvent CalculationParametersChangedEvent = EventManager.RegisterRoutedEvent(
             "CalculationParametersChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler),
             typeof(DialogShipSimulationWpf));
@@ -40,6 +39,9 @@ namespace ElectronicObserver.Window.Dialog
         public DialogShipSimulationWpf()
         {
             InitializeComponent();
+
+            // todo make a language select setting
+            Properties.Resources.Culture = new System.Globalization.CultureInfo("en");
 
             AttackerDisplay.AddHandler(EquipmentSelectionItem.EquipmentSelectionEvent,
                 new RoutedEventHandler(UpdatePossibleAttacks));
@@ -112,10 +114,10 @@ namespace ElectronicObserver.Window.Dialog
         private List<NightAttackKind> NightAttacks { get; set; } = new List<NightAttackKind>();
         private List<CvnciKind> CvnciAttacks { get; set; } = new List<CvnciKind>();
 
-        private List<DayAttackKind> BattleDayAttacks { get; set; } = new List<DayAttackKind>();
-        private List<DayAttackKind> BattleAswAttacks { get; set; } = new List<DayAttackKind>();
-        private List<NightAttackKind> BattleNightAttacks { get; set; } = new List<NightAttackKind>();
-        private List<CvnciKind> BattleCvnciAttacks { get; set; } = new List<CvnciKind>();
+        private IEnumerable<AttackKindData> BattleDayAttacks { get; set; } = Enumerable.Empty<AttackKindData>();
+        private IEnumerable<AttackKindData> BattleAswAttacks { get; set; } = Enumerable.Empty<AttackKindData>();
+        private IEnumerable<AttackKindData> BattleNightAttacks { get; set; } = Enumerable.Empty<AttackKindData>();
+        private IEnumerable<AttackKindData> BattleCvnciAttacks { get; set; } = Enumerable.Empty<AttackKindData>();
 
         private void AllPossibleAttacks()
         {
@@ -149,13 +151,17 @@ namespace ElectronicObserver.Window.Dialog
 
         private void BattlePossibleAttacks()
         {
-            BattleDayAttacks = AttackerDisplay.Ship.DayAttacks.ToList();
-            BattleAswAttacks = AttackerDisplay.Ship.AswAttacks.ToList();
-            BattleNightAttacks = AttackerDisplay.Ship.NightAttacks.ToList();
+            BattleDayAttacks = AttackFilter(Attacker, Defender, Attacker.DayAttacks.Select(a => new AttackKindData(a)));
+            BattleAswAttacks = AttackFilter(Attacker, Defender, Attacker.AswAttacks.Select(a => new AttackKindData(a)));
+            BattleNightAttacks =
+                AttackFilter(Attacker, Defender, Attacker.NightAttacks.Select(a => new AttackKindData(a)));
+            BattleCvnciAttacks = AttackFilter(Attacker, Defender, Attacker.Cvncis().Select(a => new AttackKindData(a)));
 
-            int dayAttackCount = BattleDayAttacks.Count;
-            int aswAttackCount = BattleAswAttacks.Count;
-            int nightAttackCount = BattleNightAttacks.Count;
+            // todo possible attack filter
+
+            int dayAttackCount = BattleDayAttacks.Count();
+            int aswAttackCount = BattleAswAttacks.Count();
+            int nightAttackCount = BattleNightAttacks.Count() + BattleCvnciAttacks.Count();
 
             int displayCount = 0;
 
@@ -178,11 +184,12 @@ namespace ElectronicObserver.Window.Dialog
 
         private void UpdatePossibleAttacks(object sender, RoutedEventArgs e)
         {
-            if (AttackerDisplay.Ship == null || DefenderDisplay.Ship == null)
-                return;
+            if (Attacker == null || Defender == null) return;
 
             AllPossibleAttacks();
             BattlePossibleAttacks();
+
+            BonusParameters.Bonus = new AntiInstallationDamage(Attacker, Defender).ShellingBonus();
 
             Calculate(sender, e);
         }
@@ -190,10 +197,13 @@ namespace ElectronicObserver.Window.Dialog
         private void Calculate(object sender, RoutedEventArgs e)
         {
             if (e != null)
+            {
                 e.Handled = true;
+            }
 
-            if (Attacker == null || Defender == null)
-                return;
+            if (Attacker == null || Defender == null) return;
+
+
 
             Battle = new BattleDataCustom
             {
@@ -410,8 +420,10 @@ namespace ElectronicObserver.Window.Dialog
                 damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingDamage;
                 i++;
 
-                foreach (DayAttackKind dayAttack in BattleDayAttacks)
+                foreach (AttackKindData attack in BattleDayAttacks)
                 {
+                    DayAttackKind dayAttack = (DayAttackKind) attack.Value;
+
                     Battle.DayAttack = dayAttack;
 
                     Battle.HitType = HitType.Hit;
@@ -435,8 +447,10 @@ namespace ElectronicObserver.Window.Dialog
                 damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswDamage;
                 i++;
 
-                foreach (DayAttackKind dayAttack in BattleAswAttacks)
+                foreach (AttackKindData attack in BattleAswAttacks)
                 {
+                    DayAttackKind dayAttack = (DayAttackKind) attack.Value;
+
                     Battle.DayAttack = dayAttack;
 
                     Battle.HitType = HitType.Hit;
@@ -460,8 +474,10 @@ namespace ElectronicObserver.Window.Dialog
                 damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingDamage;
                 i++;
 
-                foreach (NightAttackKind nightAttack in BattleNightAttacks)
+                foreach (AttackKindData attack in BattleNightAttacks)
                 {
+                    NightAttackKind nightAttack = (NightAttackKind) attack.Value;
+
                     Battle.NightAttack = nightAttack;
 
                     Battle.HitType = HitType.Hit;
@@ -499,8 +515,10 @@ namespace ElectronicObserver.Window.Dialog
                 hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingHitRate;
                 i++;
 
-                foreach (DayAttackKind dayAttack in BattleDayAttacks)
+                foreach (AttackKindData attack in BattleDayAttacks)
                 {
+                    DayAttackKind dayAttack = (DayAttackKind) attack.Value;
+
                     Battle.DayAttack = dayAttack;
 
                     hitRateDisplays[i].AttackName = $"{dayAttack.Display()}";
@@ -515,8 +533,10 @@ namespace ElectronicObserver.Window.Dialog
                 hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswHitRate;
                 i++;
 
-                foreach (DayAttackKind dayAttack in BattleAswAttacks)
+                foreach (AttackKindData attack in BattleAswAttacks)
                 {
+                    DayAttackKind dayAttack = (DayAttackKind) attack.Value;
+
                     Battle.DayAttack = dayAttack;
 
                     hitRateDisplays[i].AttackName = $"{dayAttack.Display()}";
@@ -531,8 +551,10 @@ namespace ElectronicObserver.Window.Dialog
                 hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingHitRate;
                 i++;
 
-                foreach (NightAttackKind nightAttack in BattleNightAttacks)
+                foreach (AttackKindData attack in BattleNightAttacks)
                 {
+                    NightAttackKind nightAttack = (NightAttackKind) attack.Value;
+
                     Battle.NightAttack = nightAttack;
 
                     hitRateDisplays[i].AttackName = $"{nightAttack.Display()}";
@@ -542,6 +564,34 @@ namespace ElectronicObserver.Window.Dialog
                 }
             }
         }
+
+        private IEnumerable<AttackKindData> AttackFilter(ShipDataCustom attacker, ShipDataCustom defender,
+            IEnumerable<AttackKindData> attacks)
+        {
+            if (defender == null) return attacks;
+
+            IEnumerable<AttackKindData> attackList = attacks;
+
+            if (defender.IsSubmarine)
+            {
+                attackList = attackList.Where(a => a.CanHitSubmarine);
+            }
+            else
+            {
+                attackList = attackList.Where(a => !a.CanHitSubmarine);
+            }
+
+            if (defender.IsInstallation)
+            {
+                if (attacker.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedBomber))
+                    return Enumerable.Empty<AttackKindData>();
+
+                attackList = attackList.Where(a => a.CanHitInstallation);
+            }
+
+            return attackList;
+        }
+
 
     }
 }

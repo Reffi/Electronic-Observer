@@ -16,6 +16,11 @@ namespace ElectronicObserver.Data.HitRate
         TEquipType[] Equipment { get; }
     }
 
+    public interface IEvasionFleet
+    {
+        FormationType Formation { get; }
+    }
+
     public interface IEvasionEquipment
     {
         int BaseEvasion { get; }
@@ -44,13 +49,6 @@ namespace ElectronicObserver.Data.HitRate
         protected abstract double PostcapMod { get; }
 
         protected abstract double PostcapBonus { get; }
-
-
-        // protected double PostcapBonus => TorpedoEvasion + HeavyCruiserBonus
-
-        // private double SearchlightMod => Battle.ActivatedSearchlight ? 0.2 : 1;
-        private double TorpedoEvasion => 0;
-        private double HeavyCruiserBonus => 0;
 
         // potentially misleading since it can only be 0 or negative
         private double FuelBonus => Math.Min(Ship.Fuel - 75, 0);

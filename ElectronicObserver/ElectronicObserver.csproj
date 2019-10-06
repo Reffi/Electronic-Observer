@@ -135,6 +135,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Damage\AntiInstallationDamage.cs" />
     <Compile Include="Data\Damage\CarrierNightDamage.cs" />
     <Compile Include="Data\Damage\CarrierShellingDamage.cs" />
     <Compile Include="Data\HitRate\AswAccuracy.cs" />
@@ -313,6 +314,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DialogShipSimulationWpf.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\EngagementTypes.en.Designer.cs">
+      <DependentUpon>EngagementTypes.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\EngagementTypes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -350,6 +356,7 @@
     </Compile>
     <Compile Include="Utility\Data\EngagementTypes.cs" />
     <Compile Include="Utility\Data\FleetPositionDetail.cs" />
+    <Compile Include="Utility\Data\InstallationType.cs" />
     <Compile Include="Utility\DynamicTranslator.cs" />
     <Compile Include="Utility\Helpers\ExtensionMethods.cs" />
     <Compile Include="Utility\Helpers\Observable.cs" />
@@ -951,38 +958,50 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NotifierRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\DayAttackKind.en.resx" />
     <EmbeddedResource Include="Properties\DayAttackKind.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DayAttackKind.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\DialogShipSimulationWpf.en.resx" />
     <EmbeddedResource Include="Properties\DialogShipSimulationWpf.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DialogShipSimulationWpf.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\EngagementTypes.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EngagementTypes.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\EngagementTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EngagementTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\EquipmentTypes.en.resx" />
     <EmbeddedResource Include="Properties\EquipmentTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EquipmentTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FleetPositionDetail.en.resx" />
     <EmbeddedResource Include="Properties\FleetPositionDetail.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FleetPositionDetail.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FleetType.en.resx" />
     <EmbeddedResource Include="Properties\FleetType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FleetType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\FormationType.en.resx" />
     <EmbeddedResource Include="Properties\FormationType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FormationType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\NightAttackKind.en.resx" />
     <EmbeddedResource Include="Properties\NightAttackKind.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NightAttackKind.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ShipTypes.en.resx" />
     <EmbeddedResource Include="Properties\ShipTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ShipTypes.Designer.cs</LastGenOutput>

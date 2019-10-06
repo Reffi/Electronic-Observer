@@ -13,7 +13,7 @@ namespace ElectronicObserver.Data
         ICarrierShellingDamageAttackerFleet, ICarrierNightDamageAttackerFleet,
         IAswDamageDefenderFleet, INightDamageAttackerFleet, INightDamageDefenderFleet,
         ICarrierShellingDamageDefenderFleet, ICarrierNightDamageDefenderFleet, IShellingAccuracyFleet,
-        IAswAccuracyFleet, INightAccuracyFleet, IShellingEvasionFleet, IAswEvasionFleet, INightEvasionFleet
+        IAswAccuracyFleet, INightAccuracyFleet, IEvasionFleet
     {
         public FleetType Type { get; set; } = FleetType.Single;
 

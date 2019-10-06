@@ -14,7 +14,7 @@ namespace ElectronicObserver.Data
     public class EquipmentDataCustom : IShellingDamageAttackerEquipment, ICarrierShellingDamageEquipment,
         IAswDamageAttackerEquipment, INightDamageAttackerEquipment, ICarrierNightDamageEquipment,
         IShellingAccuracyEquipment, IAswAccuracyEquipment, INightAccuracyEquipment, IEvasionEquipment,
-        ITorpedoEvasionEquipment, IEquipmentDataCustom
+        ITorpedoEvasionEquipment, IEquipmentDataCustom, IAntiInstallationEquipment
     {
         private int _id;
 
@@ -158,7 +158,7 @@ namespace ElectronicObserver.Data
             BaseAA = _equipMaster.AA;
             Range = _equipMaster.Range;
 
-            SetFitCategory(equip);
+            FitCategory = GetFitCategory(equip);
         }
 
 
@@ -296,70 +296,52 @@ namespace ElectronicObserver.Data
         private double LinearUpgrade(double constant) => constant * Level;
         private double SqrtUpgrade(double constant = 1) => constant * Math.Sqrt(Level);
 
-        private void SetFitCategory(EquipmentDataMaster equip)
+        private FitCategories GetFitCategory(EquipmentDataMaster equip) => equip.ID switch
         {
-            switch (equip.ID)
-            {
-                case 231: // 30.5
-                case 232: // kai
-                case 7: // 35.6
-                case 103: // p
-                case 104: // dazzle
-                case 289: // dazzle kai
-                case 328: // kai
-                case 329: // ni
-                case 76: // 38 (Bisko)
-                case 114: // kai
-                case 190: // 38.1 (Warspite)
-                case 192: // kai
-                    FitCategory = FitCategories.smallBBGun;
-                    break;
+            231 => FitCategories.smallBBGun, // 30.5
+            232 => FitCategories.smallBBGun, // kai
 
-                case 133: // 381
-                case 137: // kai
-                    FitCategory = FitCategories.pastaBBGun;
-                    break;
+            7 => FitCategories.smallBBGun, // 35.6
+            103 => FitCategories.smallBBGun, // p
+            104 => FitCategories.smallBBGun, // dazzle
+            289 => FitCategories.smallBBGun, // dazzle kai
+            328 => FitCategories.smallBBGun, // kai
+            329 => FitCategories.smallBBGun, // ni
 
-                case 245: // 38 quad
-                case 246: // kai
-                    FitCategory = FitCategories.baguetteBBGun;
-                    break;
+            76 => FitCategories.smallBBGun, // 38 (Bisko)
+            114 => FitCategories.smallBBGun, // kai
 
-                case 161: // burger
-                case 183: // gfcs
-                    FitCategory = FitCategories.burgerBBGun;
-                    break;
+            190 => FitCategories.smallBBGun, // 38.1 (Warspite)
+            192 => FitCategories.smallBBGun, // kai
 
-                case 298: // Nelson
-                case 299: // afct
-                case 300: // fcr
-                    FitCategory = FitCategories.nelsonBBGun;
-                    break;
+            133 => FitCategories.pastaBBGun, // 381
+            137 => FitCategories.pastaBBGun, // kai
 
-                case 8: // 41
-                case 105: // p
-                case 236: // kai
-                case 318: // ni
-                case 290: // triple
-                    FitCategory = FitCategories.mediumBBGun;
-                    break;
+            245 => FitCategories.baguetteBBGun, // 38 quad
+            246 => FitCategories.baguetteBBGun, // kai
 
-                case 9: // 46
-                case 117: // p
-                case 276: // kai
-                    FitCategory = FitCategories.largeBBGun;
-                    break;
+            161 => FitCategories.burgerBBGun, // burger
+            183 => FitCategories.burgerBBGun, // gfcs
 
-                case 281: // 51
-                case 128: // p
-                    FitCategory = FitCategories.veryLargeBBGun;
-                    break;
+            298 => FitCategories.nelsonBBGun, // Nelson
+            299 => FitCategories.nelsonBBGun, // afct
+            300 => FitCategories.nelsonBBGun, // fcr
 
-                default:
-                    FitCategory = FitCategories.Unknown;
-                    break;
-            }
-        }
+            8 => FitCategories.mediumBBGun, // 41
+            105 => FitCategories.mediumBBGun, // p
+            236 => FitCategories.mediumBBGun, // kai
+            318 => FitCategories.mediumBBGun, // ni
+            290 => FitCategories.mediumBBGun, // triple
+
+            9 => FitCategories.largeBBGun, // 46
+            117 => FitCategories.largeBBGun, // p
+            276 => FitCategories.largeBBGun, // kai
+
+            281 => FitCategories.veryLargeBBGun, // 51
+            128 => FitCategories.veryLargeBBGun, // p
+
+            _ => FitCategories.Unknown
+        };
 
         public EquipmentType CategoryTypeInstance =>
             _equip?.MasterEquipment.CategoryTypeInstance ?? _equipMaster.CategoryTypeInstance;
@@ -475,5 +457,49 @@ namespace ElectronicObserver.Data
         public bool IsNightAttacker => ID == 257 || // TBM-3D
                                        ID == 344 || // 九七式艦攻改 試製三号戊型(空六号電探改装備機)
                                        ID == 345; // 九七式艦攻改(熟練) 試製三号戊型(空六号電探改装備機)
+
+        /// <summary>
+        /// WG42 (Wurfgerät 42)
+        /// </summary>
+        public bool IsWG => ID == 126;
+
+        /// <summary>
+        /// 艦載型 四式20cm対地噴進砲 <br />
+        /// 四式20cm対地噴進砲 集中配備
+        /// </summary>
+        public bool IsAntiInstallationRocket => ID == 348 ||
+                                                ID == 349;
+
+        /// <summary>
+        /// 二式12cm迫撃砲改 <br />
+        /// 二式12cm迫撃砲改 集中配備
+        /// </summary>
+        public bool IsMortar => ID == 346 ||
+                                ID == 347;
+
+        /// <summary>
+        /// 大発動艇
+        /// </summary>
+        public bool IsDaihatsu => ID == 68;
+
+        /// <summary>
+        /// 大発動艇(八九式中戦車&amp;陸戦隊)
+        /// </summary>
+        public bool IsDaihatsuTank => ID == 166;
+
+        /// <summary>
+        /// 特大発動艇
+        /// </summary>
+        public bool IsTokuDaihatsu => ID == 193;
+
+        /// <summary>
+        /// 特大発動艇+戦車第11連隊
+        /// </summary>
+        public bool IsTokuDaihatsuTank => ID == 230;
+
+        /// <summary>
+        /// M4A1 DD
+        /// </summary>
+        public bool IsAmericanDaihatsuTank => ID == 355;
     }
 }
