@@ -31,27 +31,27 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// バージョン(日本語, ソフトウェア名を含みます)
 		/// </summary>
-		public static string VersionJapanese => SoftwareNameJapanese + "四二型改";
+		public static string VersionJapanese => SoftwareNameJapanese + "四三型";
 
 
 		/// <summary>
 		/// バージョン(英語)
 		/// </summary>
-		public static string VersionEnglish => "4.2.1";
+		public static string VersionEnglish => "4.3.0";
 
 
 
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2019/06/30 21:00:00");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2019/10/01 01:00:00");
 
 
 
 
 		private static System.Net.WebClient client;
 		private static readonly Uri uri =
-			new Uri("http://raw.githubusercontent.com/silfumus/ryuukitsune.github.io/master/Translations/en-US/update.json");
+			new Uri("http://raw.githubusercontent.com/gre4bee/ryuukitsune.github.io/master/Translations/en-US/update.json");
 
 		public static void CheckUpdate()
 		{
@@ -115,7 +115,7 @@ namespace ElectronicObserver.Utility
 					if (result == System.Windows.Forms.DialogResult.Yes)
 					{
 
-						System.Diagnostics.Process.Start("https://github.com/silfumus/ElectronicObserver/releases/latest");
+						System.Diagnostics.Process.Start("https://github.com/gre4bee/ElectronicObserver/releases/latest");
 
 					}
 					else if (result == System.Windows.Forms.DialogResult.Cancel)

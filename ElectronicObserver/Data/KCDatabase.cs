@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ElectronicObserver.Data.Constants;
 
 namespace ElectronicObserver.Data
 {
@@ -91,6 +92,11 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public IDDictionary<DockData> Docks { get; private set; }
 
+		/// <summary>
+		/// 開発データ
+		/// </summary>
+		public DevelopmentData Development { get; private set; }
+
 
 		/// <summary>
 		/// 艦隊データ
@@ -154,6 +160,11 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public IDDictionary<RelocationData> RelocatedEquipments { get; private set; }
 
+		/// <summary>
+		/// Current server
+		/// </summary>
+		public KCServer Server { get; set; }
+
 		private KCDatabase()
 		{
 
@@ -169,6 +180,7 @@ namespace ElectronicObserver.Data
 			UseItems = new IDDictionary<UseItem>();
 			Arsenals = new IDDictionary<ArsenalData>();
 			Docks = new IDDictionary<DockData>();
+			Development = new DevelopmentData();
 			Fleet = new FleetManager();
 			Material = new MaterialData();
 			Quest = new QuestManager();
@@ -180,7 +192,7 @@ namespace ElectronicObserver.Data
 			ShipGroup = new ShipGroupManager();
 			BaseAirCorps = new IDDictionary<BaseAirCorpsData>();
 			RelocatedEquipments = new IDDictionary<RelocationData>();
-		}
+        }
 
 
 		public void Load()
