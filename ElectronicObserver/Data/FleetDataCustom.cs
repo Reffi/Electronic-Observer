@@ -17,12 +17,6 @@ namespace ElectronicObserver.Data
     {
         public FleetType Type { get; set; } = FleetType.Single;
 
-        public bool IsCombined => Type == FleetType.Carrier ||
-                                  Type == FleetType.Surface ||
-                                  Type == FleetType.Transport;
-
-        public bool IsEscortFlag => PositionDetail == FleetPositionDetail.EscortFlag;
-
         public bool IsMain => PositionDetail == FleetPositionDetail.Main ||
                               PositionDetail == FleetPositionDetail.MainFlag;
 

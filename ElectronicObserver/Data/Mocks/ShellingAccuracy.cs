@@ -30,8 +30,6 @@ namespace ElectronicObserver.Data.Mocks
     {
         public FormationType Formation { get; set; } = FormationType.LineAhead;
         public FleetType Type { get; set; } = FleetType.Single;
-        public bool IsCombined { get; set; } = false;
-        public bool IsEscortFlag { get; set; } = false;
         public bool IsMain { get; set; } = true;
         public bool IsVanguardTop { get; set; } = false;
     }

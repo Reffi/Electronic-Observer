@@ -4,8 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+
+            xmlns:viewModels="clr-namespace:ElectronicObserver.Window.ViewModel"
+
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="500">
+             d:DesignHeight="750" d:DesignWidth="500" Loaded="ShipDisplay_Loaded">
+
+    <UserControl.DataContext>
+        <viewModels:ShipViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,7 +42,7 @@
                 UseLayoutRounding="True"
                 MouseLeftButtonUp="ShowShipSelection"/>
 
-            <Label Grid.Column="0" Height="Auto" VerticalAlignment="Top" Content="{Binding ShipID}"></Label>
+            <Label Grid.Column="0" Height="Auto" VerticalAlignment="Top" Content="{Binding ShipID}" />
 
             <Label x:Name="ShipName" 
                    Grid.Column="0" 
@@ -39,16 +54,14 @@
                 <TextBlock 
                     Text="{Binding Name, FallbackValue='（なし）'}" 
                     TextWrapping="WrapWithOverflow"
-                    TextAlignment="Center"
-                />
+                    TextAlignment="Center"/>
             </Label>
 
-            <local:ShipStatsDisplay Grid.Column="1"  />
+            <local:ShipStatsDisplay x:Name="StatDisplay" Grid.Column="1"  />
 
             <local:SynergyStatDisplay
                 x:Name="SynergyDisplay"
-                Grid.Column="2"
-                />
+                Grid.Column="2"/>
 
         </Grid>
 
@@ -58,8 +71,7 @@
             x:Name="ShipSelectionOverlay"
             Visibility="Hidden"
             Grid.Row="0" 
-            RowSpan="2"
-            >
+            RowSpan="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -68,15 +80,15 @@
 
             <Label
                 MouseLeftButtonDown="CloseShipSelection"
-                Opacity="0.01" 
-                Background="{DynamicResource MaterialDesignPaper}" />
+                Opacity="0.1" 
+                Background="#303030" />
 
             <local:ShipSelection 
                 x:Name="ShipSelect" 
                 Grid.Column="1" 
                 BorderThickness="1"
                 Opacity="0.9" 
-                Background="{DynamicResource MaterialDesignPaper}"
+                Background="#303030"
                 BorderBrush="DodgerBlue"/>
         </Grid>
 
@@ -84,8 +96,8 @@
             x:Name="EquipmentSelectionOverlay"
             Visibility="Hidden"
             Grid.Row="0" 
-            RowSpan="2"
-        >
+            RowSpan="2">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="2*" />
@@ -93,15 +105,15 @@
 
             <Label
                 MouseLeftButtonDown="CloseEquipmentSelection"
-                Opacity="0.01" 
-                Background="{DynamicResource MaterialDesignPaper}" />
+                Opacity="0.1" 
+                Background="#303030" />
 
             <local:EquipmentSelection 
                 x:Name="EquipmentSelect" 
                 Grid.Column="1" 
                 BorderThickness="1"
                 Opacity="0.9" 
-                Background="{DynamicResource MaterialDesignPaper}"
+                Background="#303030"
                 BorderBrush="DodgerBlue"/>
         </Grid>
     </Grid>

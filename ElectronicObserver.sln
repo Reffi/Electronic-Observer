@@ -86,6 +86,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_SortFileContentOnSave = False
+		RESX_NeutralResourcesLanguage = ja-JP
 		SolutionGuid = {84B27D64-9786-4547-801E-3631DDC32551}
 	EndGlobalSection
 EndGlobal

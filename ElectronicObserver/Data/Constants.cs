@@ -1356,7 +1356,133 @@ namespace ElectronicObserver.Data
             public const int Airstrike = 150;
             public const int Torpedo = 150;
         }
+
+        public static IEnumerable<ShipTypes> GetShipTypeGroup(ShipTypeGroup group) => group switch
+        {
+            ShipTypeGroup.Battleships => new[]
+                {ShipTypes.Battleship, ShipTypes.AviationBattleship, ShipTypes.Battlecruiser},
+
+            ShipTypeGroup.Carriers => new[]
+                {ShipTypes.AircraftCarrier, ShipTypes.ArmoredAircraftCarrier, ShipTypes.LightAircraftCarrier},
+
+            ShipTypeGroup.HeavyCruisers => new[] {ShipTypes.HeavyCruiser, ShipTypes.AviationCruiser},
+
+            ShipTypeGroup.LightCruisers => new[] {ShipTypes.LightCruiser, ShipTypes.TrainingCruiser},
+
+            ShipTypeGroup.Destroyers => new[] {ShipTypes.Destroyer},
+
+            ShipTypeGroup.Escorts => new[] {ShipTypes.Escort},
+
+            ShipTypeGroup.Submarines => new[] {ShipTypes.Submarine, ShipTypes.SubmarineAircraftCarrier},
+
+            ShipTypeGroup.Auxiliaries => new[]
+            {
+                ShipTypes.SeaplaneTender, 
+                ShipTypes.FleetOiler, 
+                ShipTypes.RepairShip, 
+                ShipTypes.AmphibiousAssaultShip,
+                ShipTypes.SubmarineTender
+            },
+
+            _ => Enumerable.Empty<ShipTypes>()
+        };
+
+        public static IEnumerable<EquipmentTypes> GetEquipmentTypeGroup(EquipmentTypeGroup group) => group switch
+        {
+            EquipmentTypeGroup.Fighters => new[] {EquipmentTypes.CarrierBasedFighter},
+
+            EquipmentTypeGroup.Bombers => new[]
+            {
+                EquipmentTypes.CarrierBasedBomber,
+                EquipmentTypes.CarrierBasedTorpedo,
+                EquipmentTypes.JetBomber
+            },
+
+            EquipmentTypeGroup.Recons => new[]
+            {
+                EquipmentTypes.SeaplaneRecon,
+                EquipmentTypes.SeaplaneBomber,
+                EquipmentTypes.SeaplaneFighter,
+                EquipmentTypes.CarrierBasedRecon,
+                EquipmentTypes.Autogyro,
+                EquipmentTypes.ASPatrol
+            },
+
+            EquipmentTypeGroup.MainGuns => new[]
+            {
+                EquipmentTypes.MainGunSmall,
+                EquipmentTypes.MainGunMedium,
+                EquipmentTypes.MainGunLarge,
+                EquipmentTypes.MainGunLarge2
+            },
+
+            EquipmentTypeGroup.SecondaryGuns => new[]
+            {
+                EquipmentTypes.SecondaryGun,
+                EquipmentTypes.AAGun
+            },
+
+            EquipmentTypeGroup.Torpedoes => new[]
+            {
+                EquipmentTypes.Torpedo,
+                EquipmentTypes.MidgetSubmarine,
+                EquipmentTypes.SubmarineTorpedo
+            },
+
+            EquipmentTypeGroup.ASW => new[]
+            {
+                EquipmentTypes.Sonar,
+                EquipmentTypes.SonarLarge,
+                EquipmentTypes.DepthCharge
+            },
+
+            EquipmentTypeGroup.Radars => new[]
+            {
+                EquipmentTypes.RadarSmall,
+                EquipmentTypes.RadarLarge,
+                EquipmentTypes.RadarLarge2
+            },
+
+            EquipmentTypeGroup.Transport => new[]
+            {
+                EquipmentTypes.TransportContainer,
+                EquipmentTypes.LandingCraft,
+                EquipmentTypes.SpecialAmphibiousTank
+            },
+
+            EquipmentTypeGroup.Food => new[]
+            {
+                EquipmentTypes.Ration,
+                EquipmentTypes.Supplies
+            },
+
+            EquipmentTypeGroup.LandPlanes => new[]
+            {
+                EquipmentTypes.FlyingBoat
+            },
+
+            EquipmentTypeGroup.Other => new[]
+            {
+                EquipmentTypes.APShell,
+                EquipmentTypes.AAShell,
+                EquipmentTypes.Engine,
+                EquipmentTypes.DamageControl,
+                EquipmentTypes.ExtraArmor,
+                EquipmentTypes.ExtraArmorMedium,
+                EquipmentTypes.ExtraArmorLarge,
+                EquipmentTypes.Searchlight,
+                EquipmentTypes.SearchlightLarge,
+                EquipmentTypes.RepairFacility,
+                EquipmentTypes.StarShell,
+                EquipmentTypes.CommandFacility,
+                EquipmentTypes.AviationPersonnel,
+                EquipmentTypes.AADirector,
+                EquipmentTypes.Rocket,
+                EquipmentTypes.SurfaceShipPersonnel,
+                EquipmentTypes.SubmarineEquipment
+            },
+
+            _ => Enumerable.Empty<EquipmentTypes>()
+        };
     }
-
-
 }

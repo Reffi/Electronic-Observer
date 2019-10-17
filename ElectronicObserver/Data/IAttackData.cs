@@ -13,6 +13,7 @@ namespace ElectronicObserver.Data
         EngagementTypes Engagement { get; }
 
         DayAttackKind DayAttack { get; }
+        DayAirAttackCutinKind CvciKind { get; }
         HitType HitType { get; }
     }
 

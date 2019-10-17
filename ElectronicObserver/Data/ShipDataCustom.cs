@@ -76,7 +76,7 @@ namespace ElectronicObserver.Data
         public FitBonusCustom FitBonus { get; set; }
 
         //public VisibleFits Synergies { get; set; }
-        private FitBonusCustom Synergies { get; set; }
+        private FitBonusCustom Synergies { get; set; } = new FitBonusCustom();
         public FitBonusCustom CurrentSynergies => Synergies;
 
         public int Level
@@ -246,6 +246,8 @@ namespace ElectronicObserver.Data
         public int RadarCount => Equipment.Where(eq => eq != null).Count(eq => eq.IsRadar);
         public int ApShellCount => Equipment.Where(eq => eq != null).Count(eq => eq.IsApShell);
 
+
+        public ShipDataCustom() { }
 
         public ShipDataCustom(ShipData ship) : this(ship.MasterShip)
         {
@@ -588,8 +590,8 @@ namespace ElectronicObserver.Data
 
             if (ShipID == 553 || ShipID == 554)
             {
-                /*if(suiseiCount > 1 && mainGunCount > 0)
-                    dayAttacks.Add(DayAttackKind.Suisei);*/
+                if(suiseiCount > 1 && mainGunCount > 0)
+                    dayAttacks.Add(DayAttackKind.SeaAirMultiAngle);
 
                 if (zuiunCount > 1 && mainGunCount > 0)
                     dayAttacks.Add(DayAttackKind.ZuiunMultiAngle);
@@ -622,7 +624,7 @@ namespace ElectronicObserver.Data
         {
             List<DayAttackKind> dayAttacks = new List<DayAttackKind>();
 
-            int attackerCount = 0;
+            /*int attackerCount = 0;
             int bomberCount = 0;
 
             foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
@@ -640,11 +642,55 @@ namespace ElectronicObserver.Data
             }
 
             if (attackerCount > 0 && bomberCount > 0)
-                dayAttacks.Add(DayAttackKind.CutinAirAttack);
+                dayAttacks.Add(DayAttackKind.CutinAirAttack);*/
 
             dayAttacks.Add(DayAttackKind.AirAttack);
 
             return dayAttacks;
+        }
+
+        public List<DayAirAttackCutinKind> Cvcis()
+        {
+            List<DayAirAttackCutinKind> cvcis = new List<DayAirAttackCutinKind>();
+
+            int attackerCount = 0;
+            int bomberCount = 0;
+            int fighterCount = 0;
+
+            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            {
+                switch (equip.CategoryType)
+                {
+                    case EquipmentTypes.CarrierBasedTorpedo:
+                        attackerCount++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedBomber:
+                        bomberCount++;
+                        break;
+
+                    case EquipmentTypes.CarrierBasedFighter:
+                        fighterCount++;
+                        break;
+                }
+            }
+
+            if (fighterCount > 0 && attackerCount > 0 && bomberCount > 0)
+            {
+                cvcis.Add(DayAirAttackCutinKind.FighterBomberAttacker);
+            }
+
+            if (attackerCount > 0 && bomberCount > 1)
+            {
+                cvcis.Add(DayAirAttackCutinKind.BomberBomberAttacker);
+            }
+
+            if (attackerCount > 0 && bomberCount > 0)
+            {
+                cvcis.Add(DayAirAttackCutinKind.BomberAttacker);
+            }
+
+            return cvcis;
         }
 
         private List<DayAttackKind> GetAswAttacks()
@@ -844,25 +890,25 @@ namespace ElectronicObserver.Data
 
 
 
-        public string Name => _shipMaster.Name;
-        public int SortID => _shipMaster.SortID;
+        public string Name => _shipMaster?.Name ?? "";
+        public int SortID => _shipMaster?.SortID ?? 0;
 
-        public int ShipID => _shipMaster.ShipID;
+        public int ShipID => _shipMaster?.ShipID ?? 0;
 
         // DropID
         public int MasterID => _ship?.MasterID ?? -1;
 
         public ShipDataMaster MasterShip => _shipMaster;
 
-        public int EquipmentSlotCount => _ship?.SlotSize ?? _shipMaster.SlotSize;
+        public int EquipmentSlotCount => _ship?.SlotSize ?? _shipMaster?.SlotSize ?? 0;
 
         public bool IsExpansionSlotAvailable => _ship?.IsExpansionSlotAvailable ?? true;
 
         public string NameWithLevel => $"{MasterShip.Name} Lv. {Level}";
 
-        public ShipClasses ShipClass => (ShipClasses) _shipMaster.ShipClass;
+        public ShipClasses ShipClass => (ShipClasses) (_shipMaster?.ShipClass ?? 0);
 
-        public ShipTypes ShipType => _shipMaster.ShipType;
+        public ShipTypes ShipType => _shipMaster?.ShipType ?? ShipTypes.Destroyer;
 
         public InstallationType InstallationType { get; }
 
@@ -871,13 +917,13 @@ namespace ElectronicObserver.Data
 
         public bool IsMarried => Level > 99;
 
-        public bool IsInstallation => _shipMaster.IsLandBase;
+        public bool IsInstallation => _shipMaster?.IsLandBase ?? false;
 
-        public bool IsCarrier => _shipMaster.IsAircraftCarrier;
+        public bool IsCarrier => _shipMaster?.IsAircraftCarrier ?? false;
 
-        public bool IsSubmarine => _shipMaster.IsSubmarine;
+        public bool IsSubmarine => _shipMaster?.IsSubmarine ?? false;
 
-        public bool IsAbyssal => _shipMaster.IsAbyssalShip;
+        public bool IsAbyssal => _shipMaster?.IsAbyssalShip ?? false;
 
         public bool CanAttackSubmarine => ShipType switch
         {

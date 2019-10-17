@@ -6,17 +6,28 @@
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
              mc:Ignorable="d" 
              d:DesignHeight="45" d:DesignWidth="120">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label   Content="{Binding StatName, Mode=OneWay}" 
-                 Grid.Column="0" 
-                 VerticalAlignment="Center" 
-                 HorizontalAlignment="Stretch" 
-                 HorizontalContentAlignment="Center" />
+        <Label   
+            Content="{Binding OtherContent, Mode=TwoWay}"
+            Grid.Column="0" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Stretch" 
+            HorizontalContentAlignment="Center" />
 
         <TextBox 
             SourceUpdated="StatChanged"
@@ -26,6 +37,13 @@
             VerticalAlignment="Center" 
             HorizontalAlignment="Stretch" 
             HorizontalContentAlignment="Center"
-            Margin="0 0 5 2"/>
+            Margin="0 0 5 0"/>
+
+        <Image 
+            Grid.Column="0" 
+            Source="{Binding StatIcon}"
+            Height="18"
+            Width="18"/>
+
     </Grid>
 </UserControl>

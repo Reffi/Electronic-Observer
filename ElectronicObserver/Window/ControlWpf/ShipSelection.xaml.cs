@@ -40,7 +40,7 @@ namespace ElectronicObserver.Window.ControlWpf
             return true;
         }
 
-        private ShipTypes _filter = ShipTypes.Escort;
+        private IEnumerable<ShipTypes> _filter = Enumerable.Empty<ShipTypes>();
 
         private IEnumerable<ShipSelectionItem> _displayedShips;
         public IEnumerable<ShipSelectionItem> DisplayedShips
@@ -58,14 +58,14 @@ namespace ElectronicObserver.Window.ControlWpf
             {
                 _ships = value;
 
-                foreach (ShipTypes type in Enum.GetValues(typeof(ShipTypes)))
+                foreach (ShipTypeGroup type in Enum.GetValues(typeof(ShipTypeGroup)))
                 {
                     Button button = new Button();
 
                     button.Content = type.Display();
                     button.Click += (s, e) =>
                     {
-                        _filter = type;
+                        _filter = Constants.GetShipTypeGroup(type);
                         ReloadList();
                     };
 
@@ -85,7 +85,7 @@ namespace ElectronicObserver.Window.ControlWpf
         private void ReloadList()
         {
             DisplayedShips = _ships?
-                .Where(ship => ship.ShipType == _filter)
+                .Where(ship => _filter.Contains(ship.ShipType))
                 .OrderByDescending(ship => ship.Level)
                 .Select(ship => new ShipSelectionItem(ship))
                 .ToList();

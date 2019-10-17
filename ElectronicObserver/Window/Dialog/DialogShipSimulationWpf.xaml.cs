@@ -4,7 +4,6 @@ using ElectronicObserver.Utility.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using ElectronicObserver.Data.Damage;
 using ElectronicObserver.Data.HitRate;
 using ElectronicObserver.Utility.Helpers;
@@ -15,7 +14,7 @@ namespace ElectronicObserver.Window.Dialog
     /// <summary>
     /// Interaction logic for DialogShipSimulationWpf.xaml
     /// </summary>
-    public partial class DialogShipSimulationWpf : UserControl
+    public partial class DialogShipSimulationWpf
     {
         public static readonly RoutedEvent CalculationParametersChangedEvent = EventManager.RegisterRoutedEvent(
             "CalculationParametersChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler),
@@ -39,7 +38,21 @@ namespace ElectronicObserver.Window.Dialog
         public DialogShipSimulationWpf()
         {
             InitializeComponent();
+        }
 
+        public DialogShipSimulationWpf(int shipID) : this()
+        {
+            DefaultShipID = shipID;
+        }
+
+        private BattleStatDisplay[] powerDisplays;
+        private BattleStatDisplay[] accuracyDisplays;
+
+        private BattleStatDisplay[] damageDisplays;
+        private BattleStatDisplay[] hitRateDisplays;
+
+        private void DialogShipSimulation_Loaded(object sender, RoutedEventArgs e)
+        {
             // todo make a language select setting
             Properties.Resources.Culture = new System.Globalization.CultureInfo("en");
 
@@ -61,7 +74,7 @@ namespace ElectronicObserver.Window.Dialog
 
             BonusParameters.AddHandler(CalculationParametersChangedEvent, new RoutedEventHandler(Calculate));
 
-            ShipList = KCDatabase.Instance.Ships.Values.Select(x => new ShipDataCustom(x));
+            ShipList = KCDatabase.Instance.Ships.Values.Select(x => new ShipDataCustom(x)).ToList();
             EquipmentList = KCDatabase.Instance.Equipments.Values.Select(x => new EquipmentDataCustom(x));
 
             EnemyShipList = KCDatabase.Instance.MasterShips.Values
@@ -69,21 +82,7 @@ namespace ElectronicObserver.Window.Dialog
                 .Select(x => new ShipDataCustom(x));
 
             DataContext = this;
-        }
 
-        public DialogShipSimulationWpf(int shipID) : this()
-        {
-            DefaultShipID = shipID;
-        }
-
-        private BattleStatDisplay[] powerDisplays;
-        private BattleStatDisplay[] accuracyDisplays;
-
-        private BattleStatDisplay[] damageDisplays;
-        private BattleStatDisplay[] hitRateDisplays;
-
-        private void DialogShipSimulation_Load(object sender, RoutedEventArgs e)
-        {
             if (!ShipList.Any())
             {
                 //MessageBox.Show("No ships available.\r\nPlease return to the home port page.", "Ships Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -98,7 +97,7 @@ namespace ElectronicObserver.Window.Dialog
             BattlePossibleAttacks();
 
             DefenderDisplay.Ship = new ShipDataCustom(
-                KCDatabase.Instance.MasterShips.Values.First(x => x.ID == 1572));
+                KCDatabase.Instance.MasterShips.Values.First(x => x.ID == 1501));
 
             AttackerDisplay.Ships = ShipList;
             AttackerDisplay.Equipments = EquipmentList;
@@ -110,6 +109,7 @@ namespace ElectronicObserver.Window.Dialog
         }
 
         private List<DayAttackKind> DayAttacks { get; set; } = new List<DayAttackKind>();
+        private List<DayAirAttackCutinKind> CvciAttacks { get; set; } = new List<DayAirAttackCutinKind>();
         private List<DayAttackKind> AswAttacks { get; set; } = new List<DayAttackKind>();
         private List<NightAttackKind> NightAttacks { get; set; } = new List<NightAttackKind>();
         private List<CvnciKind> CvnciAttacks { get; set; } = new List<CvnciKind>();
@@ -121,12 +121,13 @@ namespace ElectronicObserver.Window.Dialog
 
         private void AllPossibleAttacks()
         {
-            DayAttacks = AttackerDisplay.Ship.DayAttacks.ToList();
-            AswAttacks = AttackerDisplay.Ship.AswAttacks.ToList();
-            NightAttacks = AttackerDisplay.Ship.NightAttacks.ToList();
-            CvnciAttacks = AttackerDisplay.Ship.Cvncis();
+            DayAttacks = Attacker.DayAttacks.ToList();
+            CvciAttacks = Attacker.Cvcis();
+            AswAttacks = Attacker.AswAttacks.ToList();
+            NightAttacks = Attacker.NightAttacks.ToList();
+            CvnciAttacks = Attacker.Cvncis();
 
-            int dayAttackCount = DayAttacks.Count;
+            int dayAttackCount = DayAttacks.Count + CvciAttacks.Count;
             int aswAttackCount = AswAttacks.Count;
             int nightAttackCount = NightAttacks.Count + CvnciAttacks.Count;
 
@@ -203,7 +204,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (Attacker == null || Defender == null) return;
 
-
+            if (ExternalParameters.Parameters == null) return;
 
             Battle = new BattleDataCustom
             {
@@ -267,17 +268,33 @@ namespace ElectronicObserver.Window.Dialog
             double normal;
             double critical;
 
-            if (DayAttacks.Any())
+            if (DayAttacks.Any() || CvciAttacks.Any())
             {
-                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingPower;
+                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelDayShellingPower;
                 i++;
+
+                foreach (DayAirAttackCutinKind cvci in CvciAttacks)
+                {
+                    Battle.CvciKind = cvci;
+
+                    Battle.HitType = HitType.Hit;
+                    normal = shelling.Postcap;
+
+                    Battle.HitType = HitType.Critical;
+                    critical = shelling.Postcap;
+
+                    powerDisplays[i].AttackName = $"{cvci.Display()}";
+                    powerDisplays[i].Value = $"{normal:0.##} ({critical:0.##})";
+
+                    i++;
+                }
 
                 foreach (DayAttackKind dayAttack in DayAttacks)
                 {
                     Battle.DayAttack = dayAttack;
 
                     Battle.HitType = HitType.Hit;
-                    normal = dayAttack == DayAttackKind.Shelling ? shelling.Capped : shelling.Postcap;
+                    normal = shelling.Postcap;
 
                     Battle.HitType = HitType.Critical;
                     critical = shelling.Postcap;
@@ -291,7 +308,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (AswAttacks.Any())
             {
-                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswPower;
+                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelAswPower;
                 i++;
 
                 foreach (DayAttackKind dayAttack in AswAttacks)
@@ -313,7 +330,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (NightAttacks.Any() || CvnciAttacks.Any())
             {
-                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingPower;
+                powerDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelNightShellingPower;
                 i++;
 
                 foreach (CvnciKind cvnci in CvnciAttacks)
@@ -359,7 +376,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (DayAttacks.Any())
             {
-                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingAccuracy;
+                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelDayShellingAccuracy;
                 i++;
 
                 foreach (DayAttackKind dayAttack in DayAttacks)
@@ -375,7 +392,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (AswAttacks.Any())
             {
-                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswAccuracy;
+                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelAswAccuracy;
                 i++;
 
                 foreach (DayAttackKind dayAttack in AswAttacks)
@@ -391,7 +408,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (NightAttacks.Any())
             {
-                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingAccuracy;
+                accuracyDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelNightShellingAccuracy;
                 i++;
 
                 foreach (NightAttackKind nightAttack in NightAttacks)
@@ -417,7 +434,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleDayAttacks.Any())
             {
-                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingDamage;
+                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelDayShellingDamage;
                 i++;
 
                 foreach (AttackKindData attack in BattleDayAttacks)
@@ -444,7 +461,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleAswAttacks.Any())
             {
-                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswDamage;
+                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelAswDamage;
                 i++;
 
                 foreach (AttackKindData attack in BattleAswAttacks)
@@ -471,7 +488,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleNightAttacks.Any())
             {
-                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingDamage;
+                damageDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelNightShellingDamage;
                 i++;
 
                 foreach (AttackKindData attack in BattleNightAttacks)
@@ -512,7 +529,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleDayAttacks.Any())
             {
-                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.DayShellingHitRate;
+                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelDayShellingHitRate;
                 i++;
 
                 foreach (AttackKindData attack in BattleDayAttacks)
@@ -530,7 +547,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleAswAttacks.Any())
             {
-                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.AswHitRate;
+                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelAswHitRate;
                 i++;
 
                 foreach (AttackKindData attack in BattleAswAttacks)
@@ -548,7 +565,7 @@ namespace ElectronicObserver.Window.Dialog
 
             if (BattleNightAttacks.Any())
             {
-                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.NightShellingHitRate;
+                hitRateDisplays[i].Separator = Properties.DialogShipSimulationWpf.LabelNightShellingHitRate;
                 i++;
 
                 foreach (AttackKindData attack in BattleNightAttacks)

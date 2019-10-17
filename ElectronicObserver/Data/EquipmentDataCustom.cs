@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ElectronicObserver.Data.Damage;
@@ -17,6 +18,7 @@ namespace ElectronicObserver.Data
         ITorpedoEvasionEquipment, IEquipmentDataCustom, IAntiInstallationEquipment
     {
         private int _id;
+        private string _name;
 
         private int _baseFirepower;
         private int _baseTorpedo;
@@ -36,7 +38,7 @@ namespace ElectronicObserver.Data
         private EquipmentDataMaster _equipMaster;
 
         public int ID => _id;
-        public string Name => _equip?.Name ?? _equipMaster.Name;
+        public string Name => _name;
 
 
         public int BaseFirepower
@@ -131,6 +133,8 @@ namespace ElectronicObserver.Data
 
         public FitCategories FitCategory { get; private set; }
 
+        public EquipmentDataCustom() { }
+
         public EquipmentDataCustom(EquipmentData equip) : this(equip.MasterEquipment)
         {
             _equip = equip;
@@ -145,6 +149,7 @@ namespace ElectronicObserver.Data
 
             Level = 0;
             _id = equip.EquipmentID;
+            _name = equip.Name;
             Proficiency = 0;
 
             BaseFirepower = _equipMaster.Firepower;

@@ -6,33 +6,46 @@
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
              mc:Ignorable="d" 
              d:DesignHeight="45" d:DesignWidth="180">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
-        <Label   
-            Content="{Binding StatName, Mode=TwoWay}"
-            Grid.Column="0" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Stretch" 
-            HorizontalContentAlignment="Center" />
+    <!--UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+    </-->
 
-        <TextBox 
-            Text="{Binding BaseStat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-            Grid.Column="1" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Stretch" 
-            HorizontalContentAlignment="Center" />
+    <Border CornerRadius="4" Margin="2" Background="#212121">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Label
-            x:Name="DisplayStat"
-            Content="{Binding TotalStat, Mode=OneWay}"
-            Grid.Column="2" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Stretch" 
-            HorizontalContentAlignment="Center" />
-    </Grid>
+            <Label   
+                Content="{Binding OtherContent, Mode=TwoWay}"
+                Grid.Column="0" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Stretch" 
+                HorizontalContentAlignment="Center" />
+
+            <Image 
+                Source="{Binding StatIcon}"
+                Margin="5"
+                Height="18"
+                Width="18"/>
+
+            <TextBox 
+                Text="{Binding BaseStat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                Grid.Column="1" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Stretch" 
+                HorizontalContentAlignment="Center" />
+
+            <Label
+                x:Name="DisplayStat"
+                Content="{Binding TotalStat, Mode=OneWay}"
+                Grid.Column="2" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Stretch" 
+                HorizontalContentAlignment="Center" />
+        </Grid>
+    </Border>
 </UserControl>

@@ -33,7 +33,8 @@ namespace ElectronicObserver.Window.ViewModel
 
 
         private ShipDataCustom _ship;
-        private ObservableCollection<EquipmentViewModel> _equipmentViewModels;
+        private ObservableCollection<EquipmentViewModel> _equipmentViewModels 
+            = new ObservableCollection<EquipmentViewModel>(new EquipmentViewModel[6]);
         private SynergyViewModel _synergies;
 
         public ShipDataCustom Ship
@@ -45,7 +46,7 @@ namespace ElectronicObserver.Window.ViewModel
                 _synergies = new SynergyViewModel(value);
                 _synergies.PropertyChanged += EquipmentStatChange;
                 _ship = value;
-                Equipment = _ship.Equipment;
+                Equipment = _ship.Equipment ?? new EquipmentDataCustom[6];
             }
         }
 
@@ -62,39 +63,33 @@ namespace ElectronicObserver.Window.ViewModel
 
         public SynergyViewModel SynergyViewModel => _synergies;
 
-        private EquipmentDataCustom[] _equipment;
-
         public EquipmentDataCustom[] Equipment
         {
-            get => _ship.Equipment;
+            get => Ship.Equipment;
             set
             {
-                // _synergies = new VisibleFits();
-                _ship.Equipment = value;
-                EquipmentViewModel[] evms = new EquipmentViewModel[6];
+                Ship.Equipment = value;
 
                 for (int i = 0; i < 6; i++)
                 {
-                    if (_equipment?[i] == value[i])
-                        continue;
+                    if (EquipmentViewModels[i]?.Equip == value[i]) continue;
 
                     if (value[i] == null)
                     {
-                        evms[i] = null;
+                        EquipmentViewModels[i] = null;
                         continue;
                     }
 
-                    FitBonusViewModel fbvm = new FitBonusViewModel(_ship, value[i]);
+                    FitBonusViewModel fbvm = new FitBonusViewModel(Ship, value[i]);
                     fbvm.PropertyChanged += EquipmentStatChange;
 
-                    evms[i] = new EquipmentViewModel(value[i]);
-                    evms[i].CurrentFitBonus = fbvm;
+                    EquipmentViewModels[i] = new EquipmentViewModel(value[i]) {CurrentFitBonus = fbvm};
                     if (i < Aircraft.Length)
-                        evms[i].SlotSize = Aircraft[i];
-                    evms[i].PropertyChanged += EquipmentStatChange;
+                    {
+                        EquipmentViewModels[i].SlotSize = Aircraft[i];
+                    }
+                    EquipmentViewModels[i].PropertyChanged += EquipmentStatChange;
                 }
-
-                EquipmentViewModels = new ObservableCollection<EquipmentViewModel>(evms);
 
                 // change all properties
                 OnPropertyChanged(string.Empty);
@@ -334,15 +329,30 @@ namespace ElectronicObserver.Window.ViewModel
 
 
 
-        public ShipViewModel()
-        {
-
-        }
+        public ShipViewModel() => Ship = new ShipDataCustom();
 
         public ShipViewModel(ShipDataCustom ship)
         {
             Ship = ship;
-        }
+
+            _level = ship.Level;
+            _hp = ship.HP;
+            _baseArmor = ship.BaseArmor;
+            _baseEvasion = ship.BaseEvasion;
+            _baseAircraft = ship.Aircraft.Sum();
+            _baseSpeed = ship.BaseSpeed;
+            _baseRange = ship.BaseRange;
+            _baseAccuracy = ship.BaseAccuracy;
+
+            _condition = ship.Condition;
+            _baseFirepower = ship.BaseFirepower;
+            _baseTorpedo = ship.BaseTorpedo;
+            _baseAA = ship.BaseAA;
+            _baseASW = ship.BaseASW;
+            _baseLoS = ship.BaseLoS;
+            _baseLuck = ship.BaseLuck;
+            _baseNightPower = ship.BaseNightPower;
+    }
 
         private int ValidRange(int value, int min = 0, int? max = null)
         {

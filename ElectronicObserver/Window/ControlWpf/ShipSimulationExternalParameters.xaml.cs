@@ -87,9 +87,6 @@ namespace ElectronicObserver.Window.ControlWpf
                 set => SetField(ref _searchlight, value);
             }
 
-            /*public IEnumerable<FormationType> Formations =>
-                Enum.GetValues(typeof(FormationType)).Cast<FormationType>();*/
-
             public ExternalParameters(EngagementTypes engagement = EngagementTypes.Parallel,
                 FormationType formation = FormationType.LineAhead, FleetType fleet = FleetType.Single, 
                 FleetPositionDetail positiionDetail = FleetPositionDetail.MainFlag, bool nightRecon = false, 
@@ -108,6 +105,25 @@ namespace ElectronicObserver.Window.ControlWpf
         {
             // bind to fleet and battle?
             InitializeComponent();
+        }
+
+        public ShipSimulationExternalParameters(EngagementTypes engagement = EngagementTypes.Parallel,
+            FormationType formation = FormationType.LineAhead, FleetType fleet = FleetType.Single,
+            FleetPositionDetail positiionDetail = FleetPositionDetail.MainFlag, bool nightRecon = false, 
+            bool flare = false, bool searchlight = false)
+        {
+            _externalParameters = new ExternalParameters(engagement, formation, fleet, positiionDetail,
+                nightRecon, flare, searchlight);
+            DataContext = _externalParameters;
+        }
+
+        public void ParameterChange(object sender, RoutedEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent, this));
+        }
+
+        private void ShipSimulationExternalParameters_Loaded(object sender, RoutedEventArgs e)
+        {
             _externalParameters = new ExternalParameters();
 
             List<ComboboxEnumItem<FormationType>> formations = Enum.GetValues(typeof(FormationType))
@@ -150,21 +166,6 @@ namespace ElectronicObserver.Window.ControlWpf
 
 
             DataContext = _externalParameters;
-        }
-
-        public ShipSimulationExternalParameters(EngagementTypes engagement = EngagementTypes.Parallel,
-            FormationType formation = FormationType.LineAhead, FleetType fleet = FleetType.Single,
-            FleetPositionDetail positiionDetail = FleetPositionDetail.MainFlag, bool nightRecon = false, 
-            bool flare = false, bool searchlight = false)
-        {
-            _externalParameters = new ExternalParameters(engagement, formation, fleet, positiionDetail,
-                nightRecon, flare, searchlight);
-            DataContext = _externalParameters;
-        }
-
-        public void ParameterChange(object sender, RoutedEventArgs e)
-        {
-            RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent, this));
         }
     }
 }

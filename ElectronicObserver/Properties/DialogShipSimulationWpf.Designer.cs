@@ -63,135 +63,144 @@ namespace ElectronicObserver.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 対潜命中項.
         /// </summary>
-        public static string AswAccuracy {
+        public static string LabelAswAccuracy {
             get {
-                return ResourceManager.GetString("AswAccuracy", resourceCulture);
+                return ResourceManager.GetString("LabelAswAccuracy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 対潜ダメージ.
+        ///   Looks up a localized string similar to 対潜ダメージ (クリティカル).
         /// </summary>
-        public static string AswDamage {
+        public static string LabelAswDamage {
             get {
-                return ResourceManager.GetString("AswDamage", resourceCulture);
+                return ResourceManager.GetString("LabelAswDamage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 対潜命中率.
         /// </summary>
-        public static string AswHitRate {
+        public static string LabelAswHitRate {
             get {
-                return ResourceManager.GetString("AswHitRate", resourceCulture);
+                return ResourceManager.GetString("LabelAswHitRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 対潜力.
+        ///   Looks up a localized string similar to 対潜力 (クリティカル).
         /// </summary>
-        public static string AswPower {
+        public static string LabelAswPower {
             get {
-                return ResourceManager.GetString("AswPower", resourceCulture);
+                return ResourceManager.GetString("LabelAswPower", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 昼砲撃命中項.
         /// </summary>
-        public static string DayShellingAccuracy {
+        public static string LabelDayShellingAccuracy {
             get {
-                return ResourceManager.GetString("DayShellingAccuracy", resourceCulture);
+                return ResourceManager.GetString("LabelDayShellingAccuracy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 昼砲撃ダメージ.
+        ///   Looks up a localized string similar to 昼砲撃ダメージ (クリティカル).
         /// </summary>
-        public static string DayShellingDamage {
+        public static string LabelDayShellingDamage {
             get {
-                return ResourceManager.GetString("DayShellingDamage", resourceCulture);
+                return ResourceManager.GetString("LabelDayShellingDamage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 昼砲撃命中率.
         /// </summary>
-        public static string DayShellingHitRate {
+        public static string LabelDayShellingHitRate {
             get {
-                return ResourceManager.GetString("DayShellingHitRate", resourceCulture);
+                return ResourceManager.GetString("LabelDayShellingHitRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 昼砲撃力.
+        ///   Looks up a localized string similar to 昼砲撃力 (クリティカル).
         /// </summary>
-        public static string DayShellingPower {
+        public static string LabelDayShellingPower {
             get {
-                return ResourceManager.GetString("DayShellingPower", resourceCulture);
+                return ResourceManager.GetString("LabelDayShellingPower", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 照明弾.
         /// </summary>
-        public static string Flare {
+        public static string LabelFlare {
             get {
-                return ResourceManager.GetString("Flare", resourceCulture);
+                return ResourceManager.GetString("LabelFlare", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 夜偵.
         /// </summary>
-        public static string NightRecon {
+        public static string LabelNightRecon {
             get {
-                return ResourceManager.GetString("NightRecon", resourceCulture);
+                return ResourceManager.GetString("LabelNightRecon", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 夜砲撃命中項.
         /// </summary>
-        public static string NightShellingAccuracy {
+        public static string LabelNightShellingAccuracy {
             get {
-                return ResourceManager.GetString("NightShellingAccuracy", resourceCulture);
+                return ResourceManager.GetString("LabelNightShellingAccuracy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 夜砲撃ダメージ.
+        ///   Looks up a localized string similar to 夜砲撃ダメージ (クリティカル).
         /// </summary>
-        public static string NightShellingDamage {
+        public static string LabelNightShellingDamage {
             get {
-                return ResourceManager.GetString("NightShellingDamage", resourceCulture);
+                return ResourceManager.GetString("LabelNightShellingDamage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 夜砲撃命中率.
         /// </summary>
-        public static string NightShellingHitRate {
+        public static string LabelNightShellingHitRate {
             get {
-                return ResourceManager.GetString("NightShellingHitRate", resourceCulture);
+                return ResourceManager.GetString("LabelNightShellingHitRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 夜砲撃力.
+        ///   Looks up a localized string similar to 夜砲撃力 (クリティカル).
         /// </summary>
-        public static string NightShellingPower {
+        public static string LabelNightShellingPower {
             get {
-                return ResourceManager.GetString("NightShellingPower", resourceCulture);
+                return ResourceManager.GetString("LabelNightShellingPower", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 探照灯.
         /// </summary>
-        public static string Searchlight {
+        public static string LabelSearchlight {
             get {
-                return ResourceManager.GetString("Searchlight", resourceCulture);
+                return ResourceManager.GetString("LabelSearchlight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to シナジー.
+        /// </summary>
+        public static string LabelSynergy {
+            get {
+                return ResourceManager.GetString("LabelSynergy", resourceCulture);
             }
         }
     }

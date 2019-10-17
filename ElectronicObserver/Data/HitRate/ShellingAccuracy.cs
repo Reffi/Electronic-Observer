@@ -27,8 +27,6 @@ namespace ElectronicObserver.Data.HitRate
     {
         FormationType Formation { get; }
         FleetType Type { get; }
-        bool IsCombined { get; }
-        bool IsEscortFlag { get; }
         bool IsMain { get; }
         bool IsVanguardTop { get; }
     }
@@ -90,24 +88,19 @@ namespace ElectronicObserver.Data.HitRate
             };
         }
 
-        private int Base => FleetBase();
-
-        private int FleetBase()
+        private int Base => (Fleet.Type, Fleet.IsMain) switch
         {
-            int baseAcc;
+            (FleetType.Surface, true) => 46,
+            (FleetType.Surface, false) => 70,
 
-            if (!Fleet.IsCombined || (Fleet.Type == FleetType.Carrier && Fleet.IsMain))
-                baseAcc = 90;
-            else if (Fleet.Type == FleetType.Surface && Fleet.IsMain)
-                baseAcc = 57;
-            else
-                baseAcc = 74;
+            (FleetType.Carrier, true) => 78,
+            (FleetType.Carrier, false) => 43,
 
-            if (Fleet.IsCombined && !Fleet.IsMain && Fleet.IsEscortFlag)
-                baseAcc -= 10;
+            (FleetType.Transport, true) => 51,
+            (FleetType.Transport, false) => 45,
 
-            return baseAcc;
-        }
+            _ => 90
+        };
 
         private double FleetMod => Fleet.Formation switch
         {

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Media.Imaging;
 using ElectronicObserver.Data;
 using ElectronicObserver.Utility.Data;
 
@@ -23,5 +27,30 @@ namespace ElectronicObserver.Utility.Helpers
                 .First()?
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? enumValue.ToString();
+
+        public static BitmapImage ToImageSource(this Image image)
+        {
+            // ImageSource ...
+            BitmapImage bi = new BitmapImage();
+
+            bi.BeginInit();
+
+            MemoryStream ms = new MemoryStream();
+
+            var a = PixelFormat.Format32bppArgb;
+
+            // Save to a memory stream...
+            image.Save(ms, ImageFormat.Png);
+
+            // Rewind the stream...
+            ms.Seek(0, SeekOrigin.Begin);
+
+            // Tell the WPF image to use this stream...
+            bi.StreamSource = ms;
+
+            bi.EndInit();
+
+            return bi;
+        }
     }
 }

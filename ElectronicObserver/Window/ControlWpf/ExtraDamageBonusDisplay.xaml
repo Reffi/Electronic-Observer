@@ -4,10 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
+
+             xmlns:viewModel="clr-namespace:ElectronicObserver.Window.ControlWpf"
+
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="350">
-    <Border CornerRadius="7" Padding="4" Background="#424242">
-        <Grid MinWidth="300">
+
+    <UserControl.Resources>
+        <viewModel:ExtraDamageBonusViewModel x:Key="ExtraDamageBonus" />
+    </UserControl.Resources>
+
+    <Border CornerRadius="7" Padding="4" Background="#303030">
+        <Grid MinWidth="300" DataContext="{StaticResource ExtraDamageBonus}">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -28,37 +36,37 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Border CornerRadius="7" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Background="#383838"></Border>
+            <Border CornerRadius="4" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Background="#212121" />
 
-            <Border CornerRadius="7" Margin="2" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Background="#383838"></Border>
+            <Border CornerRadius="4" Margin="2" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Background="#212121" />
 
-            <Border CornerRadius="7" Margin="2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Background="#383838"></Border>
+            <Border CornerRadius="4" Margin="2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" Background="#212121" />
 
-            <Border CornerRadius="7" Margin="2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="2" Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="2" Background="#383838"></Border>
+            <Border CornerRadius="4" Margin="2" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="4" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="6" Grid.Column="6" Grid.ColumnSpan="2" Background="#212121" />
 
             <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 4" Content="a1" />
             <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 4" Content="a2" />

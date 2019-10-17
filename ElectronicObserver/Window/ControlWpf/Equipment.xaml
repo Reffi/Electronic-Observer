@@ -4,10 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
-             mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="400">
 
-    <Border CornerRadius="7" Padding="3" Margin="2" Background="#424242">
+             xmlns:viewModels="clr-namespace:ElectronicObserver.Window.ViewModel"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="120" d:DesignWidth="500">
+
+    <UserControl.DataContext>
+        <viewModels:EquipmentViewModel />
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="7" Padding="3" Margin="2" Background="{StaticResource MaterialDesignPaper}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -15,7 +31,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -24,54 +40,45 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <!--Image 
-            x:Name="EquipImage" 
-            Grid.Column="0" 
-            Grid.Row="0" 
-            Grid.RowSpan="3"
-            RenderOptions.BitmapScalingMode="HighQuality"
-            UseLayoutRounding="True"
-            MouseLeftButtonDown="EquipSelection"/-->
-
             <Label x:Name="EquipName" 
                Grid.Column="0" 
                Grid.Row="0" 
                Grid.ColumnSpan="6"
                MouseLeftButtonDown="EquipSelection"
-               VerticalContentAlignment="Center"
-               >
+               VerticalContentAlignment="Center">
 
                 <TextBlock 
-                Text="{Binding Name, FallbackValue='（なし）'}" 
-                TextWrapping="WrapWithOverflow"
-                TextAlignment="Center"
-                />
+                    Text="{Binding Name, FallbackValue='（なし）'}" 
+                    TextWrapping="WrapWithOverflow"
+                    TextAlignment="Center"/>
             </Label>
 
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Background="#383838"></Border>
-            <Border CornerRadius="7" Margin="5 0 0 0" Grid.Row="1" Grid.Column="5" Grid.RowSpan="2" Background="#383838"></Border>
 
-            <local:Stat StatName="" x:Name="StatDisplay0" Grid.Row="1" Grid.Column="0" />
-            <local:Stat StatName="" x:Name="StatDisplay1" Grid.Row="1" Grid.Column="1" />
-            <local:Stat StatName="" x:Name="StatDisplay2" Grid.Row="1" Grid.Column="2" />
-            <local:Stat StatName="" x:Name="StatDisplay3" Grid.Row="1" Grid.Column="3" />
-            <local:Stat StatName="" x:Name="StatDisplay4" Grid.Row="1" Grid.Column="4" />
-            <local:Stat StatName="" x:Name="StatDisplay5" Grid.Row="1" Grid.Column="5" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Background="#212121" />
+            <Border CornerRadius="4" Margin="0 0 3 0" Grid.Row="1" Grid.Column="5" Grid.RowSpan="2" Background="#212121" />
 
-            <local:Stat StatName="+" x:Name="FitDisplay0" Grid.Row="2" Grid.Column="0" />
-            <local:Stat StatName="+" x:Name="FitDisplay1" Grid.Row="2" Grid.Column="1" />
-            <local:Stat StatName="+" x:Name="FitDisplay2" Grid.Row="2" Grid.Column="2" />
-            <local:Stat StatName="+" x:Name="FitDisplay3" Grid.Row="2" Grid.Column="3" />
-            <local:Stat StatName="+" x:Name="FitDisplay4" Grid.Row="2" Grid.Column="4" />
-            <local:Stat StatName="+" x:Name="FitDisplay5" Grid.Row="2" Grid.Column="5" />
+            <local:Stat x:Name="StatDisplay0" Grid.Row="1" Grid.Column="0" />
+            <local:Stat x:Name="StatDisplay1" Grid.Row="1" Grid.Column="1" />
+            <local:Stat x:Name="StatDisplay2" Grid.Row="1" Grid.Column="2" />
+            <local:Stat x:Name="StatDisplay3" Grid.Row="1" Grid.Column="3" />
+            <local:Stat x:Name="StatDisplay4" Grid.Row="1" Grid.Column="4" />
+            <local:Stat x:Name="StatDisplay5" Grid.Row="1" Grid.Column="5" />
 
-            <local:Stat BaseStat="{Binding Level}" StatName="★" Grid.Row="0" Grid.Column="6" />
-            <local:Stat BaseStat="{Binding Proficiency}" StatName=">>" Grid.Row="1" Grid.Column="6" />
-            <local:Stat BaseStat="{Binding SlotSize, Mode=OneWay}" StatName="搭載" Grid.Row="2" Grid.Column="6" IsEnabled="False" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay0" Grid.Row="2" Grid.Column="0" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay1" Grid.Row="2" Grid.Column="1" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay2" Grid.Row="2" Grid.Column="2" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay3" Grid.Row="2" Grid.Column="3" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay4" Grid.Row="2" Grid.Column="4" />
+             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay5" Grid.Row="2" Grid.Column="5" />
+
+            <local:Stat OtherContent="★" BaseStat="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="6" />
+            <local:Stat OtherContent=">>" BaseStat="{Binding Proficiency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="6" />
+            <local:Stat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding SlotSize}" Grid.Row="2" Grid.Column="6" IsEnabled="False" />
+
         </Grid>
     </Border>
 </UserControl>

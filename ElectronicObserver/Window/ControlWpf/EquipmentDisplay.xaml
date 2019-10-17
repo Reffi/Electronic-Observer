@@ -17,11 +17,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <local:Equipment  SlotIndex="0" x:Name="EquipDisplay0" Grid.Row="0" />
-        <local:Equipment  SlotIndex="1" x:Name="EquipDisplay1" Grid.Row="1" />
-        <local:Equipment  SlotIndex="2" x:Name="EquipDisplay2" Grid.Row="2" />
-        <local:Equipment  SlotIndex="3" x:Name="EquipDisplay3" Grid.Row="3" />
-        <local:Equipment  SlotIndex="4" x:Name="EquipDisplay4" Grid.Row="4" />
-        <local:Equipment  SlotIndex="5" x:Name="EquipDisplay5" Grid.Row="5" />
+        <local:Equipment SlotIndex="0" x:Name="EquipDisplay0" Grid.Row="0" />
+        <local:Equipment SlotIndex="1" x:Name="EquipDisplay1" Grid.Row="1" />
+        <local:Equipment SlotIndex="2" x:Name="EquipDisplay2" Grid.Row="2" />
+        <local:Equipment SlotIndex="3" x:Name="EquipDisplay3" Grid.Row="3" />
+        <local:Equipment SlotIndex="4" x:Name="EquipDisplay4" Grid.Row="4" />
+        <local:Equipment SlotIndex="5" x:Name="EquipDisplay5" Grid.Row="5" />
     </Grid>
 </UserControl>

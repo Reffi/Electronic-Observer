@@ -1,7 +1,15 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ElectronicObserver.Resource;
+using ElectronicObserver.Utility.Helpers;
 using ElectronicObserver.Window.Dialog;
+using ElectronicObserver.Window.ViewModel;
 
 namespace ElectronicObserver.Window.ControlWpf
 {
@@ -10,19 +18,28 @@ namespace ElectronicObserver.Window.ControlWpf
     /// </summary>
     public partial class Stat : UserControl
     {
-        public static readonly DependencyProperty StatNameProperty = DependencyProperty
-            .Register(nameof(StatName), typeof(string), typeof(Stat),
-                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty StatIconProperty = DependencyProperty
+            .Register(nameof(StatIcon), typeof(ImageSource), typeof(Stat),
+                new FrameworkPropertyMetadata(default(ImageSource), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public static readonly DependencyProperty OtherContentProperty = DependencyProperty
+            .Register(nameof(OtherContent), typeof(object), typeof(Stat),
+                new FrameworkPropertyMetadata(default, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty BaseStatProperty = DependencyProperty
             .Register(nameof(BaseStat), typeof(int), typeof(Stat),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public string StatName
+        public ImageSource StatIcon
         {
-            get => (string)GetValue(StatNameProperty);
-            set => SetValue(StatNameProperty, value);
+            get => (ImageSource)GetValue(StatIconProperty);
+            set => SetValue(StatIconProperty, value);
+        }
+
+        public object OtherContent
+        {
+            get => GetValue(OtherContentProperty);
+            set => SetValue(OtherContentProperty, value);
         }
 
         public int BaseStat
@@ -34,16 +51,8 @@ namespace ElectronicObserver.Window.ControlWpf
         public Stat()
         {
             InitializeComponent();
-            // Since data context is a dependency property and dependency properties inherit
-            // down the visual tree, we can set the data context of a container and intercept
-            // the data context’s inheritance.
+
             (Content as FrameworkElement).DataContext = this;
-        }
-
-
-        private void StatChanged(object sender, TextChangedEventArgs e)
-        {
-            
         }
 
         private void StatChanged(object sender, DataTransferEventArgs e)

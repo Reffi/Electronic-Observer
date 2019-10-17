@@ -128,6 +128,8 @@ namespace ElectronicObserver.Data
             set => _accuracy = value;
         }
 
+        public FitBonusCustom(): this(new VisibleFits()) { }
+
         // todo find a better way for this
         public FitBonusCustom(VisibleFits synergies)
         {

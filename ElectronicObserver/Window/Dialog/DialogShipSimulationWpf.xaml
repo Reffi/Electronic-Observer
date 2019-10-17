@@ -10,23 +10,15 @@
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
-             Background="{DynamicResource MaterialDesignPaper}"
+             Background="{DynamicResource MaterialDesignToolBarBackground}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-
 
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:ElectronicObserver.Window.ControlWpf"
-             Loaded="DialogShipSimulation_Load" d:DesignWidth="1600" d:DesignHeight="900" >
+             Loaded="DialogShipSimulation_Loaded" d:DesignWidth="1600" d:DesignHeight="900" >
 
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Purple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
     </UserControl.Resources>
 
     <Grid Margin="5">
@@ -100,18 +92,18 @@
                     </ListView.ItemContainerStyle>
 
 
-                    <Border CornerRadius="7" Background="#424242">
+                    <Border CornerRadius="4" Background="#303030">
                         <ListView
                             x:Name="PowerDisplay"
                             HorizontalContentAlignment="Stretch"
-                            Margin="5"/>
+                            Margin="0 5"/>
                     </Border>
 
-                    <Border CornerRadius="7" Background="#424242">
+                    <Border CornerRadius="4" Background="#303030">
                         <ListView
                             x:Name="AccuracyDisplay"
                             HorizontalContentAlignment="Stretch"
-                            Margin="5"/>
+                            Margin="0 5"/>
                     </Border>
 
                 </ListView>
@@ -136,18 +128,18 @@
                     </ListView.ItemContainerStyle>
 
 
-                    <Border CornerRadius="7" Background="#424242">
+                    <Border CornerRadius="4" Background="#303030">
                         <ListView
                             x:Name="DamageDisplay"
                             HorizontalContentAlignment="Stretch"
-                            Margin="5"/>
+                            Margin="0 5"/>
                     </Border>
 
-                    <Border CornerRadius="7" Background="#424242">
+                    <Border CornerRadius="4" Background="#303030">
                         <ListView
                             x:Name="HitRateDisplay"
                             HorizontalContentAlignment="Stretch"
-                            Margin="5"/>
+                            Margin="0 5"/>
                     </Border>
 
                 </ListView>

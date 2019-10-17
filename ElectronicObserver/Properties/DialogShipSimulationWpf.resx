@@ -117,49 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AswAccuracy" xml:space="preserve">
+  <data name="LabelAswAccuracy" xml:space="preserve">
     <value>対潜命中項</value>
   </data>
-  <data name="AswDamage" xml:space="preserve">
-    <value>対潜ダメージ</value>
+  <data name="LabelAswDamage" xml:space="preserve">
+    <value>対潜ダメージ (クリティカル)</value>
   </data>
-  <data name="AswHitRate" xml:space="preserve">
+  <data name="LabelAswHitRate" xml:space="preserve">
     <value>対潜命中率</value>
   </data>
-  <data name="AswPower" xml:space="preserve">
-    <value>対潜力</value>
+  <data name="LabelAswPower" xml:space="preserve">
+    <value>対潜力 (クリティカル)</value>
   </data>
-  <data name="DayShellingAccuracy" xml:space="preserve">
+  <data name="LabelDayShellingAccuracy" xml:space="preserve">
     <value>昼砲撃命中項</value>
   </data>
-  <data name="DayShellingDamage" xml:space="preserve">
-    <value>昼砲撃ダメージ</value>
+  <data name="LabelDayShellingDamage" xml:space="preserve">
+    <value>昼砲撃ダメージ (クリティカル)</value>
   </data>
-  <data name="DayShellingHitRate" xml:space="preserve">
+  <data name="LabelDayShellingHitRate" xml:space="preserve">
     <value>昼砲撃命中率</value>
   </data>
-  <data name="DayShellingPower" xml:space="preserve">
-    <value>昼砲撃力</value>
+  <data name="LabelDayShellingPower" xml:space="preserve">
+    <value>昼砲撃力 (クリティカル)</value>
   </data>
-  <data name="Flare" xml:space="preserve">
+  <data name="LabelFlare" xml:space="preserve">
     <value>照明弾</value>
   </data>
-  <data name="NightRecon" xml:space="preserve">
+  <data name="LabelNightRecon" xml:space="preserve">
     <value>夜偵</value>
   </data>
-  <data name="NightShellingAccuracy" xml:space="preserve">
+  <data name="LabelNightShellingAccuracy" xml:space="preserve">
     <value>夜砲撃命中項</value>
   </data>
-  <data name="NightShellingDamage" xml:space="preserve">
-    <value>夜砲撃ダメージ</value>
+  <data name="LabelNightShellingDamage" xml:space="preserve">
+    <value>夜砲撃ダメージ (クリティカル)</value>
   </data>
-  <data name="NightShellingHitRate" xml:space="preserve">
+  <data name="LabelNightShellingHitRate" xml:space="preserve">
     <value>夜砲撃命中率</value>
   </data>
-  <data name="NightShellingPower" xml:space="preserve">
-    <value>夜砲撃力</value>
+  <data name="LabelNightShellingPower" xml:space="preserve">
+    <value>夜砲撃力 (クリティカル)</value>
   </data>
-  <data name="Searchlight" xml:space="preserve">
+  <data name="LabelSearchlight" xml:space="preserve">
     <value>探照灯</value>
+  </data>
+  <data name="LabelSynergy" xml:space="preserve">
+    <value>シナジー</value>
   </data>
 </root>

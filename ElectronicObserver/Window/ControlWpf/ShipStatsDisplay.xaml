@@ -5,8 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
              mc:Ignorable="d" 
-             d:DesignHeight="211" d:DesignWidth="242">
-    <Border CornerRadius="7" Padding="3" Margin="2" Background="#424242">
+             d:DesignHeight="300" d:DesignWidth="200">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="4" Padding="3" Margin="2" Background="#303030">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -16,30 +27,30 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition/>
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <local:ShipStat StatName="レベル" BaseStat="{Binding Level, Mode=TwoWay}"        TotalStat="{Binding Level, Mode=OneWay}"           Grid.Column="0" Grid.Row="0" />
-            <local:ShipStat StatName="耐久"   BaseStat="{Binding HP, Mode=TwoWay}"           TotalStat="{Binding HP, Mode=OneWay}"              Grid.Column="0" Grid.Row="1" />
-            <local:ShipStat StatName="装甲"   BaseStat="{Binding BaseArmor, Mode=TwoWay}"    TotalStat="{Binding DisplayArmor, Mode=OneWay}"    Grid.Column="0" Grid.Row="2" />
-            <local:ShipStat StatName="回避"   BaseStat="{Binding BaseEvasion, Mode=TwoWay}"  TotalStat="{Binding DisplayEvasion, Mode=OneWay}"  Grid.Column="0" Grid.Row="3" />
-            <local:ShipStat StatName="搭載"   BaseStat="{Binding Aircraft, Mode=OneWay}"     TotalStat="{Binding Aircraft, Mode=OneWay}"        Grid.Column="0" Grid.Row="4" />
-            <local:ShipStat StatName="速力"   BaseStat="{Binding BaseSpeed, Mode=TwoWay}"    TotalStat="{Binding BaseSpeed, Mode=OneWay}"       Grid.Column="0" Grid.Row="5" IsEnabled="False" />
-            <local:ShipStat StatName="射程"   BaseStat="{Binding BaseRange, Mode=TwoWay}"    TotalStat="{Binding BaseRange, Mode=OneWay}"       Grid.Column="0" Grid.Row="6" IsEnabled="False" />
-            <local:ShipStat StatName="命中"   BaseStat="{Binding BaseAccuracy, Mode=OneWay}" TotalStat="{Binding DisplayAccuracy, Mode=OneWay}" Grid.Column="0" Grid.Row="7" IsEnabled="False" />
+            <local:ShipStat OtherContent="Lv." BaseStat="{Binding Level, Mode=TwoWay}" TotalStat="{Binding Level, Mode=OneWay}"           Grid.Column="0" Grid.Row="0" />
+            <local:ShipStat StatIcon="{StaticResource IconHP}" BaseStat="{Binding HP, Mode=TwoWay}"           TotalStat="{Binding HP, Mode=OneWay}"              Grid.Column="0" Grid.Row="1" />
+            <local:ShipStat StatIcon="{StaticResource IconArmor}" BaseStat="{Binding BaseArmor, Mode=TwoWay}"    TotalStat="{Binding DisplayArmor, Mode=OneWay}"    Grid.Column="0" Grid.Row="2" />
+            <local:ShipStat StatIcon="{StaticResource IconEvasion}" BaseStat="{Binding BaseEvasion, Mode=TwoWay}"  TotalStat="{Binding DisplayEvasion, Mode=OneWay}"  Grid.Column="0" Grid.Row="3" />
+            <local:ShipStat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding Aircraft[0], Mode=OneWay}"     TotalStat="{Binding Aircraft[0], Mode=OneWay}"        Grid.Column="0" Grid.Row="4" />
+            <local:ShipStat StatIcon="{StaticResource IconSpeed}" BaseStat="{Binding BaseSpeed, Mode=TwoWay}"    TotalStat="{Binding BaseSpeed, Mode=OneWay}"       Grid.Column="0" Grid.Row="5" IsEnabled="False" />
+            <local:ShipStat StatIcon="{StaticResource IconRange}" BaseStat="{Binding BaseRange, Mode=TwoWay}"    TotalStat="{Binding BaseRange, Mode=OneWay}"       Grid.Column="0" Grid.Row="6" IsEnabled="False" />
+            <local:ShipStat StatIcon="{StaticResource IconAccuracy}" BaseStat="{Binding BaseAccuracy, Mode=OneWay}" TotalStat="{Binding DisplayAccuracy, Mode=OneWay}" Grid.Column="0" Grid.Row="7" IsEnabled="False" />
 
-            <local:ShipStat StatName="疲労度" BaseStat="{Binding Condition, Mode=TwoWay}"      TotalStat="{Binding Condition, Mode=OneWay}"         Grid.Column="1" Grid.Row="0" />
-            <local:ShipStat StatName="火力"   BaseStat="{Binding BaseFirepower, Mode=TwoWay}"  TotalStat="{Binding DisplayFirepower, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" />
-            <local:ShipStat StatName="雷装"   BaseStat="{Binding BaseTorpedo, Mode=TwoWay}"    TotalStat="{Binding DisplayTorpedo, Mode=OneWay}"    Grid.Column="1" Grid.Row="2" />
-            <local:ShipStat StatName="対空"   BaseStat="{Binding BaseAA, Mode=TwoWay}"         TotalStat="{Binding DisplayAA, Mode=OneWay}"         Grid.Column="1" Grid.Row="3" />
-            <local:ShipStat StatName="対潜"   BaseStat="{Binding BaseASW, Mode=TwoWay}"        TotalStat="{Binding DisplayASW, Mode=OneWay}"        Grid.Column="1" Grid.Row="4" />
-            <local:ShipStat StatName="索敵"   BaseStat="{Binding BaseLoS, Mode=TwoWay}"        TotalStat="{Binding DisplayLoS, Mode=OneWay}"        Grid.Column="1" Grid.Row="5" />
-            <local:ShipStat StatName="運"     BaseStat="{Binding BaseLuck, Mode=TwoWay}"       TotalStat="{Binding BaseLuck, Mode=OneWay}"          Grid.Column="1" Grid.Row="6" />
-            <local:ShipStat StatName="夜火力" BaseStat="{Binding BaseNightPower, Mode=OneWay}" TotalStat="{Binding DisplayNightPower, Mode=OneWay}" Grid.Column="1" Grid.Row="7" IsEnabled="False" />
+            <local:ShipStat OtherContent="{StaticResource IconCondition}" BaseStat="{Binding Condition, Mode=TwoWay}" TotalStat="{Binding Condition, Mode=OneWay}"         Grid.Column="1" Grid.Row="0" />
+            <local:ShipStat StatIcon="{StaticResource IconFirepower}" BaseStat="{Binding BaseFirepower, Mode=TwoWay}"  TotalStat="{Binding DisplayFirepower, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" />
+            <local:ShipStat StatIcon="{StaticResource IconTorpedo}" BaseStat="{Binding BaseTorpedo, Mode=TwoWay}"    TotalStat="{Binding DisplayTorpedo, Mode=OneWay}"    Grid.Column="1" Grid.Row="2" />
+            <local:ShipStat StatIcon="{StaticResource IconAA}" BaseStat="{Binding BaseAA, Mode=TwoWay}"         TotalStat="{Binding DisplayAA, Mode=OneWay}"         Grid.Column="1" Grid.Row="3" />
+            <local:ShipStat StatIcon="{StaticResource IconASW}" BaseStat="{Binding BaseASW, Mode=TwoWay}"        TotalStat="{Binding DisplayASW, Mode=OneWay}"        Grid.Column="1" Grid.Row="4" />
+            <local:ShipStat StatIcon="{StaticResource IconLoS}" BaseStat="{Binding BaseLoS, Mode=TwoWay}"        TotalStat="{Binding DisplayLoS, Mode=OneWay}"        Grid.Column="1" Grid.Row="5" />
+            <local:ShipStat StatIcon="{StaticResource IconLuck}" BaseStat="{Binding BaseLuck, Mode=TwoWay}"       TotalStat="{Binding BaseLuck, Mode=OneWay}"          Grid.Column="1" Grid.Row="6" />
+            <local:ShipStat OtherContent="{StaticResource IconNight}" BaseStat="{Binding BaseNightPower, Mode=OneWay}" TotalStat="{Binding DisplayNightPower, Mode=OneWay}" Grid.Column="1" Grid.Row="7" IsEnabled="False" />
         </Grid>
     </Border>
 </UserControl>

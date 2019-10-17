@@ -127,7 +127,7 @@
     <value>Anti-Aircraft Shell</value>
   </data>
   <data name="APShell" xml:space="preserve">
-    <value>Armour Piercing Shelling</value>
+    <value>Armour Piercing Shell</value>
   </data>
   <data name="ASPatrol" xml:space="preserve">
     <value>Anti-submarine Patrol</value>

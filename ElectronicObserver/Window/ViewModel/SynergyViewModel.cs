@@ -94,6 +94,8 @@ namespace ElectronicObserver.Window.ViewModel
             }
         }*/
 
+        public SynergyViewModel() => _ship = new ShipDataCustom();
+
         public SynergyViewModel(ShipDataCustom ship)
         {
             _ship = ship;

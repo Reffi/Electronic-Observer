@@ -2557,8 +2557,11 @@ namespace ElectronicObserver.Utility.Data
     {
         None = 0,
 
+        [Display(ResourceType = typeof(Properties.DayAirAttackCutinKind), Name = "FighterBomberAttacker")]
         FighterBomberAttacker,
+        [Display(ResourceType = typeof(Properties.DayAirAttackCutinKind), Name = "BomberBomberAttacker")]
         BomberBomberAttacker,
+        [Display(ResourceType = typeof(Properties.DayAirAttackCutinKind), Name = "BomberAttacker")]
         BomberAttacker,
     }
 

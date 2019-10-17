@@ -12,6 +12,7 @@ namespace ElectronicObserver.Data
     {
         public EngagementTypes Engagement { get; set; } = EngagementTypes.Parallel;
         public DayAttackKind DayAttack { get; set; } = DayAttackKind.NormalAttack;
+        public DayAirAttackCutinKind CvciKind { get; set; } = DayAirAttackCutinKind.None;
         public NightAttackKind NightAttack { get; set; } = NightAttackKind.NormalAttack;
         public NightTorpedoCutinKind TorpedoCutinKind { get; set; } = NightTorpedoCutinKind.None;
         public CvnciKind CvnciKind { get; set; } = CvnciKind.Unknown;

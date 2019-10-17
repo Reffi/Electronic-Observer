@@ -49,7 +49,7 @@ namespace ElectronicObserver.Window.ControlWpf
             set => SetField(ref _displayedEquipment, value);
         }
 
-        private EquipmentTypes _filter = EquipmentTypes.Unknown;
+        private IEnumerable<EquipmentTypes> _filter = Enumerable.Empty<EquipmentTypes>();
 
         private IEnumerable<EquipmentTypes> _equippableCategories;
         public IEnumerable<EquipmentTypes> EquippableCategories
@@ -60,15 +60,16 @@ namespace ElectronicObserver.Window.ControlWpf
                 _equippableCategories = value;
 
                 Filters.Children.Clear();
+                
 
-                foreach (EquipmentTypes type in _equippableCategories)
+                foreach (EquipmentTypeGroup type in Enum.GetValues(typeof(EquipmentTypeGroup)))
                 {
                     Button button = new Button();
 
                     button.Content = type.Display();
                     button.Click += (s, e) =>
                     {
-                        _filter = type;
+                        _filter = Constants.GetEquipmentTypeGroup(type);
                         ReloadList();
                     };
 
@@ -94,7 +95,9 @@ namespace ElectronicObserver.Window.ControlWpf
         private void ReloadList()
         {
             DisplayedEquipment = _equips?
-                .Where(eq => eq.CategoryType == _filter)
+                .Where(eq => _filter
+                    .Where(f => _equippableCategories.Contains(f))
+                    .Contains(eq.CategoryType))
                 .OrderBy(eq => eq.ID)
                 .ThenByDescending(eq => eq.Level)
                 .Select(eq => new EquipmentSelectionItem(eq))

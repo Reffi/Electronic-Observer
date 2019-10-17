@@ -4,11 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="80">
+             xmlns:properties="clr-namespace:ElectronicObserver.Properties"
+             xmlns:resource="clr-namespace:ElectronicObserver.Resource"
 
-    <Border CornerRadius="7" Padding="3" Margin="2" Background="#424242">
-        <Grid>
+             xmlns:viewModels="clr-namespace:ElectronicObserver.Window.ViewModel"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="80">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <viewModels:SynergyViewModel x:Key="Synergy" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="4" Padding="3" Margin="2" Background="{StaticResource MaterialDesignPaper}">
+        <Grid DataContext="{StaticResource Synergy}">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -20,15 +35,22 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
+            <Border CornerRadius="4" Margin="2" Grid.Row="1" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="2" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="3" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="4" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="5" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="6" Background="{StaticResource MaterialDesignToolBarBackground}" />
+            <Border CornerRadius="4" Margin="2" Grid.Row="7" Background="{StaticResource MaterialDesignToolBarBackground}" />
 
-            <Label Content="シナジー" HorizontalAlignment="Center" />
-            <local:Stat StatName="火力" BaseStat="{Binding Firepower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" />
-            <local:Stat StatName="雷装" BaseStat="{Binding Torpedo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" />
-            <local:Stat StatName="対空" BaseStat="{Binding AA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" />
-            <local:Stat StatName="装甲" BaseStat="{Binding Armor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" />
-            <local:Stat StatName="対潜" BaseStat="{Binding ASW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" />
-            <local:Stat StatName="回避" BaseStat="{Binding Evasion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" />
-            <local:Stat StatName="索敵" BaseStat="{Binding LoS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" />
+            <Label Grid.Row="0" Content="{x:Static properties:DialogShipSimulationWpf.LabelSynergy}" HorizontalAlignment="Center" />
+            <local:Stat StatIcon="{StaticResource IconFirepower}" BaseStat="{Binding Firepower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" />
+            <local:Stat StatIcon="{StaticResource IconTorpedo}" BaseStat="{Binding Torpedo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" />
+            <local:Stat StatIcon="{StaticResource IconAA}" BaseStat="{Binding AA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" />
+            <local:Stat StatIcon="{StaticResource IconArmor}" BaseStat="{Binding Armor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" />
+            <local:Stat StatIcon="{StaticResource IconASW}" BaseStat="{Binding ASW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" />
+            <local:Stat StatIcon="{StaticResource IconEvasion}" BaseStat="{Binding Evasion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" />
+            <local:Stat StatIcon="{StaticResource IconLoS}" BaseStat="{Binding LoS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" />
         </Grid>
     </Border>
 </UserControl>

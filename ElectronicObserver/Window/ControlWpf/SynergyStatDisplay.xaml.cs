@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ElectronicObserver.Resource;
 using ElectronicObserver.Window.ViewModel;
 
 namespace ElectronicObserver.Window.ControlWpf
@@ -36,6 +37,14 @@ namespace ElectronicObserver.Window.ControlWpf
         public SynergyStatDisplay()
         {
             InitializeComponent();
+
+            /*FirepowerIcon.StatIcon = IconContent.ParameterFirepower;
+            TorpedoIcon.StatIcon = IconContent.ParameterTorpedo;
+            AaIcon.StatIcon = IconContent.ParameterAA;
+            ArmorIcon.StatIcon = IconContent.ParameterArmor;
+            AswIcon.StatIcon = IconContent.ParameterASW;
+            EvasionIcon.StatIcon = IconContent.ParameterEvasion;
+            LoSIcon.StatIcon = IconContent.ParameterLOS;*/
         }
     }
 }

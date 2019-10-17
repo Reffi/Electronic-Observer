@@ -23,7 +23,7 @@ namespace ElectronicObserver.Window.ControlWpf
                     return;
 
                 _shipViewModel = value;
-                DataContext = _shipViewModel;
+                DataContext = Ship;
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -31,8 +31,10 @@ namespace ElectronicObserver.Window.ControlWpf
 
                     equipmentDisplays[i].IsEnabled = slotEnabled;
                     equipmentDisplays[i].Equip = _shipViewModel.EquipmentViewModels[i];
-                    if(i < 5)
-                        equipmentDisplays[i].SlotSize = _shipViewModel.Aircraft?[i] ?? 0;
+                    /*if(i < 5)
+                        equipmentDisplays[i].SlotSize = _shipViewModel.Aircraft?[i] ?? 0;*/
+
+
                 }
             }
         }
@@ -42,8 +44,6 @@ namespace ElectronicObserver.Window.ControlWpf
             InitializeComponent();
 
             equipmentDisplays = new[] { EquipDisplay0, EquipDisplay1, EquipDisplay2, EquipDisplay3, EquipDisplay4, EquipDisplay5 };
-
-            //DataContext = this;
         }
     }
 }

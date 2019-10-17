@@ -11,6 +11,7 @@ namespace ElectronicObserver.Data.Mocks
     {
         public EngagementTypes Engagement { get; set; } = EngagementTypes.Parallel;
         public DayAttackKind DayAttack { get; set; } = DayAttackKind.NormalAttack;
+        public DayAirAttackCutinKind CvciKind { get; set; } = DayAirAttackCutinKind.None;
         public HitType HitType { get; set; } = HitType.Hit;
     }
 

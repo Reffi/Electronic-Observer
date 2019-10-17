@@ -234,4 +234,20 @@ namespace ElectronicObserver.Data
         [Display(ResourceType = typeof(Properties.EquipmentTypes), Name = "CarrierBasedRecon2")]
         CarrierBasedRecon2 = 94
     }
+
+    public enum EquipmentTypeGroup
+    {
+        Fighters,
+        Bombers,
+        Recons,
+        MainGuns,
+        SecondaryGuns,
+        Torpedoes,
+        ASW,
+        Radars,
+        Transport,
+        Food,
+        LandPlanes,
+        Other
+    }
 }

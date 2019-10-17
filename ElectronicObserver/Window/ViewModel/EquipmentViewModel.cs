@@ -173,15 +173,27 @@ namespace ElectronicObserver.Window.ViewModel
 
 
 
-        public EquipmentViewModel()
-        {
-
-        }
+        public EquipmentViewModel() => Equip = new EquipmentDataCustom();
 
         public EquipmentViewModel(IEquipmentDataCustom equip)
         {
             _equip = equip;
-        }
+
+            _id = equip.ID;
+
+            _baseFirepower = equip.BaseFirepower;
+            _baseTorpedo = equip.BaseTorpedo;
+            _baseAA = equip.BaseAA;
+            _baseArmor = equip.BaseArmor;
+            _baseASW = equip.BaseASW;
+            _baseEvasion = equip.BaseEvasion;
+            _baseLoS = equip.BaseLoS;
+            _baseAccuracy = equip.BaseAccuracy;
+            _baseBombing = equip.BaseBombing;
+
+            _level = equip.Level;
+            _proficiency = equip.Proficiency;
+    }
 
         private int ValidRange(int value, int min = 0, int? max = null)
         {

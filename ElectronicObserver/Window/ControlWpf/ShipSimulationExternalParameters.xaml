@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
              xmlns:properties="clr-namespace:ElectronicObserver.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="160">
+             d:DesignHeight="150" d:DesignWidth="160" Loaded="ShipSimulationExternalParameters_Loaded">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -70,9 +70,8 @@
             Unchecked="ParameterChange" 
             Grid.Row="4" 
             Grid.Column="0" 
-            Grid.ColumnSpan="2" 
-            x:Name="NightReconSelect" 
-            Content="{x:Static properties:DialogShipSimulationWpf.NightRecon}"/>
+            Grid.ColumnSpan="2"
+            Content="{x:Static properties:DialogShipSimulationWpf.LabelNightRecon}"/>
 
         <CheckBox 
             IsChecked="{Binding Flare, Mode=TwoWay}" 
@@ -80,9 +79,8 @@
             Unchecked="ParameterChange" 
             Grid.Row="5" 
             Grid.Column="0" 
-            Grid.ColumnSpan="2" 
-            x:Name="FlareSelect" 
-            Content="{x:Static properties:DialogShipSimulationWpf.Flare}"/>
+            Grid.ColumnSpan="2"
+            Content="{x:Static properties:DialogShipSimulationWpf.LabelFlare}"/>
 
         <CheckBox 
             IsChecked="{Binding Searchlight, Mode=TwoWay}"
@@ -90,9 +88,8 @@
             Unchecked="ParameterChange" 
             Grid.Row="6" 
             Grid.Column="0" 
-            Grid.ColumnSpan="2" 
-            x:Name="SearchlightSelect" 
-            Content="{x:Static properties:DialogShipSimulationWpf.Searchlight}"/>
+            Grid.ColumnSpan="2"
+            Content="{x:Static properties:DialogShipSimulationWpf.LabelSearchlight}"/>
 
     </Grid>
 </UserControl>

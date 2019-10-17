@@ -60,7 +60,6 @@ namespace ElectronicObserver.Window.ControlWpf
             }
 
             if (args.Equip == null) return;
-            if (args.Equip == null) return;
 
             //_ship.Equipment[_currentEquipmentSlot.SlotIndex] = args.Equip;
 
@@ -102,6 +101,9 @@ namespace ElectronicObserver.Window.ControlWpf
                     return;
                 }
 
+                _viewModel = new ShipViewModel();
+                _viewModel.PropertyChanged += CalculationParametersChanged;
+
                 _ship = value;
                 _viewModel.Ship = _ship;
                 DataContext = ViewModel;
@@ -111,6 +113,7 @@ namespace ElectronicObserver.Window.ControlWpf
                 EquipmentDisplay.Ship = _viewModel;
                 EquipmentSelect.EquippableCategories = _ship.EquippableCategories.Cast<EquipmentTypes>();
 
+                StatDisplay.ViewModel = _viewModel;
 
                 string resourceType = _ship.IsAbyssal
                     ? KCResourceHelper.ResourceTypeShipFull
@@ -166,17 +169,14 @@ namespace ElectronicObserver.Window.ControlWpf
         public ShipDisplay()
         {
             InitializeComponent();
+        }
+
+        private void ShipDisplay_Loaded(object sender, RoutedEventArgs e)
+        {
             ShipSelect.AddHandler(ShipSelectionItem.ShipSelectionEvent, new RoutedEventHandler(ShipSelected));
             EquipmentSelect.AddHandler(EquipmentSelectionItem.EquipmentSelectionEvent,
                 new RoutedEventHandler(EquipSelected));
             EquipmentDisplay.AddHandler(Equipment.EquipmentChangeEvent, new RoutedEventHandler(EquipChange));
-
-
-            CloseShipSelection(null, null);
-            CloseEquipmentSelection(null, null);
-
-            _viewModel = new ShipViewModel();
-            _viewModel.PropertyChanged += CalculationParametersChanged;
         }
 
         private void ShowShipSelection(object sender, MouseButtonEventArgs e)

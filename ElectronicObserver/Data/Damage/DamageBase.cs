@@ -5,7 +5,7 @@ namespace ElectronicObserver.Data.Damage
     public abstract class DamageBase
     {
         Random rng = new Random();
-        protected ExtraDamageBonus Parameters { get; }
+        private ExtraDamageBonus Parameters { get; }
 
         private int Cap { get; }
 
@@ -39,7 +39,7 @@ namespace ElectronicObserver.Data.Damage
         protected virtual double ApShellMod => 1;
         protected virtual double AmmoMod => 1;
 
-        protected double CapDamage(double damage)
+        private double CapDamage(double damage)
         {
             if (damage > Cap)
                 damage = Cap + Math.Sqrt(damage - Cap);

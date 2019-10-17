@@ -41,6 +41,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>8.0</LangVersion>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -312,6 +313,11 @@
       <DependentUpon>NotifierRes.resx</DependentUpon>
     </Compile>
     <Compile Include="Observer\DiscordRPC.cs" />
+    <Compile Include="Properties\DayAirAttackCutinKind.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DayAirAttackCutinKind.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\DayAttackKind.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -356,6 +362,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NightAttackKind.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\ShipTypeGroups.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipTypeGroups.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\ShipTypes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -967,6 +978,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NotifierRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\DayAirAttackCutinKind.en.resx" />
+    <EmbeddedResource Include="Properties\DayAirAttackCutinKind.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DayAirAttackCutinKind.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\DayAttackKind.en.resx" />
     <EmbeddedResource Include="Properties\DayAttackKind.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1009,6 +1025,11 @@
     <EmbeddedResource Include="Properties\NightAttackKind.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NightAttackKind.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\ShipTypeGroups.en.resx" />
+    <EmbeddedResource Include="Properties\ShipTypeGroups.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShipTypeGroups.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\ShipTypes.en.resx" />
     <EmbeddedResource Include="Properties\ShipTypes.resx">
@@ -1268,6 +1289,19 @@
   <ItemGroup>
     <Content Include="74eo.ico" />
     <Content Include="Other\Information\apilist.txt" />
+    <Resource Include="Resources\IconAccuracy.png" />
+    <Resource Include="Resources\IconTorpedo.png" />
+    <Resource Include="Resources\IconSpeed.png" />
+    <Resource Include="Resources\IconRange.png" />
+    <Resource Include="Resources\IconLuck.png" />
+    <Resource Include="Resources\IconLOS.png" />
+    <Resource Include="Resources\IconHP.png" />
+    <Resource Include="Resources\IconFirepower.png" />
+    <Resource Include="Resources\IconEvasion.png" />
+    <Resource Include="Resources\IconASW.png" />
+    <Resource Include="Resources\IconArmor.png" />
+    <Resource Include="Resources\IconAircraft.png" />
+    <Resource Include="Resources\IconAA.png" />
     <None Include="Other\Information\kcmemo.md" />
     <Content Include="Other\Information\todo.txt" />
   </ItemGroup>
@@ -1306,6 +1340,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Properties\Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Window\ControlWpf\BattleStatDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1327,6 +1365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Window\ControlWpf\ExtraDamageBonusDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Properties\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

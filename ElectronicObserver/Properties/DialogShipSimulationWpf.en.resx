@@ -117,50 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AswAccuracy" xml:space="preserve">
+  <data name="LabelAswAccuracy" xml:space="preserve">
     <value>ASW Accuracy</value>
   </data>
-  <data name="AswDamage" xml:space="preserve">
-    <value>ASW Damage</value>
+  <data name="LabelAswDamage" xml:space="preserve">
+    <value>ASW Damage (critical)</value>
   </data>
-  <data name="AswHitRate" xml:space="preserve">
+  <data name="LabelAswHitRate" xml:space="preserve">
     <value>ASW Hit Rate</value>
   </data>
-  <data name="AswPower" xml:space="preserve">
-    <value>ASW Power</value>
+  <data name="LabelAswPower" xml:space="preserve">
+    <value>ASW Power (critical)</value>
   </data>
-  <data name="DayShellingAccuracy" xml:space="preserve">
+  <data name="LabelDayShellingAccuracy" xml:space="preserve">
     <value>Day Shelling Accuracy</value>
   </data>
-  <data name="DayShellingDamage" xml:space="preserve">
-    <value>Day Shelling Damage</value>
+  <data name="LabelDayShellingDamage" xml:space="preserve">
+    <value>Day Shelling Damage (critical)</value>
   </data>
-  <data name="DayShellingHitRate" xml:space="preserve">
+  <data name="LabelDayShellingHitRate" xml:space="preserve">
     <value>Day Shelling Hit Rate</value>
   </data>
-  <data name="DayShellingPower" xml:space="preserve">
-    <value>Day Shelling Power</value>
+  <data name="LabelDayShellingPower" xml:space="preserve">
+    <value>Day Shelling Power (critical)</value>
   </data>
-  <data name="Flare" xml:space="preserve">
+  <data name="LabelFlare" xml:space="preserve">
     <value>Flare</value>
     <comment>Or known as star shell</comment>
   </data>
-  <data name="NightRecon" xml:space="preserve">
+  <data name="LabelNightRecon" xml:space="preserve">
     <value>Night Recon</value>
   </data>
-  <data name="NightShellingAccuracy" xml:space="preserve">
+  <data name="LabelNightShellingAccuracy" xml:space="preserve">
     <value>Night Shelling Accuracy</value>
   </data>
-  <data name="NightShellingDamage" xml:space="preserve">
-    <value>Night Shelling Damage</value>
+  <data name="LabelNightShellingDamage" xml:space="preserve">
+    <value>Night Shelling Damage (critical)</value>
   </data>
-  <data name="NightShellingHitRate" xml:space="preserve">
+  <data name="LabelNightShellingHitRate" xml:space="preserve">
     <value>Night Shelling Hit Rate</value>
   </data>
-  <data name="NightShellingPower" xml:space="preserve">
-    <value>Night Shelling Power</value>
+  <data name="LabelNightShellingPower" xml:space="preserve">
+    <value>Night Shelling Power (critical)</value>
   </data>
-  <data name="Searchlight" xml:space="preserve">
+  <data name="LabelSearchlight" xml:space="preserve">
     <value>Searchlight</value>
+  </data>
+  <data name="LabelSynergy" xml:space="preserve">
+    <value>Synergy</value>
   </data>
 </root>

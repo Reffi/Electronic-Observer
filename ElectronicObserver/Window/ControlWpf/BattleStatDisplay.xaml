@@ -6,13 +6,29 @@
              xmlns:local="clr-namespace:ElectronicObserver.Window.ControlWpf"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="160">
+
+    <!--UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+    </-->
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="SeparatorDisplay" Foreground="Yellow" Padding="-5" Margin="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Separator}" HorizontalContentAlignment="Center" />
+        <Label 
+            x:Name="SeparatorDisplay" 
+            Content="{Binding Separator}" 
+            Foreground="DodgerBlue" 
+            Padding="-5" 
+            Margin="0" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2"
+            HorizontalContentAlignment="Center" >
+
+
+        </Label>
 
         <Label x:Name="AttackNameDisplay" Padding="-5" Margin="0" Grid.Column="0" Content="{Binding AttackName}" HorizontalAlignment="Left" />
         <Label x:Name="ValueDisplay" Padding="-5" Margin="0" Grid.Column="1" Content="{Binding Value}" HorizontalAlignment="Right" />

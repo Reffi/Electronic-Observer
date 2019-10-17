@@ -66,8 +66,12 @@ namespace ElectronicObserver.Data.Damage
         };
 
         // todo CVCI mods
-        protected override double AttackKindPostcapMod => Battle.DayAttack switch
+        protected override double AttackKindPostcapMod => Battle.CvciKind switch
         {
+            DayAirAttackCutinKind.FighterBomberAttacker => 1.25,
+            DayAirAttackCutinKind.BomberBomberAttacker => 1.2,
+            DayAirAttackCutinKind.BomberAttacker => 1.15,
+
             _ => 1
         };
 
