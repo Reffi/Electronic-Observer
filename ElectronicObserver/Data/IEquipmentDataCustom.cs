@@ -2,7 +2,7 @@
 
 namespace ElectronicObserver.Data
 {
-    public interface IEquipmentDataCustom: IEquipmentDamageData
+    /*public interface IEquipmentDataCustom: IEquipmentDamageData
     {
         string Name { get; }
         int ID { get; }
@@ -10,7 +10,7 @@ namespace ElectronicObserver.Data
 
         /*int BaseFirepower { get; set; }
         int BaseTorpedo { get; set; }*/
-        int BaseAA { get; set; }
+        /*int BaseAA { get; set; }
         int BaseArmor { get; set; }
         int BaseASW { get; set; }
         int BaseEvasion { get; set; }
@@ -74,5 +74,5 @@ namespace ElectronicObserver.Data
         bool IsDepthChargeProjector { get; }
         bool IsSpecialDepthChargeProjector { get; }
         
-    }
+    }*/
 }

@@ -8,7 +8,7 @@ using ElectronicObserver.Utility.Helpers;
 
 namespace ElectronicObserver.Window.ViewModel
 {
-    public class EquipmentViewModel: Observable
+    public class EquipmentSlotViewModel : Observable
     {
         private int _id;
 
@@ -24,16 +24,20 @@ namespace ElectronicObserver.Window.ViewModel
 
         private int _level;
         private int _proficiency;
+        private int _slotSize;
 
 
 
+        private EquipmentDataCustom _equip;
 
-        private IEquipmentDataCustom _equip;
-
-        public IEquipmentDataCustom Equip
+        public EquipmentDataCustom Equip
         {
             get => _equip;
-            set => _equip = value;
+            set
+            {
+                _equip = value ?? new EquipmentDataCustom();
+                OnPropertyChanged("");
+            }
         }
 
         public int ID => _equip.ID;
@@ -52,6 +56,7 @@ namespace ElectronicObserver.Window.ViewModel
             }
 
         }
+
         public int BaseTorpedo
         {
             get => _equip.BaseTorpedo;
@@ -62,6 +67,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseTorpedo, value);
             }
         }
+
         public int BaseAA
         {
             get => _equip.BaseAA;
@@ -72,6 +78,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseAA, value);
             }
         }
+
         public int BaseArmor
         {
             get => _equip.BaseArmor;
@@ -82,6 +89,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseArmor, value);
             }
         }
+
         public int BaseASW
         {
             get => _equip.BaseASW;
@@ -92,6 +100,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseASW, value);
             }
         }
+
         public int BaseEvasion
         {
             get => _equip.BaseEvasion;
@@ -102,6 +111,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseEvasion, value);
             }
         }
+
         public int BaseLoS
         {
             get => _equip.BaseLoS;
@@ -112,6 +122,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseLoS, value);
             }
         }
+
         public int BaseAccuracy
         {
             get => _equip.BaseAccuracy;
@@ -122,6 +133,7 @@ namespace ElectronicObserver.Window.ViewModel
                 SetField(ref _baseAccuracy, value);
             }
         }
+
         public int BaseBombing
         {
             get => _equip.BaseBombing;
@@ -139,43 +151,150 @@ namespace ElectronicObserver.Window.ViewModel
             get => _equip.Level;
             set
             {
-                value = ValidRange(value, 0, 10);
+                value = value.Clamp(0, 10);
                 _equip.Level = value;
 
                 SetField(ref _level, value);
             }
         }
+
         public int Proficiency
         {
             get => _equip.Proficiency;
             set
             {
-                value = ValidRange(value, 0, 7);
+                value = value.Clamp(0, 7);
                 _equip.Proficiency = value;
 
                 SetField(ref _proficiency, value);
             }
         }
-        public int SlotSize { get; set; }
+
+        public int SlotSize
+        {
+            get => _slotSize;
+            set
+            {
+                SetField(ref _slotSize, value);
+            }
+        }
 
 
-        private FitBonusViewModel _currentFitBonus;
+        private int _fitFirepower;
+        private int _fitTorpedo;
+        private int _fitAA;
+        private int _fitASW;
+        private int _fitEvasion;
+        private int _fitArmor;
+        private int _fitLoS;
+        private int _fitAccuracy;
+
+        public int FitFirepower
+        {
+            get => FitBonus.Firepower;
+            set
+            {
+                FitBonus.Firepower = value;
+                SetField(ref _fitFirepower, value);
+            }
+        }
+
+        public int FitTorpedo
+        {
+            get => FitBonus.Torpedo;
+            set
+            {
+                FitBonus.Torpedo = value;
+                SetField(ref _fitTorpedo, value);
+            }
+        }
+
+        public int FitAA
+        {
+            get => FitBonus.AA;
+            set
+            {
+                FitBonus.AA = value;
+                SetField(ref _fitAA, value);
+            }
+        }
+
+        public int FitASW
+        {
+            get => FitBonus.ASW;
+            set
+            {
+                FitBonus.ASW = value;
+                SetField(ref _fitASW, value);
+            }
+        }
+
+        public int FitEvasion
+        {
+            get => FitBonus.Evasion;
+            set
+            {
+                FitBonus.Evasion = value;
+                SetField(ref _fitEvasion, value);
+            }
+        }
+
+        public int FitArmor
+        {
+            get => FitBonus.Armor;
+            set
+            {
+                FitBonus.Armor = value;
+                SetField(ref _fitArmor, value);
+            }
+        }
+
+        public int FitLoS
+        {
+            get => FitBonus.LoS;
+            set
+            {
+                FitBonus.LoS = value;
+                SetField(ref _fitLoS, value);
+            }
+        }
+
+        public int FitAccuracy
+        {
+            get => FitBonus.Accuracy;
+            set
+            {
+                FitBonus.Accuracy = value;
+                SetField(ref _fitAccuracy, value);
+            }
+        }
+
+        public FitBonusCustom FitBonus
+        {
+            get => Equip.CurrentFitBonus;
+            set => Equip.CurrentFitBonus = value;
+        }
+
+
+        /*private FitBonusViewModel _currentFitBonus;
+
         public FitBonusViewModel CurrentFitBonus
         {
             get => _currentFitBonus;
             set
             {
-                _equip.CurrentFitBonus = value.CurrentFitBonus;
-                _currentFitBonus = value;
+                SetField(ref _currentFitBonus, value);
+                _equip.CurrentFitBonus = value.CurrentFitBonus ?? new FitBonusCustom();
+                CurrentFitBonus.PropertyChanged += (sender, args) => SetField(ref _currentFitBonus, value);
             }
-        }
+        }*/
 
 
 
 
-        public EquipmentViewModel() => Equip = new EquipmentDataCustom();
+        public EquipmentSlotViewModel() => Equip = new EquipmentDataCustom();
 
-        public EquipmentViewModel(IEquipmentDataCustom equip)
+        public EquipmentSlotViewModel(EquipmentDataCustom equip)
         {
             _equip = equip;
 
@@ -193,17 +312,6 @@ namespace ElectronicObserver.Window.ViewModel
 
             _level = equip.Level;
             _proficiency = equip.Proficiency;
-    }
-
-        private int ValidRange(int value, int min = 0, int? max = null)
-        {
-            if (value < min)
-                return min;
-
-            if (max != null && value > max)
-                return max.Value;
-
-            return value;
         }
     }
 }

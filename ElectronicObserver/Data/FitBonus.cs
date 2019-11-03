@@ -146,7 +146,7 @@ namespace ElectronicObserver.Data
             Accuracy = 0;
         }
 
-        public FitBonusCustom(IShipDataCustom ship, IEquipmentDataCustom equip)
+        public FitBonusCustom(ShipDataCustom ship, EquipmentDataCustom equip)
         {
             _ship = ship;
 
@@ -163,7 +163,7 @@ namespace ElectronicObserver.Data
             Accuracy = GetAccuracy(equip);
         }
 
-        private VisibleFits VisibleFitBonus(IEquipmentDataCustom equip) => _ship.ShipClass switch
+        private VisibleFits VisibleFitBonus(EquipmentDataCustom equip) => _ship.ShipClass switch
         {
             ShipClasses.Kongou => VisibleFitsKongou(equip),
             ShipClasses.QueenElizabeth => VisibleFitsWarspite(equip),
@@ -185,7 +185,7 @@ namespace ElectronicObserver.Data
         /// 591 - Kongou k2c    <br/>
         /// _   - kai Kongou class
         /// </summary>
-        private VisibleFits VisibleFitsKongou(IEquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
+        private VisibleFits VisibleFitsKongou(EquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
         {
             // dazzle
             (104, 149) => new VisibleFits(firepower: 2),
@@ -245,7 +245,7 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsWarspite(IEquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsWarspite(EquipmentDataCustom equip) => equip.ID switch
         {
             // nelson gun (afct, fcr)
             298 => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
@@ -258,7 +258,7 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsBurger(IEquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsBurger(EquipmentDataCustom equip) => equip.ID switch
         {
             // gfcs mk37 
             307 => new VisibleFits(firepower: 1, aa: 1, evasion: 1),
@@ -273,7 +273,7 @@ namespace ElectronicObserver.Data
         /// 553 - Ise k2    <br/>
         /// 554 - Hyuuga k2
         /// </summary>
-        private VisibleFits VisibleFitsIse(IEquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
+        private VisibleFits VisibleFitsIse(EquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
         {
             // 35.6 kai (ni)
             (328, _) => new VisibleFits(firepower: 1),
@@ -343,7 +343,7 @@ namespace ElectronicObserver.Data
         /// 412 - Yamashiro k2  <br/>
         /// _   - Fusou kai (ni) class, Ise kai class
         /// </summary>
-        private VisibleFits VisibleFitsAviationBattleship(IEquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
+        private VisibleFits VisibleFitsAviationBattleship(EquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
         {
             // 35.6 kai
             (328, 411) => new VisibleFits(firepower: 1),
@@ -385,7 +385,7 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsNelson(IEquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsNelson(EquipmentDataCustom equip) => equip.ID switch
         {
             // nelson gun (afct, fcr)
             298 => new VisibleFits(firepower: 2, armor: 1),
@@ -408,7 +408,7 @@ namespace ElectronicObserver.Data
         /// 573 - Mutsu k2  <br/>
         /// _   - Nagato kai class
         /// </summary>
-        private VisibleFits VisibleFitsNagato(IEquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
+        private VisibleFits VisibleFitsNagato(EquipmentDataCustom equip) => (equip.ID, _ship.ShipID) switch
         {
             // 41k2
             (318, 541) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
@@ -449,7 +449,7 @@ namespace ElectronicObserver.Data
 
 
 
-        private int GetAccuracy(IEquipmentDataCustom equip) => _ship.ShipClass switch
+        private int GetAccuracy(EquipmentDataCustom equip) => _ship.ShipClass switch
         {
             ShipClasses.Gangut => AccuracyGangut(equip),
             ShipClasses.Kongou => AccuracyKongou(equip),
@@ -471,7 +471,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyGangut(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyGangut(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             // (_) when equip.ID == 330 || equip.ID == 331 || equip.ID == 332 => null, // Colorado guns
             FitCategories.smallBBGun when equip.ID == 231 || equip.ID == 232 => 10, // Gangut guns
@@ -487,7 +487,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyKongou(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyKongou(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 7,
             FitCategories.baguetteBBGun => 0,
@@ -507,7 +507,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Bisko and pastas
         /// </summary>
-        private int AccuracyBismarck(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyBismarck(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => -2,
@@ -522,7 +522,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyBurger(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyBurger(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => -2,
@@ -539,7 +539,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyBaguette(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyBaguette(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => 4,
@@ -555,7 +555,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyWarspite(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyWarspite(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun when equip.ID == 190 || equip.ID == 192 => 8, // Warspite guns
             FitCategories.smallBBGun => 6,
@@ -571,7 +571,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyNelson(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyNelson(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 0,
             FitCategories.baguetteBBGun => 0,
@@ -588,7 +588,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Ise kai class, Fusou kai (ni) class
         /// </summary>
-        private int AccuracyAviationBattleship(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyAviationBattleship(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => 0,
@@ -606,7 +606,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Ise kai ni class
         /// </summary>
-        private int AccuracyIse(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyIse(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => 0,
@@ -625,7 +625,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Ise class, Fusou class, Nagato (kai) class
         /// </summary>
-        private int AccuracyBattleship(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyBattleship(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 2,
             FitCategories.baguetteBBGun => 0,
@@ -644,7 +644,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Nagato kai ni
         /// </summary>
-        private int AccuracyNagato(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyNagato(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 2,
             FitCategories.baguetteBBGun => 0,
@@ -665,7 +665,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// Mutsu kai ni
         /// </summary>
-        private int AccuracyMutsu(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyMutsu(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 2,
             FitCategories.baguetteBBGun => 0,
@@ -682,7 +682,7 @@ namespace ElectronicObserver.Data
             _ => 0
         };
 
-        private int AccuracyYamato(IEquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyYamato(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 0,
             FitCategories.baguetteBBGun => 0,

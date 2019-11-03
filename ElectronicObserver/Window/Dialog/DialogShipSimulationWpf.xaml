@@ -13,12 +13,21 @@
              Background="{DynamicResource MaterialDesignToolBarBackground}"
              FontFamily="{DynamicResource MaterialDesignFont}"
 
+             xmlns:viewModel="clr-namespace:ElectronicObserver.Window.ViewModel"
+
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:ElectronicObserver.Window.ControlWpf"
+             
              Loaded="DialogShipSimulation_Loaded" d:DesignWidth="1600" d:DesignHeight="900" >
 
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <viewModel:SimulatorViewModel x:Key="SimulatorViewModel"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Margin="5">
@@ -49,19 +58,18 @@
                 Grid.Column="0"
                 Height="200"
                 Width="150"
-                VerticalAlignment="Top"/>
+                VerticalAlignment="Top" />
 
-            <controls:ExtraDamageBonusDisplay
+            <controls:DamageBonusDisplay
                 x:Name="BonusParameters"
-                Grid.Column="1"
-                 />
+                Grid.Column="1" />
 
-            <controls:ShipSimulationExternalParameters 
-                x:Name="EnemyExternalParameters" 
-                Grid.Column="2"
-                Height="200"
-                Width="150"
-                VerticalAlignment="Top"/>
+                <controls:ShipSimulationExternalParameters 
+                    x:Name="EnemyExternalParameters" 
+                    Grid.Column="2"
+                    Height="200"
+                    Width="150"
+                    VerticalAlignment="Top"/>
 
             </Grid>
         

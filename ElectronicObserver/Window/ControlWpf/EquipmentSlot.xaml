@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.Equipment"
+﻿<UserControl x:Class="ElectronicObserver.Window.ControlWpf.EquipmentSlot"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
              d:DesignHeight="120" d:DesignWidth="500">
 
     <UserControl.DataContext>
-        <viewModels:EquipmentViewModel />
+        <viewModels:EquipmentSlotViewModel />
     </UserControl.DataContext>
 
     <UserControl.Resources>
@@ -68,16 +68,16 @@
             <local:Stat x:Name="StatDisplay4" Grid.Row="1" Grid.Column="4" />
             <local:Stat x:Name="StatDisplay5" Grid.Row="1" Grid.Column="5" />
 
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay0" Grid.Row="2" Grid.Column="0" />
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay1" Grid.Row="2" Grid.Column="1" />
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay2" Grid.Row="2" Grid.Column="2" />
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay3" Grid.Row="2" Grid.Column="3" />
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay4" Grid.Row="2" Grid.Column="4" />
-             <local:Stat OtherContent="{StaticResource IconPlusMinus}" x:Name="FitDisplay5" Grid.Row="2" Grid.Column="5" />
+            <local:Stat x:Name="FitDisplay0" Grid.Row="2" Grid.Column="0" />
+            <local:Stat x:Name="FitDisplay1" Grid.Row="2" Grid.Column="1" />
+            <local:Stat x:Name="FitDisplay2" Grid.Row="2" Grid.Column="2" />
+            <local:Stat x:Name="FitDisplay3" Grid.Row="2" Grid.Column="3" />
+            <local:Stat x:Name="FitDisplay4" Grid.Row="2" Grid.Column="4" />
+            <local:Stat x:Name="FitDisplay5" Grid.Row="2" Grid.Column="5" />
 
             <local:Stat OtherContent="★" BaseStat="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="6" />
             <local:Stat OtherContent=">>" BaseStat="{Binding Proficiency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="6" />
-            <local:Stat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding SlotSize}" Grid.Row="2" Grid.Column="6" IsEnabled="False" />
+            <local:Stat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding SlotSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="6" />
 
         </Grid>
     </Border>

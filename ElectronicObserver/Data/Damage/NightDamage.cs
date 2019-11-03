@@ -49,7 +49,7 @@ namespace ElectronicObserver.Data.Damage
             INightDamageAttackerFleet attackerFleet = null,
             INightBattle battle = null, INightDamageDefender defender = null,
             INightDamageDefenderFleet defenderFleet = null,
-            ExtraDamageBonus parameters = null) : base(parameters, Constants.Softcap.NightBattle)
+            DamageBonus parameters = null) : base(parameters, Constants.Softcap.NightBattle)
         {
             Attacker = attacker;
             AttackerFleet = attackerFleet ?? new MockNightDamageAttackerFleet();

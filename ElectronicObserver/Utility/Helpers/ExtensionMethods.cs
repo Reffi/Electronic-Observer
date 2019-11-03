@@ -28,29 +28,19 @@ namespace ElectronicObserver.Utility.Helpers
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? enumValue.ToString();
 
-        public static BitmapImage ToImageSource(this Image image)
+        public static int Clamp(this int val, int min = 0, int max = int.MaxValue)
         {
-            // ImageSource ...
-            BitmapImage bi = new BitmapImage();
+            if (val < min) return min;
+            if (val > max) return max;
+            return val;
+        }
 
-            bi.BeginInit();
-
-            MemoryStream ms = new MemoryStream();
-
-            var a = PixelFormat.Format32bppArgb;
-
-            // Save to a memory stream...
-            image.Save(ms, ImageFormat.Png);
-
-            // Rewind the stream...
-            ms.Seek(0, SeekOrigin.Begin);
-
-            // Tell the WPF image to use this stream...
-            bi.StreamSource = ms;
-
-            bi.EndInit();
-
-            return bi;
+        // todo: replace with Math.Clamp after we get dotnet core
+        public static T Clamp<T>(this T val, T min, T max) where T : struct, IComparable<T>
+        {
+            if (val.CompareTo(min) < 0) return min;
+            if (val.CompareTo(max) > 0) return max;
+            return val;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ElectronicObserver.Data.Damage
     public abstract class DamageBase
     {
         Random rng = new Random();
-        private ExtraDamageBonus Parameters { get; }
+        private DamageBonus Parameters { get; }
 
         private int Cap { get; }
 
@@ -51,9 +51,9 @@ namespace ElectronicObserver.Data.Damage
         {
         }
 
-        protected DamageBase(ExtraDamageBonus parameters, int cap)
+        protected DamageBase(DamageBonus parameters, int cap)
         {
-            Parameters = parameters ?? new ExtraDamageBonus();
+            Parameters = parameters ?? new DamageBonus();
             Cap = cap;
         }
     }

@@ -19,9 +19,48 @@ using ElectronicObserver.Window.Dialog;
 
 namespace ElectronicObserver.Window.ControlWpf
 {
-    public class ExtraDamageBonusViewModel : Observable
+    public class DamageBonusViewModel : Observable
     {
-        public ExtraDamageBonus Bonus { get; }
+        public DamageBonus Bonus
+        {
+            get => _bonus;
+            set
+            {
+                _bonus = value;
+
+                _a1 = _bonus.a1;
+                _a2 = _bonus.a2;
+                _a3 = _bonus.a3;
+                _a4 = _bonus.a4;
+                _a5 = _bonus.a5;
+                _a6 = _bonus.a6;
+                _a7 = _bonus.a7;
+                _a8 = _bonus.a8;
+                _a9 = _bonus.a9;
+                _a10 = _bonus.a10;
+                _a11 = _bonus.a11;
+                _a12 = _bonus.a12;
+                _a13 = _bonus.a13;
+                _a14 = _bonus.a14;
+
+                _b1 = _bonus.b1;
+                _b2 = _bonus.b2;
+                _b3 = _bonus.b3;
+                _b4 = _bonus.b4;
+                _b5 = _bonus.b5;
+                _b6 = _bonus.b6;
+                _b7 = _bonus.b7;
+                _b8 = _bonus.b8;
+                _b9 = _bonus.b9;
+                _b10 = _bonus.b10;
+                _b11 = _bonus.b11;
+                _b12 = _bonus.b12;
+                _b13 = _bonus.b13;
+                _b14 = _bonus.b14;
+            }
+        }
+
+        private DamageBonus _bonus;
 
         private double _a1;
         private double _a2;
@@ -53,7 +92,6 @@ namespace ElectronicObserver.Window.ControlWpf
         private double _b13;
         private double _b14;
 
-
         public double a1
         {
             get => Bonus.a1;
@@ -65,7 +103,7 @@ namespace ElectronicObserver.Window.ControlWpf
         }
         public double a2
         {
-            get => Bonus.a1;
+            get => Bonus.a2;
             set
             {
                 Bonus.a2 = value;
@@ -309,34 +347,47 @@ namespace ElectronicObserver.Window.ControlWpf
             }
         }
 
-        public ExtraDamageBonusViewModel() => Bonus = new ExtraDamageBonus();
+        public DamageBonusViewModel() : this(new DamageBonus()) { }
 
-        public ExtraDamageBonusViewModel(ExtraDamageBonus bonus)
-        {
-            Bonus = bonus;
-        }
+        public DamageBonusViewModel(DamageBonus bonus) => Bonus = bonus ?? new DamageBonus();
     }
 
     /// <summary>
     /// Interaction logic for ExtraDamageBonusDisplay.xaml
     /// </summary>
-    public partial class ExtraDamageBonusDisplay : UserControl
+    public partial class DamageBonusDisplay : UserControl
     {
-        // mistakes
-        private ExtraDamageBonusViewModel _bonusViewModel;
+        
+        /*public static readonly DependencyProperty DamageBonusProperty = DependencyProperty.Register(
+            nameof(DamageBonus), typeof(DamageBonus), typeof(DamageBonusDisplay),
+            new PropertyMetadata(ExtraDamageBonusChanged));
 
-        public ExtraDamageBonus Bonus
+        public DamageBonus DamageBonus
         {
-            get => _bonusViewModel.Bonus;
+            get => (DamageBonus)GetValue(DamageBonusProperty);
+            set => SetValue(DamageBonusProperty, value);
+        }
+
+        private static void ExtraDamageBonusChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            ((DamageBonusDisplay) obj).Model.Bonus = (DamageBonus)args.NewValue;
+        }*/
+
+        private DamageBonusViewModel Model { get; set; }
+
+        public DamageBonus DamageBonus
+        {
+            get => Model.Bonus;
             set
             {
-                _bonusViewModel = new ExtraDamageBonusViewModel(value);
-                _bonusViewModel.PropertyChanged += CalculationParametersChanged;
-                DataContext = Bonus;
+                Model = new DamageBonusViewModel(value);
+                Model.PropertyChanged += CalculationParametersChanged;
+
+                DataContext = Model;
             }
         }
 
-        public ExtraDamageBonusDisplay()
+        public DamageBonusDisplay()
         {
             InitializeComponent();
         }

@@ -52,6 +52,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>74eo.ico</ApplicationIcon>
@@ -228,7 +229,7 @@
     <Compile Include="Data\EquipmentDataMaster.cs" />
     <Compile Include="Data\EquipmentType.cs" />
     <Compile Include="Data\EquipmentTypes.cs" />
-    <Compile Include="Data\Damage\ExtraDamageBonus.cs" />
+    <Compile Include="Data\Damage\DamageBonus.cs" />
     <Compile Include="Data\FitBonus.cs" />
     <Compile Include="Data\FleetDataCustom.cs" />
     <Compile Include="Data\FleetManager.cs" />
@@ -384,11 +385,8 @@
     <Compile Include="Window\ControlWpf\BattleStatDisplay.xaml.cs">
       <DependentUpon>BattleStatDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window\ControlWpf\Equipment.xaml.cs">
-      <DependentUpon>Equipment.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Window\ControlWpf\EquipmentDisplay.xaml.cs">
-      <DependentUpon>EquipmentDisplay.xaml</DependentUpon>
+    <Compile Include="Window\ControlWpf\EquipmentSlot.xaml.cs">
+      <DependentUpon>EquipmentSlot.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\ControlWpf\EquipmentSelection.xaml.cs">
       <DependentUpon>EquipmentSelection.xaml</DependentUpon>
@@ -396,8 +394,8 @@
     <Compile Include="Window\ControlWpf\EquipmentSelectionItem.xaml.cs">
       <DependentUpon>EquipmentSelectionItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window\ControlWpf\ExtraDamageBonusDisplay.xaml.cs">
-      <DependentUpon>ExtraDamageBonusDisplay.xaml</DependentUpon>
+    <Compile Include="Window\ControlWpf\DamageBonusDisplay.xaml.cs">
+      <DependentUpon>DamageBonusDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\ControlWpf\ShipDisplay.xaml.cs">
       <DependentUpon>ShipDisplay.xaml</DependentUpon>
@@ -941,10 +939,10 @@
     <Compile Include="Window\Support\ControlHelper.cs" />
     <Compile Include="Window\Support\CustomFloatWindowFactory.cs" />
     <Compile Include="Window\Support\WindowPlacementManager.cs" />
-    <Compile Include="Window\ViewModel\EquipmentViewModel.cs" />
-    <Compile Include="Window\ViewModel\SynergyViewModel.cs" />
-    <Compile Include="Window\ViewModel\FitBonusViewModel.cs" />
+    <Compile Include="Window\ViewModel\EquipmentSlotViewModel.cs" />
+    <Compile Include="Window\ViewModel\SimulatorViewModel.cs" />
     <Compile Include="Window\ViewModel\ShipViewModel.cs" />
+    <Compile Include="Window\ViewModel\SynergyViewModel.cs" />
     <EmbeddedResource Include="Data\ConstantsRes.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ConstantsRes.en.Designer.cs</LastGenOutput>
@@ -1348,11 +1346,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window\ControlWpf\Equipment.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Window\ControlWpf\EquipmentDisplay.xaml">
+    <Page Include="Window\ControlWpf\EquipmentSlot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1364,7 +1358,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window\ControlWpf\ExtraDamageBonusDisplay.xaml">
+    <Page Include="Window\ControlWpf\DamageBonusDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

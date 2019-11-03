@@ -19,29 +19,35 @@ namespace ElectronicObserver.Window.ControlWpf
     /// <summary>
     /// Interaction logic for Equipment.xaml
     /// </summary>
-    public partial class Equipment : UserControl
+    public partial class EquipmentSlot : UserControl
     {
         public static readonly RoutedEvent EquipmentChangeEvent = EventManager.RegisterRoutedEvent(
-            "EquipmentChange", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Equipment));
+            "EquipmentChange", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(EquipmentSlot));
 
         public event RoutedEventHandler EquipmentChange
         {
-            add { AddHandler(EquipmentChangeEvent, value); }
-            remove { RemoveHandler(EquipmentChangeEvent, value); }
+            add => AddHandler(EquipmentChangeEvent, value);
+            remove => RemoveHandler(EquipmentChangeEvent, value);
         }
 
         public static readonly DependencyProperty SlotIndexProperty = DependencyProperty
-            .Register(nameof(SlotIndex), typeof(int), typeof(Equipment),
+            .Register(nameof(SlotIndex), typeof(int), typeof(EquipmentSlot),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public static readonly DependencyProperty EquipProperty = DependencyProperty
+            .Register(nameof(Equip), typeof(EquipmentDataCustom), typeof(EquipmentSlot),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+
         private EquipmentViewModel _equipViewModel;
-        public EquipmentViewModel Equip
+        public EquipmentViewModel EquipViewModel
         {
             get => _equipViewModel;
             set
             {
                 _equipViewModel = value;
-                DataContext = Equip;
+                DataContext = EquipViewModel;
 
                 if (_equipViewModel == null)
                 {
@@ -83,14 +89,20 @@ namespace ElectronicObserver.Window.ControlWpf
             set => SetValue(SlotIndexProperty, value);
         }
 
-        public Equipment()
+        public EquipmentDataCustom Equip
+        {
+            get => (EquipmentDataCustom)GetValue(EquipProperty);
+            set => SetValue(EquipProperty, value);
+        }
+
+        public EquipmentSlot()
         {
             InitializeComponent();
         }
 
         private void SetDisplayStats()
         {
-            switch(Equip.CategoryType)
+            switch(EquipViewModel.CategoryType)
             {
                 case EquipmentTypes.Torpedo:
                 case EquipmentTypes.MidgetSubmarine:
@@ -105,56 +117,56 @@ namespace ElectronicObserver.Window.ControlWpf
 
         private void MainGunStatDisplay()
         {
-            SetDisplayStat(StatDisplay0, Resources["IconFirepower"], nameof(Equip.BaseFirepower));
-            SetDisplayStat(StatDisplay1, Resources["IconAccuracy"], nameof(Equip.BaseAccuracy));
-            SetDisplayStat(StatDisplay2, Resources["IconArmor"], nameof(Equip.BaseArmor));
-            SetDisplayStat(StatDisplay3, Resources["IconAA"], nameof(Equip.BaseAA));
-            SetDisplayStat(StatDisplay4, Resources["IconEvasion"], nameof(Equip.BaseEvasion));
+            SetDisplayStat(StatDisplay0, Resources["IconFirepower"], nameof(EquipViewModel.BaseFirepower));
+            SetDisplayStat(StatDisplay1, Resources["IconAccuracy"], nameof(EquipViewModel.BaseAccuracy));
+            SetDisplayStat(StatDisplay2, Resources["IconArmor"], nameof(EquipViewModel.BaseArmor));
+            SetDisplayStat(StatDisplay3, Resources["IconAA"], nameof(EquipViewModel.BaseAA));
+            SetDisplayStat(StatDisplay4, Resources["IconEvasion"], nameof(EquipViewModel.BaseEvasion));
 
-            if (Equip.BaseLoS > 0)
-                SetDisplayStat(StatDisplay5, Resources["IconLoS"], nameof(Equip.BaseLoS));
+            if (EquipViewModel.BaseLoS > 0)
+                SetDisplayStat(StatDisplay5, Resources["IconLoS"], nameof(EquipViewModel.BaseLoS));
             else
-                SetDisplayStat(StatDisplay5, Resources["IconASW"], nameof(Equip.BaseASW));
+                SetDisplayStat(StatDisplay5, Resources["IconASW"], nameof(EquipViewModel.BaseASW));
 
 
             // todo some icon to indicate fit bonus
-            SetFitDisplayStat(FitDisplay0, null, nameof(Equip.CurrentFitBonus.Firepower));
-            SetFitDisplayStat(FitDisplay1, null, nameof(Equip.CurrentFitBonus.Accuracy));
-            SetFitDisplayStat(FitDisplay2, null, nameof(Equip.CurrentFitBonus.Armor));
-            SetFitDisplayStat(FitDisplay3, null, nameof(Equip.CurrentFitBonus.AA));
-            SetFitDisplayStat(FitDisplay4, null, nameof(Equip.CurrentFitBonus.Evasion));
+            SetFitDisplayStat(FitDisplay0, null, nameof(EquipViewModel.CurrentFitBonus.Firepower));
+            SetFitDisplayStat(FitDisplay1, null, nameof(EquipViewModel.CurrentFitBonus.Accuracy));
+            SetFitDisplayStat(FitDisplay2, null, nameof(EquipViewModel.CurrentFitBonus.Armor));
+            SetFitDisplayStat(FitDisplay3, null, nameof(EquipViewModel.CurrentFitBonus.AA));
+            SetFitDisplayStat(FitDisplay4, null, nameof(EquipViewModel.CurrentFitBonus.Evasion));
 
-            if (Equip.CurrentFitBonus.LoS > 0)
-                SetFitDisplayStat(FitDisplay5, null, nameof(Equip.CurrentFitBonus.LoS));
+            if (EquipViewModel.CurrentFitBonus.LoS > 0)
+                SetFitDisplayStat(FitDisplay5, null, nameof(EquipViewModel.CurrentFitBonus.LoS));
             else
-                SetFitDisplayStat(FitDisplay5, null, nameof(Equip.CurrentFitBonus.ASW));
+                SetFitDisplayStat(FitDisplay5, null, nameof(EquipViewModel.CurrentFitBonus.ASW));
         }
 
         private void TorpedoStatDisplay()
         {
-            SetDisplayStat(StatDisplay0, Resources["IconTorpedo"], nameof(Equip.BaseTorpedo));
-            SetDisplayStat(StatDisplay1, Resources["IconAccuracy"], nameof(Equip.BaseAccuracy));
-            SetDisplayStat(StatDisplay2, Resources["IconArmor"], nameof(Equip.BaseArmor));
-            SetDisplayStat(StatDisplay3, Resources["IconFirepower"], nameof(Equip.BaseFirepower));
-            SetDisplayStat(StatDisplay4, Resources["IconEvasion"], nameof(Equip.BaseEvasion));
+            SetDisplayStat(StatDisplay0, Resources["IconTorpedo"], nameof(EquipViewModel.BaseTorpedo));
+            SetDisplayStat(StatDisplay1, Resources["IconAccuracy"], nameof(EquipViewModel.BaseAccuracy));
+            SetDisplayStat(StatDisplay2, Resources["IconArmor"], nameof(EquipViewModel.BaseArmor));
+            SetDisplayStat(StatDisplay3, Resources["IconFirepower"], nameof(EquipViewModel.BaseFirepower));
+            SetDisplayStat(StatDisplay4, Resources["IconEvasion"], nameof(EquipViewModel.BaseEvasion));
 
-            if (Equip.BaseLoS > 0)
-                SetDisplayStat(StatDisplay5, Resources["IconLoS"], nameof(Equip.BaseLoS));
+            if (EquipViewModel.BaseLoS > 0)
+                SetDisplayStat(StatDisplay5, Resources["IconLoS"], nameof(EquipViewModel.BaseLoS));
             else
-                SetDisplayStat(StatDisplay5, Resources["IconASW"], nameof(Equip.BaseASW));
+                SetDisplayStat(StatDisplay5, Resources["IconASW"], nameof(EquipViewModel.BaseASW));
 
 
             // todo some icon to indicate fit bonus
-            SetFitDisplayStat(FitDisplay0, null, nameof(Equip.CurrentFitBonus.Torpedo));
-            SetFitDisplayStat(FitDisplay1, null, nameof(Equip.CurrentFitBonus.Accuracy));
-            SetFitDisplayStat(FitDisplay2, null, nameof(Equip.CurrentFitBonus.Armor));
-            SetFitDisplayStat(FitDisplay3, null, nameof(Equip.CurrentFitBonus.Firepower));
-            SetFitDisplayStat(FitDisplay4, null, nameof(Equip.CurrentFitBonus.Evasion));
+            SetFitDisplayStat(FitDisplay0, null, nameof(EquipViewModel.CurrentFitBonus.Torpedo));
+            SetFitDisplayStat(FitDisplay1, null, nameof(EquipViewModel.CurrentFitBonus.Accuracy));
+            SetFitDisplayStat(FitDisplay2, null, nameof(EquipViewModel.CurrentFitBonus.Armor));
+            SetFitDisplayStat(FitDisplay3, null, nameof(EquipViewModel.CurrentFitBonus.Firepower));
+            SetFitDisplayStat(FitDisplay4, null, nameof(EquipViewModel.CurrentFitBonus.Evasion));
 
-            if (Equip.CurrentFitBonus.LoS > 0)
-                SetFitDisplayStat(FitDisplay5, null, nameof(Equip.CurrentFitBonus.LoS));
+            if (EquipViewModel.CurrentFitBonus.LoS > 0)
+                SetFitDisplayStat(FitDisplay5, null, nameof(EquipViewModel.CurrentFitBonus.LoS));
             else
-                SetFitDisplayStat(FitDisplay5, null, nameof(Equip.CurrentFitBonus.ASW));
+                SetFitDisplayStat(FitDisplay5, null, nameof(EquipViewModel.CurrentFitBonus.ASW));
         }
 
         private void SetDisplayStat(Stat display, object icon, string path)
@@ -163,7 +175,7 @@ namespace ElectronicObserver.Window.ControlWpf
             BindingOperations.SetBinding(display, Stat.BaseStatProperty,
                 new Binding
                 {
-                    Source = Equip,
+                    Source = EquipViewModel,
                     Path = new PropertyPath(path),
                     Mode = BindingMode.TwoWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
@@ -175,7 +187,7 @@ namespace ElectronicObserver.Window.ControlWpf
             BindingOperations.SetBinding(display, Stat.BaseStatProperty,
                 new Binding
                 {
-                    Source = Equip.CurrentFitBonus,
+                    Source = EquipViewModel.CurrentFitBonus,
                     Path = new PropertyPath(path),
                     Mode = BindingMode.TwoWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged

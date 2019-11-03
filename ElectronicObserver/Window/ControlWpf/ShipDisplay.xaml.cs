@@ -59,8 +59,6 @@ namespace ElectronicObserver.Window.ControlWpf
                 return;
             }
 
-            if (args.Equip == null) return;
-
             //_ship.Equipment[_currentEquipmentSlot.SlotIndex] = args.Equip;
 
             EquipmentDataCustom[] newEquip = new EquipmentDataCustom[6];
@@ -68,13 +66,17 @@ namespace ElectronicObserver.Window.ControlWpf
             for (int i = 0; i < 6; i++)
             {
                 if (i == _currentEquipmentSlot.SlotIndex)
+                {
                     newEquip[i] = args.Equip;
+                }
                 else
-                    newEquip[i] = _viewModel.Equipment[i];
+                {
+                    newEquip[i] = ViewModel.Equipment[i];
+                }
             }
 
-            _viewModel.Equipment = newEquip;
-            _currentEquipmentSlot.Equip = _viewModel.EquipmentViewModels[_currentEquipmentSlot.SlotIndex];
+            ViewModel.Equipment = newEquip;
+            _currentEquipmentSlot.EquipSlotViewModel = ViewModel.EquipmentViewModels[_currentEquipmentSlot.SlotIndex];
 
             DataContext = ViewModel;
             CloseEquipmentSelection(sender, null);
@@ -105,15 +107,27 @@ namespace ElectronicObserver.Window.ControlWpf
                 _viewModel.PropertyChanged += CalculationParametersChanged;
 
                 _ship = value;
-                _viewModel.Ship = _ship;
+                ViewModel.Ship = _ship;
+                SynergyDisplay.Synergy = ViewModel.SynergyViewModel;
                 DataContext = ViewModel;
 
-                SynergyDisplay.SynergyViewModel = _viewModel.SynergyViewModel;
 
-                EquipmentDisplay.Ship = _viewModel;
+                // EquipmentDisplay.Ship = _viewModel;
                 EquipmentSelect.EquippableCategories = _ship.EquippableCategories.Cast<EquipmentTypes>();
 
-                StatDisplay.ViewModel = _viewModel;
+                StatDisplay.ViewModel = ViewModel;
+
+                for (int i = 0; i < 6; i++)
+                {
+                    bool slotEnabled = i < Ship.EquipmentSlotCount || (i == 5 && Ship.IsExpansionSlotAvailable);
+                    if (i < EquipmentDisplays.Length)
+                    {
+                        EquipmentDisplays[i].EquipSlotViewModel = ViewModel.EquipmentViewModels[i];
+                        EquipmentDisplays[i].IsEnabled = slotEnabled;
+                    }
+                }
+
+                RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent));
 
                 string resourceType = _ship.IsAbyssal
                     ? KCResourceHelper.ResourceTypeShipFull
@@ -136,7 +150,6 @@ namespace ElectronicObserver.Window.ControlWpf
                 // there should be a better way to find the image path
                 Uri test = new Uri(stream.Name);
                 ShipImage.Source = new BitmapImage(test);
-                RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent));
             }
         }
 
@@ -152,23 +165,27 @@ namespace ElectronicObserver.Window.ControlWpf
             }
         }
 
-        private IEnumerable<EquipmentDataCustom> _equipments;
+        private IEnumerable<EquipmentDataCustom> _equipment;
 
-        public IEnumerable<EquipmentDataCustom> Equipments
+        public IEnumerable<EquipmentDataCustom> Equipment
         {
-            get => _equipments;
+            get => _equipment;
             set
             {
-                _equipments = value;
-                EquipmentSelect.Equips = _equipments;
+                _equipment = value;
+                EquipmentSelect.Equips = _equipment;
             }
         }
 
-        private Equipment _currentEquipmentSlot;
+        private EquipmentSlot[] EquipmentDisplays { get; }
+
+        private EquipmentSlot _currentEquipmentSlot;
 
         public ShipDisplay()
         {
             InitializeComponent();
+
+            EquipmentDisplays = new[] { EquipDisplay0, EquipDisplay1, EquipDisplay2, EquipDisplay3, EquipDisplay4, EquipDisplay5 };
         }
 
         private void ShipDisplay_Loaded(object sender, RoutedEventArgs e)
@@ -176,7 +193,11 @@ namespace ElectronicObserver.Window.ControlWpf
             ShipSelect.AddHandler(ShipSelectionItem.ShipSelectionEvent, new RoutedEventHandler(ShipSelected));
             EquipmentSelect.AddHandler(EquipmentSelectionItem.EquipmentSelectionEvent,
                 new RoutedEventHandler(EquipSelected));
-            EquipmentDisplay.AddHandler(Equipment.EquipmentChangeEvent, new RoutedEventHandler(EquipChange));
+
+            foreach (EquipmentSlot equipmentDisplay in EquipmentDisplays)
+            {
+                equipmentDisplay.AddHandler(EquipmentSlot.EquipmentChangeEvent, new RoutedEventHandler(EquipChange));
+            }
         }
 
         private void ShowShipSelection(object sender, MouseButtonEventArgs e)
@@ -191,7 +212,7 @@ namespace ElectronicObserver.Window.ControlWpf
 
         private void ShowEquipmentSelection(object sender, MouseButtonEventArgs e)
         {
-            _currentEquipmentSlot = (Equipment) sender;
+            _currentEquipmentSlot = (EquipmentSlot) sender;
             EquipmentSelectionOverlay.Visibility = Visibility.Visible;
         }
 

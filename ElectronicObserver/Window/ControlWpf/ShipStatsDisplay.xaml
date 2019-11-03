@@ -38,7 +38,7 @@
             <local:ShipStat StatIcon="{StaticResource IconHP}" BaseStat="{Binding HP, Mode=TwoWay}"           TotalStat="{Binding HP, Mode=OneWay}"              Grid.Column="0" Grid.Row="1" />
             <local:ShipStat StatIcon="{StaticResource IconArmor}" BaseStat="{Binding BaseArmor, Mode=TwoWay}"    TotalStat="{Binding DisplayArmor, Mode=OneWay}"    Grid.Column="0" Grid.Row="2" />
             <local:ShipStat StatIcon="{StaticResource IconEvasion}" BaseStat="{Binding BaseEvasion, Mode=TwoWay}"  TotalStat="{Binding DisplayEvasion, Mode=OneWay}"  Grid.Column="0" Grid.Row="3" />
-            <local:ShipStat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding Aircraft[0], Mode=OneWay}"     TotalStat="{Binding Aircraft[0], Mode=OneWay}"        Grid.Column="0" Grid.Row="4" />
+            <local:ShipStat StatIcon="{StaticResource IconAircraft}" BaseStat="{Binding TotalAircraft, Mode=OneWay}"     TotalStat="{Binding TotalAircraft, Mode=OneWay}"        Grid.Column="0" Grid.Row="4" IsEnabled="False" />
             <local:ShipStat StatIcon="{StaticResource IconSpeed}" BaseStat="{Binding BaseSpeed, Mode=TwoWay}"    TotalStat="{Binding BaseSpeed, Mode=OneWay}"       Grid.Column="0" Grid.Row="5" IsEnabled="False" />
             <local:ShipStat StatIcon="{StaticResource IconRange}" BaseStat="{Binding BaseRange, Mode=TwoWay}"    TotalStat="{Binding BaseRange, Mode=OneWay}"       Grid.Column="0" Grid.Row="6" IsEnabled="False" />
             <local:ShipStat StatIcon="{StaticResource IconAccuracy}" BaseStat="{Binding BaseAccuracy, Mode=OneWay}" TotalStat="{Binding DisplayAccuracy, Mode=OneWay}" Grid.Column="0" Grid.Row="7" IsEnabled="False" />

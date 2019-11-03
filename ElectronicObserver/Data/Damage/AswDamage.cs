@@ -50,7 +50,7 @@ namespace ElectronicObserver.Data.Damage
         public AswDamage(IAswDamageAttacker<IAswDamageAttackerEquipment> attacker,
             IAswDamageAttackerFleet attackerFleet = null,
             IDayBattle battle = null, IAswDamageDefender defender = null, IAswDamageDefenderFleet defenderFleet = null,
-            ExtraDamageBonus parameters = null) : base(parameters, Constants.Softcap.ASW)
+            DamageBonus parameters = null) : base(parameters, Constants.Softcap.ASW)
         {
             Attacker = attacker;
             AttackerFleet = attackerFleet ?? new MockAswDamageAttackerFleet();

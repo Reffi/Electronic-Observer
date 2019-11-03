@@ -79,7 +79,7 @@ namespace ElectronicObserver.Data.Damage
             Defender = defender;
         }
 
-        public ExtraDamageBonus ShellingBonus() => Defender.InstallationType switch
+        public DamageBonus ShellingBonus() => Defender.InstallationType switch
         {
             InstallationType.SupplyDepot => AllInstallationBonus(Attacker)
                                             + SoftSkinBonus(Attacker)
@@ -97,12 +97,12 @@ namespace ElectronicObserver.Data.Damage
             InstallationType.HarbourSummer => AllInstallationBonus(Attacker)
                                               + HarbourSummerBonus(Attacker),
 
-            _ => new ExtraDamageBonus()
+            _ => new DamageBonus()
         };
 
-        private ExtraDamageBonus AllInstallationBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus AllInstallationBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             bonus.b12 += attacker.ShipType switch
             {
@@ -166,9 +166,9 @@ namespace ElectronicObserver.Data.Damage
             return bonus;
         }
 
-        private ExtraDamageBonus SoftSkinBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus SoftSkinBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             if (attacker.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.AAShell))
             {
@@ -240,9 +240,9 @@ namespace ElectronicObserver.Data.Damage
             return bonus;
         }
 
-        private ExtraDamageBonus SupplyDepotBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus SupplyDepotBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             bonus.a6 *= attacker.Equipment.Count(eq => eq?.IsWG ?? false) switch
             {
@@ -303,9 +303,9 @@ namespace ElectronicObserver.Data.Damage
             return bonus;
         }
 
-        private ExtraDamageBonus ArtilleryImpBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus ArtilleryImpBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             if (attacker.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.APShell))
             {
@@ -386,9 +386,9 @@ namespace ElectronicObserver.Data.Damage
             return bonus;
         }
 
-        private ExtraDamageBonus IsolatedIslandBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus IsolatedIslandBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             if (attacker.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.AAShell))
             {
@@ -459,9 +459,9 @@ namespace ElectronicObserver.Data.Damage
             return bonus;
         }
 
-        private ExtraDamageBonus HarbourSummerBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
+        private DamageBonus HarbourSummerBonus(IAntiInstallationAttacker<IAntiInstallationEquipment> attacker)
         {
-            ExtraDamageBonus bonus = new ExtraDamageBonus();
+            DamageBonus bonus = new DamageBonus();
 
             if (attacker.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.AAShell))
             {

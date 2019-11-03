@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ElectronicObserver.Data;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Window.ViewModel;
 
@@ -22,15 +23,15 @@ namespace ElectronicObserver.Window.ControlWpf
     /// </summary>
     public partial class SynergyStatDisplay : UserControl
     {
-        private SynergyViewModel _synergyViewModel;
+        private SynergyViewModel _synergy;
 
-        public SynergyViewModel SynergyViewModel
+        public SynergyViewModel Synergy
         {
-            get => _synergyViewModel;
+            get => _synergy;
             set
             {
-                _synergyViewModel = value;
-                DataContext = _synergyViewModel;
+                _synergy = value;
+                DataContext = Synergy;
             }
         }
 

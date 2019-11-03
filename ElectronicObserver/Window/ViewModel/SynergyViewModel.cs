@@ -10,7 +10,7 @@ namespace ElectronicObserver.Window.ViewModel
 {
     public class SynergyViewModel: Observable
     {
-        private ShipDataCustom _ship;
+        private FitBonusCustom Synergy { get; }
 
         private int _firepower;
         private int _torpedo;
@@ -19,72 +19,73 @@ namespace ElectronicObserver.Window.ViewModel
         private int _evasion;
         private int _armor;
         private int _los;
-        private int? _accuracy;
+        private int _accuracy;
 
         public int Firepower
         {
-            get => _ship.CurrentSynergies.Firepower;
+            get => Synergy.Firepower;
             set
             {
-                _ship.CurrentSynergies.Firepower = value;
+                Synergy.Firepower = value;
                 SetField(ref _firepower, value);
             }
         }
         public int Torpedo
         {
-            get => _ship.CurrentSynergies.Torpedo;
+            get => Synergy.Torpedo;
             set
             {
-                _ship.CurrentSynergies.Torpedo = value;
+                Synergy.Torpedo = value;
                 SetField(ref _torpedo, value);
             }
         }
         public int AA
         {
-            get => _ship.CurrentSynergies.AA;
+            get => Synergy.AA;
             set
             {
-                _ship.CurrentSynergies.AA = value;
+                Synergy.AA = value;
                 SetField(ref _aa, value);
             }
         }
         public int ASW
         {
-            get => _ship.CurrentSynergies.ASW;
+            get => Synergy.ASW;
             set
             {
-                _ship.CurrentSynergies.ASW = value;
+                Synergy.ASW = value;
                 SetField(ref _asw, value);
             }
         }
         public int Evasion
         {
-            get => _ship.CurrentSynergies.Evasion;
+            get => Synergy.Evasion;
             set
             {
-                _ship.CurrentSynergies.Evasion = value;
+                Synergy.Evasion = value;
                 SetField(ref _evasion, value);
             }
         }
         public int Armor
         {
-            get => _ship.CurrentSynergies.Armor;
+            get => Synergy.Armor;
             set
             {
-                _ship.CurrentSynergies.Armor = value;
+                Synergy.Armor = value;
                 SetField(ref _armor, value);
             }
         }
         public int LoS
         {
-            get => _ship.CurrentSynergies.LoS;
+            get => Synergy.LoS;
             set
             {
-                _ship.CurrentSynergies.LoS = value;
+                Synergy.LoS = value;
                 SetField(ref _los, value);
             }
         }
-        /*public int? Accuracy
+
+        /*public int Accuracy
         {
             get => _ship.CurrentSynergies.Accuracy;
             set
@@ -94,11 +95,20 @@ namespace ElectronicObserver.Window.ViewModel
             }
         }*/
 
-        public SynergyViewModel() => _ship = new ShipDataCustom();
+        public SynergyViewModel() => Synergy = new FitBonusCustom();
 
-        public SynergyViewModel(ShipDataCustom ship)
+        public SynergyViewModel(FitBonusCustom synergy)
         {
-            _ship = ship;
+            Synergy = synergy;
+
+            _firepower = synergy.Firepower;
+            _torpedo = synergy.Torpedo;
+            _aa = synergy.AA;
+            _asw = synergy.ASW;
+            _evasion = synergy.Evasion;
+            _armor = synergy.Armor;
+            _los = synergy.LoS;
+            _accuracy = synergy.Accuracy;
         }
     }
 }

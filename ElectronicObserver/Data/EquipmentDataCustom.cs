@@ -15,101 +15,40 @@ namespace ElectronicObserver.Data
     public class EquipmentDataCustom : IShellingDamageAttackerEquipment, ICarrierShellingDamageEquipment,
         IAswDamageAttackerEquipment, INightDamageAttackerEquipment, ICarrierNightDamageEquipment,
         IShellingAccuracyEquipment, IAswAccuracyEquipment, INightAccuracyEquipment, IEvasionEquipment,
-        ITorpedoEvasionEquipment, IEquipmentDataCustom, IAntiInstallationEquipment
+        ITorpedoEvasionEquipment, IAntiInstallationEquipment
     {
-        private int _id;
-        private string _name;
-
-        private int _baseFirepower;
-        private int _baseTorpedo;
-        private int _baseAA;
-        private int _baseArmor;
-        private int _baseASW;
-        private int _baseEvasion;
-        private int _baseLoS;
-        private int _baseAccuracy;
-        private int _baseBombing;
-
-        private int _level;
-        private int _proficiency;
-
-
         private EquipmentData _equip;
         private EquipmentDataMaster _equipMaster;
 
-        public int ID => _id;
-        public string Name => _name;
+        public int ID { get; }
+        public string Name { get; }
 
 
-        public int BaseFirepower
-        {
-            get => _baseFirepower;
-            set => _baseFirepower = value;
-        }
+        public int BaseFirepower { get; set; }
 
-        public int BaseTorpedo
-        {
-            get => _baseTorpedo;
-            set => _baseTorpedo = value;
-        }
+        public int BaseTorpedo { get; set; }
 
-        public int BaseAA
-        {
-            get => _baseAA;
-            set => _baseAA = value;
-        }
+        public int BaseAA { get; set; }
 
-        public int BaseArmor
-        {
-            get => _baseArmor;
-            set => _baseArmor = value;
-        }
+        public int BaseArmor { get; set; }
 
-        public int BaseASW
-        {
-            get => _baseASW;
-            set => _baseASW = value;
-        }
+        public int BaseASW { get; set; }
 
-        public int BaseEvasion
-        {
-            get => _baseEvasion;
-            set => _baseEvasion = value;
-        }
+        public int BaseEvasion { get; set; }
 
-        public int BaseLoS
-        {
-            get => _baseLoS;
-            set => _baseLoS = value;
-        }
+        public int BaseLoS { get; set; }
 
-        public int BaseAccuracy
-        {
-            get => _baseAccuracy;
-            set => _baseAccuracy = value;
-        }
+        public int BaseAccuracy { get; set; }
 
-        public int BaseBombing
-        {
-            get => _baseBombing;
-            set => _baseBombing = value;
-        }
+        public int BaseBombing { get; set; }
 
 
-        public int Level
-        {
-            get => _level;
-            set => _level = value;
-        }
+        public int Level { get; set; }
 
-        public int Proficiency
-        {
-            get => _proficiency;
-            set => _proficiency = value;
-        }
+        public int Proficiency { get; set; }
 
 
-        public FitBonusCustom CurrentFitBonus { get; set; }
+        public FitBonusCustom CurrentFitBonus { get; set; } = new FitBonusCustom();
 
 
 
@@ -148,8 +87,8 @@ namespace ElectronicObserver.Data
             _equipMaster = equip;
 
             Level = 0;
-            _id = equip.EquipmentID;
-            _name = equip.Name;
+            ID = equip.EquipmentID;
+            Name = equip.Name;
             Proficiency = 0;
 
             BaseFirepower = _equipMaster.Firepower;
@@ -360,7 +299,7 @@ namespace ElectronicObserver.Data
         public bool IsDepthChargeProjector =>
             _equip?.MasterEquipment.IsDepthChargeProjector ?? _equipMaster.IsDepthChargeProjector;
 
-        public EquipmentTypes CategoryType => _equip?.MasterEquipment.CategoryType ?? _equipMaster.CategoryType;
+        public EquipmentTypes CategoryType => _equip?.MasterEquipment.CategoryType ?? _equipMaster?.CategoryType ?? EquipmentTypes.Unknown;
 
         public bool CountsForAswDamage => CategoryType switch
         {

@@ -82,7 +82,7 @@ namespace ElectronicObserver.Data.Damage
             IShellingDamageAttackerFleet attackerFleet = null,
             IDayBattle battle = null, IShellingDamageDefender defender = null,
             IShellingDamageDefenderFleet defenderFleet = null,
-            ExtraDamageBonus parameters = null) : base(parameters, Constants.Softcap.DayShelling)
+            DamageBonus parameters = null) : base(parameters, Constants.Softcap.DayShelling)
         {
             Attacker = attacker;
             AttackerFleet = attackerFleet ?? new MockShellingDamageAttackerFleet();

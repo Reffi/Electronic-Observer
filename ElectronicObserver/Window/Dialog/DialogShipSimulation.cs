@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ElectronicObserver.Window.ControlWpf;
 
 namespace ElectronicObserver.Window.Dialog
 {
@@ -36,6 +37,11 @@ namespace ElectronicObserver.Window.Dialog
         private void DialogShipSimulation_Load(object sender, EventArgs e)
         {
             DialogShipSimulationWpf wpfApp = new DialogShipSimulationWpf(DefaultShipID);
+
+            // ExtraDamageBonusDisplay wpfApp = new ExtraDamageBonusDisplay();
+
+            // ShipDisplay wpfApp = new ShipDisplay();
+
             elementHost1.Child = wpfApp;
         }
     }

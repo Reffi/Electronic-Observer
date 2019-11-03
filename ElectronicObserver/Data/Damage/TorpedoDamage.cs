@@ -41,7 +41,7 @@ namespace ElectronicObserver.Data.Damage
         public TorpedoDamage(ITorpedoDamageAttacker<ITorpedoDamageAttackerEquipment> attacker, ITorpedoAttackerFleetData attackerFleet = null,
             IDayBattle battle = null, ITorpedoDefenderData defender = null,
             ITorpedoDefenderFleetData defenderFleet = null,
-            ExtraDamageBonus parameters = null) : base(parameters, Constants.Softcap.Torpedo)
+            DamageBonus parameters = null) : base(parameters, Constants.Softcap.Torpedo)
         {
             Attacker = attacker;
             AttackerFleet = attackerFleet ?? new MockTorpedoAttackerFleetData();

@@ -8,19 +8,11 @@
             xmlns:viewModels="clr-namespace:ElectronicObserver.Window.ViewModel"
 
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="500" Loaded="ShipDisplay_Loaded">
+             d:DesignHeight="800" d:DesignWidth="500" Loaded="ShipDisplay_Loaded">
 
     <UserControl.DataContext>
         <viewModels:ShipViewModel/>
     </UserControl.DataContext>
-
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/ElectronicObserver;component/Properties/Theme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -65,7 +57,28 @@
 
         </Grid>
 
-        <local:EquipmentDisplay x:Name="EquipmentDisplay" Grid.Row="1" Grid.ColumnSpan="2" />
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+
+            <local:EquipmentSlot SlotIndex="0" x:Name="EquipDisplay0" />
+            <local:EquipmentSlot SlotIndex="1" x:Name="EquipDisplay1" />
+            <local:EquipmentSlot SlotIndex="2" x:Name="EquipDisplay2" />
+            <local:EquipmentSlot SlotIndex="3" x:Name="EquipDisplay3" />
+            <local:EquipmentSlot SlotIndex="4" x:Name="EquipDisplay4" />
+            <local:EquipmentSlot SlotIndex="5" x:Name="EquipDisplay5" />
+
+        </StackPanel>
+
+
+
+
+
+
+
+
+
+
+
+
 
         <Grid 
             x:Name="ShipSelectionOverlay"

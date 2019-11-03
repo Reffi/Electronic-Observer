@@ -24,26 +24,13 @@ namespace ElectronicObserver.Data
         IHitRateDefender, IShipDataCustom, IAntiInstallationAttacker<EquipmentDataCustom>, IInstallation
     {
         private int _level;
-        private int _hp;
-        private int _baseArmor;
-        private int _baseEvasion;
-        private int _baseAircraft;
-        private int _baseSpeed;
-        private int _baseRange;
-        private double _baseAccuracy;
 
-        private int _condition;
         private int _baseFirepower;
         private int _baseTorpedo;
-        private int _baseAA;
-        private int _baseASW;
-        private int _baseLoS;
         private int _baseLuck;
-        private int _baseNightPower;
 
 
         private ShipData _ship;
-        private ShipDataMaster _shipMaster;
         private EquipmentDataCustom[] _equipment;
 
         private VisibleFits CurrentFitBonus => Equipment.Where(eq => eq != null)
@@ -93,48 +80,22 @@ namespace ElectronicObserver.Data
             }
         }
 
-        public int HP
-        {
-            get => _hp;
-            set => _hp = value;
-        }
+        public int HP { get; set; }
 
-        public int BaseArmor
-        {
-            get => _baseArmor;
-            set => _baseArmor = value;
-        }
+        public int BaseArmor { get; set; }
 
-        public int BaseEvasion
-        {
-            get => _baseEvasion;
-            set => _baseEvasion = value;
-        }
+        public int BaseEvasion { get; set; }
 
-        public int[] Aircraft { get; set; }
+        public int[] Aircraft { get; set; } = {0, 0, 0, 0, 0, 0};
 
-        public int BaseSpeed
-        {
-            get => _baseSpeed;
-            set => _baseSpeed = value;
-        }
+        public int BaseSpeed { get; set; }
 
-        public int BaseRange
-        {
-            get => _baseRange;
-            set => _baseRange = value;
-        }
+        public int BaseRange { get; set; }
 
-        public double BaseAccuracy => _baseAccuracy;
+        public double BaseAccuracy { get; private set; }
 
 
-
-
-        public int Condition
-        {
-            get => _condition;
-            set => _condition = value;
-        }
+        public int Condition { get; set; }
 
         public int BaseFirepower
         {
@@ -156,23 +117,11 @@ namespace ElectronicObserver.Data
             }
         }
 
-        public int BaseAA
-        {
-            get => _baseAA;
-            set => _baseAA = value;
-        }
+        public int BaseAA { get; set; }
 
-        public int BaseASW
-        {
-            get => _baseASW;
-            set => _baseASW = value;
-        }
+        public int BaseASW { get; set; }
 
-        public int BaseLoS
-        {
-            get => _baseLoS;
-            set => _baseLoS = value;
-        }
+        public int BaseLoS { get; set; }
 
         public int BaseLuck
         {
@@ -184,7 +133,8 @@ namespace ElectronicObserver.Data
             }
         }
 
-        public int BaseNightPower => _baseNightPower;
+        public int BaseNightPower { get; private set; }
+
         public int Fuel { get; set; } = 100;
         public int Ammo { get; set; } = 100;
 
@@ -313,7 +263,7 @@ namespace ElectronicObserver.Data
 
         public ShipDataCustom(ShipDataMaster ship)
         {
-            _shipMaster = ship;
+            MasterShip = ship;
 
             ASWMin = ship.ASW.GetParameter(1);
             ASWMax = ship.ASW.GetParameter(99);
@@ -549,7 +499,7 @@ namespace ElectronicObserver.Data
             int zuiunCount = 0;
             int suiseiCount = 0;
 
-            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            foreach (EquipmentDataCustom equip in Equipment.Where(eq => eq != null))
             {
                 switch (equip.CategoryType)
                 {
@@ -657,7 +607,7 @@ namespace ElectronicObserver.Data
             int bomberCount = 0;
             int fighterCount = 0;
 
-            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            foreach (EquipmentDataCustom equip in Equipment.Where(eq => eq != null))
             {
                 switch (equip.CategoryType)
                 {
@@ -716,7 +666,7 @@ namespace ElectronicObserver.Data
             int torpedoCount = 0;
             int secondaryCount = 0;
 
-            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            foreach (EquipmentDataCustom equip in Equipment.Where(eq => eq != null))
             {
                 switch (equip.CategoryType)
                 {
@@ -767,7 +717,7 @@ namespace ElectronicObserver.Data
             int radarCount = 0;
             int skilledLookoutsCount = 0;
 
-            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            foreach (EquipmentDataCustom equip in Equipment.Where(eq => eq != null))
             {
                 switch (equip.CategoryType)
                 {
@@ -822,7 +772,7 @@ namespace ElectronicObserver.Data
         {
             List<NightAttackKind> attacks = new List<NightAttackKind>();
 
-            if (Equipment.Where(eq => eq != null).Cast<IEquipmentDataCustom>().TakeWhile(equip => !equip.IsGun).Any(equip => equip.IsTorpedo))
+            if (Equipment.Where(eq => eq != null).TakeWhile(equip => !equip.IsGun).Any(equip => equip.IsTorpedo))
             {
                 attacks.Add(NightAttackKind.Torpedo);
             }
@@ -845,7 +795,7 @@ namespace ElectronicObserver.Data
             int nightBomber = 0;
             int nightAttacker = 0;
 
-            foreach (IEquipmentDataCustom equip in Equipment.Where(eq => eq != null))
+            foreach (EquipmentDataCustom equip in Equipment.Where(eq => eq != null))
             {
                 switch (equip.CategoryType)
                 {
@@ -890,40 +840,40 @@ namespace ElectronicObserver.Data
 
 
 
-        public string Name => _shipMaster?.Name ?? "";
-        public int SortID => _shipMaster?.SortID ?? 0;
+        public string Name => MasterShip?.Name ?? "";
+        public int SortID => MasterShip?.SortID ?? 0;
 
-        public int ShipID => _shipMaster?.ShipID ?? 0;
+        public int ShipID => MasterShip?.ShipID ?? 0;
 
         // DropID
         public int MasterID => _ship?.MasterID ?? -1;
 
-        public ShipDataMaster MasterShip => _shipMaster;
+        public ShipDataMaster MasterShip { get; }
 
-        public int EquipmentSlotCount => _ship?.SlotSize ?? _shipMaster?.SlotSize ?? 0;
+        public int EquipmentSlotCount => _ship?.SlotSize ?? MasterShip?.SlotSize ?? 0;
 
         public bool IsExpansionSlotAvailable => _ship?.IsExpansionSlotAvailable ?? true;
 
         public string NameWithLevel => $"{MasterShip.Name} Lv. {Level}";
 
-        public ShipClasses ShipClass => (ShipClasses) (_shipMaster?.ShipClass ?? 0);
+        public ShipClasses ShipClass => (ShipClasses) (MasterShip?.ShipClass ?? 0);
 
-        public ShipTypes ShipType => _shipMaster?.ShipType ?? ShipTypes.Destroyer;
+        public ShipTypes ShipType => MasterShip?.ShipType ?? ShipTypes.Destroyer;
 
         public InstallationType InstallationType { get; }
 
         // todo localize enum
-        public string ShipTypeName => _shipMaster.ShipTypeName;
+        public string ShipTypeName => MasterShip.ShipTypeName;
 
         public bool IsMarried => Level > 99;
 
-        public bool IsInstallation => _shipMaster?.IsLandBase ?? false;
+        public bool IsInstallation => MasterShip?.IsLandBase ?? false;
 
-        public bool IsCarrier => _shipMaster?.IsAircraftCarrier ?? false;
+        public bool IsCarrier => MasterShip?.IsAircraftCarrier ?? false;
 
-        public bool IsSubmarine => _shipMaster?.IsSubmarine ?? false;
+        public bool IsSubmarine => MasterShip?.IsSubmarine ?? false;
 
-        public bool IsAbyssal => _shipMaster?.IsAbyssalShip ?? false;
+        public bool IsAbyssal => MasterShip?.IsAbyssalShip ?? false;
 
         public bool CanAttackSubmarine => ShipType switch
         {
@@ -957,12 +907,12 @@ namespace ElectronicObserver.Data
 
         private bool HasSwordfish => Equipment.Where(eq => eq != null).Any(eq => eq.IsSwordfish);
 
-        public IEnumerable<int> EquippableCategories => _shipMaster.EquippableCategories;
+        public IEnumerable<int> EquippableCategories => MasterShip.EquippableCategories;
 
 
 
-        private void SetBaseAccuracy() => _baseAccuracy = 2 * Math.Sqrt(Level) + 1.5 * Math.Sqrt(BaseLuck);
-        private void SetBaseNightPower() => _baseNightPower = _baseFirepower + _baseTorpedo;
+        private void SetBaseAccuracy() => BaseAccuracy = 2 * Math.Sqrt(Level) + 1.5 * Math.Sqrt(BaseLuck);
+        private void SetBaseNightPower() => BaseNightPower = _baseFirepower + _baseTorpedo;
 
     }
 }
