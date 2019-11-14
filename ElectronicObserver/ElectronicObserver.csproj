@@ -375,8 +375,10 @@
       <DependentUpon>ShipTypes.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\Data\EngagementTypes.cs" />
+    <Compile Include="Utility\Data\EquipID.cs" />
     <Compile Include="Utility\Data\FleetPositionDetail.cs" />
     <Compile Include="Utility\Data\InstallationType.cs" />
+    <Compile Include="Utility\Data\ShipID.cs" />
     <Compile Include="Utility\DynamicTranslator.cs" />
     <Compile Include="Utility\Helpers\ExtensionMethods.cs" />
     <Compile Include="Utility\Helpers\Observable.cs" />

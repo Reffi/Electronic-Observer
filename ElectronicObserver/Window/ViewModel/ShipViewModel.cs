@@ -144,7 +144,7 @@ namespace ElectronicObserver.Window.ViewModel
             }
         }
 
-        public int ShipID => _ship.ShipID;
+        public int ShipID => _ship.ID;
         public string Name => _ship.Name;
 
         public int Level

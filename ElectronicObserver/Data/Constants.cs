@@ -1367,7 +1367,8 @@ namespace ElectronicObserver.Data
 
             ShipTypeGroup.HeavyCruisers => new[] {ShipTypes.HeavyCruiser, ShipTypes.AviationCruiser},
 
-            ShipTypeGroup.LightCruisers => new[] {ShipTypes.LightCruiser, ShipTypes.TrainingCruiser},
+            ShipTypeGroup.LightCruisers => new[]
+                {ShipTypes.LightCruiser, ShipTypes.TrainingCruiser, ShipTypes.TorpedoCruiser},
 
             ShipTypeGroup.Destroyers => new[] {ShipTypes.Destroyer},
 
@@ -1377,9 +1378,9 @@ namespace ElectronicObserver.Data
 
             ShipTypeGroup.Auxiliaries => new[]
             {
-                ShipTypes.SeaplaneTender, 
-                ShipTypes.FleetOiler, 
-                ShipTypes.RepairShip, 
+                ShipTypes.SeaplaneTender,
+                ShipTypes.FleetOiler,
+                ShipTypes.RepairShip,
                 ShipTypes.AmphibiousAssaultShip,
                 ShipTypes.SubmarineTender
             },

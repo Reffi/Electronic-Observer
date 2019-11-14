@@ -538,7 +538,7 @@ namespace ElectronicObserver.Data
                 }
             }
 
-            if (ShipID == 553 || ShipID == 554)
+            if (ID == 553 || ID == 554)
             {
                 if(suiseiCount > 1 && mainGunCount > 0)
                     dayAttacks.Add(DayAttackKind.SeaAirMultiAngle);
@@ -843,7 +843,8 @@ namespace ElectronicObserver.Data
         public string Name => MasterShip?.Name ?? "";
         public int SortID => MasterShip?.SortID ?? 0;
 
-        public int ShipID => MasterShip?.ShipID ?? 0;
+        public int ID => MasterShip?.ShipID ?? 0;
+        public ShipID ShipID => (ShipID) ID;
 
         // DropID
         public int MasterID => _ship?.MasterID ?? -1;
@@ -899,13 +900,16 @@ namespace ElectronicObserver.Data
 
         private bool HasNightPersonnel => Equipment.Where(eq => eq != null)
                                              .Any(eq => eq.IsNightAviationPersonnel) ||
-                                         ShipID == 545 || // Saratoga Mk.II
-                                         ShipID == 599; // Akagi k2e
+                                         ID == 545 || // Saratoga Mk.II
+                                         ID == 599; // Akagi k2e
 
-        private bool IsArkRoyal => ShipID == 515 ||
-                                   ShipID == 393;
+        private bool IsArkRoyal => ID == 515 ||
+                                   ID == 393;
 
         private bool HasSwordfish => Equipment.Where(eq => eq != null).Any(eq => eq.IsSwordfish);
+
+        public bool HasSurfaceRadar => Equipment.Where(eq => eq != null).Any(eq => eq.IsSurfaceRadar);
+        public bool HasAirRadar => Equipment.Where(eq => eq != null).Any(eq => eq.IsAirRadar);
 
         public IEnumerable<int> EquippableCategories => MasterShip.EquippableCategories;
 

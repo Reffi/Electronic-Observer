@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Data
@@ -18,8 +19,9 @@ namespace ElectronicObserver.Data
         int Firepower { get; }
         int Torpedo { get; }
 
-
-        int ShipID { get; }
+        [Obsolete("use ShipID")]
+        int ID { get; }
+        ShipID ShipID { get; }
         ShipTypes ShipType { get; }
         ShipClasses ShipClass { get; }
         bool IsMarried { get; }

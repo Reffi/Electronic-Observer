@@ -133,7 +133,7 @@ namespace ElectronicObserver.Window.ControlWpf
                     ? KCResourceHelper.ResourceTypeShipFull
                     : KCResourceHelper.ResourceTypeShipAlbumZoom;
 
-                string link = KCResourceHelper.GetShipImagePath(value.ShipID, false,
+                string link = KCResourceHelper.GetShipImagePath(value.ID, false,
                     resourceType);
 
                 if (link == null)

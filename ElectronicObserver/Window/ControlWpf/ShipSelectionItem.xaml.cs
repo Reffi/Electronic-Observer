@@ -51,7 +51,7 @@ namespace ElectronicObserver.Window.ControlWpf
         {
             Ship = ship;
 
-            ShipItem.Content = $"{Ship.ShipID} {Ship.Name} Lv. {Ship.Level}";
+            ShipItem.Content = $"{Ship.ID} {Ship.Name} Lv. {Ship.Level}";
         }
 
         void ItemOnClick(object sender, RoutedEventArgs e)

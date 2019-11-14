@@ -20,6 +20,7 @@ namespace ElectronicObserver.Data
         private EquipmentData _equip;
         private EquipmentDataMaster _equipMaster;
 
+        public EquipID EquipID => (EquipID) ID;
         public int ID { get; }
         public string Name { get; }
 
@@ -291,6 +292,7 @@ namespace ElectronicObserver.Data
             _equip?.MasterEquipment.CategoryTypeInstance ?? _equipMaster.CategoryTypeInstance;
 
         public bool IsSurfaceRadar => _equip?.MasterEquipment.IsSurfaceRadar ?? _equipMaster.IsSurfaceRadar;
+        public bool IsAirRadar => _equip?.MasterEquipment.IsAirRadar ?? _equipMaster.IsAirRadar;
 
         public bool IsSonar => IsSmallSonar || IsLargeSonar;
         public bool IsSmallSonar => CategoryType == EquipmentTypes.Sonar;
