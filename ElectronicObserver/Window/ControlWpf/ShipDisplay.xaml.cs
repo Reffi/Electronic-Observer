@@ -28,8 +28,7 @@ namespace ElectronicObserver.Window.ControlWpf
     /// </summary>
     public partial class ShipDisplay : UserControl
     {
-        private ShipViewModel _viewModel;
-        public ShipViewModel ViewModel => _viewModel;
+        public ShipViewModel ViewModel { get; }
 
         void ShipSelected(object sender, RoutedEventArgs e)
         {
@@ -65,7 +64,7 @@ namespace ElectronicObserver.Window.ControlWpf
 
             for (int i = 0; i < 6; i++)
             {
-                if (i == _currentEquipmentSlot.SlotIndex)
+                if (i == CurrentEquipmentSlot.SlotIndex)
                 {
                     newEquip[i] = args.Equip;
                 }
@@ -76,9 +75,11 @@ namespace ElectronicObserver.Window.ControlWpf
             }
 
             ViewModel.Equipment = newEquip;
-            _currentEquipmentSlot.EquipSlotViewModel = ViewModel.EquipmentViewModels[_currentEquipmentSlot.SlotIndex];
+            CurrentEquipmentSlot.EquipSlotViewModel = ViewModel.EquipmentViewModels[CurrentEquipmentSlot.SlotIndex];
 
-            DataContext = ViewModel;
+            // SynergyDisplay.SynergyViewModel = ViewModel.SynergyViewModel;
+
+            // DataContext = ViewModel;
             CloseEquipmentSelection(sender, null);
             RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent));
             //EquipmentDisplay.EquipDisplay0.Equip = args.Equip;
@@ -103,19 +104,10 @@ namespace ElectronicObserver.Window.ControlWpf
                     return;
                 }
 
-                _viewModel = new ShipViewModel();
-                _viewModel.PropertyChanged += CalculationParametersChanged;
-
                 _ship = value;
-                ViewModel.Ship = _ship;
-                SynergyDisplay.Synergy = ViewModel.SynergyViewModel;
-                DataContext = ViewModel;
+                ViewModel.Ship = Ship;
 
-
-                // EquipmentDisplay.Ship = _viewModel;
                 EquipmentSelect.EquippableCategories = _ship.EquippableCategories.Cast<EquipmentTypes>();
-
-                StatDisplay.ViewModel = ViewModel;
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -129,12 +121,11 @@ namespace ElectronicObserver.Window.ControlWpf
 
                 RaiseEvent(new RoutedEventArgs(DialogShipSimulationWpf.CalculationParametersChangedEvent));
 
-                string resourceType = _ship.IsAbyssal
+                string resourceType = Ship.IsAbyssal
                     ? KCResourceHelper.ResourceTypeShipFull
                     : KCResourceHelper.ResourceTypeShipAlbumZoom;
 
-                string link = KCResourceHelper.GetShipImagePath(value.ID, false,
-                    resourceType);
+                string link = KCResourceHelper.GetShipImagePath(Ship.ID, false, resourceType);
 
                 if (link == null)
                 {
@@ -161,7 +152,7 @@ namespace ElectronicObserver.Window.ControlWpf
             set
             {
                 _ships = value;
-                ShipSelect.Ships = _ships;
+                ShipSelect.Ships = Ships;
             }
         }
 
@@ -173,23 +164,32 @@ namespace ElectronicObserver.Window.ControlWpf
             set
             {
                 _equipment = value;
-                EquipmentSelect.Equips = _equipment;
+                EquipmentSelect.Equips = Equipment;
             }
         }
 
         private EquipmentSlot[] EquipmentDisplays { get; }
 
-        private EquipmentSlot _currentEquipmentSlot;
+        private EquipmentSlot CurrentEquipmentSlot { get; set; }
 
         public ShipDisplay()
         {
             InitializeComponent();
 
             EquipmentDisplays = new[] { EquipDisplay0, EquipDisplay1, EquipDisplay2, EquipDisplay3, EquipDisplay4, EquipDisplay5 };
+
+            ViewModel = new ShipViewModel();
         }
 
         private void ShipDisplay_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModel.PropertyChanged += CalculationParametersChanged;
+
+            StatDisplay.ViewModel = ViewModel;
+            SynergyDisplay.SynergyViewModel = ViewModel.SynergyViewModel;
+
+            DataContext = ViewModel;
+
             ShipSelect.AddHandler(ShipSelectionItem.ShipSelectionEvent, new RoutedEventHandler(ShipSelected));
             EquipmentSelect.AddHandler(EquipmentSelectionItem.EquipmentSelectionEvent,
                 new RoutedEventHandler(EquipSelected));
@@ -212,13 +212,13 @@ namespace ElectronicObserver.Window.ControlWpf
 
         private void ShowEquipmentSelection(object sender, MouseButtonEventArgs e)
         {
-            _currentEquipmentSlot = (EquipmentSlot) sender;
+            CurrentEquipmentSlot = (EquipmentSlot) sender;
             EquipmentSelectionOverlay.Visibility = Visibility.Visible;
         }
 
         private void CloseEquipmentSelection(object sender, MouseButtonEventArgs e)
         {
-            _currentEquipmentSlot = null;
+            CurrentEquipmentSlot = null;
             EquipmentSelectionOverlay.Visibility = Visibility.Hidden;
         }
 

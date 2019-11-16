@@ -4,7 +4,7 @@ using ElectronicObserver.Utility.Data;
 
 namespace ElectronicObserver.Data
 {
-    public interface IShipDataCustom : IBaseShipStats
+    /*public interface IShipDataCustom : IBaseShipStats
     {
         string Name { get; }
         int SortID { get; }
@@ -33,7 +33,7 @@ namespace ElectronicObserver.Data
         IEnumerable<DayAttackKind> DayAttacks { get; }
         IEnumerable<NightAttackKind> NightAttacks { get; }
         IEnumerable<DayAttackKind> AswAttacks { get; }
-    }
+    }*/
 
     public interface IBaseShipStats
     {

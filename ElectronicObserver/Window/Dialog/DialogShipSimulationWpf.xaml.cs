@@ -207,15 +207,6 @@ namespace ElectronicObserver.Window.Dialog
                 e.Handled = true;
             }
 
-            string equipEnum = string.Join(",\n", KCDatabase.Instance.MasterEquipments.Values
-                .Where(eq => eq.ID < 501)
-                .Select(eq => $"{eq.CategoryType.Display().Replace(" ", "").Replace("-", "").Replace(")", "").Replace("(", "_").Replace("/", "")}_{eq.Name.Replace("/", "").Replace(".", "_").Replace("-", "").Replace("+", "_").Replace(")", "").Replace("(", "_").Replace(" ", "")} = {eq.ID}"));
-
-            string shipEnum = string.Join(",\n", KCDatabase.Instance.MasterShips.Values
-                .Where(ship => !ship.IsAbyssalShip)
-                .Select(ship => $"{ship.Name.Replace(" ", "").Replace("-", "").Replace(".", "")} = {ship.ShipID}"));
-
-
             if (Attacker == null || Defender == null) return;
 
             if (ExternalParameters.Parameters == null || EnemyExternalParameters.Parameters == null) return;

@@ -23,15 +23,15 @@ namespace ElectronicObserver.Window.ControlWpf
     /// </summary>
     public partial class SynergyStatDisplay : UserControl
     {
-        private SynergyViewModel _synergy;
+        private SynergyViewModel _synergyViewModel;
 
-        public SynergyViewModel Synergy
+        public SynergyViewModel SynergyViewModel
         {
-            get => _synergy;
+            get => _synergyViewModel;
             set
             {
-                _synergy = value;
-                DataContext = Synergy;
+                _synergyViewModel = value;
+                DataContext = SynergyViewModel;
             }
         }
 
@@ -39,13 +39,8 @@ namespace ElectronicObserver.Window.ControlWpf
         {
             InitializeComponent();
 
-            /*FirepowerIcon.StatIcon = IconContent.ParameterFirepower;
-            TorpedoIcon.StatIcon = IconContent.ParameterTorpedo;
-            AaIcon.StatIcon = IconContent.ParameterAA;
-            ArmorIcon.StatIcon = IconContent.ParameterArmor;
-            AswIcon.StatIcon = IconContent.ParameterASW;
-            EvasionIcon.StatIcon = IconContent.ParameterEvasion;
-            LoSIcon.StatIcon = IconContent.ParameterLOS;*/
+            SynergyViewModel = new SynergyViewModel();
+            DataContext = SynergyViewModel;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace ElectronicObserver.Data
     // how to not SQL
     public class FitBonusCustom
     {
-        private IShipDataCustom Ship { get; }
+        private ShipDataCustom Ship { get; }
 
         public VisibleFits VisibleFit =>
             new VisibleFits(Firepower, Torpedo, AA, ASW, Evasion, Armor, LoS);
@@ -106,6 +106,28 @@ namespace ElectronicObserver.Data
             Accuracy = 0;
         }
 
+        // todo synergy and fit bonus should be different classes
+        /// <summary>
+        /// this is for synergy
+        /// </summary>
+        public FitBonusCustom(ShipDataCustom ship)
+        {
+            Ship = ship;
+
+            VisibleFits visibleFits = SynergyBonus(ship);
+
+            Firepower = visibleFits.Firepower;
+            Torpedo = visibleFits.Torpedo;
+            AA = visibleFits.AA;
+            ASW = visibleFits.ASW;
+            Evasion = visibleFits.Evasion;
+            Armor = visibleFits.Armor;
+            LoS = visibleFits.LoS;
+        }
+
+        /// <summary>
+        /// this is for fit bonus
+        /// </summary>
         public FitBonusCustom(ShipDataCustom ship, EquipmentDataCustom equip)
         {
             Ship = ship;
@@ -147,7 +169,7 @@ namespace ElectronicObserver.Data
 
             ShipClasses.Shimushu => VisibleFitsShimushu(equip),
             ShipClasses.Etorofu => VisibleFitsEtorofu(equip),
-            // todo Mikura
+            ShipClasses.Mikura => VisibleFitsMikura(equip),
             ShipClasses.Hiburi => VisibleFitsHiburi(equip),
 
             ShipClasses.Tenryuu => new VisibleFits(), // todo VisibleFitsTenryuu(equip),
@@ -157,7 +179,7 @@ namespace ElectronicObserver.Data
             ShipClasses.Yuubari => VisibleFitsYuubari(equip),
             ShipClasses.Agano => VisibleFitsAgano(equip),
             ShipClasses.Ooyodo => VisibleFitsOoyodo(equip),
-            // todo Luigi di Savoia Duca Degli Abruzzi
+            ShipClasses.Abruzzi => VisibleFitsAbruzzi(equip),
             ShipClasses.Gotland => VisibleFitsGotland(equip),
 
             ShipClasses.Furutaka => VisibleFitsFurutaka(equip),
@@ -178,8 +200,8 @@ namespace ElectronicObserver.Data
             // todo Bisko
             // todo VV
             ShipClasses.Iowa => VisibleFitsIowa(equip),
-            // todo Colorado
-            ShipClasses.QueenElizabeth => VisibleFitsWarspite(equip),
+            ShipClasses.Colorado => VisibleFitsColorado(equip),
+            ShipClasses.QueenElizabeth => VisibleFitsQueenElizabeth(equip),
             ShipClasses.Nelson => VisibleFitsNelson(equip),
             // todo Richelieu
             // todo Gangut
@@ -205,15 +227,16 @@ namespace ElectronicObserver.Data
             ShipClasses.Taiyou => VisibleFitsTaiyou(equip),
             ShipClasses.Casablanca => VisibleFitsCasablanca(equip),
 
-            ShipClasses.神威型 => new VisibleFits(), // todo VisibleFitsKamoi(equip),
-            ShipClasses.千歳型 => new VisibleFits(), // todo VisibleFitsChitose(equip),
-            ShipClasses.瑞穂型 => new VisibleFits(), // todo VisibleFitsMizuho(equip),
-            ShipClasses.日進型 => VisibleFitsNisshin(equip),
-            ShipClasses.秋津洲型 => new VisibleFits(), // todo VisibleFitsAkitsushima(equip),
-            ShipClasses.大鯨型 => VisibleFitsTaigei(equip),
-            ShipClasses.改風早型 => new VisibleFits(), // todo VisibleFitsKazahaya(equip),
+            ShipClasses.Kamoi => new VisibleFits(), // todo VisibleFitsKamoi(equip),
+            ShipClasses.Chitose => new VisibleFits(), // todo VisibleFitsChitose(equip),
+            ShipClasses.Mizuho => new VisibleFits(), // todo VisibleFitsMizuho(equip),
+            ShipClasses.Nisshin => VisibleFitsNisshin(equip),
+            ShipClasses.Akitsushima => new VisibleFits(), // todo VisibleFitsAkitsushima(equip),
+            ShipClasses.Taigei => VisibleFitsTaigei(equip),
+            ShipClasses.Ryuuhou => VisibleFitsTaigei(equip),
+            ShipClasses.Kazahaya => new VisibleFits(), // todo VisibleFitsKazahaya(equip),
             ShipClasses.工作艦 => new VisibleFits(), // todo VisibleFitsRepairShip ??
-            ShipClasses.香取型 => VisibleFitsKatori(equip),
+            ShipClasses.Katori => VisibleFitsKatori(equip),
             ShipClasses.巡潜甲型改二 => new VisibleFits(), // todo VisibleFitsI13(equip),
             ShipClasses.潜特型伊400型潜水艦 => new VisibleFits(), // todo VisibleFitsI400(equip),
             ShipClasses.海大VI型 => new VisibleFits(), // todo VisibleFitsI168(equip),
@@ -224,6 +247,110 @@ namespace ElectronicObserver.Data
             ShipClasses.特種船丙型 => new VisibleFits(), // todo VisibleFitsAkitsuMaru ??
             ShipClasses.UボートIXC型 => new VisibleFits(), // todo VisibleFitsIXC
 
+            _ => new VisibleFits()
+        };
+
+        private VisibleFits SynergyBonus(ShipDataCustom ship) => ship.ShipClass switch
+        {
+            // why R# dying in here?
+            ShipClasses.Kamikaze => SynergyKamikaze(ship),
+            ShipClasses.Mutsuki => SynergyMutsuki(ship),
+            ShipClasses.Fubuki => SynergyFubuki(ship),
+            ShipClasses.Ayanami => SynergyAyanami(ship),
+            ShipClasses.Akatsuki => SynergyAkatsuki(ship),
+            ShipClasses.Hatsuharu => SynergyHatsuharu(ship),
+            ShipClasses.Shiratsuyu => SynergyShiratsuyu(ship),
+            ShipClasses.Asashio => SynergyAsashio(ship),
+            ShipClasses.Kagerou => SynergyKagerou(ship),
+            ShipClasses.Yuugumo => SynergyYuugumo(ship),
+            // ShipClasses.Akizuki => SynergyAkizuki(ship),
+            ShipClasses.Shimakaze => SynergyShimakaze(ship),
+            // ShipClasses.Z1 => SynergyZ1(ship),
+            // ShipClasses.Maestrale => SynergyMaestrale(ship),
+            // ShipClasses.Fletcher => SynergyAmericanDD(ship),
+            // ShipClasses.JohnCButler => SynergyAmericanDD(ship),
+            // ShipClasses.J => SynergyJ(ship),
+            // ShipClasses.Tashkent => SynergyTashkent(ship),
+
+            ShipClasses.Shimushu => SynergyShimushu(ship),
+            ShipClasses.Etorofu => SynergyEtorofu(ship),
+            ShipClasses.Mikura => SynergyMikura(ship),
+            ShipClasses.Hiburi => SynergyHiburi(ship),
+
+            ShipClasses.Tenryuu => new VisibleFits(), // todo SynergyTenryuu(ship),
+            ShipClasses.Kuma => SynergyKuma(ship),
+            ShipClasses.Nagara => SynergyNagara(ship),
+            ShipClasses.Sendai => SynergySendai(ship),
+            // ShipClasses.Yuubari => SynergyYuubari(ship),
+            // ShipClasses.Agano => SynergyAgano(ship),
+            // ShipClasses.Ooyodo => SynergyOoyodo(ship),
+            // ShipClasses.Abruzzi => Synergy
+            // ShipClasses.Gotland => SynergyGotland(ship),
+
+            ShipClasses.Furutaka => SynergyFurutaka(ship),
+            ShipClasses.Aoba => SynergyAoba(ship),
+            ShipClasses.Myoukou => new VisibleFits(), // todo SynergyMyoukou(ship),
+            ShipClasses.Takao => SynergyTakao(ship),
+            ShipClasses.Mogami => SynergyMogami(ship),
+            ShipClasses.Tone => new VisibleFits(), // todo SynergyTone(ship),
+            ShipClasses.AdmiralHipper => new VisibleFits(), // todo SynergyAdmiralHipper(ship),
+            ShipClasses.Zara => new VisibleFits(), // todo SynergyZara(ship),
+
+            ShipClasses.Kongou => SynergyKongou(ship),
+            ShipClasses.Ise when Ship.ShipID == ShipID.IseKaiNi || Ship.ShipID == ShipID.HyuugaKaiNi =>
+            SynergyIse(ship),
+            // _ when Ship.ShipType == ShipTypes.AviationBattleship => SynergyAviationBattleship(ship),
+            ShipClasses.Nagato => SynergyNagato(ship),
+            // todo Yamato
+            // todo Bisko
+            // todo VV
+            // ShipClasses.Iowa => SynergyIowa(ship),
+            // ShipClasses.Colorado
+            // ShipClasses.QueenElizabeth => SynergyQueenElizabeth(ship),
+            // ShipClasses.Nelson => SynergyNelson(ship),
+            // todo Richelieu
+            // todo Gangut
+
+            ShipClasses.Akagi => SynergyAkagi(ship),
+            ShipClasses.Kaga => SynergyKaga(ship),
+            ShipClasses.Souryuu => SynergySouryuu(ship),
+            ShipClasses.Hiryuu => SynergyHiryuu(ship),
+            ShipClasses.Shoukaku => SynergyShoukaku(ship),
+            ShipClasses.Unryuu => SynergyUnryuu(ship),
+            ShipClasses.Taihou => SynergyTaihou(ship),
+            ShipClasses.GrafZeppelin => SynergyGrafZeppelin(ship),
+            ShipClasses.Aquila => SynergyAquila(ship),
+            ShipClasses.Lexington => SynergyLexington(ship),
+            ShipClasses.Essex => SynergyEssex(ship),
+            ShipClasses.ArkRoyal => SynergyArkRoyal(ship),
+
+            ShipClasses.Houshou => SynergyHoushou(ship),
+            ShipClasses.Ryuujou => SynergyRyuujou(ship),
+            ShipClasses.Shouhou => SynergyShouhou(ship),
+            ShipClasses.Hiyou => SynergyHiyou(ship),
+            ShipClasses.KasugaMaru => SynergyTaiyou(ship),
+            ShipClasses.Taiyou => SynergyTaiyou(ship),
+            ShipClasses.Casablanca => SynergyCasablanca(ship),
+
+            ShipClasses.Kamoi => new VisibleFits(), // todo SynergyKamoi(ship),
+            ShipClasses.Chitose => SynergyChitose(ship),
+            ShipClasses.Mizuho => new VisibleFits(), // todo SynergyMizuho(ship),
+            // ShipClasses.日進型 => SynergyNisshin(ship),
+            ShipClasses.Akitsushima => new VisibleFits(), // todo SynergyAkitsushima(ship),
+            ShipClasses.Taigei => SynergyTaigei(ship),
+            ShipClasses.Ryuuhou => SynergyTaigei(ship),
+            ShipClasses.Kazahaya => new VisibleFits(), // todo SynergyKazahaya(ship),
+            ShipClasses.工作艦 => new VisibleFits(), // todo SynergyRepairShip ??
+            // ShipClasses.香取型 => SynergyKatori(ship),
+            ShipClasses.巡潜甲型改二 => new VisibleFits(), // todo SynergyI13(ship),
+            ShipClasses.潜特型伊400型潜水艦 => new VisibleFits(), // todo SynergyI400(ship),
+            ShipClasses.海大VI型 => new VisibleFits(), // todo SynergyI168(ship),
+            ShipClasses.巡潜3型 => new VisibleFits(), // todo SynergyI7(ship),
+            ShipClasses.巡潜乙型 => new VisibleFits(), // todo SynergyI15(ship),
+            ShipClasses.巡潜乙型改二 => new VisibleFits(), // todo SynergyI54(ship),
+            ShipClasses.三式潜航輸送艇 => new VisibleFits(), // todo SynergyMaruyu(ship),
+            ShipClasses.特種船丙型 => new VisibleFits(), // todo SynergyAkitsuMaru ??
+            ShipClasses.UボートIXC型 => new VisibleFits(), // todo SynergyIXC
 
             _ => new VisibleFits()
         };
@@ -234,15 +361,16 @@ namespace ElectronicObserver.Data
             ShipClasses.Kongou => AccuracyKongou(equip),
             ShipClasses.Bismarck => AccuracyBismarck(equip),
             ShipClasses.VVeneto => AccuracyBismarck(equip),
-            ShipClasses.Iowa => AccuracyBurger(equip),
-            ShipClasses.Richelieu => AccuracyBaguette(equip),
-            ShipClasses.QueenElizabeth => AccuracyWarspite(equip),
+            ShipClasses.Iowa => AccuracyIowa(equip),
+            ShipClasses.Richelieu => AccuracyRichelieu(equip),
+            ShipClasses.QueenElizabeth => AccuracyQueenElizabeth(equip),
             ShipClasses.Nelson => AccuracyNelson(equip),
             ShipClasses.Yamato => AccuracyYamato(equip),
 
-            ShipClasses.Nagato when Ship.ID == 541 => AccuracyNagato(equip),
-            ShipClasses.Nagato when Ship.ID == 573 => AccuracyMutsu(equip),
-            ShipClasses.Ise when Ship.ID == 553 || Ship.ID == 554 => AccuracyIse(equip), // Ise kai ni class
+            ShipClasses.Nagato when Ship.ShipID == ShipID.NagatoKaiNi => AccuracyNagato(equip),
+            ShipClasses.Nagato when Ship.ShipID == ShipID.MutsuKaiNi => AccuracyMutsu(equip),
+            ShipClasses.Ise when Ship.ShipID == ShipID.IseKaiNi || 
+                                 Ship.ShipID == ShipID.HyuugaKaiNi => AccuracyIse(equip),
 
             _ when Ship.ShipType == ShipTypes.AviationBattleship => AccuracyAviationBattleship(equip),
             _ when Ship.ShipType == ShipTypes.Battleship => AccuracyBattleship(equip),
@@ -252,285 +380,202 @@ namespace ElectronicObserver.Data
 
         #region BB visible fits
 
-        /// <summary>
-        /// 149 - Kongou k2     <br/>
-        /// 150 - Hiei k2       <br/>
-        /// 151 - Haruna k2     <br/>
-        /// 152 - Kirishima k2  <br/>
-        /// 591 - Kongou k2c    <br/>
-        /// _   - kai Kongou class
-        /// </summary>
-        private VisibleFits VisibleFitsKongou(EquipmentDataCustom equip) => (equip.ID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsKongou(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // dazzle
-            (104, 149) => new VisibleFits(firepower: 2),
-            (104, 150) => new VisibleFits(firepower: 1),
-            (104, 152) => new VisibleFits(firepower: 1),
-            (104, 151) => new VisibleFits(firepower: 2, aa: 1, evasion: 2),
+            (EquipID.LargeCalibreMainGun_35_6cmTwinGun_DazzleCamouflage, ShipID.KongouKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_35_6cmTwinGun_DazzleCamouflage, ShipID.HieiKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cmTwinGun_DazzleCamouflage, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cmTwinGun_DazzleCamouflage, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 2, aa: 1, evasion: 2),
 
-            // dazzle kai
-            (289, 149) => new VisibleFits(firepower: 2, aa: 2),
-            (289, 150) => new VisibleFits(firepower: 1),
-            (289, 152) => new VisibleFits(firepower: 1),
-            (289, 151) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_35_6cmTripleGunKai_DazzleCamouflage, ShipID.KongouKaiNi) => new VisibleFits(firepower: 2, aa: 2),
+            (EquipID.LargeCalibreMainGun_35_6cmTripleGunKai_DazzleCamouflage, ShipID.HieiKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cmTripleGunKai_DazzleCamouflage, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cmTripleGunKai_DazzleCamouflage, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
 
-            // 35.6 kai
-            (328, 591) => new VisibleFits(firepower: 3, torpedo: 1, evasion: 1),
-            (328, 149) => new VisibleFits(firepower: 2, evasion: 1),
-            (328, 150) => new VisibleFits(firepower: 2, evasion: 1),
-            (328, 152) => new VisibleFits(firepower: 2, evasion: 1),
-            (328, 151) => new VisibleFits(firepower: 2, evasion: 1),
-            (328, _) => new VisibleFits(firepower: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.KongouKaiNiC) => new VisibleFits(firepower: 3, torpedo: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.KongouKaiNi) => new VisibleFits(firepower: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.HieiKaiNi) => new VisibleFits(firepower: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, _) => new VisibleFits(firepower: 1, evasion: 1),
 
-            // 35.6 k2
-            (329, 591) => new VisibleFits(firepower: 4, torpedo: 2, aa: 1, evasion: 1),
-            (329, 149) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
-            (329, 150) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
-            (329, 152) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
-            (329, 151) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
-            (329, _) => new VisibleFits(firepower: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, ShipID.KongouKaiNiC) => new VisibleFits(firepower: 4, torpedo: 2, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, ShipID.KongouKaiNi) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, ShipID.HieiKaiNi) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 3, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, _) => new VisibleFits(firepower: 1, evasion: 1),
 
-            // T13 kai
-            (106, 151) => new VisibleFits(firepower: 1, aa: 2, evasion: 3, armor: 1),
+            (EquipID.SmallRadar_Type13AirRADARKai, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 1, aa: 2, evasion: 3, armor: 1),
 
-            // sub torp
-            (67, _) => new VisibleFits(torpedo: -5),
+            (EquipID.Torpedo_53cmBow_OxygenTorpedo, _) => new VisibleFits(torpedo: -5),
 
-            // Kamikaze torp
-            (174, 591) => new VisibleFits(torpedo: 6, evasion: 3),
+            (EquipID.Torpedo_53cmTwinTorpedo, ShipID.KongouKaiNiC) => new VisibleFits(torpedo: 6, evasion: 3),
 
-            // nelson gun
-            (298, 149) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (298, 150) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (298, 152) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (298, 151) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, ShipID.KongouKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, ShipID.HieiKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
 
-            // afct
-            (299, 149) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (299, 150) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (299, 152) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (299, 151) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, ShipID.KongouKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, ShipID.HieiKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
 
-            // fcr
-            (300, 149) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (300, 150) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (300, 152) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
-            (300, 151) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, ShipID.KongouKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, ShipID.HieiKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, ShipID.KirishimaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, ShipID.HarunaKaiNi) => new VisibleFits(firepower: 1, evasion: -3, armor: 1),
 
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsWarspite(EquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsQueenElizabeth(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // nelson gun (afct, fcr)
-            298 => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
-            299 => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
-            300 => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, _) => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, _) => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, _) => new VisibleFits(firepower: 2, evasion: -2, armor: 1),
 
-            // brit rocket
-            301 => new VisibleFits(firepower: 2, evasion: 1, armor: 1),
+            (EquipID.AntiAircraftMachineGun_20tube7inchUPRocketLaunchers, _) => new VisibleFits(firepower: 2, evasion: 1, armor: 1),
 
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsIowa(EquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsIowa(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // gfcs mk37 
-            307 => new VisibleFits(firepower: 1, aa: 1, evasion: 1),
+            (EquipID.SmallRadar_GFCSMk_37, _) => new VisibleFits(firepower: 1, aa: 1, evasion: 1),
 
-            // sg initial
-            315 => new VisibleFits(firepower: 2, evasion: 3, los: 4),
+            (EquipID.SmallRadar_SGRadar_InitialModel, _) => new VisibleFits(firepower: 2, evasion: 3, los: 4),
 
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// 553 - Ise k2    <br/>
-        /// 554 - Hyuuga k2
-        /// </summary>
-        private VisibleFits VisibleFitsIse(EquipmentDataCustom equip) => (equip.ID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsIse(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // 35.6 kai (ni)
-            (328, _) => new VisibleFits(firepower: 1),
-            (329, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, _) => new VisibleFits(firepower: 1),
 
-            // 41k2
-            (318, 553) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
-            (318, 554) => new VisibleFits(firepower: 3, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.IseKaiNi) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.HyuugaKaiNi) => new VisibleFits(firepower: 3, aa: 2, evasion: 2),
 
-            // 41k2 triple
-            (236, 553) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
-            (236, 554) => new VisibleFits(firepower: 3, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.IseKaiNi) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.HyuugaKaiNi) => new VisibleFits(firepower: 3, aa: 2, evasion: 2),
 
-            (24, _) => new VisibleFits(firepower: 2), // Suisei
-            (57, _) => new VisibleFits(firepower: 2), // 12A
-            (111, _) => new VisibleFits(firepower: 2), // 601
-            (100, _) => new VisibleFits(firepower: 4), // Egusa
-            (291, _) => new VisibleFits(firepower: 6, evasion: 1), // 22 634
-            (292, _) => new VisibleFits(firepower: 8, aa: 1, evasion: 2), // 22 634 skilled
-            (319, _) => new VisibleFits(firepower: 7, aa: 3, evasion: 2), // 12 634 T3
-            (320, 553) => new VisibleFits(firepower: 2), // 12 31
-            (320, 554) => new VisibleFits(firepower: 4), // 12 31
+            (EquipID.CarrierDiveBomber_Suisei, _) => new VisibleFits(firepower: 2),
+            (EquipID.CarrierDiveBomber_SuiseiModel12A, _) => new VisibleFits(firepower: 2),
+            (EquipID.CarrierDiveBomber_Suisei_601AirGroup, _) => new VisibleFits(firepower: 2),
+            (EquipID.CarrierDiveBomber_Suisei_EgusaSquadron, _) => new VisibleFits(firepower: 4),
+            (EquipID.CarrierDiveBomber_SuiseiModel22_634AirGroup, _) => new VisibleFits(firepower: 6, evasion: 1),
+            (EquipID.CarrierDiveBomber_SuiseiModel22_634AirGroupSkilled, _) => new VisibleFits(firepower: 8, aa: 1, evasion: 2),
+            (EquipID.CarrierDiveBomber_彗星一二型_六三四空三号爆弾搭載機, _) => new VisibleFits(firepower: 7, aa: 3, evasion: 2),
+            (EquipID.CarrierDiveBomber_彗星一二型_三一号光電管爆弾搭載機, ShipID.IseKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.CarrierDiveBomber_彗星一二型_三一号光電管爆弾搭載機, ShipID.HyuugaKaiNi) => new VisibleFits(firepower: 4),
 
-            // Zuiun
-            (79, _) => new VisibleFits(firepower: 3), // 634
-            (81, _) => new VisibleFits(firepower: 3), // 12 634
-            (237, _) => new VisibleFits(firepower: 4, evasion: 2), // 634 skilled
-            (322, _) => new VisibleFits(firepower: 5, aa: 2, asw: 1, evasion: 2), // k2 634
-            (323, _) => new VisibleFits(firepower: 6, aa: 3, asw: 2, evasion: 3), // k2 634 skilled
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroup, _) => new VisibleFits(firepower: 3),
+            (EquipID.SeaplaneBomber_ZuiunModel12_634AirGroup, _) => new VisibleFits(firepower: 3),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroupSkilled, _) => new VisibleFits(firepower: 4, evasion: 2),
+            (EquipID.SeaplaneBomber_瑞雲改二_六三四空, _) => new VisibleFits(firepower: 5, aa: 2, asw: 1, evasion: 2),
+            (EquipID.SeaplaneBomber_瑞雲改二_六三四空熟練, _) => new VisibleFits(firepower: 6, aa: 3, asw: 2, evasion: 3),
 
-            // gyro kai
-            (324, 553) => new VisibleFits(asw: 1, evasion: 1),
-            (324, 554) => new VisibleFits(asw: 2, evasion: 1),
+            (EquipID.Autogyro_オ号観測機改, ShipID.IseKaiNi) => new VisibleFits(asw: 1, evasion: 1),
+            (EquipID.Autogyro_オ号観測機改, ShipID.HyuugaKaiNi) => new VisibleFits(asw: 2, evasion: 1),
 
-            // gyro k2
-            (325, 553) => new VisibleFits(asw: 1, evasion: 1),
-            (325, 554) => new VisibleFits(asw: 2, evasion: 1),
+            (EquipID.Autogyro_オ号観測機改二, ShipID.IseKaiNi) => new VisibleFits(asw: 1, evasion: 1),
+            (EquipID.Autogyro_オ号観測機改二, ShipID.HyuugaKaiNi) => new VisibleFits(asw: 2, evasion: 1),
 
-            // S-51J
-            (326, 553) => new VisibleFits(firepower: 2, asw: 1, evasion: 2),
-            (326, 554) => new VisibleFits(firepower: 3, asw: 2, evasion: 3),
+            (EquipID.Autogyro_S51J, ShipID.IseKaiNi) => new VisibleFits(firepower: 2, asw: 1, evasion: 2),
+            (EquipID.Autogyro_S51J, ShipID.HyuugaKaiNi) => new VisibleFits(firepower: 3, asw: 2, evasion: 3),
 
-            // S-51J
-            (327, 553) => new VisibleFits(firepower: 1, asw: 3, evasion: 1),
-            (327, 554) => new VisibleFits(firepower: 2, asw: 4, evasion: 2),
-
-            // T2 recon
-            (61, 553) when equip.Level == 10 => new VisibleFits(firepower: 5, evasion: 2, armor: 1, los: 3),
-            (61, 553) when equip.Level > 5 => new VisibleFits(firepower: 4, evasion: 2, armor: 1, los: 2),
-            (61, 553) when equip.Level > 3 => new VisibleFits(firepower: 4, evasion: 2, armor: 1, los: 1),
-            (61, 553) when equip.Level > 1 => new VisibleFits(firepower: 3, evasion: 2, armor: 1, los: 1),
-            (61, 553) => new VisibleFits(firepower: 3, evasion: 2, armor: 1),
-
-            (61, 554) when equip.Level == 10 => new VisibleFits(firepower: 5, evasion: 3, armor: 3, los: 3),
-            (61, 554) when equip.Level > 5 => new VisibleFits(firepower: 4, evasion: 3, armor: 3, los: 2),
-            (61, 554) when equip.Level > 3 => new VisibleFits(firepower: 4, evasion: 3, armor: 3, los: 1),
-            (61, 554) when equip.Level > 1 => new VisibleFits(firepower: 3, evasion: 3, armor: 3, los: 1),
-            (61, 554) => new VisibleFits(firepower: 3, evasion: 3, armor: 3),
+            (EquipID.Autogyro_S51J改, ShipID.IseKaiNi) => new VisibleFits(firepower: 1, asw: 3, evasion: 1),
+            (EquipID.Autogyro_S51J改, ShipID.HyuugaKaiNi) => new VisibleFits(firepower: 2, asw: 4, evasion: 2),
 
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// 82  - Ise kai       <br/>
-        /// 87  - Hyuuga kai    <br/>
-        /// 411 - Fusou k2      <br/>
-        /// 412 - Yamashiro k2  <br/>
-        /// _   - Fusou kai (ni) class, Ise kai class
-        /// </summary>
-        private VisibleFits VisibleFitsAviationBattleship(EquipmentDataCustom equip) => (equip.ID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsAviationBattleship(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // 35.6 kai
-            (328, 411) => new VisibleFits(firepower: 1),
-            (328, 412) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.FusouKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 1),
 
-            // 35.6 kai ni
-            (329, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_35_6cm連装砲改二, _) => new VisibleFits(firepower: 1),
 
-            // 41k2
-            (318, 82) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
-            (318, 87) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
-            (318, 411) => new VisibleFits(firepower: 1),
-            (318, 412) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.IseKai) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.HyuugaKai) => new VisibleFits(firepower: 2, aa: 2, evasion: 2),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.FusouKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 1),
 
-            // 41k2 triple
-            (236, 82) => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
-            (236, 87) => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
-            (236, 411) => new VisibleFits(firepower: 1),
-            (236, 412) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.IseKai) => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.HyuugaKai) => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.FusouKaiNi) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_41cmTripleGunKai2, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 1),
 
-            // Zuiun (634)
-            (79, 82) => new VisibleFits(firepower: 2),
-            (79, 87) => new VisibleFits(firepower: 2),
-            (79, 411) => new VisibleFits(firepower: 2),
-            (79, 412) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroup, ShipID.IseKai) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroup, ShipID.HyuugaKai) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroup, ShipID.FusouKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroup, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 2),
 
-            // Zuiun 12 (634)
-            (81, 82) => new VisibleFits(firepower: 2),
-            (81, 87) => new VisibleFits(firepower: 2),
-            (81, 411) => new VisibleFits(firepower: 2),
-            (81, 412) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_ZuiunModel12_634AirGroup, ShipID.IseKai) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_ZuiunModel12_634AirGroup, ShipID.HyuugaKai) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_ZuiunModel12_634AirGroup, ShipID.FusouKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_ZuiunModel12_634AirGroup, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 2),
 
-            // Zuiun (634 skilled)
-            (237, 82) => new VisibleFits(firepower: 3, evasion: 1),
-            (237, 87) => new VisibleFits(firepower: 3, evasion: 1),
-            (237, 411) => new VisibleFits(firepower: 2),
-            (237, 412) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroupSkilled, ShipID.IseKai) => new VisibleFits(firepower: 3, evasion: 1),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroupSkilled, ShipID.HyuugaKai) => new VisibleFits(firepower: 3, evasion: 1),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroupSkilled, ShipID.FusouKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.SeaplaneBomber_Zuiun_634AirGroupSkilled, ShipID.YamashiroKaiNi) => new VisibleFits(firepower: 2),
 
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsNelson(EquipmentDataCustom equip) => equip.ID switch
+        private VisibleFits VisibleFitsNelson(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // nelson gun (afct, fcr)
-            298 => new VisibleFits(firepower: 2, armor: 1),
-            299 => new VisibleFits(firepower: 2, armor: 1),
-            300 => new VisibleFits(firepower: 2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun, _) => new VisibleFits(firepower: 2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai, _) => new VisibleFits(firepower: 2, armor: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284, _) => new VisibleFits(firepower: 2, armor: 1),
 
-            // brit rocket
-            301 => new VisibleFits(firepower: 2, evasion: 1, armor: 1),
+            (EquipID.AntiAircraftMachineGun_20tube7inchUPRocketLaunchers, _) => new VisibleFits(firepower: 2, evasion: 1, armor: 1),
 
-            // burger twin (mk1, mk5, mk8)
-            330 => new VisibleFits(firepower: 2),
-            331 => new VisibleFits(firepower: 2),
-            332 => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_I連装砲, _) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_V連装砲, _) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, _) => new VisibleFits(firepower: 2),
 
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// 541 - Nagato k2 <br/>
-        /// 573 - Mutsu k2  <br/>
-        /// _   - Nagato kai class
-        /// </summary>
-        private VisibleFits VisibleFitsNagato(EquipmentDataCustom equip) => (equip.ID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsNagato(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // 41k2
-            (318, 541) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
-            (318, 573) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.NagatoKaiNi) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_41cm連装砲改二, ShipID.MutsuKaiNi) => new VisibleFits(firepower: 3, aa: 2, evasion: 1),
 
-            // burger twin mk1
-            (330, 541) => new VisibleFits(firepower: 2),
-            (330, 573) => new VisibleFits(firepower: 2),
-            (330, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_I連装砲, ShipID.NagatoKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_I連装砲, ShipID.MutsuKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_I連装砲, _) => new VisibleFits(firepower: 1),
 
-            // burger twin mk5
-            (331, 541) => new VisibleFits(firepower: 2),
-            (331, 573) => new VisibleFits(firepower: 2),
-            (331, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_V連装砲, ShipID.NagatoKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_V連装砲, ShipID.MutsuKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_V連装砲, _) => new VisibleFits(firepower: 1),
 
-            // burger twin mk8
-            (332, 541) => new VisibleFits(firepower: 2),
-            (332, 573) => new VisibleFits(firepower: 2),
-            (332, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, ShipID.NagatoKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, ShipID.MutsuKaiNi) => new VisibleFits(firepower: 2),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, _) => new VisibleFits(firepower: 1),
 
-            // T13 kai
-            (106, 541) => new VisibleFits(firepower: 1, aa: 2, evasion: 3, armor: 1),
+            (EquipID.SmallRadar_Type13AirRADARKai, ShipID.NagatoKaiNi) => new VisibleFits(firepower: 1, aa: 2, evasion: 3, armor: 1),
 
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// 601  - Colorado      <br/>
-        /// 1496 - Colorado kai
-        /// </summary>
-        private VisibleFits VisibleFitsColorado(EquipmentDataCustom equip) => (equip.ID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsColorado(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
-            // burger twin mk1
-            (330, _) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_I連装砲, _) => new VisibleFits(firepower: 1),
 
-            // burger twin mk5
-            (331, _) => new VisibleFits(firepower: 2, evasion: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_V連装砲, _) => new VisibleFits(firepower: 2, evasion: 1),
 
-            // burger twin mk8
-            (332, 601) => new VisibleFits(firepower: 1),
-            (332, 1496) => new VisibleFits(firepower: 2, aa: 1, evasion: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, ShipID.Colorado) => new VisibleFits(firepower: 1),
+            (EquipID.LargeCalibreMainGun_16inchMk_VIII連装砲改, ShipID.Colorado改) => new VisibleFits(firepower: 2, aa: 1, evasion: 1),
 
-            // gfcs mk37 
-            (307, _) => new VisibleFits(firepower: 1, aa: 1, evasion: 1),
+            (EquipID.SmallRadar_GFCSMk_37, _) => new VisibleFits(firepower: 1, aa: 1, evasion: 1),
 
-            // sg initial
-            (315, _) => new VisibleFits(firepower: 2, evasion: 3, los: 4),
+            (EquipID.SmallRadar_SGRadar_InitialModel, _) => new VisibleFits(firepower: 2, evasion: 3, los: 4),
 
             _ => new VisibleFits()
         };
@@ -539,92 +584,80 @@ namespace ElectronicObserver.Data
 
         #region BB synergy
 
-        /// <summary>
-        /// 149 - Kongou k2     <br/>
-        /// 150 - Hiei k2       <br/>
-        /// 151 - Haruna k2     <br/>
-        /// 152 - Kirishima k2  <br/>
-        /// 591 - Kongou k2c    <br/>
-        /// </summary>
         private VisibleFits SynergyKongou(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // dazzle kai
-            if (ship.Equipment.Any(eq => eq?.ID == 289))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeCalibreMainGun_35_6cmTripleGunKai_DazzleCamouflage))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    149 when ship.HasSurfaceRadar => new VisibleFits(firepower: 2),
-                    151 when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, evasion: 2),
+                    ShipID.KongouKaiNi when ship.HasSurfaceRadar => new VisibleFits(firepower: 2),
+                    ShipID.HarunaKaiNi when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, evasion: 2),
 
                     _ => new VisibleFits()
                 };
             }
 
-            // sanshiki
-            if (ship.Equipment.Any(eq => eq?.ID == 35))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.AntiAircraftShell_Type3Shell))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    149 => new VisibleFits(firepower: 1, aa: 1),
-                    591 => new VisibleFits(firepower: 1, aa: 1),
-                    150 => new VisibleFits(aa: 1),
-                    151 => new VisibleFits(aa: 1, evasion: 1),
-                    152 => new VisibleFits(firepower: 1),
+                    ShipID.KongouKaiNi => new VisibleFits(firepower: 1, aa: 1),
+                    ShipID.KongouKaiNiC => new VisibleFits(firepower: 1, aa: 1),
+                    ShipID.HieiKaiNi => new VisibleFits(aa: 1),
+                    ShipID.HarunaKaiNi => new VisibleFits(aa: 1, evasion: 1),
+                    ShipID.KirishimaKaiNi => new VisibleFits(firepower: 1),
 
                     _ => new VisibleFits()
                 };
             }
 
-            // sanshiki kai
-            if (ship.Equipment.Any(eq => eq?.ID == 317))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.AntiAircraftShell_三式弾改))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    149 => new VisibleFits(firepower: 3, aa: 3),
-                    591 => new VisibleFits(firepower: 3, aa: 3),
-                    150 => new VisibleFits(firepower: 2, aa: 2),
-                    151 => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
-                    152 => new VisibleFits(firepower: 3, aa: 2),
+                    ShipID.KongouKaiNi => new VisibleFits(firepower: 3, aa: 3),
+                    ShipID.KongouKaiNiC => new VisibleFits(firepower: 3, aa: 3),
+                    ShipID.HieiKaiNi => new VisibleFits(firepower: 2, aa: 2),
+                    ShipID.HarunaKaiNi => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
+                    ShipID.KirishimaKaiNi => new VisibleFits(firepower: 3, aa: 2),
 
                     _ => new VisibleFits(firepower: 1, aa: 1)
                 };
             }
 
-            // searchlight
-            if (ship.Equipment.Any(eq => eq?.ID == 74))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.Searchlight_Searchlight))
             {
                 VisibleFits fit = new VisibleFits(firepower: 2, evasion: -1);
 
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    86 => fit,
-                    210 => fit,
-                    150 => fit,
+                    ShipID.Hiei => fit,
+                    ShipID.HieiKai => fit,
+                    ShipID.HieiKaiNi => fit,
 
-                    85 => fit,
-                    212 => fit,
-                    152 => fit,
+                    ShipID.Kirishima => fit,
+                    ShipID.KirishimaKai => fit,
+                    ShipID.KirishimaKaiNi => fit,
 
                     _ => new VisibleFits()
                 };
             }
 
-            // large searchlight
-            if (ship.Equipment.Any(eq => eq?.ID == 140))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeSearchlight_Type96150cmSearchlight))
             {
                 VisibleFits fit = new VisibleFits(firepower: 3, evasion: -2);
 
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    86 => fit,
-                    210 => fit,
-                    150 => fit,
+                    ShipID.Hiei => fit,
+                    ShipID.HieiKai => fit,
+                    ShipID.HieiKaiNi => fit,
 
-                    85 => fit,
-                    212 => fit,
-                    152 => fit,
+                    ShipID.Kirishima => fit,
+                    ShipID.KirishimaKai => fit,
+                    ShipID.KirishimaKaiNi => fit,
 
                     _ => new VisibleFits()
                 };
@@ -633,79 +666,76 @@ namespace ElectronicObserver.Data
             return synergy;
         }
 
-        /// <summary>
-        /// 82  - Ise kai       <br/>
-        /// 87  - Hyuuga kai    <br/>
-        /// 553 - Ise k2        <br/>
-        /// 554 - Hyuuga k2
-        /// </summary>
         private VisibleFits SynergyIse(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 41k2 triple
-            if (ship.Equipment.Any(eq => eq?.ID == 290))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeCalibreMainGun_41cmTripleGunKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    82 when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
-                    87 when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
-                    553 when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
-                    554 when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
+                    ShipID.IseKai when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
+                    ShipID.HyuugaKai when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
+                    ShipID.IseKaiNi when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
+                    ShipID.HyuugaKaiNi when ship.HasAirRadar => new VisibleFits(aa: 2, evasion: 3),
 
                     _ => new VisibleFits()
                 };
 
-                // 41k2
-                if (ship.Equipment.Any(eq => eq?.ID == 318))
+                if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二))
                 {
-                    synergy += ship.ID switch
+                    synergy += ship.ShipID switch
                     {
-                        82 => new VisibleFits(evasion: 2, armor: 1),
-                        87 => new VisibleFits(evasion: 2, armor: 1),
-                        553 => new VisibleFits(evasion: 2, armor: 1),
-                        554 => new VisibleFits(firepower: 1, evasion: 2, armor: 1),
+                        ShipID.IseKai => new VisibleFits(evasion: 2, armor: 1),
+                        ShipID.HyuugaKai => new VisibleFits(evasion: 2, armor: 1),
+                        ShipID.IseKaiNi => new VisibleFits(evasion: 2, armor: 1),
+                        ShipID.HyuugaKaiNi => new VisibleFits(firepower: 1, evasion: 2, armor: 1),
 
                         _ => new VisibleFits()
                     };
                 }
             }
 
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
+            {
+                synergy += ship.ShipID switch
+                {
+                    ShipID.IseKaiNi => new VisibleFits(firepower: 3, evasion:2, armor: 1),
+
+                    ShipID.HyuugaKaiNi => new VisibleFits(firepower: 3, evasion: 3, armor: 3),
+
+                    _ => new VisibleFits()
+                };
+
+                synergy += SynergyCarrierReconUpgrade(ship);
+            }
+
             return synergy;
         }
 
-        /// <summary>
-        /// 541 - Nagato k2 <br/>
-        /// 573 - Mutsu k2  <br/>
-        /// </summary>
         private VisibleFits SynergyNagato(ShipDataCustom ship)
         {
-            if (ship.ID != 541 && ship.ID != 571)
-            {
-                return new VisibleFits();
-            }
-
             VisibleFits synergy = new VisibleFits();
 
-            // 41k2 triple && 41k2
-            if (ship.Equipment.Any(eq => eq?.ID == 290) && ship.Equipment.Any(eq => eq?.ID == 318))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeCalibreMainGun_41cmTripleGunKai2) && 
+                ship.Equipment.Any(eq => eq?.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    541 => new VisibleFits(firepower: 2, evasion: 2, armor: 1),
-                    573 => new VisibleFits(firepower: 2, evasion: 2, armor: 1),
+                    ShipID.NagatoKaiNi => new VisibleFits(firepower: 2, evasion: 2, armor: 1),
+                    ShipID.MutsuKaiNi => new VisibleFits(firepower: 2, evasion: 2, armor: 1),
 
                     _ => new VisibleFits()
                 };
             }
 
-            // sanshiki kai
-            if (ship.Equipment.Any(eq => eq?.ID == 317))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.AntiAircraftShell_三式弾改))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
-                    541 => new VisibleFits(firepower: 1, aa: 2),
-                    573 => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
+                    ShipID.NagatoKaiNi => new VisibleFits(firepower: 1, aa: 2),
+                    ShipID.MutsuKaiNi => new VisibleFits(firepower: 2, aa: 2, evasion: 1),
 
                     _ => new VisibleFits()
                 };
@@ -720,15 +750,15 @@ namespace ElectronicObserver.Data
 
         private int AccuracyGangut(EquipmentDataCustom equip) => equip.FitCategory switch
         {
-            // (_) when equip.ID == 330 || equip.ID == 331 || equip.ID == 332 => null, // Colorado guns
-            FitCategories.smallBBGun when equip.ID == 231 || equip.ID == 232 => 10, // Gangut guns
+            FitCategories.smallBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_30_5cmTripleGun || 
+                                          equip.EquipID == EquipID.LargeCalibreMainGun_30_5cmTripleGunKai => 10,
             FitCategories.smallBBGun => 7,
             FitCategories.baguetteBBGun => 0,
             FitCategories.pastaBBGun => 1,
             FitCategories.nelsonBBGun => -8,
             FitCategories.burgerBBGun => -3,
             FitCategories.mediumBBGun => -10,
-            FitCategories.largeBBGun when equip.ID == 117 => -7, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -7,
             FitCategories.largeBBGun => -18,
 
             _ => 0
@@ -739,80 +769,78 @@ namespace ElectronicObserver.Data
             FitCategories.smallBBGun => 7,
             FitCategories.baguetteBBGun => 0,
             FitCategories.pastaBBGun => -2,
-            FitCategories.nelsonBBGun when equip.ID == 299 => -6, // afct
-            FitCategories.nelsonBBGun when equip.ID == 300 => -8, // fcr
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai => -6,
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284 => -8,
             FitCategories.nelsonBBGun => -5,
-            FitCategories.burgerBBGun when equip.ID == 183 => -6, // gfcs
+            FitCategories.burgerBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchTripleGunMk_7_GFCS => -6,
             FitCategories.burgerBBGun => -5,
             FitCategories.mediumBBGun => -5,
-            FitCategories.largeBBGun when equip.ID == 117 => -7, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -7,
             FitCategories.largeBBGun => -10,
 
             _ => 0
         };
 
-        /// <summary>
-        /// Bisko and pastas
-        /// </summary>
         private int AccuracyBismarck(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => -2,
             FitCategories.pastaBBGun => 1,
             FitCategories.nelsonBBGun => -5,
-            FitCategories.burgerBBGun when equip.ID == 183 => -4, // gfcs
+            FitCategories.burgerBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchTripleGunMk_7_GFCS => -4,
             FitCategories.burgerBBGun => -5,
             FitCategories.mediumBBGun => -5,
-            FitCategories.largeBBGun when equip.ID == 117 => -7, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -7,
             FitCategories.largeBBGun => -10,
 
             _ => 0
         };
 
-        private int AccuracyBurger(EquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyIowa(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => -2,
             FitCategories.pastaBBGun => -2,
             FitCategories.nelsonBBGun => -5,
-            FitCategories.burgerBBGun when equip.ID == 183 && Ship.IsMarried => 5, // gfcs
-            FitCategories.burgerBBGun when equip.ID == 183 => -2, // gfcs
+            FitCategories.burgerBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchTripleGunMk_7_GFCS && Ship.IsMarried => 5,
+            FitCategories.burgerBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchTripleGunMk_7_GFCS => -2,
             FitCategories.burgerBBGun when Ship.IsMarried => -3,
             FitCategories.burgerBBGun => -5,
             FitCategories.mediumBBGun => -5,
-            FitCategories.largeBBGun when equip.ID == 117 => -7, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -7,
             FitCategories.largeBBGun => -10,
 
             _ => 0
         };
 
-        private int AccuracyBaguette(EquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyRichelieu(EquipmentDataCustom equip) => equip.FitCategory switch
         {
             FitCategories.smallBBGun => 4,
             FitCategories.baguetteBBGun => 4,
             FitCategories.pastaBBGun => -2,
-            FitCategories.nelsonBBGun when equip.ID == 299 => -14, // afct
-            FitCategories.nelsonBBGun when equip.ID == 300 => -8, // fcr
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai => -14,
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284 => -8,
             FitCategories.nelsonBBGun => -7,
             FitCategories.burgerBBGun => -5,
             FitCategories.mediumBBGun => -5,
-            FitCategories.largeBBGun when equip.ID == 117 => -7, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -7,
             FitCategories.largeBBGun => -10,
 
             _ => 0
         };
 
-        private int AccuracyWarspite(EquipmentDataCustom equip) => equip.FitCategory switch
+        private int AccuracyQueenElizabeth(EquipmentDataCustom equip) => equip.FitCategory switch
         {
-            FitCategories.smallBBGun when equip.ID == 190 || equip.ID == 192 => 8, // Warspite guns
+            FitCategories.smallBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_38_1cmMk_ITwinGun || 
+                                          equip.EquipID == EquipID.LargeCalibreMainGun_38_1cmMk_INTwinGunKai => 8,
             FitCategories.smallBBGun => 6,
             FitCategories.baguetteBBGun => 0,
             FitCategories.pastaBBGun => 1,
-            FitCategories.nelsonBBGun when equip.ID == 300 => 3, // fcr
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGunKai_FCRType284 => 3,
             FitCategories.nelsonBBGun => 5,
             FitCategories.burgerBBGun => -2,
             FitCategories.mediumBBGun => 2,
-            FitCategories.largeBBGun when equip.ID == 117 => -8, // p46
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -8,
             FitCategories.largeBBGun => -11,
 
             _ => 0
@@ -825,7 +853,7 @@ namespace ElectronicObserver.Data
             FitCategories.pastaBBGun => 0,
             FitCategories.nelsonBBGun => 5,
             FitCategories.burgerBBGun => 0,
-            FitCategories.mediumBBGun when equip.ID == 318 => 0, // 41k2
+            FitCategories.mediumBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二 => 0,
             FitCategories.mediumBBGun => 3,
             FitCategories.largeBBGun => -2,
 
@@ -843,8 +871,8 @@ namespace ElectronicObserver.Data
             FitCategories.nelsonBBGun => 0,
             FitCategories.burgerBBGun => 0,
             FitCategories.mediumBBGun => 2,
-            FitCategories.largeBBGun when equip.ID == 117 => -3, // p46
-            FitCategories.largeBBGun when equip.ID == 276 => -4, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -3,
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => -4,
             FitCategories.largeBBGun => -7,
 
             _ => 0
@@ -860,10 +888,10 @@ namespace ElectronicObserver.Data
             FitCategories.pastaBBGun => 2,
             FitCategories.nelsonBBGun => 2,
             FitCategories.burgerBBGun => 2,
-            FitCategories.mediumBBGun when equip.ID == 318 => 6, //41k2
+            FitCategories.mediumBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二 => 6,
             FitCategories.mediumBBGun => 4,
-            FitCategories.largeBBGun when equip.ID == 117 => -3, // p46
-            FitCategories.largeBBGun when equip.ID == 276 => -4, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -3,
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => -4,
             FitCategories.largeBBGun => -7,
 
             _ => 0
@@ -880,8 +908,8 @@ namespace ElectronicObserver.Data
             FitCategories.nelsonBBGun => 3,
             FitCategories.burgerBBGun => 2,
             FitCategories.mediumBBGun => 2,
-            FitCategories.largeBBGun when equip.ID == 117 => -3, // p46
-            FitCategories.largeBBGun when equip.ID == 276 => -4, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -3,
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => -4,
             FitCategories.largeBBGun => -7,
             FitCategories.veryLargeBBGun => 0, // lol
 
@@ -896,13 +924,13 @@ namespace ElectronicObserver.Data
             FitCategories.smallBBGun => 2,
             FitCategories.baguetteBBGun => 0,
             FitCategories.pastaBBGun => 2,
-            FitCategories.nelsonBBGun when equip.ID == 299 => 4, // afct
+            FitCategories.nelsonBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_16inchMk_ITripleGun_AFCTKai => 4,
             FitCategories.nelsonBBGun => 2,
             FitCategories.burgerBBGun => 0,
-            FitCategories.mediumBBGun when equip.ID == 318 => 6, //41k2
+            FitCategories.mediumBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二 => 6,
             FitCategories.mediumBBGun => 4,
-            FitCategories.largeBBGun when equip.ID == 117 => -2, // p46
-            FitCategories.largeBBGun when equip.ID == 276 => -6, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -2,
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => -6,
             FitCategories.largeBBGun => -4,
             FitCategories.veryLargeBBGun => -5,
 
@@ -919,10 +947,10 @@ namespace ElectronicObserver.Data
             FitCategories.pastaBBGun => 2,
             FitCategories.nelsonBBGun => 2,
             FitCategories.burgerBBGun => 0,
-            FitCategories.mediumBBGun when equip.ID == 318 => 6, //41k2
+            FitCategories.mediumBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_41cm連装砲改二 => 6,
             FitCategories.mediumBBGun => 5,
-            FitCategories.largeBBGun when equip.ID == 117 => -2, // p46
-            FitCategories.largeBBGun when equip.ID == 276 => -6, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_Prototype46cmTwinGun => -2,
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => -6,
             FitCategories.largeBBGun => -4,
             FitCategories.veryLargeBBGun => -8,
 
@@ -937,7 +965,7 @@ namespace ElectronicObserver.Data
             FitCategories.nelsonBBGun => 0,
             FitCategories.burgerBBGun => 0,
             FitCategories.mediumBBGun => 0,
-            FitCategories.largeBBGun when equip.ID == 276 => 7, // 46kai
+            FitCategories.largeBBGun when equip.EquipID == EquipID.LargeCalibreMainGun_46cmTripleGunKai => 7,
             FitCategories.largeBBGun => 3,
             FitCategories.veryLargeBBGun => 0,
 
@@ -1277,7 +1305,7 @@ namespace ElectronicObserver.Data
 
             if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12cmSingleGunKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, torpedo: 1, evasion: 3),
 
@@ -1294,7 +1322,7 @@ namespace ElectronicObserver.Data
 
             if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, evasion: 3),
 
@@ -1311,7 +1339,7 @@ namespace ElectronicObserver.Data
 
             if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12cmSingleGunKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, torpedo: 1, evasion: 3),
 
@@ -1328,7 +1356,7 @@ namespace ElectronicObserver.Data
 
             if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, evasion: 3),
 
@@ -1576,10 +1604,9 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12.7Ck2
-            if (ship.Equipment.Any(eq => eq?.ID == 266))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmTwinGunModelCKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, torpedo: 3, evasion: 1),
 
@@ -1628,10 +1655,9 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12.7Ck2
-            if (ship.Equipment.Any(eq => eq?.ID == 266))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmTwinGunModelCKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, torpedo: 3, evasion: 1),
 
@@ -1776,8 +1802,6 @@ namespace ElectronicObserver.Data
 
         #region DE visible fits
 
-        /// <summary>
-        /// </summary>
         private VisibleFits VisibleFitsShimushu(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
             (EquipID.SmallCalibreMainGun_12cmSingleGunKai2, _) => new VisibleFits(firepower: 1, aa: 1, evasion: 2),
@@ -1788,8 +1812,6 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// </summary>
         private VisibleFits VisibleFitsEtorofu(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
             (EquipID.SmallCalibreMainGun_12cmSingleGunKai2, _) => new VisibleFits(firepower: 1, aa: 1, evasion: 2),
@@ -1800,8 +1822,6 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// </summary>
         private VisibleFits VisibleFitsMikura(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
             (EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel, _) when equip.Level > 6 => new VisibleFits(firepower: 1, aa: 1),
@@ -1811,9 +1831,7 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        /// <summary>
-        /// </summary>
-        private VisibleFits VisibleFitsHiburi(EquipmentDataCustom equip) => (equip.EquipID, ShipID: Ship.ID) switch
+        private VisibleFits VisibleFitsHiburi(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
             (EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel, _) when equip.Level > 6 => new VisibleFits(firepower: 1, aa: 1),
 
@@ -1827,16 +1845,13 @@ namespace ElectronicObserver.Data
 
         #region DE synergy
 
-        /// <summary>
-        /// </summary>
         private VisibleFits SynergyShimushu(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12k2 single
-            if (ship.Equipment.Any(eq => eq?.ID == 293))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12cmSingleGunKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, torpedo: 1, evasion: 3),
 
@@ -1844,10 +1859,9 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            // 12.7 LM
-            if (ship.Equipment.Any(eq => eq?.ID == 229 && eq.Level > 6))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, evasion: 4),
 
@@ -1858,16 +1872,13 @@ namespace ElectronicObserver.Data
             return synergy;
         }
 
-        /// <summary>
-        /// </summary>
         private VisibleFits SynergyEtorofu(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12k2 single
-            if (ship.Equipment.Any(eq => eq?.ID == 293))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12cmSingleGunKai2))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 2, torpedo: 1, evasion: 3),
 
@@ -1875,10 +1886,9 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            // 12.7 LM
-            if (ship.Equipment.Any(eq => eq?.ID == 229 && eq.Level > 6))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, evasion: 4),
 
@@ -1889,16 +1899,13 @@ namespace ElectronicObserver.Data
             return synergy;
         }
 
-        /// <summary>
-        /// </summary>
         private VisibleFits SynergyMikura(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12.7 LM
-            if (ship.Equipment.Any(eq => eq?.ID == 229 && eq.Level > 6))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, evasion: 4),
 
@@ -1909,16 +1916,13 @@ namespace ElectronicObserver.Data
             return synergy;
         }
 
-        /// <summary>
-        /// </summary>
         private VisibleFits SynergyHiburi(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            // 12.7 LM
-            if (ship.Equipment.Any(eq => eq?.ID == 229 && eq.Level > 6))
+            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.SmallCalibreMainGun_12_7cmSingleHighangleGun_LateModel && eq.Level > 6))
             {
-                synergy += ship.ID switch
+                synergy += ship.ShipID switch
                 {
                     _ when ship.HasSurfaceRadar => new VisibleFits(firepower: 1, evasion: 4),
 
@@ -2016,7 +2020,7 @@ namespace ElectronicObserver.Data
             _ => new VisibleFits()
         };
 
-        private VisibleFits VisibleFitsItalianCL(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
+        private VisibleFits VisibleFitsAbruzzi(EquipmentDataCustom equip) => (equip.EquipID, Ship.ShipID) switch
         {
             (EquipID.MediumCalibreMainGun_152mm55三連装速射砲, _) => new VisibleFits(firepower: 1, aa: 1, evasion:1),
             (EquipID.MediumCalibreMainGun_152mm55三連装速射砲改, _) => new VisibleFits(firepower: 2, aa: 1, evasion:1),
@@ -2226,7 +2230,8 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
                 int level = ship.Equipment
                     .Where(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft)
@@ -2234,20 +2239,14 @@ namespace ElectronicObserver.Data
 
                 synergy += ship.ShipID switch
                 {
-                    ShipID.SuzuyaCVLKaiNi when level == 10 => new VisibleFits(firepower: 3, los: 4),
-                    ShipID.SuzuyaCVLKaiNi when level > 5 => new VisibleFits(firepower: 2, los: 3),
-                    ShipID.SuzuyaCVLKaiNi when level > 3 => new VisibleFits(firepower: 2, los: 2),
-                    ShipID.SuzuyaCVLKaiNi when level > 1 => new VisibleFits(firepower: 1, los: 2),
-                    ShipID.SuzuyaCVLKaiNi when level == 1 => new VisibleFits(firepower: 1, los: 1),
+                    ShipID.SuzuyaCVLKaiNi when level > 0 => new VisibleFits(firepower: 1, los: 1),
 
-                    ShipID.KumanoCVLKaiNi when level == 10 => new VisibleFits(firepower: 3, los: 4),
-                    ShipID.KumanoCVLKaiNi when level > 5 => new VisibleFits(firepower: 2, los: 3),
-                    ShipID.KumanoCVLKaiNi when level > 3 => new VisibleFits(firepower: 2, los: 2),
-                    ShipID.KumanoCVLKaiNi when level > 1 => new VisibleFits(firepower: 1, los: 2),
-                    ShipID.KumanoCVLKaiNi when level == 1 => new VisibleFits(firepower: 1, los: 1),
+                    ShipID.KumanoCVLKaiNi when level > 0 => new VisibleFits(firepower: 1, los: 1),
 
                     _ => new VisibleFits()
                 };
+
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2518,9 +2517,10 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2550,9 +2550,10 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2592,7 +2593,8 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
                 int level = ship.Equipment
                     .Where(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft)
@@ -2600,15 +2602,13 @@ namespace ElectronicObserver.Data
 
                 synergy += ship.ShipID switch
                 {
-                    ShipID.SouryuuKaiNi when level == 10 => new VisibleFits(firepower: 6, los: 7),
-                    ShipID.SouryuuKaiNi when level > 7 => new VisibleFits(firepower: 5, los: 6),
-                    ShipID.SouryuuKaiNi when level > 5 => new VisibleFits(firepower: 4, los: 5),
-                    ShipID.SouryuuKaiNi when level > 3 => new VisibleFits(firepower: 4, los: 4),
-                    ShipID.SouryuuKaiNi when level > 1 => new VisibleFits(firepower: 3, los: 4),
-                    ShipID.SouryuuKaiNi when level == 1 => new VisibleFits(firepower: 3, los: 3),
+                    ShipID.SouryuuKaiNi when level > 7 => new VisibleFits(firepower: 4, los: 4),
+                    ShipID.SouryuuKaiNi when level > 0 => new VisibleFits(firepower: 3, los: 3),
 
-                    _ => Type2ReconAircraft(ship)
+                    _ => new VisibleFits()
                 };
+
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2648,7 +2648,8 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
                 int level = ship.Equipment
                     .Where(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft)
@@ -2656,14 +2657,12 @@ namespace ElectronicObserver.Data
 
                 synergy += ship.ShipID switch
                 {
-                    ShipID.HiryuuKaiNi when level == 10 => new VisibleFits(firepower: 4, los: 5),
-                    ShipID.HiryuuKaiNi when level > 5 => new VisibleFits(firepower: 3, los: 4),
-                    ShipID.HiryuuKaiNi when level > 3 => new VisibleFits(firepower: 3, los: 3),
-                    ShipID.HiryuuKaiNi when level > 1 => new VisibleFits(firepower: 2, los: 3),
-                    ShipID.HiryuuKaiNi when level == 1 => new VisibleFits(firepower: 2, los: 2),
+                    ShipID.HiryuuKaiNi when level > 0 => new VisibleFits(firepower: 2, los: 2),
 
-                    _ => Type2ReconAircraft(ship)
+                    _ => new VisibleFits()
                 };
+
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2709,20 +2708,10 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
-            }
-
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_PrototypeKeiun))
-            {
-                synergy += ship.ShipID switch
-                {
-                    ShipID.ShoukakuKaiNiA => PrototypeKeiun(ship),
-                    ShipID.ZuikakuKaiNiA => PrototypeKeiun(ship),
-
-                    _ => new VisibleFits()
-                };
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2732,9 +2721,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2744,26 +2734,23 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
-            }
-
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_PrototypeKeiun))
-            {
-                synergy += PrototypeKeiun(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
         }
 
-        private VisibleFits SynergyGrafZepelin(ShipDataCustom ship)
+        private VisibleFits SynergyGrafZeppelin(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2773,43 +2760,36 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
         }
 
-        private VisibleFits SynergySaratoga(ShipDataCustom ship)
+        private VisibleFits SynergyLexington(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
-            }
-
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_PrototypeKeiun))
-            {
-                synergy += ship.ShipID switch
-                {
-                    ShipID.SaratogaMkIIMod2 => PrototypeKeiun(ship),
-
-                    _ => new VisibleFits()
-                };
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
         }
 
-        private VisibleFits SynergyIntrepid(ShipDataCustom ship)
+        private VisibleFits SynergyEssex(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2819,9 +2799,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2831,9 +2812,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2863,9 +2845,10 @@ namespace ElectronicObserver.Data
                 };
             }
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2875,7 +2858,8 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
                 int level = ship.Equipment
                     .Where(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft)
@@ -2883,14 +2867,12 @@ namespace ElectronicObserver.Data
 
                 synergy += ship.ShipID switch
                 {
-                    ShipID.ZuihouKaiNiB when level == 10 => new VisibleFits(firepower: 3, los: 4),
-                    ShipID.ZuihouKaiNiB when level > 5 => new VisibleFits(firepower: 2, los: 3),
-                    ShipID.ZuihouKaiNiB when level > 3 => new VisibleFits(firepower: 2, los: 2),
-                    ShipID.ZuihouKaiNiB when level > 1 => new VisibleFits(firepower: 1, los: 2),
-                    ShipID.ZuihouKaiNiB when level == 1 => new VisibleFits(firepower: 1, los: 1),
+                    ShipID.ZuihouKaiNiB when level > 0 => new VisibleFits(firepower: 1, los: 1),
 
                     _ => new VisibleFits()
                 };
+
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2900,9 +2882,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2912,9 +2895,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy += Type2ReconAircraft(ship);
+                synergy += SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2924,9 +2908,10 @@ namespace ElectronicObserver.Data
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
-                synergy +=  Type2ReconAircraft(ship);
+                synergy +=  SynergyCarrierReconUpgrade(ship);
             }
 
             return synergy;
@@ -2977,13 +2962,13 @@ namespace ElectronicObserver.Data
             {
                 synergy += ship.ShipID switch
                 {
-                    ShipID.ChitoseCVL => Type2ReconAircraft(ship),
-                    ShipID.ChitoseCVLKai => Type2ReconAircraft(ship),
-                    ShipID.ChitoseCVLKaiNi => Type2ReconAircraft(ship),
+                    ShipID.ChitoseCVL => SynergyCarrierReconUpgrade(ship),
+                    ShipID.ChitoseCVLKai => SynergyCarrierReconUpgrade(ship),
+                    ShipID.ChitoseCVLKaiNi => SynergyCarrierReconUpgrade(ship),
 
-                    ShipID.ChiyodaCVL => Type2ReconAircraft(ship),
-                    ShipID.ChiyodaCVLKai => Type2ReconAircraft(ship),
-                    ShipID.ChiyodaCVLKaiNi => Type2ReconAircraft(ship),
+                    ShipID.ChiyodaCVL => SynergyCarrierReconUpgrade(ship),
+                    ShipID.ChiyodaCVLKai => SynergyCarrierReconUpgrade(ship),
+                    ShipID.ChiyodaCVLKaiNi => SynergyCarrierReconUpgrade(ship),
 
                     _ => new VisibleFits()
                 };
@@ -3000,8 +2985,8 @@ namespace ElectronicObserver.Data
             {
                 synergy += ship.ShipID switch
                 {
-                    ShipID.Ryuuhou => Type2ReconAircraft(ship),
-                    ShipID.RyuuhouKai => Type2ReconAircraft(ship),
+                    ShipID.Ryuuhou => SynergyCarrierReconUpgrade(ship),
+                    ShipID.RyuuhouKai => SynergyCarrierReconUpgrade(ship),
 
                     _ => new VisibleFits()
                 };
@@ -3098,45 +3083,18 @@ namespace ElectronicObserver.Data
         }
 
         /// <summary>
-        /// for all ships without a specific bonus
-        ///
-        /// todo: could subtract this value from all specific ones and then always do this + specific
-        /// </summary>
-        private VisibleFits Type2ReconAircraft(ShipDataCustom ship)
-        {
-            VisibleFits synergy = new VisibleFits();
-
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft))
-            {
-                int level = ship.Equipment
-                    .Where(eq => eq?.EquipID == EquipID.CarrierRecon_Type2ReconAircraft)
-                    .Max(eq => eq.Level);
-
-                synergy += ship.ShipID switch
-                {
-                    _ when level == 10 => new VisibleFits(firepower: 2, los: 3),
-                    _ when level > 5 => new VisibleFits(firepower: 1, los: 2),
-                    _ when level > 3 => new VisibleFits(firepower: 1, los: 1),
-                    _ when level > 1 => new VisibleFits(los: 1),
-
-                    _ => new VisibleFits()
-                };
-            }
-
-            return synergy;
-        }
-
-        /// <summary>
         /// todo: the upgrade bonus is the same for all carrier recons?
         /// </summary>
-        private VisibleFits PrototypeKeiun(ShipDataCustom ship)
+        private VisibleFits SynergyCarrierReconUpgrade(ShipDataCustom ship)
         {
             VisibleFits synergy = new VisibleFits();
 
-            if (ship.Equipment.Any(eq => eq?.EquipID == EquipID.CarrierRecon_PrototypeKeiun))
+            if (ship.Equipment.Any(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                         eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2))
             {
                 int level = ship.Equipment
-                    .Where(eq => eq?.EquipID == EquipID.CarrierRecon_PrototypeKeiun)
+                    .Where(eq => eq?.CategoryType == EquipmentTypes.CarrierBasedRecon ||
+                                 eq?.CategoryType == EquipmentTypes.CarrierBasedRecon2)
                     .Max(eq => eq.Level);
 
                 synergy += ship.ShipID switch

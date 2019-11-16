@@ -20,8 +20,6 @@
             HorizontalContentAlignment="Center" />
 
         <TextBox 
-            SourceUpdated="StatChanged"
-            TargetUpdated="StatChanged"
             Text="{Binding BaseStat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             Grid.Column="1" 
             VerticalAlignment="Center" 

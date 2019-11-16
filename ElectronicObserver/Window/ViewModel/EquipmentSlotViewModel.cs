@@ -36,7 +36,7 @@ namespace ElectronicObserver.Window.ViewModel
             set
             {
                 _equip = value ?? new EquipmentDataCustom();
-                OnPropertyChanged("");
+                OnPropertyChanged(string.Empty);
             }
         }
 

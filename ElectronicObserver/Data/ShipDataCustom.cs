@@ -21,7 +21,7 @@ namespace ElectronicObserver.Data
         INightDamageDefender, ICarrierShellingDamageDefender, ICarrierNightDamageDefender,
         IShellingAccuracyShip<EquipmentDataCustom>, IAswAccuracyShip<EquipmentDataCustom>,
         INightAccuracyShip<EquipmentDataCustom>, INightEvasionShip<EquipmentDataCustom>,
-        IHitRateDefender, IShipDataCustom, IAntiInstallationAttacker<EquipmentDataCustom>, IInstallation
+        IHitRateDefender, IAntiInstallationAttacker<EquipmentDataCustom>, IInstallation
     {
         private int _level;
 
@@ -60,11 +60,7 @@ namespace ElectronicObserver.Data
         private int LoSMin { get; }
         private int LoSMax { get; }
 
-        public FitBonusCustom FitBonus { get; set; }
-
-        //public VisibleFits Synergies { get; set; }
-        private FitBonusCustom Synergies { get; set; } = new FitBonusCustom();
-        public FitBonusCustom CurrentSynergies => Synergies;
+        public FitBonusCustom Synergies => new FitBonusCustom(this);
 
         public int Level
         {
@@ -258,7 +254,8 @@ namespace ElectronicObserver.Data
                 armor: EquipmentBaseArmor,
                 los: EquipmentBaseLoS);
 
-            Synergies = new FitBonusCustom(originalShipStats - shipStats - equipStats - CurrentFitBonus);
+            // Synergies = new FitBonusCustom(originalShipStats - shipStats - equipStats - CurrentFitBonus);
+            // Synergies = new FitBonusCustom(this);
         }
 
         public ShipDataCustom(ShipDataMaster ship)
@@ -300,11 +297,13 @@ namespace ElectronicObserver.Data
                                                   .ToList() ?? new List<EquipmentDataCustom>();
 
             while (equip.Count < 6)
+            {
                 equip.Add(null);
+            }
 
             Equipment = equip.ToArray();
 
-            Synergies = new FitBonusCustom(new VisibleFits());
+            // Synergies = new FitBonusCustom(new VisibleFits());
 
             InstallationType = GetInstallationType(ship);
         }
@@ -538,7 +537,7 @@ namespace ElectronicObserver.Data
                 }
             }
 
-            if (ID == 553 || ID == 554)
+            if (ShipID == ShipID.IseKaiNi || ShipID == ShipID.HyuugaKaiNi)
             {
                 if(suiseiCount > 1 && mainGunCount > 0)
                     dayAttacks.Add(DayAttackKind.SeaAirMultiAngle);
@@ -842,9 +841,21 @@ namespace ElectronicObserver.Data
 
         public string Name => MasterShip?.Name ?? "";
         public int SortID => MasterShip?.SortID ?? 0;
-
+        [Obsolete("use ShipID")]
         public int ID => MasterShip?.ShipID ?? 0;
         public ShipID ShipID => (ShipID) ID;
+
+        public ShipID BaseShipID()
+        {
+            ShipDataMaster ship = KCDatabase.Instance.MasterShips[ID];
+
+            while (ship.RemodelBeforeShipID != 0)
+            {
+                ship = ship.RemodelBeforeShip;
+            }
+
+            return (ShipID)ship.ShipID;
+        }
 
         // DropID
         public int MasterID => _ship?.MasterID ?? -1;
@@ -900,11 +911,10 @@ namespace ElectronicObserver.Data
 
         private bool HasNightPersonnel => Equipment.Where(eq => eq != null)
                                              .Any(eq => eq.IsNightAviationPersonnel) ||
-                                         ID == 545 || // Saratoga Mk.II
-                                         ID == 599; // Akagi k2e
+                                         ShipID == ShipID.SaratogaMkII ||
+                                         ShipID == ShipID.AkagiKaiNiE;
 
-        private bool IsArkRoyal => ID == 515 ||
-                                   ID == 393;
+        private bool IsArkRoyal => BaseShipID() == ShipID.ArkRoyal;
 
         private bool HasSwordfish => Equipment.Where(eq => eq != null).Any(eq => eq.IsSwordfish);
 

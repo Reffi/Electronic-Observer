@@ -10,7 +10,25 @@ namespace ElectronicObserver.Window.ViewModel
 {
     public class SynergyViewModel: Observable
     {
-        private FitBonusCustom Synergy { get; }
+        public FitBonusCustom Synergy
+        {
+            get => _synergy;
+            set
+            {
+                _synergy = value;
+
+                _firepower = Synergy.Firepower;
+                _torpedo = Synergy.Torpedo;
+                _aa = Synergy.AA;
+                _asw = Synergy.ASW;
+                _evasion = Synergy.Evasion;
+                _armor = Synergy.Armor;
+                _los = Synergy.LoS;
+                _accuracy = Synergy.Accuracy;
+
+                OnPropertyChanged(string.Empty);
+            }
+        }
 
         private int _firepower;
         private int _torpedo;
@@ -20,6 +38,7 @@ namespace ElectronicObserver.Window.ViewModel
         private int _armor;
         private int _los;
         private int _accuracy;
+        private FitBonusCustom _synergy;
 
         public int Firepower
         {
@@ -100,15 +119,6 @@ namespace ElectronicObserver.Window.ViewModel
         public SynergyViewModel(FitBonusCustom synergy)
         {
             Synergy = synergy;
-
-            _firepower = synergy.Firepower;
-            _torpedo = synergy.Torpedo;
-            _aa = synergy.AA;
-            _asw = synergy.ASW;
-            _evasion = synergy.Evasion;
-            _armor = synergy.Armor;
-            _los = synergy.LoS;
-            _accuracy = synergy.Accuracy;
         }
     }
 }

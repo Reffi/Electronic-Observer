@@ -21,6 +21,7 @@ namespace ElectronicObserver.Data
         private EquipmentDataMaster _equipMaster;
 
         public EquipID EquipID => (EquipID) ID;
+        [Obsolete("use EquipID")]
         public int ID { get; }
         public string Name { get; }
 
@@ -75,35 +76,35 @@ namespace ElectronicObserver.Data
 
         public EquipmentDataCustom() { }
 
-        public EquipmentDataCustom(EquipmentData equip) : this(equip.MasterEquipment)
+        public EquipmentDataCustom(EquipmentData equip) : this(equip?.MasterEquipment)
         {
             _equip = equip;
 
-            Level = equip.Level;
-            Proficiency = equip.AircraftLevel;
+            Level = equip?.Level ?? default;
+            Proficiency = equip?.AircraftLevel ?? default;
         }
 
         public EquipmentDataCustom(EquipmentDataMaster equip)
         {
             _equipMaster = equip;
 
-            Level = 0;
-            ID = equip.EquipmentID;
-            Name = equip.Name;
-            Proficiency = 0;
+            Level = default;
+            ID = equip?.EquipmentID ?? default;
+            Name = equip?.Name ?? "";
+            Proficiency = default;
 
-            BaseFirepower = _equipMaster.Firepower;
-            BaseTorpedo = _equipMaster.Torpedo;
-            BaseBombing = _equipMaster.Bomber;
-            BaseAccuracy = _equipMaster.Accuracy;
-            BaseEvasion = _equipMaster.Evasion;
-            BaseASW = _equipMaster.ASW;
-            BaseLoS = _equipMaster.LOS;
-            BaseArmor = _equipMaster.Armor;
-            BaseAA = _equipMaster.AA;
-            Range = _equipMaster.Range;
+            BaseFirepower = equip?.Firepower ?? default;
+            BaseTorpedo = equip?.Torpedo ?? default;
+            BaseBombing = equip?.Bomber ?? default;
+            BaseAccuracy = equip?.Accuracy ?? default;
+            BaseEvasion = equip?.Evasion ?? default;
+            BaseASW = equip?.ASW ?? default;
+            BaseLoS = equip?.LOS ?? default;
+            BaseArmor = equip?.Armor ?? default;
+            BaseAA = equip?.AA ?? default;
+            Range = equip?.Range ?? default;
 
-            FitCategory = GetFitCategory(equip);
+            FitCategory = GetFitCategory(this);
         }
 
 
@@ -241,7 +242,7 @@ namespace ElectronicObserver.Data
         private double LinearUpgrade(double constant) => constant * Level;
         private double SqrtUpgrade(double constant = 1) => constant * Math.Sqrt(Level);
 
-        private FitCategories GetFitCategory(EquipmentDataMaster equip) => equip.ID switch
+        private FitCategories GetFitCategory(EquipmentDataCustom equip) => equip.ID switch
         {
             231 => FitCategories.smallBBGun, // 30.5
             232 => FitCategories.smallBBGun, // kai
@@ -299,7 +300,7 @@ namespace ElectronicObserver.Data
         public bool IsLargeSonar => CategoryType == EquipmentTypes.SonarLarge;
 
         public bool IsDepthChargeProjector =>
-            _equip?.MasterEquipment.IsDepthChargeProjector ?? _equipMaster.IsDepthChargeProjector;
+            _equip?.MasterEquipment.IsDepthChargeProjector ?? _equipMaster?.IsDepthChargeProjector ?? default;
 
         public EquipmentTypes CategoryType => _equip?.MasterEquipment.CategoryType ?? _equipMaster?.CategoryType ?? EquipmentTypes.Unknown;
 

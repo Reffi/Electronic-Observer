@@ -13,7 +13,7 @@
              d:DesignHeight="250" d:DesignWidth="80">
 
     <UserControl.DataContext>
-        <viewModels:EquipmentSlotViewModel />
+        <viewModels:SynergyViewModel />
     </UserControl.DataContext>
 
     <UserControl.Resources>
