@@ -5,7 +5,7 @@ using ElectronicObserver.Data.Mocks;
 using ElectronicObserver.Utility.Data;
 using Xunit;
 
-namespace ElectronicObserverTests.Data
+namespace ElectronicObserverTests
 {
     public class DamageTests
     {

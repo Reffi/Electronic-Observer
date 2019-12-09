@@ -17,6 +17,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EOUpdater", "EOUpdater\EOUp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicObserverTests", "ElectronicObserverTests\ElectronicObserverTests.csproj", "{846B35F5-36B2-421D-A600-2839CB11AB61}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KancolleSimulator", "KancolleSimulator\KancolleSimulator.csproj", "{3348A4E3-F68D-467E-9075-3893698515B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectronicObserverTypes", "ElectronicObserverTypes\ElectronicObserverTypes.csproj", "{6362B9A4-796A-455A-8885-80B1C255732E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicObserverViewModels", "ElectronicObserverViewModels\ElectronicObserverViewModels.csproj", "{A40F19B1-FA91-47D2-A79E-593A6108CD70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicObserverDatabase", "ElectronicObserverDatabase\ElectronicObserverDatabase.csproj", "{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,13 +89,45 @@ Global
 		{846B35F5-36B2-421D-A600-2839CB11AB61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{846B35F5-36B2-421D-A600-2839CB11AB61}.Release|x64.ActiveCfg = Release|Any CPU
 		{846B35F5-36B2-421D-A600-2839CB11AB61}.Release|x64.Build.0 = Release|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Debug|x64.Build.0 = Debug|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Release|x64.ActiveCfg = Release|Any CPU
+		{3348A4E3-F68D-467E-9075-3893698515B4}.Release|x64.Build.0 = Release|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Debug|x64.Build.0 = Debug|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Release|x64.ActiveCfg = Release|Any CPU
+		{6362B9A4-796A-455A-8885-80B1C255732E}.Release|x64.Build.0 = Release|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Debug|x64.Build.0 = Debug|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Release|x64.ActiveCfg = Release|Any CPU
+		{A40F19B1-FA91-47D2-A79E-593A6108CD70}.Release|x64.Build.0 = Release|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4A4F04D-A0B7-499B-B43F-9B6E82DF1549}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = False
-		RESX_NeutralResourcesLanguage = ja-JP
 		SolutionGuid = {84B27D64-9786-4547-801E-3631DDC32551}
+		RESX_NeutralResourcesLanguage = ja-JP
+		RESX_SortFileContentOnSave = False
 	EndGlobalSection
 EndGlobal

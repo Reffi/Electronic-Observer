@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="KancolleSimulator.Views.FleetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KancolleSimulator.Views"
+             xmlns:ViewModels="clr-namespace:ElectronicObserverViewModels;assembly=ElectronicObserverViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1280" Loaded="UserControl_Loaded">
+
+    <UserControl.DataContext>
+        <ViewModels:FleetViewModel />
+    </UserControl.DataContext>
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <TextBlock Text="Air" />
+            <TextBlock Text="LoS(1)" />
+            <TextBlock Text="{Binding LoS}" />
+            <TextBlock Text="LoS(2)" />
+            <TextBlock Text="LoS(3)" />
+            <TextBlock Text="LoS(4)" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <local:ShipView Width="130" x:Name="Ship1" />
+            <local:ShipView Width="130" x:Name="Ship2" />
+            <local:ShipView Width="130" x:Name="Ship3" />
+            <local:ShipView Width="130" x:Name="Ship4" />
+            <local:ShipView Width="130" x:Name="Ship5" />
+            <local:ShipView Width="130" x:Name="Ship6" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

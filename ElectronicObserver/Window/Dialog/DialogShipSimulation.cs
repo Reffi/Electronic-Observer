@@ -38,6 +38,7 @@ namespace ElectronicObserver.Window.Dialog
         {
             DialogShipSimulationWpf wpfApp = new DialogShipSimulationWpf(DefaultShipID);
 
+
             // ExtraDamageBonusDisplay wpfApp = new ExtraDamageBonusDisplay();
 
             // ShipDisplay wpfApp = new ShipDisplay();

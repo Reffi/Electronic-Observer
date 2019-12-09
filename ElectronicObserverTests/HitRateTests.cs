@@ -1,9 +1,8 @@
-﻿using ElectronicObserver.Data;
-using ElectronicObserver.Data.HitRate;
+﻿using ElectronicObserver.Data.HitRate;
 using ElectronicObserver.Data.Mocks;
 using Xunit;
 
-namespace ElectronicObserverTests.Data
+namespace ElectronicObserverTests
 {
     public class HitRateTests
     {

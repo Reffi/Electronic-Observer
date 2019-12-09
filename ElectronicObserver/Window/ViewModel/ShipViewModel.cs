@@ -15,6 +15,8 @@ namespace ElectronicObserver.Window.ViewModel
 {
     public class ShipViewModel : Observable
     {
+        
+
         private int _level;
         private int _hp;
         private int _baseArmor;
@@ -45,6 +47,7 @@ namespace ElectronicObserver.Window.ViewModel
             {
                 _ship = value;
 
+                ShipID = Ship.ID;
                 Name = Ship.Name;
 
                 _level = Ship.Level;

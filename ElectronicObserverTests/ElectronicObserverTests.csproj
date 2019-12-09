@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ElectronicObserverTests</RootNamespace>
     <AssemblyName>ElectronicObserverTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -68,10 +68,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\AntiInstallationDamageTests.cs" />
-    <Compile Include="Data\CarrierNightDamageTests.cs" />
-    <Compile Include="Data\DamageTests.cs" />
-    <Compile Include="Data\HitRateTests.cs" />
+    <Compile Include="AntiInstallationDamageTests.cs" />
+    <Compile Include="CarrierNightDamageTests.cs" />
+    <Compile Include="DamageTests.cs" />
+    <Compile Include="FitBonusTests.cs" />
+    <Compile Include="HitRateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElectronicObserverTypes\ElectronicObserverTypes.csproj">
+      <Project>{6362b9a4-796a-455a-8885-80b1c255732e}</Project>
+      <Name>ElectronicObserverTypes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElectronicObserver\ElectronicObserver.csproj">
       <Project>{A9ABEC50-1BFC-4C69-87AE-C68DB6004F68}</Project>
       <Name>ElectronicObserver</Name>
@@ -87,6 +92,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
