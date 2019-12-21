@@ -269,6 +269,52 @@ namespace ElectronicObserverTypes
 
         public ShipDataCustom() { }
 
+        public ShipDataCustom(IUserShipRecord ship)
+        {
+            ShipID = (ShipID) ship.ShipId;
+            Level = ship.Level;
+        }
+
+        public ShipDataCustom(IMasterShipRecord ship)
+        {
+            Name = ship.ShipName;
+            SortID = ship.SortId;
+            ShipID = (ShipID)ship.ShipId;
+            ShipClass = (ShipClasses)ship.ShipClass;
+            RemodelBeforeShipId = (ShipID) ship.RemodelBeforeShipId;
+            ShipType = (ShipTypes)ship.ShipType;
+            /*ShipType = ship.ShipType;
+            EquippableCategories = ship.EquippableCategories;
+
+            EquipmentSlotCount = ship.SlotSize;
+
+            Name = ship.Name;
+
+            ASWMin = ship.ASW.GetParameter(1);
+            ASWMax = ship.ASW.GetParameter(99);
+
+            LoSMin = ship.LOS.GetParameter(1);
+            LoSMax = ship.LOS.GetParameter(99);
+
+            EvasionMin = ship.Evasion.GetParameter(1);
+            EvasionMax = ship.Evasion.GetParameter(99);
+
+            HP = ship.HPMax;
+            BaseArmor = ship.ArmorMax;
+            BaseEvasion = ScaledStat(EvasionMin, EvasionMax);
+            Aircraft = ship.Aircraft.ToArray();
+            BaseSpeed = ship.Speed;
+            BaseRange = ship.Range;
+
+            Condition = 49;
+            BaseFirepower = ship.FirepowerMax;
+            BaseTorpedo = ship.TorpedoMax;
+            BaseAA = ship.AAMax;
+            BaseASW = ScaledStat(ASWMin, ASWMax);
+            BaseLoS = ScaledStat(LoSMin, LoSMax);
+            BaseLuck = ship.LuckMin;*/
+        }
+
         public ShipDataCustom(IShipData ship) : this(ship.MasterShip)
         {
             MasterID = ship.MasterID;
@@ -929,6 +975,7 @@ namespace ElectronicObserverTypes
         public int SortID { get; }
         
         public ShipID ShipID { get; set; }
+        public ShipID RemodelBeforeShipId { get; set; }
 
         public ShipID BaseShipID()
         {

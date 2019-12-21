@@ -23,6 +23,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ElectronicObserver.Utility.Mathematics;
+using ElectronicObserverDatabase.Models;
+using Microsoft.EntityFrameworkCore;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace ElectronicObserver.Window
@@ -1536,6 +1538,25 @@ namespace ElectronicObserver.Window
 
         private void StripMenu_Tool_KancolleProgress_Click(object sender, EventArgs e)
         {
+            MasterDataContext db = new MasterDataContext();
+            UserDataContext userDb = new UserDataContext();
+
+            db.Database.Migrate();
+            userDb.Database.Migrate();
+
+            foreach (ShipDataMaster ship in KCDatabase.Instance.MasterShips.Values)
+            {
+                db.Add((Ships) ship);
+            }
+
+            foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
+            {
+                userDb.Add((UserShipData) ship);
+            }
+
+            db.SaveChanges();
+            userDb.SaveChanges();
+
             new Dialog.DialogKancolleProgress().Show(this);
         }
 

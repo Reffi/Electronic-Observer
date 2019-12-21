@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElectronicObserverDatabase.Models;
 
 namespace ElectronicObserver.Data
 {
@@ -740,7 +741,56 @@ namespace ElectronicObserver.Data
 
 		public override string ToString() => $"[{ShipID}] {NameWithClass}";
 
+        public static explicit operator Ships(ShipDataMaster ship) => new Ships
+        {
+            ShipId = ship.ShipID,
+            RemodelBeforeShipId = ship.RemodelBeforeShipID,
+            SortId = ship.SortID,
+			ShipType = (int)ship.ShipType,
+            ShipClass = ship.ShipClass,
+            ShipName = ship.Name,
+            HpMin = ship.HPMin,
+            HpMax = ship.HPMax,
+            FirepowerMin = ship.FirepowerMin,
+            FirepowerMax = ship.FirepowerMax,
+            TorpedoMin = ship.TorpedoMin,
+            TorpedoMax = ship.TorpedoMax,
+            AaMin = ship.AAMin,
+            AaMax = ship.AAMax,
+            ArmorMin = ship.ArmorMin,
+            ArmorMax = ship.ArmorMax,
+            AswMinLowerBound = ship.ASW.MinimumEstMin,
+            AswMinUpperBound = ship.ASW.MinimumEstMax,
+            AswMax = ship.ASW.Maximum,
+            EvasionMinLowerBound = ship.Evasion.MinimumEstMin,
+            EvasionMinUpperBound = ship.Evasion.MinimumEstMax,
+            EvasionMax = ship.Evasion.Maximum,
+            LosMinLowerBound = ship.LOS.MinimumEstMin,
+            LosMinUpperBound = ship.LOS.MinimumEstMax,
+            LosMax = ship.LOS.Maximum,
+            LuckMin = ship.LuckMin,
+            LuckMax = ship.LuckMax,
+            Range = ship.Range,
+            Equipment1 = ship.DefaultSlot?[0],
+            Equipment2 = ship.DefaultSlot?[0],
+            Equipment3 = ship.DefaultSlot?[0],
+            Equipment4 = ship.DefaultSlot?[0],
+            Equipment5 = ship.DefaultSlot?[0],
+            Aircraft1 = ship.Aircraft[0],
+            Aircraft2 = ship.Aircraft[0],
+            Aircraft3 = ship.Aircraft[0],
+            Aircraft4 = ship.Aircraft[0],
+            Aircraft5 = ship.Aircraft[0],
+            MessageGet = ship.MessageGet,
+            MessageAlbum = ship.MessageAlbum,
+            ResourceName = ship.ResourceName,
+            ResourceGraphicVersion = ship.ResourceGraphicVersion,
+            ResourceVoiceVersion = ship.ResourceVoiceVersion,
+            ResourcePortVoiceVersion = ship.ResourcePortVoiceVersion,
+            OriginalCostumeShipId = ship.OriginalCostumeShipID
+        };
 
-	}
+        // public static explicit operator Ships(ShipDataMaster b) => new Digit(b);
+    }
 
 }
