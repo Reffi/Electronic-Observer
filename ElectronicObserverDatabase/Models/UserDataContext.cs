@@ -4,8 +4,15 @@ namespace ElectronicObserverDatabase.Models
 {
     public partial class UserDataContext : DbContext
     {
+        public string DbPath { get; }
+
         public UserDataContext()
         {
+        }
+
+        public UserDataContext(string dbPath)
+        {
+            DbPath = dbPath;
         }
 
         public UserDataContext(DbContextOptions<UserDataContext> options)
@@ -20,7 +27,7 @@ namespace ElectronicObserverDatabase.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlite("Data Source=UserData.db");
+                optionsBuilder.UseSqlite($@"Data Source={DbPath}\UserData.db");
             }
         }
 
@@ -28,12 +35,12 @@ namespace ElectronicObserverDatabase.Models
         {
             modelBuilder.Entity<UserShipData>(entity =>
             {
-                entity.HasKey(e => e.ShipId);
+                entity.HasKey(e => e.DropId);
 
-                entity.HasIndex(e => e.ShipId)
+                entity.HasIndex(e => e.DropId)
                     .IsUnique();
 
-                entity.Property(e => e.ShipId)
+                entity.Property(e => e.DropId)
                     .ValueGeneratedNever();
             });
 

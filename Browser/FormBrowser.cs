@@ -33,7 +33,7 @@ namespace Browser
 	{
 
 		private readonly Size KanColleSize = new Size(1200, 720);
-		private readonly string BrowserCachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"ElectronicObserver\CEF");
+		private readonly string BrowserCachePath = "BrowserCache";
 
 		private readonly string StyleClassID = Guid.NewGuid().ToString().Substring(0, 8);
 		private bool RestoreStyleSheet = false;
@@ -115,7 +115,7 @@ namespace Browser
 		/// <param name="serverUri">ホストプロセスとの通信用URL</param>
 		public FormBrowser( string serverUri )
 		{
-            CultureInfo c = CultureInfo.CurrentCulture;
+			CultureInfo c = CultureInfo.CurrentCulture;
             CultureInfo ui = CultureInfo.CurrentUICulture;
             if(c.Name != "en-US" && c.Name != "ja-JP" && c.Name != "ko-KR")
             {
@@ -387,7 +387,13 @@ namespace Browser
 			if (e.IsLoading)
 				return;
 
-		    if (Browser.Address.Contains("login/=/path="))
+            if (Browser.Address.Contains("redirect"))
+            {
+				SetCookie();
+				Browser.Refresh();
+            }
+
+            if (Browser.Address.Contains("login/=/path="))
 		    {
 		        SetCookie();
                 Browser.ExecuteScriptAsync(Properties.Resources.RemoveWelcomePopup);

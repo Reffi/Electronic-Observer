@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KancolleSimulator.Migrations
+namespace ElectronicObserverDatabase.Migrations
 {
     public partial class InitialCreate : Migration
     {

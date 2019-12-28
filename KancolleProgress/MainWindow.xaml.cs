@@ -14,14 +14,17 @@ namespace KancolleProgress
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<ShipTypeGroupControl> Controls { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            MasterDataContext masterDb = new MasterDataContext();
-            UserDataContext userDb = new UserDataContext();
+        public MainWindow(string dbPath)
+        {
+            InitializeComponent();
+
+            MasterDataContext masterDb = new MasterDataContext(dbPath);
+            UserDataContext userDb = new UserDataContext(dbPath);
 
             masterDb.Database.Migrate();
             userDb.Database.Migrate();
@@ -42,34 +45,31 @@ namespace KancolleProgress
 
             foreach (ShipDataCustom ship in userShips)
             {
-                GetBaseShip(ship);
+                masterShipData[GetBaseShip(ship).ShipID].Level = ship.Level;
             }
 
-            IEnumerable<IGrouping<ShipTypeGroup, ShipDataCustom>> groups = masterShipData.Values
+            List<ShipDataCustom> playerShips = masterShipData.Values
                 .Where(s => s.RemodelBeforeShipId == 0)
                 .OrderBy(s => s.SortID)
+                .ToList();
+
+            IEnumerable<IGrouping<ShipTypeGroup, ShipDataCustom>> groups = playerShips
                 .GroupBy(s => s.ShipType.ToGroup())
                 .OrderBy(s => s.Key);
-
-            
-
-            Controls = new List<ShipTypeGroupControl>();
 
             foreach (IGrouping<ShipTypeGroup, ShipDataCustom> group in groups)
             {
                 ShipTypeGroupContainer.Children.Add(new ShipTypeGroupControl {Group = group});
             }
 
+            ShipTypeGroupContainer.Children.Add(new ColorFilterContainerControl{Ships = playerShips});
+
             ShipDataCustom GetBaseShip(ShipDataCustom ship)
             {
                 while (masterShipData[ship.ShipID].RemodelBeforeShipId != 0)
                 {
-                    if (masterShipData[masterShipData[ship.ShipID].RemodelBeforeShipId].Level < ship.Level)
-                    {
-                        masterShipData[masterShipData[ship.ShipID].RemodelBeforeShipId].Level = ship.Level;
-                    }
                     ship = masterShipData[masterShipData[ship.ShipID].RemodelBeforeShipId];
-                }
+                } 
 
                 return ship;
             }

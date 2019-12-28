@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="KancolleProgress.Controls.ColorFilterContainerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KancolleProgress.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="80">
+    <Border Background="#212121" CornerRadius="4" Margin="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Content="Color Filters" Height="auto" HorizontalContentAlignment="Center"/>
+            <WrapPanel x:Name="ColorFilterContainer" Orientation="Vertical" Grid.Row="1">
+                <!-- StackPanel>
+                    <Label Content="Kamikaze 175"/>
+                    <Label Content="Asakaze 175"/>
+                    <Label Content="Harukaze 175"/>
+                    <Label Content="Matsukaze 175"/>
+                    <Label Content="Hatakaze 175"/>
+                </>
+                <StackPanel>
+                    <Label Content="Mutsuki 175"/>
+                    <Label Content="Kisaragi 175"/>
+                    <Label Content="Yayoi 175"/>
+                    <Label Content="Uzuki 175"/>
+                    <Label Content="Satsuki 175"/>
+                    <Label Content="Minazuki 175"/>
+                    <Label Content="Fumizuki 175"/>
+                    <Label Content="Nagatsuki 175"/>
+                    <Label Content="Kikuzuki 175"/>
+                    <Label Content="Mikazuki 175"/>
+                    <Label Content="Mochizuki 175"/>
+                </StackPanel-->
+            </WrapPanel>
+        </Grid>
+    </Border>
+</UserControl>

@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -1538,26 +1539,28 @@ namespace ElectronicObserver.Window
 
         private void StripMenu_Tool_KancolleProgress_Click(object sender, EventArgs e)
         {
-            MasterDataContext db = new MasterDataContext();
-            UserDataContext userDb = new UserDataContext();
+            string dbPath = Directory.GetCurrentDirectory();
+
+            MasterDataContext db = new MasterDataContext(dbPath);
+            UserDataContext userDb = new UserDataContext(dbPath);
 
             db.Database.Migrate();
             userDb.Database.Migrate();
 
             foreach (ShipDataMaster ship in KCDatabase.Instance.MasterShips.Values)
             {
-                db.Add((Ships) ship);
+                db.Upsert((Ships) ship);
             }
 
             foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
             {
-                userDb.Add((UserShipData) ship);
+                userDb.Upsert((UserShipData)ship);
             }
 
             db.SaveChanges();
             userDb.SaveChanges();
 
-            new Dialog.DialogKancolleProgress().Show(this);
+            Process.Start(@"Plugins\KancolleProgress\KancolleProgress.exe", $"\"{dbPath}\"");
         }
 
         private void CallPumpkinHead(string apiname, dynamic data)

@@ -1566,6 +1566,7 @@ namespace ElectronicObserver.Data
 
         public static explicit operator UserShipData(ShipData ship) => new UserShipData
         {
+            DropId = ship.MasterID,
             Level = ship.Level,
             ShipId = ship.ShipID
         };

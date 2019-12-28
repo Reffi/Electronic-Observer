@@ -33,35 +33,26 @@ namespace KancolleProgress.Controls
 
                 foreach (ShipDataCustom ship in ClassGroup)
                 {
-                    DockPanel s = new DockPanel();
+                    DockPanel dockPanel = new DockPanel();
 
-                    SolidColorBrush brush = (SolidColorBrush)(new BrushConverter().ConvertFrom(LevelColor(ship.Level)));
+                    SolidColorBrush brush = (SolidColorBrush)(new BrushConverter().ConvertFrom(ColorFilter.LevelColor(ship.Level)));
 
-                    s.Children.Add(new Label
+                    dockPanel.Children.Add(new Label
                     {
                         Content = $"{ship.Name}",
                         HorizontalContentAlignment = HorizontalAlignment.Left,
                         Foreground = brush
                     });
 
-                    s.Children.Add(new Label
+                    dockPanel.Children.Add(new Label
                     {
                         Content = $"{ship.Level}",
                         HorizontalContentAlignment = HorizontalAlignment.Right,
                         Foreground = brush
                     });
 
-                    ShipClassContainer.Children.Add(s);
+                    ShipClassContainer.Children.Add(dockPanel);
                 }
-
-                string LevelColor(int level) => (level switch
-                {
-                    175 => Colors.DeepPink,
-                    _ when level >= 99 => Colors.DodgerBlue,
-                    _ when level >= 90 => Colors.Green,
-                    _ when level >= 1 => Colors.Yellow,
-                    _ => Colors.Red
-                }).ToString();
             }
         }
 

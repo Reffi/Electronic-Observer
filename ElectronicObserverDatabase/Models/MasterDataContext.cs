@@ -4,8 +4,11 @@ namespace ElectronicObserverDatabase.Models
 {
     public partial class MasterDataContext : DbContext
     {
-        public MasterDataContext()
+        public string DbPath { get; }
+
+        public MasterDataContext(string dbPath)
         {
+            DbPath = dbPath;
         }
 
         public MasterDataContext(DbContextOptions<MasterDataContext> options)
@@ -20,7 +23,7 @@ namespace ElectronicObserverDatabase.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlite("Data Source=MasterData.db");
+                optionsBuilder.UseSqlite($@"Data Source={DbPath}\MasterData.db");
             }
         }
 

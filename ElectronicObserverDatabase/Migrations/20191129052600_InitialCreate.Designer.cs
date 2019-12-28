@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace KancolleSimulator.Migrations
+namespace ElectronicObserverDatabase.Migrations
 {
     [DbContext(typeof(MasterDataContext))]
     [Migration("20191129052600_InitialCreate")]
