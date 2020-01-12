@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ElectronicObserverDatabase.Models;
 
 namespace ElectronicObserver.Data
 {
@@ -1571,7 +1572,11 @@ namespace ElectronicObserver.Data
 
         }
 
-
+        public static explicit operator UserShipRecord(ShipData ship) => new UserShipRecord
+        {
+			DropId = ship.MasterID,
+	        Level = ship.Level,
+	        ShipId = ship.ShipID
+        };
     }
-
 }

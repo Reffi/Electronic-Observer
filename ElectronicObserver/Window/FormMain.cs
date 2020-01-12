@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -23,6 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ElectronicObserver.Utility.Mathematics;
+using ElectronicObserverDatabase.Models;
+using Microsoft.EntityFrameworkCore;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace ElectronicObserver.Window
@@ -1537,10 +1540,49 @@ namespace ElectronicObserver.Window
 
         private void StripMenu_Tool_KancolleProgress_Click(object sender, EventArgs e)
         {
-            new Dialog.DialogKancolleProgress().Show(this);
+	        if (!File.Exists(@"Plugins\KancolleProgress\KancolleProgress.exe"))
+	        {
+		        new DialogKancolleProgress().Show(this);
+		        return;
+	        }
+
+			string dbPath = Directory.GetCurrentDirectory();
+
+			MasterDataContext db = new MasterDataContext(dbPath);
+	        UserDataContext userDb = new UserDataContext(dbPath);
+
+	        db.Database.Migrate();
+	        userDb.Database.Migrate();
+
+	        foreach (ShipDataMaster ship in KCDatabase.Instance.MasterShips.Values)
+	        {
+				// https://github.com/artiomchi/FlexLabs.Upsert/issues/76
+				// db.Upsert((MasterShipRecord) ship).Run();
+
+				if (db.MasterShipData.Any(s => s.ShipId == ship.ShipID))
+		        {
+			        db.Update((MasterShipRecord) ship);
+		        }
+		        else
+		        {
+					db.Add((MasterShipRecord) ship);
+		        }
+	        }
+
+	        userDb.Database.ExecuteSqlRaw("DELETE FROM UserShipData");
+
+	        foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
+	        {
+		        userDb.Add((UserShipRecord) ship);
+			}
+
+	        db.SaveChanges();
+	        userDb.SaveChanges();
+
+			Process.Start(@"Plugins\KancolleProgress\KancolleProgress.exe", $"\"{dbPath}\"");
         }
 
-        private void CallPumpkinHead(string apiname, dynamic data)
+		private void CallPumpkinHead(string apiname, dynamic data)
 		{
 			new DialogHalloween().Show(this);
 			APIObserver.Instance.APIList["api_port/port"].ResponseReceived -= CallPumpkinHead;
