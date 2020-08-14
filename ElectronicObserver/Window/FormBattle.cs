@@ -385,7 +385,7 @@ namespace ElectronicObserver.Window
 			if (bm.Compass != null && bm.Compass.EventID == 5)
 				FleetEnemy.ForeColor = Utility.Configuration.Config.UI.Color_Red;
 			else
-				FleetEnemy.ForeColor = SystemColors.ControlText;
+				FleetEnemy.ForeColor = Utility.Configuration.Config.UI.ForeColor;
 
 			if (bm.IsEnemyCombined && bm.StartsFromDayBattle)
 			{
@@ -637,6 +637,8 @@ namespace ElectronicObserver.Window
 				switch (phases[1].Air.AirSuperiority)
 				{
 					case 1: //AS+
+						AirSuperiority.ForeColor = Utility.Configuration.Config.UI.Color_Yellow;
+						break;
 					case 2: //AS
 						AirSuperiority.ForeColor = Utility.Configuration.Config.UI.Color_Green;
 						break;
