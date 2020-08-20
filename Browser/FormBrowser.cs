@@ -254,7 +254,7 @@ namespace Browser
 			// limit browser fps to fix canvas crash
 			// causes memory leak after Umikaze k2 update somehow...
 			// settings.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0"; // fix for 206 response from server for bgm
-			settings.CefCommandLineArgs.Add("disable-features", "HardwareMediaKeyHandling"); // prevent CEF from taking over media keys
+			settings.CefCommandLineArgs.Add("disable-features", "HardwareMediaKeyHandling,WebContentsOcclusion,CalculateNativeWinOcclusion"); // prevent CEF from taking over media keys
 			if (Configuration.ForceColorProfile)
 				settings.CefCommandLineArgs.Add("force-color-profile", "srgb");
 			CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
