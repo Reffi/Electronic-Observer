@@ -164,7 +164,7 @@ Cut-in type: {1} ({2})</value>
     <value>AS+: {0}
 AS: {1}
 AP: {2}
-AI: {3}
+AD: {3}
 ({4}: {5})</value>
   </data>
   <data name="ASW" xml:space="preserve">
