@@ -521,7 +521,7 @@ namespace ElectronicObserver.Window
 		{
 			if (air > 0)
 			{
-				return string.Format("AS+: {0}\r\nAS: {1}\r\nAP: {2}\r\nAI: {3}\r\n",
+				return string.Format("AS+: {0}\r\nAS: {1}\r\nAP: {2}\r\nAD: {3}\r\n",
 							(int)(air * 3.0),
 							(int)Math.Ceiling(air * 1.5),
 							(int)(air / 1.5 + 1),

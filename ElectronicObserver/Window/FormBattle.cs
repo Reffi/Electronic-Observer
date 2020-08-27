@@ -4,6 +4,7 @@ using ElectronicObserver.Data.Battle.Detail;
 using ElectronicObserver.Data.Battle.Phase;
 using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
+using ElectronicObserver.Utility;
 using ElectronicObserver.Window.Control;
 using ElectronicObserver.Window.Support;
 using System;
@@ -564,7 +565,7 @@ namespace ElectronicObserver.Window
 		void ClearAircraftLabel(ImageLabel label)
 		{
 			label.Text = "-";
-			label.ForeColor = SystemColors.ControlText;
+			label.ForeColor = Configuration.Config.UI.ForeColor;
 			label.ImageAlign = ContentAlignment.MiddleCenter;
 			label.ImageIndex = -1;
 			ToolTipInfo.SetToolTip(label, null);

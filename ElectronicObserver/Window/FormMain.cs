@@ -326,11 +326,13 @@ namespace ElectronicObserver.Window
 			{
 				MainDockPanel.AllowChangeLayout = false;
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+				ToggleLock(MainDockPanel.AllowChangeLayout);
 			}
 			else
 			{
 				MainDockPanel.AllowChangeLayout = true;
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+				ToggleLock(MainDockPanel.AllowChangeLayout);
 			}
 
 			StripMenu_File_Layout_LockLayout.Checked = c.Life.LockLayout;
@@ -350,7 +352,13 @@ namespace ElectronicObserver.Window
 			StripMenu_Update.Text = string.Format("Electronic Observer v{0} is available!", newVersion);
 		}
 
-
+		private void ToggleLock(bool status_lock)
+		{
+			foreach (var form in SubForms)
+			{
+				form.AllowEndUserDocking = status_lock;
+			}
+		}
 
 
 		private void StripMenu_Debug_LoadAPIFromFile_Click(object sender, EventArgs e)

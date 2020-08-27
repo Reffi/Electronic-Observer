@@ -106,10 +106,14 @@ namespace ElectronicObserver.Window.Integrate
 		}
 
 		private static String[] MATCH_COMBO_ITEMS = new String[] {
-				  "完全一致",
-				  "含む",
-				  "前方後方一致",
-				  "条件を無視"
+		//		  "完全一致",
+		//		  "含む",
+		//		  "前方後方一致",
+		//		  "条件を無視"
+		FormIntegratedRes.IsExact,
+		FormIntegratedRes.IsContains,
+		FormIntegratedRes.IsStartsWith,
+		FormIntegratedRes.IsEndsWith
 		};
 
 		private FormMain parent;
@@ -131,7 +135,7 @@ namespace ElectronicObserver.Window.Integrate
 					ProcessFilePath = new MatchString(fileNameTextBox.Text,
 					(MatchControl)fileNameComboBox.SelectedIndex)
 				};
-
+				
 				return info;
 			}
 			set
