@@ -118,262 +118,262 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AABase" xml:space="preserve">
-    <value>基本対空</value>
+    <value>Base AA</value>
   </data>
   <data name="AARemain" xml:space="preserve">
-    <value>対空改修残り</value>
+    <value>AA Remaining</value>
   </data>
   <data name="AATotal" xml:space="preserve">
-    <value>合計対空</value>
+    <value>Total AA</value>
   </data>
   <data name="AirBattlePower" xml:space="preserve">
-    <value>航空威力</value>
+    <value>Aerial Power</value>
   </data>
   <data name="AircraftPower" xml:space="preserve">
-    <value>空撃威力</value>
+    <value>Aircraft Power</value>
   </data>
   <data name="AircraftRate1" xml:space="preserve">
-    <value>搭載割合 #1</value>
+    <value>Aircraft #1 Percentage</value>
   </data>
   <data name="AircraftRate2" xml:space="preserve">
-    <value>搭載割合 #2</value>
+    <value>Aircraft #2 Percentage</value>
   </data>
   <data name="AircraftRate3" xml:space="preserve">
-    <value>搭載割合 #3</value>
+    <value>Aircraft #3 Percentage</value>
   </data>
   <data name="AircraftRate4" xml:space="preserve">
-    <value>搭載割合 #4</value>
+    <value>Aircraft #4 Percentage</value>
   </data>
   <data name="AircraftRate5" xml:space="preserve">
-    <value>搭載割合 #5</value>
+    <value>Aircraft #5 Percentage</value>
   </data>
   <data name="AircraftRateTotal" xml:space="preserve">
-    <value>搭載割合合計</value>
+    <value>Aircraft Total Percentage</value>
   </data>
   <data name="AircraftSlot1" xml:space="preserve">
-    <value>搭載 #1</value>
+    <value>Aircraft #1</value>
   </data>
   <data name="AircraftSlot2" xml:space="preserve">
-    <value>搭載 #2</value>
+    <value>Aircraft #2</value>
   </data>
   <data name="AircraftSlot3" xml:space="preserve">
-    <value>搭載 #3</value>
+    <value>Aircraft #3</value>
   </data>
   <data name="AircraftSlot4" xml:space="preserve">
-    <value>搭載 #4</value>
+    <value>Aircraft #4</value>
   </data>
   <data name="AircraftSlot5" xml:space="preserve">
-    <value>搭載 #5</value>
+    <value>Aircraft #5</value>
   </data>
   <data name="AircraftTotal" xml:space="preserve">
-    <value>搭載機数合計</value>
+    <value>Aircraft Total</value>
   </data>
   <data name="AlbumNo" xml:space="preserve">
-    <value>図鑑番号</value>
+    <value>Album No.</value>
   </data>
   <data name="AllSlotMaster" xml:space="preserve">
-    <value>装備</value>
+    <value>Equipments</value>
   </data>
   <data name="Ammo" xml:space="preserve">
-    <value>搭載弾薬</value>
+    <value>Ammo</value>
   </data>
   <data name="AmmoMax" xml:space="preserve">
-    <value>最大搭載弾薬</value>
+    <value>Max Ammo</value>
   </data>
   <data name="AmmoRate" xml:space="preserve">
-    <value>搭載弾薬割合</value>
+    <value>Ammo Percentage</value>
   </data>
   <data name="ArmorBase" xml:space="preserve">
-    <value>基本装甲</value>
+    <value>Base Armor</value>
   </data>
   <data name="ArmorRemain" xml:space="preserve">
-    <value>装甲改修残り</value>
+    <value>Armor Remaining</value>
   </data>
   <data name="ArmorTotal" xml:space="preserve">
-    <value>合計装甲</value>
+    <value>Total Armor</value>
   </data>
   <data name="ASWBase" xml:space="preserve">
-    <value>基本対潜</value>
+    <value>Base ASW</value>
   </data>
   <data name="ASWPower" xml:space="preserve">
-    <value>対潜威力</value>
+    <value>ASW Power</value>
   </data>
   <data name="ASWTotal" xml:space="preserve">
-    <value>合計対潜</value>
+    <value>Total ASW</value>
   </data>
   <data name="BomberTotal" xml:space="preserve">
-    <value>合計爆装</value>
+    <value>Total Bombers</value>
   </data>
   <data name="Condition" xml:space="preserve">
-    <value>コンディション</value>
+    <value>Condition</value>
   </data>
   <data name="EquippableCategories" xml:space="preserve">
-    <value>装備可能リスト</value>
+    <value>Equippable Categories</value>
   </data>
   <data name="EvasionBase" xml:space="preserve">
-    <value>基本回避</value>
+    <value>Base Evasion</value>
   </data>
   <data name="EvasionTotal" xml:space="preserve">
-    <value>合計回避</value>
+    <value>Total Evasion</value>
   </data>
   <data name="ExpansionSlotMaster" xml:space="preserve">
-    <value>補強装備</value>
+    <value>Expansion Slot Equipment</value>
   </data>
   <data name="ExpNext" xml:space="preserve">
-    <value>次のレベルまで</value>
+    <value>Exp Next</value>
   </data>
   <data name="ExpNextRemodel" xml:space="preserve">
-    <value>次の改装まで</value>
+    <value>Exp to Next Remodel</value>
   </data>
   <data name="ExpTotal" xml:space="preserve">
-    <value>経験値</value>
+    <value>Exp Total</value>
   </data>
   <data name="FirePowerBase" xml:space="preserve">
-    <value>基本火力</value>
+    <value>Base Firepower</value>
   </data>
   <data name="FirePowerRemain" xml:space="preserve">
-    <value>火力改修残り</value>
+    <value>Firepower Remaining</value>
   </data>
   <data name="FirePowerTotal" xml:space="preserve">
-    <value>合計火力</value>
+    <value>Total Firepower</value>
   </data>
   <data name="FleetWithIndex" xml:space="preserve">
-    <value>所属艦隊</value>
+    <value>Fleet Index</value>
   </data>
   <data name="Fuel" xml:space="preserve">
-    <value>搭載燃料</value>
+    <value>Fuel</value>
   </data>
   <data name="FuelMax" xml:space="preserve">
-    <value>最大搭載燃料</value>
+    <value>Max Fuel</value>
   </data>
   <data name="FuelRate" xml:space="preserve">
-    <value>搭載燃料割合</value>
+    <value>Fuel Percentage</value>
   </data>
   <data name="HPCurrent" xml:space="preserve">
-    <value>現在HP</value>
+    <value>Current HP</value>
   </data>
   <data name="HPMax" xml:space="preserve">
-    <value>最大HP</value>
+    <value>Max HP</value>
   </data>
   <data name="HPRate" xml:space="preserve">
-    <value>HP割合</value>
+    <value>HP Percentage</value>
   </data>
   <data name="IsLocked" xml:space="preserve">
-    <value>ロック</value>
+    <value>Locked</value>
   </data>
   <data name="IsLockedByEquipment" xml:space="preserve">
-    <value>装備ロック</value>
+    <value>Locked By Equipment</value>
   </data>
   <data name="IsMarried" xml:space="preserve">
-    <value>ケッコンカッコカリ</value>
+    <value>Married</value>
   </data>
   <data name="Level" xml:space="preserve">
-    <value>レベル</value>
+    <value>Level</value>
   </data>
   <data name="LOSBase" xml:space="preserve">
-    <value>基本索敵</value>
+    <value>Base LOS</value>
   </data>
   <data name="LOSTotal" xml:space="preserve">
-    <value>合計索敵</value>
+    <value>Total LOS</value>
   </data>
   <data name="LuckBase" xml:space="preserve">
-    <value>基本運</value>
+    <value>Base Luck</value>
   </data>
   <data name="LuckRemain" xml:space="preserve">
-    <value>運改修残り</value>
+    <value>Luck Remaining</value>
   </data>
   <data name="LuckTotal" xml:space="preserve">
-    <value>合計運</value>
+    <value>Total Luck</value>
   </data>
   <data name="MasterAircraft1" xml:space="preserve">
-    <value>最大搭載 #1</value>
+    <value>Max Aircraft #1</value>
   </data>
   <data name="MasterAircraft2" xml:space="preserve">
-    <value>最大搭載 #2</value>
+    <value>Max Aircraft #2</value>
   </data>
   <data name="MasterAircraft3" xml:space="preserve">
-    <value>最大搭載 #3</value>
+    <value>Max Aircraft #3</value>
   </data>
   <data name="MasterAircraft4" xml:space="preserve">
-    <value>最大搭載 #4</value>
+    <value>Max Aircraft #4</value>
   </data>
   <data name="MasterAircraft5" xml:space="preserve">
-    <value>最大搭載 #5</value>
+    <value>Max Aircraft #5</value>
   </data>
   <data name="MasterAircraftTotal" xml:space="preserve">
-    <value>最大搭載機数</value>
+    <value>Max Aircraft Total</value>
   </data>
   <data name="MasterID" xml:space="preserve">
-    <value>艦船固有ID</value>
+    <value>MasterID</value>
   </data>
   <data name="MasterRarity" xml:space="preserve">
-    <value>レアリティ</value>
+    <value>Rarity</value>
   </data>
   <data name="MasterSpeed" xml:space="preserve">
-    <value>基礎速力</value>
+    <value>Base Speed</value>
   </data>
   <data name="NameReading" xml:space="preserve">
-    <value>艦名読み</value>
+    <value>Name Reading</value>
   </data>
   <data name="NameWithClass" xml:space="preserve">
-    <value>艦名</value>
+    <value>Name With Class</value>
   </data>
   <data name="NightBattlePower" xml:space="preserve">
-    <value>夜戦威力</value>
+    <value>Night Battle Power</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>射程</value>
+    <value>Range</value>
   </data>
   <data name="RemodelAfterShipID" xml:space="preserve">
-    <value>改装後艦船ID</value>
+    <value>Ship ID After Remodel</value>
   </data>
   <data name="RemodelBeforeShipID" xml:space="preserve">
-    <value>改装前艦船ID</value>
+    <value>Ship ID Before Remodel</value>
   </data>
   <data name="RepairFuel" xml:space="preserve">
-    <value>入渠消費燃料</value>
+    <value>Repair Fuel</value>
   </data>
   <data name="RepairingDockID" xml:space="preserve">
-    <value>入渠ドック</value>
+    <value>Dock ID</value>
   </data>
   <data name="RepairSteel" xml:space="preserve">
-    <value>入渠消費鋼材</value>
+    <value>Repair Steel</value>
   </data>
   <data name="RepairTime" xml:space="preserve">
-    <value>入渠時間</value>
+    <value>Repair Time</value>
   </data>
   <data name="SallyArea" xml:space="preserve">
-    <value>出撃海域</value>
+    <value>Event Area</value>
   </data>
   <data name="ShellingPower" xml:space="preserve">
-    <value>砲撃威力</value>
+    <value>Shelling Power</value>
   </data>
   <data name="ShipID" xml:space="preserve">
-    <value>艦船ID</value>
+    <value>ShipID</value>
   </data>
   <data name="ShipType" xml:space="preserve">
-    <value>艦種</value>
+    <value>Ship Type</value>
   </data>
   <data name="SlotMaster1" xml:space="preserve">
-    <value>装備 #1</value>
+    <value>Equipment #1</value>
   </data>
   <data name="SlotMaster2" xml:space="preserve">
-    <value>装備 #2</value>
+    <value>Equipment #2</value>
   </data>
   <data name="SlotMaster3" xml:space="preserve">
-    <value>装備 #3</value>
+    <value>Equipment #3</value>
   </data>
   <data name="SlotMaster4" xml:space="preserve">
-    <value>装備 #4</value>
+    <value>Equipment #4</value>
   </data>
   <data name="SlotMaster5" xml:space="preserve">
-    <value>装備 #5</value>
+    <value>Equipment #5</value>
   </data>
   <data name="SlotSize" xml:space="preserve">
-    <value>装備</value>
+    <value>Slots Count</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>速力</value>
+    <value>Speed</value>
   </data>
   <data name="StrArrayContains" xml:space="preserve">
     <value>Array Contains</value>
@@ -418,15 +418,15 @@
     <value>!=</value>
   </data>
   <data name="TorpedoBase" xml:space="preserve">
-    <value>基本雷装</value>
+    <value>Base Torpedo</value>
   </data>
   <data name="TorpedoPower" xml:space="preserve">
-    <value>雷撃威力</value>
+    <value>Torpedo Power</value>
   </data>
   <data name="TorpedoRemain" xml:space="preserve">
-    <value>雷装改修残り</value>
+    <value>Torpedo Remaining</value>
   </data>
   <data name="TorpedoTotal" xml:space="preserve">
-    <value>合計雷装</value>
+    <value>Total Torpedo</value>
   </data>
 </root>

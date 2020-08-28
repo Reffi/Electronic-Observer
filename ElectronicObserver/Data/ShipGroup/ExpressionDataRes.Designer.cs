@@ -19,10 +19,10 @@ namespace ElectronicObserver.Data.ShipGroup {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExpressionDataRes {
+    public class ExpressionDataRes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ElectronicObserver.Data.ShipGroup.ExpressionDataRes", typeof(ExpressionDataRes).Assembly);
@@ -51,7 +51,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,774 +61,774 @@ namespace ElectronicObserver.Data.ShipGroup {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base AA.
+        ///   Looks up a localized string similar to 基本対空.
         /// </summary>
-        internal static string AABase {
+        public static string AABase {
             get {
                 return ResourceManager.GetString("AABase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AA Remaining.
+        ///   Looks up a localized string similar to 対空改修残り.
         /// </summary>
-        internal static string AARemain {
+        public static string AARemain {
             get {
                 return ResourceManager.GetString("AARemain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total AA.
+        ///   Looks up a localized string similar to 合計対空.
         /// </summary>
-        internal static string AATotal {
+        public static string AATotal {
             get {
                 return ResourceManager.GetString("AATotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aerial Power.
+        ///   Looks up a localized string similar to 航空威力.
         /// </summary>
-        internal static string AirBattlePower {
+        public static string AirBattlePower {
             get {
                 return ResourceManager.GetString("AirBattlePower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft Power.
+        ///   Looks up a localized string similar to 空撃威力.
         /// </summary>
-        internal static string AircraftPower {
+        public static string AircraftPower {
             get {
                 return ResourceManager.GetString("AircraftPower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #1 Percentage.
+        ///   Looks up a localized string similar to 搭載割合 #1.
         /// </summary>
-        internal static string AircraftRate1 {
+        public static string AircraftRate1 {
             get {
                 return ResourceManager.GetString("AircraftRate1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #2 Percentage.
+        ///   Looks up a localized string similar to 搭載割合 #2.
         /// </summary>
-        internal static string AircraftRate2 {
+        public static string AircraftRate2 {
             get {
                 return ResourceManager.GetString("AircraftRate2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #3 Percentage.
+        ///   Looks up a localized string similar to 搭載割合 #3.
         /// </summary>
-        internal static string AircraftRate3 {
+        public static string AircraftRate3 {
             get {
                 return ResourceManager.GetString("AircraftRate3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #4 Percentage.
+        ///   Looks up a localized string similar to 搭載割合 #4.
         /// </summary>
-        internal static string AircraftRate4 {
+        public static string AircraftRate4 {
             get {
                 return ResourceManager.GetString("AircraftRate4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #5 Percentage.
+        ///   Looks up a localized string similar to 搭載割合 #5.
         /// </summary>
-        internal static string AircraftRate5 {
+        public static string AircraftRate5 {
             get {
                 return ResourceManager.GetString("AircraftRate5", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft Total Percentage.
+        ///   Looks up a localized string similar to 搭載割合合計.
         /// </summary>
-        internal static string AircraftRateTotal {
+        public static string AircraftRateTotal {
             get {
                 return ResourceManager.GetString("AircraftRateTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #1.
+        ///   Looks up a localized string similar to 搭載 #1.
         /// </summary>
-        internal static string AircraftSlot1 {
+        public static string AircraftSlot1 {
             get {
                 return ResourceManager.GetString("AircraftSlot1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #2.
+        ///   Looks up a localized string similar to 搭載 #2.
         /// </summary>
-        internal static string AircraftSlot2 {
+        public static string AircraftSlot2 {
             get {
                 return ResourceManager.GetString("AircraftSlot2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #3.
+        ///   Looks up a localized string similar to 搭載 #3.
         /// </summary>
-        internal static string AircraftSlot3 {
+        public static string AircraftSlot3 {
             get {
                 return ResourceManager.GetString("AircraftSlot3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #4.
+        ///   Looks up a localized string similar to 搭載 #4.
         /// </summary>
-        internal static string AircraftSlot4 {
+        public static string AircraftSlot4 {
             get {
                 return ResourceManager.GetString("AircraftSlot4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft #5.
+        ///   Looks up a localized string similar to 搭載 #5.
         /// </summary>
-        internal static string AircraftSlot5 {
+        public static string AircraftSlot5 {
             get {
                 return ResourceManager.GetString("AircraftSlot5", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aircraft Total.
+        ///   Looks up a localized string similar to 搭載機数合計.
         /// </summary>
-        internal static string AircraftTotal {
+        public static string AircraftTotal {
             get {
                 return ResourceManager.GetString("AircraftTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Album No..
+        ///   Looks up a localized string similar to 図鑑番号.
         /// </summary>
-        internal static string AlbumNo {
+        public static string AlbumNo {
             get {
                 return ResourceManager.GetString("AlbumNo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipments.
+        ///   Looks up a localized string similar to 装備.
         /// </summary>
-        internal static string AllSlotMaster {
+        public static string AllSlotMaster {
             get {
                 return ResourceManager.GetString("AllSlotMaster", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ammo.
+        ///   Looks up a localized string similar to 搭載弾薬.
         /// </summary>
-        internal static string Ammo {
+        public static string Ammo {
             get {
                 return ResourceManager.GetString("Ammo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Ammo.
+        ///   Looks up a localized string similar to 最大搭載弾薬.
         /// </summary>
-        internal static string AmmoMax {
+        public static string AmmoMax {
             get {
                 return ResourceManager.GetString("AmmoMax", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ammo Percentage.
+        ///   Looks up a localized string similar to 搭載弾薬割合.
         /// </summary>
-        internal static string AmmoRate {
+        public static string AmmoRate {
             get {
                 return ResourceManager.GetString("AmmoRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Armor.
+        ///   Looks up a localized string similar to 基本装甲.
         /// </summary>
-        internal static string ArmorBase {
+        public static string ArmorBase {
             get {
                 return ResourceManager.GetString("ArmorBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armor Remaining.
+        ///   Looks up a localized string similar to 装甲改修残り.
         /// </summary>
-        internal static string ArmorRemain {
+        public static string ArmorRemain {
             get {
                 return ResourceManager.GetString("ArmorRemain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Armor.
+        ///   Looks up a localized string similar to 合計装甲.
         /// </summary>
-        internal static string ArmorTotal {
+        public static string ArmorTotal {
             get {
                 return ResourceManager.GetString("ArmorTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base ASW.
+        ///   Looks up a localized string similar to 基本対潜.
         /// </summary>
-        internal static string ASWBase {
+        public static string ASWBase {
             get {
                 return ResourceManager.GetString("ASWBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ASW Power.
+        ///   Looks up a localized string similar to 対潜威力.
         /// </summary>
-        internal static string ASWPower {
+        public static string ASWPower {
             get {
                 return ResourceManager.GetString("ASWPower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total ASW.
+        ///   Looks up a localized string similar to 合計対潜.
         /// </summary>
-        internal static string ASWTotal {
+        public static string ASWTotal {
             get {
                 return ResourceManager.GetString("ASWTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Bombers.
+        ///   Looks up a localized string similar to 合計爆装.
         /// </summary>
-        internal static string BomberTotal {
+        public static string BomberTotal {
             get {
                 return ResourceManager.GetString("BomberTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Condition.
+        ///   Looks up a localized string similar to コンディション.
         /// </summary>
-        internal static string Condition {
+        public static string Condition {
             get {
                 return ResourceManager.GetString("Condition", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equippable Categories.
+        ///   Looks up a localized string similar to 装備可能リスト.
         /// </summary>
-        internal static string EquippableCategories {
+        public static string EquippableCategories {
             get {
                 return ResourceManager.GetString("EquippableCategories", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Evasion.
+        ///   Looks up a localized string similar to 基本回避.
         /// </summary>
-        internal static string EvasionBase {
+        public static string EvasionBase {
             get {
                 return ResourceManager.GetString("EvasionBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Evasion.
+        ///   Looks up a localized string similar to 合計回避.
         /// </summary>
-        internal static string EvasionTotal {
+        public static string EvasionTotal {
             get {
                 return ResourceManager.GetString("EvasionTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expansion Slot Equipment.
+        ///   Looks up a localized string similar to 補強装備.
         /// </summary>
-        internal static string ExpansionSlotMaster {
+        public static string ExpansionSlotMaster {
             get {
                 return ResourceManager.GetString("ExpansionSlotMaster", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exp Next.
+        ///   Looks up a localized string similar to 次のレベルまで.
         /// </summary>
-        internal static string ExpNext {
+        public static string ExpNext {
             get {
                 return ResourceManager.GetString("ExpNext", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exp to Next Remodel.
+        ///   Looks up a localized string similar to 次の改装まで.
         /// </summary>
-        internal static string ExpNextRemodel {
+        public static string ExpNextRemodel {
             get {
                 return ResourceManager.GetString("ExpNextRemodel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exp Total.
+        ///   Looks up a localized string similar to 経験値.
         /// </summary>
-        internal static string ExpTotal {
+        public static string ExpTotal {
             get {
                 return ResourceManager.GetString("ExpTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Firepower.
+        ///   Looks up a localized string similar to 基本火力.
         /// </summary>
-        internal static string FirePowerBase {
+        public static string FirePowerBase {
             get {
                 return ResourceManager.GetString("FirePowerBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Firepower Remaining.
+        ///   Looks up a localized string similar to 火力改修残り.
         /// </summary>
-        internal static string FirePowerRemain {
+        public static string FirePowerRemain {
             get {
                 return ResourceManager.GetString("FirePowerRemain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Firepower.
+        ///   Looks up a localized string similar to 合計火力.
         /// </summary>
-        internal static string FirePowerTotal {
+        public static string FirePowerTotal {
             get {
                 return ResourceManager.GetString("FirePowerTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fleet Index.
+        ///   Looks up a localized string similar to 所属艦隊.
         /// </summary>
-        internal static string FleetWithIndex {
+        public static string FleetWithIndex {
             get {
                 return ResourceManager.GetString("FleetWithIndex", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fuel.
+        ///   Looks up a localized string similar to 搭載燃料.
         /// </summary>
-        internal static string Fuel {
+        public static string Fuel {
             get {
                 return ResourceManager.GetString("Fuel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Fuel.
+        ///   Looks up a localized string similar to 最大搭載燃料.
         /// </summary>
-        internal static string FuelMax {
+        public static string FuelMax {
             get {
                 return ResourceManager.GetString("FuelMax", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fuel Percentage.
+        ///   Looks up a localized string similar to 搭載燃料割合.
         /// </summary>
-        internal static string FuelRate {
+        public static string FuelRate {
             get {
                 return ResourceManager.GetString("FuelRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current HP.
+        ///   Looks up a localized string similar to 現在HP.
         /// </summary>
-        internal static string HPCurrent {
+        public static string HPCurrent {
             get {
                 return ResourceManager.GetString("HPCurrent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max HP.
+        ///   Looks up a localized string similar to 最大HP.
         /// </summary>
-        internal static string HPMax {
+        public static string HPMax {
             get {
                 return ResourceManager.GetString("HPMax", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HP Percentage.
+        ///   Looks up a localized string similar to HP割合.
         /// </summary>
-        internal static string HPRate {
+        public static string HPRate {
             get {
                 return ResourceManager.GetString("HPRate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Locked.
+        ///   Looks up a localized string similar to ロック.
         /// </summary>
-        internal static string IsLocked {
+        public static string IsLocked {
             get {
                 return ResourceManager.GetString("IsLocked", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Locked By Equipment.
+        ///   Looks up a localized string similar to 装備ロック.
         /// </summary>
-        internal static string IsLockedByEquipment {
+        public static string IsLockedByEquipment {
             get {
                 return ResourceManager.GetString("IsLockedByEquipment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Married.
+        ///   Looks up a localized string similar to ケッコンカッコカリ.
         /// </summary>
-        internal static string IsMarried {
+        public static string IsMarried {
             get {
                 return ResourceManager.GetString("IsMarried", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level.
+        ///   Looks up a localized string similar to レベル.
         /// </summary>
-        internal static string Level {
+        public static string Level {
             get {
                 return ResourceManager.GetString("Level", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base LOS.
+        ///   Looks up a localized string similar to 基本索敵.
         /// </summary>
-        internal static string LOSBase {
+        public static string LOSBase {
             get {
                 return ResourceManager.GetString("LOSBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total LOS.
+        ///   Looks up a localized string similar to 合計索敵.
         /// </summary>
-        internal static string LOSTotal {
+        public static string LOSTotal {
             get {
                 return ResourceManager.GetString("LOSTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Luck.
+        ///   Looks up a localized string similar to 基本運.
         /// </summary>
-        internal static string LuckBase {
+        public static string LuckBase {
             get {
                 return ResourceManager.GetString("LuckBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luck Remaining.
+        ///   Looks up a localized string similar to 運改修残り.
         /// </summary>
-        internal static string LuckRemain {
+        public static string LuckRemain {
             get {
                 return ResourceManager.GetString("LuckRemain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Luck.
+        ///   Looks up a localized string similar to 合計運.
         /// </summary>
-        internal static string LuckTotal {
+        public static string LuckTotal {
             get {
                 return ResourceManager.GetString("LuckTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft #1.
+        ///   Looks up a localized string similar to 最大搭載 #1.
         /// </summary>
-        internal static string MasterAircraft1 {
+        public static string MasterAircraft1 {
             get {
                 return ResourceManager.GetString("MasterAircraft1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft #2.
+        ///   Looks up a localized string similar to 最大搭載 #2.
         /// </summary>
-        internal static string MasterAircraft2 {
+        public static string MasterAircraft2 {
             get {
                 return ResourceManager.GetString("MasterAircraft2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft #3.
+        ///   Looks up a localized string similar to 最大搭載 #3.
         /// </summary>
-        internal static string MasterAircraft3 {
+        public static string MasterAircraft3 {
             get {
                 return ResourceManager.GetString("MasterAircraft3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft #4.
+        ///   Looks up a localized string similar to 最大搭載 #4.
         /// </summary>
-        internal static string MasterAircraft4 {
+        public static string MasterAircraft4 {
             get {
                 return ResourceManager.GetString("MasterAircraft4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft #5.
+        ///   Looks up a localized string similar to 最大搭載 #5.
         /// </summary>
-        internal static string MasterAircraft5 {
+        public static string MasterAircraft5 {
             get {
                 return ResourceManager.GetString("MasterAircraft5", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Aircraft Total.
+        ///   Looks up a localized string similar to 最大搭載機数.
         /// </summary>
-        internal static string MasterAircraftTotal {
+        public static string MasterAircraftTotal {
             get {
                 return ResourceManager.GetString("MasterAircraftTotal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MasterID.
+        ///   Looks up a localized string similar to 艦船固有ID.
         /// </summary>
-        internal static string MasterID {
+        public static string MasterID {
             get {
                 return ResourceManager.GetString("MasterID", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rarity.
+        ///   Looks up a localized string similar to レアリティ.
         /// </summary>
-        internal static string MasterRarity {
+        public static string MasterRarity {
             get {
                 return ResourceManager.GetString("MasterRarity", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Speed.
+        ///   Looks up a localized string similar to 基礎速力.
         /// </summary>
-        internal static string MasterSpeed {
+        public static string MasterSpeed {
             get {
                 return ResourceManager.GetString("MasterSpeed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name Reading.
+        ///   Looks up a localized string similar to 艦名読み.
         /// </summary>
-        internal static string NameReading {
+        public static string NameReading {
             get {
                 return ResourceManager.GetString("NameReading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name With Class.
+        ///   Looks up a localized string similar to 艦名.
         /// </summary>
-        internal static string NameWithClass {
+        public static string NameWithClass {
             get {
                 return ResourceManager.GetString("NameWithClass", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Night Battle Power.
+        ///   Looks up a localized string similar to 夜戦威力.
         /// </summary>
-        internal static string NightBattlePower {
+        public static string NightBattlePower {
             get {
                 return ResourceManager.GetString("NightBattlePower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Range.
+        ///   Looks up a localized string similar to 射程.
         /// </summary>
-        internal static string Range {
+        public static string Range {
             get {
                 return ResourceManager.GetString("Range", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ship ID After Remodel.
+        ///   Looks up a localized string similar to 改装後艦船ID.
         /// </summary>
-        internal static string RemodelAfterShipID {
+        public static string RemodelAfterShipID {
             get {
                 return ResourceManager.GetString("RemodelAfterShipID", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ship ID Before Remodel.
+        ///   Looks up a localized string similar to 改装前艦船ID.
         /// </summary>
-        internal static string RemodelBeforeShipID {
+        public static string RemodelBeforeShipID {
             get {
                 return ResourceManager.GetString("RemodelBeforeShipID", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repair Fuel.
+        ///   Looks up a localized string similar to 入渠消費燃料.
         /// </summary>
-        internal static string RepairFuel {
+        public static string RepairFuel {
             get {
                 return ResourceManager.GetString("RepairFuel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dock ID.
+        ///   Looks up a localized string similar to 入渠ドック.
         /// </summary>
-        internal static string RepairingDockID {
+        public static string RepairingDockID {
             get {
                 return ResourceManager.GetString("RepairingDockID", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repair Steel.
+        ///   Looks up a localized string similar to 入渠消費鋼材.
         /// </summary>
-        internal static string RepairSteel {
+        public static string RepairSteel {
             get {
                 return ResourceManager.GetString("RepairSteel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Repair Time.
+        ///   Looks up a localized string similar to 入渠時間.
         /// </summary>
-        internal static string RepairTime {
+        public static string RepairTime {
             get {
                 return ResourceManager.GetString("RepairTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Event Area.
+        ///   Looks up a localized string similar to 出撃海域.
         /// </summary>
-        internal static string SallyArea {
+        public static string SallyArea {
             get {
                 return ResourceManager.GetString("SallyArea", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shelling Power.
+        ///   Looks up a localized string similar to 砲撃威力.
         /// </summary>
-        internal static string ShellingPower {
+        public static string ShellingPower {
             get {
                 return ResourceManager.GetString("ShellingPower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ShipID.
+        ///   Looks up a localized string similar to 艦船ID.
         /// </summary>
-        internal static string ShipID {
+        public static string ShipID {
             get {
                 return ResourceManager.GetString("ShipID", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ship Type.
+        ///   Looks up a localized string similar to 艦種.
         /// </summary>
-        internal static string ShipType {
+        public static string ShipType {
             get {
                 return ResourceManager.GetString("ShipType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipment #1.
+        ///   Looks up a localized string similar to 装備 #1.
         /// </summary>
-        internal static string SlotMaster1 {
+        public static string SlotMaster1 {
             get {
                 return ResourceManager.GetString("SlotMaster1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipment #2.
+        ///   Looks up a localized string similar to 装備 #2.
         /// </summary>
-        internal static string SlotMaster2 {
+        public static string SlotMaster2 {
             get {
                 return ResourceManager.GetString("SlotMaster2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipment #3.
+        ///   Looks up a localized string similar to 装備 #3.
         /// </summary>
-        internal static string SlotMaster3 {
+        public static string SlotMaster3 {
             get {
                 return ResourceManager.GetString("SlotMaster3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipment #4.
+        ///   Looks up a localized string similar to 装備 #4.
         /// </summary>
-        internal static string SlotMaster4 {
+        public static string SlotMaster4 {
             get {
                 return ResourceManager.GetString("SlotMaster4", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Equipment #5.
+        ///   Looks up a localized string similar to 装備 #5.
         /// </summary>
-        internal static string SlotMaster5 {
+        public static string SlotMaster5 {
             get {
                 return ResourceManager.GetString("SlotMaster5", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slots Count.
+        ///   Looks up a localized string similar to 装備.
         /// </summary>
-        internal static string SlotSize {
+        public static string SlotSize {
             get {
                 return ResourceManager.GetString("SlotSize", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speed.
+        ///   Looks up a localized string similar to 速力.
         /// </summary>
-        internal static string Speed {
+        public static string Speed {
             get {
                 return ResourceManager.GetString("Speed", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Array Contains.
         /// </summary>
-        internal static string StrArrayContains {
+        public static string StrArrayContains {
             get {
                 return ResourceManager.GetString("StrArrayContains", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Array Not Contains.
         /// </summary>
-        internal static string StrArrayNotContains {
+        public static string StrArrayNotContains {
             get {
                 return ResourceManager.GetString("StrArrayNotContains", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Begins With.
         /// </summary>
-        internal static string StrBeginsWith {
+        public static string StrBeginsWith {
             get {
                 return ResourceManager.GetString("StrBeginsWith", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Contains.
         /// </summary>
-        internal static string StrContains {
+        public static string StrContains {
             get {
                 return ResourceManager.GetString("StrContains", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to End With.
         /// </summary>
-        internal static string StrEndWith {
+        public static string StrEndWith {
             get {
                 return ResourceManager.GetString("StrEndWith", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to ==.
         /// </summary>
-        internal static string StrEquals {
+        public static string StrEquals {
             get {
                 return ResourceManager.GetString("StrEquals", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to &lt;=.
         /// </summary>
-        internal static string StrLessEquals {
+        public static string StrLessEquals {
             get {
                 return ResourceManager.GetString("StrLessEquals", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to &lt;.
         /// </summary>
-        internal static string StrLessThan {
+        public static string StrLessThan {
             get {
                 return ResourceManager.GetString("StrLessThan", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to &gt;=.
         /// </summary>
-        internal static string StrMoreEquals {
+        public static string StrMoreEquals {
             get {
                 return ResourceManager.GetString("StrMoreEquals", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to &gt;.
         /// </summary>
-        internal static string StrMoreThan {
+        public static string StrMoreThan {
             get {
                 return ResourceManager.GetString("StrMoreThan", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Not Begins With.
         /// </summary>
-        internal static string StrNotBeginsWith {
+        public static string StrNotBeginsWith {
             get {
                 return ResourceManager.GetString("StrNotBeginsWith", resourceCulture);
             }
@@ -936,7 +936,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Not Contains.
         /// </summary>
-        internal static string StrNotContains {
+        public static string StrNotContains {
             get {
                 return ResourceManager.GetString("StrNotContains", resourceCulture);
             }
@@ -945,7 +945,7 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to Not End With.
         /// </summary>
-        internal static string StrNotEndWith {
+        public static string StrNotEndWith {
             get {
                 return ResourceManager.GetString("StrNotEndWith", resourceCulture);
             }
@@ -954,43 +954,43 @@ namespace ElectronicObserver.Data.ShipGroup {
         /// <summary>
         ///   Looks up a localized string similar to !=.
         /// </summary>
-        internal static string StrNotEquals {
+        public static string StrNotEquals {
             get {
                 return ResourceManager.GetString("StrNotEquals", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Torpedo.
+        ///   Looks up a localized string similar to 基本雷装.
         /// </summary>
-        internal static string TorpedoBase {
+        public static string TorpedoBase {
             get {
                 return ResourceManager.GetString("TorpedoBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Torpedo Power.
+        ///   Looks up a localized string similar to 雷撃威力.
         /// </summary>
-        internal static string TorpedoPower {
+        public static string TorpedoPower {
             get {
                 return ResourceManager.GetString("TorpedoPower", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Torpedo Remaining.
+        ///   Looks up a localized string similar to 雷装改修残り.
         /// </summary>
-        internal static string TorpedoRemain {
+        public static string TorpedoRemain {
             get {
                 return ResourceManager.GetString("TorpedoRemain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Torpedo.
+        ///   Looks up a localized string similar to 合計雷装.
         /// </summary>
-        internal static string TorpedoTotal {
+        public static string TorpedoTotal {
             get {
                 return ResourceManager.GetString("TorpedoTotal", resourceCulture);
             }
