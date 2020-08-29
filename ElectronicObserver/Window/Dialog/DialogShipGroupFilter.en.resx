@@ -118,167 +118,153 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClearConstFilter" xml:space="preserve">
-    <value>初期化</value>
+    <value>Clear</value>
   </data>
   <data name="ConvertToExpression" xml:space="preserve">
-    <value>式に変換</value>
+    <value>Convert to expression</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>(説明)</value>
-  </data>
-  <data name="ExpressionDetailView_LeftOperand" xml:space="preserve">
-    <value>左辺</value>
-  </data>
-  <data name="ExpressionDetailView_Operator" xml:space="preserve">
-    <value>条件</value>
-  </data>
-  <data name="ExpressionDetailView_RightOperand" xml:space="preserve">
-    <value>右辺</value>
-  </data>
-  <data name="ExpressionDetail_Add" xml:space="preserve">
-    <value>追加</value>
-  </data>
-  <data name="ExpressionDetail_Delete" xml:space="preserve">
-    <value>削除</value>
-  </data>
-  <data name="ExpressionDetail_Edit" xml:space="preserve">
-    <value>上書き</value>
-  </data>
-  <data name="ExpressionView_Expression" xml:space="preserve">
-    <value>式</value>
-  </data>
-  <data name="ExpressionView_ExternalAndOr" xml:space="preserve">
-    <value>外条件</value>
-  </data>
-  <data name="ExpressionView_InternalAndOr" xml:space="preserve">
-    <value>内条件</value>
-  </data>
-  <data name="ExpressionView_Inverse" xml:space="preserve">
-    <value>否</value>
+    <value>(Description)</value>
   </data>
   <data name="Expression_Add" xml:space="preserve">
-    <value>追加</value>
+    <value>Add</value>
   </data>
   <data name="Expression_Delete" xml:space="preserve">
-    <value>削除</value>
+    <value>Delete</value>
+  </data>
+  <data name="ExpressionDetail_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ExpressionDetail_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ExpressionDetail_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ExpressionDetailView_LeftOperand" xml:space="preserve">
+    <value>Left operand</value>
+  </data>
+  <data name="ExpressionDetailView_Operator" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="ExpressionDetailView_RightOperand" xml:space="preserve">
+    <value>Right operand</value>
+  </data>
+  <data name="ExpressionView_Expression" xml:space="preserve">
+    <value>Expression</value>
+  </data>
+  <data name="ExpressionView_ExternalAndOr" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="ExpressionView_InternalAndOr" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="ExpressionView_Inverse" xml:space="preserve">
+    <value>Inverse</value>
   </data>
   <data name="label1" xml:space="preserve">
-    <value>フィルタの内容にかかわらず、追加/除外される艦娘のリストです。
-追加はグループ本体の右クリックメニューから行ってください。</value>
+    <value>This is the list of ships that will be included/excluded, regardless of the content of the filter.
+You can add them from the right-click menu in the group itself.</value>
   </data>
   <data name="OptimizeConstFilter" xml:space="preserve">
-    <value>最適化</value>
+    <value>Optimize</value>
   </data>
   <data name="tabPage1" xml:space="preserve">
-    <value>フィルタ</value>
+    <value>Filter</value>
   </data>
   <data name="tabPage2" xml:space="preserve">
-    <value>包含/除外リスト</value>
-  </data>
-  <data name="ExpressionView_Enabled" xml:space="preserve">
-    <value>有効/無効</value>
-  </data>
-  <data name="ExpressionView_Inverse_ToolTip" xml:space="preserve">
-    <value>条件を反転するか</value>
-  </data>
-  <data name="ExpressionView_Up" xml:space="preserve">
-    <value>↑</value>
-  </data>
-  <data name="ExpressionView_Up_ToolTip" xml:space="preserve">
-    <value>上へ</value>
-  </data>
-  <data name="ExpressionView_Down" xml:space="preserve">
-    <value>↓</value>
-  </data>
-  <data name="ExpressionView_Down_ToolTip" xml:space="preserve">
-    <value>下へ</value>
+    <value>Inclusion/exclusion list</value>
   </data>
   <data name="ExpressionDetailView_Enabled" xml:space="preserve">
     <value>○</value>
   </data>
-  <data name="ExpressionDetailView_Enabled_ToolTip" xml:space="preserve">
-    <value>有効/無効</value>
+  <data name="ExpressionView_Up" xml:space="preserve">
+    <value>↑</value>
   </data>
-  <data name="ConvertToExpression_ToolTip" xml:space="preserve">
-    <value>包含/除外リストを式に変換します。
-逆変換はできないのでご注意ください。</value>
-  </data>
-  <data name="OptimizeConstFilter_ToolTip" xml:space="preserve">
-    <value>存在しない艦娘をリストから削除します。</value>
+  <data name="ExpressionView_Down" xml:space="preserve">
+    <value>↓</value>
   </data>
   <data name="ClearConstFilter_ToolTip" xml:space="preserve">
-    <value>リストの内容をすべて削除します。</value>
+    <value>Remove all the contents of the list.</value>
+  </data>
+  <data name="ExpressionView_Down_ToolTip" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="ExpressionView_Up_ToolTip" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="ConvertToExpression_ToolTip" xml:space="preserve">
+    <value>Converts inclusion/exclusion lists to expressions.
+Note that reverse conversion is not possible.</value>
+  </data>
+  <data name="OptimizeConstFilter_ToolTip" xml:space="preserve">
+    <value>Remove non-existent ships from the list.</value>
+  </data>
+  <data name="ExpressionDetailView_Enabled_ToolTip" xml:space="preserve">
+    <value>Enable/Disable</value>
+  </data>
+  <data name="ExpressionView_Enabled" xml:space="preserve">
+    <value>Enable/Disable</value>
+  </data>
+  <data name="ExpressionView_Inverse_ToolTip" xml:space="preserve">
+    <value>Reversing the conditions</value>
   </data>
   <data name="SelectARow" xml:space="preserve">
-    <value>対象となる行を選択してください。</value>
+    <value>Select the row you want to delete.</value>
   </data>
   <data name="SelectExpressionRow" xml:space="preserve">
-    <value>対象となる式(左側)の行を選択してください。
-行が存在しない場合は追加してください。</value>
+    <value>Select the row of the expression (on the left) that you want to use.
+If the row does not exist, add it.</value>
   </data>
   <data name="SelectSequence" xml:space="preserve">
-    <value>対象となる式列(左側)を選択してください。</value>
+    <value>Select the target sequence (left side).</value>
   </data>
   <data name="SelectTargetRow" xml:space="preserve">
-    <value>対象となる行を選択してください。</value>
+    <value>Select the row you want to target.</value>
   </data>
   <data name="ClearFilterWarningTitle" xml:space="preserve">
-    <value>初期化の確認</value>
+    <value>Confirmation of initialization</value>
   </data>
   <data name="ClearFilterWarning" xml:space="preserve">
-    <value>{0} を初期化します。
-よろしいですか?</value>
+    <value>Are you sure you want to initialize {0}?</value>
   </data>
   <data name="ConvertToExpressionWarning" xml:space="preserve">
-	  <value>現在の包含/除外リストを式に変換します。
-逆変換はできません。
-よろしいですか？</value>
-	  <comment>Converts the current inclusion/exclusion list to an expression.
-		  You cannot reverse the conversion.
-		  Are you sure?</comment>
+    <value>Converts the current inclusion/exclusion list to an expression.
+You cannot reverse the conversion.
+Are you sure?</value>
   </data>
   <data name="ImportFilterFromClipboard" xml:space="preserve">
-	  <value>クリップボードからフィルタをインポートします。
-現在のフィルタは破棄されます。(包含/除外フィルタは維持されます)
-よろしいですか？
-</value>
-	  <comment>Imports a filter from the clipboard.
-		  The current filter is discarded. (Inclusion/exclusion filters will be kept.)
-		  Are you sure?</comment>
+    <value>Imports a filter from the clipboard.
+The current filter is discarded. (Inclusion/exclusion filters will be kept.)
+Are you sure?</value>
   </data>
   <data name="ImportFilterFromClipboardTitle" xml:space="preserve">
-	  <value>フィルタのインポートの確認</value>
-	  <comment>Checking the import of a filter</comment>
+    <value>Checking the import of a filter</value>
   </data>
   <data name="ClipboardIsEmpty" xml:space="preserve">
-	  <value>クリップボードが空です。
-フィルタデータをコピーしたうえで再度選択してください。
-</value>
+    <value>The clipboard is empty.
+Copy the filter data and select it again.</value>
   </data>
   <data name="CanNotImport" xml:space="preserve">
-	  <value>インポートできません</value>
+    <value>Can't import</value>
   </data>
   <data name="FormatCanNotBeImported" xml:space="preserve">
-    <value>インポートできないデータ形式です。</value>
+    <value>This data format can't be imported</value>
   </data>
   <data name="FilterImportFailed" xml:space="preserve">
-	  <value>フィルタのインポートに失敗しました。
-</value>
+    <value>The import of the filter failed.</value>
   </data>
   <data name="FilterWasExported" xml:space="preserve">
-	  <value>フィルタをクリップボードにエクスポートしました。
-「フィルタのインポート」で取り込んだり、
-メモ帳等に貼り付けて保存したりしてください。
-</value>
-  </data>
-  <data name="ExportingFilterTitle" xml:space="preserve">
-	  <value>フィルタのエクスポート</value>
+    <value>The filter was exported to the clipboard.
+Use "Import Filters" to import them, or paste them into Notepad and save them.</value>
   </data>
   <data name="FilterExportFailed" xml:space="preserve">
-	  <value>フィルタのエクスポートに失敗しました。
-</value>
+    <value>The export of the filter failed.</value>
+  </data>
+  <data name="ExportingFilterTitle" xml:space="preserve">
+    <value>Exporting Filters</value>
   </data>
   <data name="CanNotExport" xml:space="preserve">
-	  <value>エクスポートできません</value>
+    <value>Can't export</value>
   </data>
 </root>
