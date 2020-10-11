@@ -171,4 +171,5 @@ packages/
 /ElectronicObserver/ScreenShot
 
 *.bak
+/ElectronicObserver/GPUCache
 */Properties/Settings.Designer.cs
