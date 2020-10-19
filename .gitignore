@@ -172,3 +172,4 @@ packages/
 
 *.bak
 /ElectronicObserver/GPUCache
+*/Properties/Settings.Designer.cs
