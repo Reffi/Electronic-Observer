@@ -213,6 +213,9 @@
     <Compile Remove="Observer\kcsapi\api_start2.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <COMReference Include="WMPLib.dll">
       <Guid>6bf52a50-394a-11d3-b153-00c04f79faa6</Guid>
       <VersionMajor>1</VersionMajor>
