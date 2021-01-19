@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ElectronicObserverTypes;
 
 namespace ElectronicObserver.Data.Quest
 {
@@ -420,6 +421,7 @@ namespace ElectronicObserver.Data.Quest
 							}));
 							break;
 
+						// SeBw7
 						case 840:
 							Progresses.Add(new ProgressMultiBattle(q, new[]
 							{
@@ -428,6 +430,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "A", new[]{ 23 }, true),
 							}));
 							break;
+						// SeBw8
 						case 841:
 							Progresses.Add(new ProgressMultiBattle(q, new[]
 							{
@@ -436,6 +439,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[]{ 43 }, true),
 							}));
 							break;
+						// SeBw7
 						case 843:
 							Progresses.Add(new ProgressMultiBattle(q, new[]
 							{
