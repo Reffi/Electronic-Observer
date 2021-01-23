@@ -63,6 +63,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ObserverRes.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Window\Dialog\DialogShipGroupFilter.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -107,6 +112,10 @@
     <None Include=".editorconfig" />
     <None Update="Assets.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Update="Settings\ColorScheme.example.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
