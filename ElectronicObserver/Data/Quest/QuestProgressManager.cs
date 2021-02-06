@@ -758,6 +758,15 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 2, "S", new[] { 73 }, true, 2),
 							}));
 							break;
+						case 936: // B164
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 24 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 32 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 53 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 71 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 72 }, true, 2),
+							}));
+							break;
 
 						case 840:   //|840|週|【節分任務】令和三年節分作戦|2-(1~3)ボスA勝利各1|要(軽母or軽巡or雷巡or練巡)旗艦/(駆逐or海防)3, 期間限定(2021/01/13～????/??/??)
 							if (DateTime.Now < new DateTime(2021, 4, 1))
@@ -786,6 +795,30 @@ namespace ElectronicObserver.Data.Quest
 									new ProgressSpecialBattle(q, 1, "S", new[] { 52 }, true),
 									new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
 									new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
+								}));
+							}
+							break;
+
+						case 234:   // 2102 LQ1
+							if (DateTime.Now < new DateTime(2021, 5, 1))
+							{
+								Progresses.Add(new ProgressMultiBattle(q, new[] {
+									new ProgressSpecialBattle(q, 1, "A", new[] { 14 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 22 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+								}));
+							}
+							break;
+						case 238:   // 2102 LQ2
+							if (DateTime.Now < new DateTime(2021, 5, 1))
+							{
+								Progresses.Add(new ProgressMultiBattle(q, new[] {
+									new ProgressSpecialBattle(q, 1, "S", new[] { 13 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 24 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 31 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 33 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
 								}));
 							}
 							break;
@@ -828,6 +861,15 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 342:
 							Progresses.Add(new ProgressPractice(q, 4, "A"));
+							break;
+						case 348: // C53
+							Progresses.Add(new ProgressPractice(q, 4, "A"));
+							break;
+						case 349: // 2102 LQ3
+							if (DateTime.Now < new DateTime(2021, 5, 1))
+							{
+								Progresses.Add(new ProgressPractice(q, 4, "S"));
+							}
 							break;
 
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
@@ -935,6 +977,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 4 }),
 								new ProgressExpedition(q, 1, new[]{ 10 }),
 							})); break;
+						case 442: // D38
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 1, new[]{ 29 }),
+								new ProgressExpedition(q, 1, new[]{ 30 }),
+								new ProgressExpedition(q, 1, new[]{ 131 }),
+								new ProgressExpedition(q, 1, new[]{ 133 }),
+							})); 
+							break;
 
 						case 503:   //|503|艦隊大整備！|入渠5
 							Progresses.Add(new ProgressDocking(q, 5));

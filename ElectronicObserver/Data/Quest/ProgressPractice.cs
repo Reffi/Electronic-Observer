@@ -116,6 +116,28 @@ namespace ElectronicObserver.Data.Quest
 					_ => false
 				}) >= 4,
 
+				// C53
+				348 => ships.Count(s => s.MasterShip.ShipType is
+					       ShipTypes.LightCruiser or
+					       ShipTypes.TrainingCruiser
+				       ) >= 3 &&
+				       ships[0].MasterShip.ShipType is ShipTypes.LightCruiser or ShipTypes.TrainingCruiser &&
+				       ships.Count(s => s.MasterShip.ShipType is ShipTypes.Destroyer) >= 2,
+
+				// 2102 LQ3
+				349 =>
+					ships.Count(s => s.MasterShip.ShipType is ShipTypes.Destroyer) >= 2 &&
+					ships.Count(s => s.MasterShip.ShipType is ShipTypes.SeaplaneTender) >= 1 &&
+					ships.Count(s => s.MasterShip.ShipType is
+						ShipTypes.LightCruiser or
+						ShipTypes.TrainingCruiser or
+						ShipTypes.TorpedoCruiser
+					) >= 1 &&
+					ships.Count(s => s.MasterShip.ShipType is
+						ShipTypes.HeavyCruiser or
+						ShipTypes.AviationCruiser
+					) >= 1,
+
 				_ => true,
 			};
 		}

@@ -780,6 +780,14 @@ namespace ElectronicObserver.Data.Quest
 						}) >= 2 && CheckGaugeIndex72(bm.Compass) && CheckGaugeIndex73(bm.Compass);
 					break;
 
+				case 936: // B164
+				{
+					isAccepted =
+						members[0].MasterShip.ShipId is ShipId.NoshiroKaiNi &&
+						memberstype.Count(t => t is ShipTypes.Destroyer) >= 3;
+				}
+					break;
+
 
 				case 840:   //|840|週|【節分任務】令和三年節分作戦|2-(1~3)ボスA勝利各1|要(軽母or軽巡or雷巡or練巡)旗艦/(駆逐or海防)3, 期間限定(2021/01/13～????/??/??)
 					isAccepted =
@@ -812,6 +820,22 @@ namespace ElectronicObserver.Data.Quest
 							ShipTypes.ArmoredAircraftCarrier,
 						}.Contains(memberstype.FirstOrDefault()) &&
 						memberstype.Count(t => t == ShipTypes.Destroyer) >= 2;
+					break;
+
+				case 234:   // 2102 LQ1
+					{
+						isAccepted = memberstype.Count(t => t == ShipTypes.Destroyer) >= 2 &&
+						             memberstype.Count(t => t == ShipTypes.LightCruiser) >= 1;
+					}
+					break;
+
+				case 238: // 2102 LQ2
+				{
+					isAccepted = memberstype[0] is 
+						ShipTypes.LightCruiser or
+						ShipTypes.HeavyCruiser or
+						ShipTypes.AviationCruiser;
+				}
 					break;
 			}
 
