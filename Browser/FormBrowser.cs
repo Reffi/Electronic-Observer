@@ -23,6 +23,8 @@ using Browser.ExtraBrowser;
 using Browser.Properties;
 using Grpc.Core;
 using MagicOnion.Client;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.WinForms;
 
 namespace Browser
 {
@@ -51,8 +53,9 @@ namespace Browser
 
 		private ChromiumWebBrowser Browser { get; set; }
 
-		private string ProxySettings { get; set; } = null;
+		private WebView2? Edge { get; set; }
 
+		private string? ProxySettings { get; set; }
 
 		private bool _styleSheetApplied;
 
@@ -76,9 +79,12 @@ namespace Browser
 					if (IsBrowserInitialized)
 					{
 						//Browser.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-						Browser.Location = new Point(0, 0);
-						Browser.MinimumSize = new Size(0, 0);
-						Browser.Size = SizeAdjuster.Size;
+						//Browser.Location = new Point(0, 0);
+						//Browser.MinimumSize = new Size(0, 0);
+						//Browser.Size = SizeAdjuster.Size;
+						Edge.Location = new Point(0, 0);
+						Edge.MinimumSize = new Size(0, 0);
+						Edge.Size = SizeAdjuster.Size;
 					}
 
 					SizeAdjuster.ResumeLayout();
@@ -111,7 +117,7 @@ namespace Browser
 		/// </summary>
 		/// <param name="serverUri">ホストプロセスとの通信用URL</param>
 		public FormBrowser(string host, int port)
-		{
+		{ 
 			// Debugger.Launch();
 
 			Host = host;
@@ -197,7 +203,7 @@ namespace Browser
 		private void FormBrowser_Load(object sender, EventArgs e)
 		{
 			SetWindowLong(Handle, GWL_STYLE, WS_CHILD);
-
+			
 			// ホストプロセスに接続
 			Channel grpChannel = new Channel(Host, Port, ChannelCredentials.Insecure);
 			BrowserHost =
@@ -207,7 +213,7 @@ namespace Browser
 
 			// ウィンドウの親子設定＆ホストプロセスから接続してもらう
 			Task.Run(async () => await BrowserHost.ConnectToBrowser((long) Handle)).Wait();
-
+			
 			// 親ウィンドウが生きているか確認
 			HeartbeatTimer.Tick += async (sender2, e2) =>
 			{
@@ -237,9 +243,9 @@ namespace Browser
 		/// </summary>
 		void InitializeBrowser()
 		{
-			if (Browser != null) return;
+			if (Edge != null) return;
 			if (ProxySettings == null) return;
-
+			/*
 			var settings = new CefSettings
 			{
 				BrowserSubprocessPath = Path.Combine(
@@ -252,7 +258,7 @@ namespace Browser
 				LogSeverity = Configuration.SavesBrowserLog ? LogSeverity.Error : LogSeverity.Disable,
 				LogFile = "BrowserLog.log",
 			};
-
+			
 			if (!Configuration.HardwareAccelerationEnabled)
 				settings.DisableGpuAcceleration();
 
@@ -267,9 +273,9 @@ namespace Browser
 				settings.CefCommandLineArgs.Add("force-color-profile", "srgb");
 			CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
 			Cef.Initialize(settings, false, (IBrowserProcessHandler) null);
-
+			
 			// var requestHandler = new CefRequestHandler();
-
+			
 			var requestHandler = new CustomRequestHandler(pixiSettingEnabled: Configuration.PreserveDrawingBuffer);
 			requestHandler.RenderProcessTerminated += (mes) => AddLog(3, mes);
 			
@@ -286,8 +292,42 @@ namespace Browser
 			Browser.LoadingStateChanged += Browser_LoadingStateChanged;
 			Browser.IsBrowserInitializedChanged += Browser_IsBrowserInitializedChanged;
 			SizeAdjuster.Controls.Add(Browser);
+			*/
+
+			Edge = new()
+			{
+				Dock = DockStyle.Fill,
+				Size = SizeAdjuster.Size,
+				// Source = new Uri(KanColleUrl)
+			};
+
+			SizeAdjuster.Controls.Add(Edge);
+			InitializeAsync();
 		}
 
+		private async void InitializeAsync()
+		{
+			CoreWebView2EnvironmentOptions options = new()
+			{
+				AdditionalBrowserArguments = $"--proxy-server=\"{ProxySettings}\""
+			};
+
+			CoreWebView2Environment env = await CoreWebView2Environment.CreateAsync(null, null, options);
+			await Edge.EnsureCoreWebView2Async(env);
+			Edge.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
+			Edge.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.Script);
+			SetCookie();
+			
+			Edge.CoreWebView2.Navigate(KanColleUrl);
+		}
+
+		private void CoreWebView2_WebResourceRequested(object? sender, CoreWebView2WebResourceRequestedEventArgs e)
+		{
+			if (e.Request.Uri.Contains(@"gadget_html5"))
+			{
+				e.Request.Uri = e.Request.Uri.Replace("203.104.209.7/gadget_html5/", "18.176.189.52/gadget_html5/");
+			}
+		}
 
 		void Exit()
 		{
@@ -296,7 +336,7 @@ namespace Browser
 				// BrowserHost.Close();
 				HeartbeatTimer.Stop();
 				Task.Run(async () => await BrowserHost.DisposeAsync()).Wait();
-				Cef.Shutdown();
+				// Cef.Shutdown();
 				Application.Exit();
 			}
 		}
@@ -366,10 +406,17 @@ namespace Browser
 		{
 			if (!StyleSheetApplied)
 			{
+				/*
 				if (Browser != null)
 				{
 					Browser.Location = new Point(0, 0);
 					Browser.Size = SizeAdjuster.Size;
+				}
+				*/
+				if (Edge != null)
+				{
+					Edge.Location = new Point(0, 0);
+					Edge.Size = SizeAdjuster.Size;
 				}
 
 				return;
@@ -381,10 +428,12 @@ namespace Browser
 		private void CenteringBrowser()
 		{
 			if (SizeAdjuster.Width == 0 || SizeAdjuster.Height == 0) return;
-			int x = Browser.Location.X, y = Browser.Location.Y;
+			// int x = Browser.Location.X, y = Browser.Location.Y;
+			int x = Edge.Location.X, y = Edge.Location.Y;
 			bool isScrollable = Configuration.IsScrollable;
-			Browser.Dock = DockStyle.None;
-
+			// Browser.Dock = DockStyle.None;
+			Edge.Dock = DockStyle.None;
+			/*
 			if (!isScrollable || Browser.Width <= SizeAdjuster.Width)
 			{
 				x = (SizeAdjuster.Width - Browser.Width) / 2;
@@ -394,9 +443,21 @@ namespace Browser
 			{
 				y = (SizeAdjuster.Height - Browser.Height) / 2;
 			}
+			*/
+
+			if (!isScrollable || Edge.Width <= SizeAdjuster.Width)
+			{
+				x = (SizeAdjuster.Width - Edge.Width) / 2;
+			}
+
+			if (!isScrollable || Edge.Height <= SizeAdjuster.Height)
+			{
+				y = (SizeAdjuster.Height - Edge.Height) / 2;
+			}
 
 			//if ( x != Browser.Location.X || y != Browser.Location.Y )
-			Browser.Location = new Point(x, y);
+			// Browser.Location = new Point(x, y);
+			Edge.Location = new Point(x, y);
 		}
 
 		private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
@@ -406,20 +467,21 @@ namespace Browser
 
 			if (e.IsLoading)
 				return;
-
+			
 			if (Browser.Address.Contains("redirect"))
 			{
 				SetCookie();
 				Browser.Refresh();
 			}
-
-			/*if (Browser.Address.Contains("login/=/path="))
+			/*
+			if (Browser.Address.Contains("login/=/path="))
 		    {
 		        SetCookie();
                 Browser.ExecuteScriptAsync(Properties.Resources.RemoveWelcomePopup);
 		        Browser.ExecuteScriptAsync(Properties.Resources.RemoveServicePopup);
-            }*/
-
+            }
+			*/
+			/*
 			BeginInvoke((Action) (() =>
 			{
 				ApplyStyleSheet();
@@ -427,13 +489,13 @@ namespace Browser
 				ApplyZoom();
 				DestroyDMMreloadDialog();
 			}));
+			*/
 		}
 
-
-		private bool IsBrowserInitialized =>
+		private bool IsBrowserInitialized => Edge != null; /*
 			Browser != null &&
 			Browser.IsBrowserInitialized;
-
+		*/
 
 		public Action<Exception> Faulted
 		{
@@ -444,7 +506,7 @@ namespace Browser
 		private IFrame GetMainFrame()
 		{
 			if (!IsBrowserInitialized) return null;
-
+			
 			var browser = Browser.GetBrowser();
 			var frame = browser.MainFrame;
 
@@ -483,6 +545,7 @@ namespace Browser
 		/// </summary>
 		private void ApplyStyleSheet()
 		{
+			return;
 			if (!IsBrowserInitialized) return;
 			if (!Configuration.AppliesStyleSheet && !RestoreStyleSheet) return;
 
@@ -521,6 +584,7 @@ namespace Browser
 		/// </summary>
 		private void DestroyDMMreloadDialog()
 		{
+			return;
 			if (!IsBrowserInitialized)
 				return;
 
@@ -565,7 +629,8 @@ namespace Browser
 		{
 			if (url != Configuration.LogInPageURL || !Configuration.AppliesStyleSheet)
 				StyleSheetApplied = false;
-			Browser.Load(url);
+			// Browser.Load(url);
+			// Edge.CoreWebView2.Navigate(url);
 
 			if (!IsBrowserInitialized)
 			{
@@ -588,7 +653,8 @@ namespace Browser
 			if (!Configuration.AppliesStyleSheet)
 				StyleSheetApplied = false;
 
-			Browser.Reload(ignoreCache);
+			// Browser.Reload(ignoreCache);
+			Edge.Reload();
 		}
 
 		/// <summary>
@@ -596,6 +662,7 @@ namespace Browser
 		/// </summary>
 		private void ApplyZoom()
 		{
+			return;
 			if (!IsBrowserInitialized) return;
 
 			double zoomRate = Configuration.ZoomRate;
@@ -615,14 +682,20 @@ namespace Browser
 			}
 
 
-			Browser.SetZoomLevel(Math.Log(zoomFactor, 1.2));
-
+			// Browser.SetZoomLevel(Math.Log(zoomFactor, 1.2));
+			Edge.ZoomFactor = Math.Log(zoomFactor, 1.2);
 
 			if (StyleSheetApplied)
 			{
+				/*
 				Browser.Size = Browser.MinimumSize = new Size(
 					(int) (KanColleSize.Width * zoomFactor),
 					(int) (KanColleSize.Height * zoomFactor)
+				);
+				*/
+				Edge.Size = Edge.MinimumSize = new Size(
+					(int)(KanColleSize.Width * zoomFactor),
+					(int)(KanColleSize.Height * zoomFactor)
 				);
 
 				CenteringBrowser();
@@ -656,10 +729,13 @@ namespace Browser
 			Task<ScreenShotPacket> InternalTakeScreenShot()
 			{
 				var request = new ScreenShotPacket();
-
+				/*
 				if (Browser == null || !Browser.IsBrowserInitialized)
 					return request.TaskSource.Task;
+				*/
 
+				if (Edge == null || !Browser.IsBrowserInitialized)
+					return request.TaskSource.Task;
 
 				string script = $@"
 (async function()
@@ -830,7 +906,8 @@ namespace Browser
 
 		private void SetCookie()
 		{
-			Browser.ExecuteScriptAsync(Resources.RegionCookie);
+			// Browser.ExecuteScriptAsync(Resources.RegionCookie);
+			Edge.ExecuteScriptAsync(Resources.RegionCookie);
 		}
 
 
@@ -1156,7 +1233,8 @@ namespace Browser
 
 		private void FormBrowser_Activated(object sender, EventArgs e)
 		{
-			Browser.Focus();
+			// Browser.Focus();
+			Edge.Focus();
 		}
 
 		private void ToolMenu_Other_Alignment_DropDownOpening(object sender, EventArgs e)
@@ -1256,7 +1334,8 @@ namespace Browser
 			if (!IsBrowserInitialized)
 				return;
 
-			Browser.GetBrowser().ShowDevTools();
+			// Browser.GetBrowser().ShowDevTools();
+			Edge.CoreWebView2.OpenDevToolsWindow();
 		}
 
 		private void ToolMenu_Other_ClearCache_Click(object sender, EventArgs e)
