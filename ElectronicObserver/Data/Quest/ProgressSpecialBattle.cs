@@ -753,13 +753,13 @@ namespace ElectronicObserver.Data.Quest
 				}
 					break;
 
-				case 932: // 2010LQ1
+				case 932: // 2103 B5
 				{
-					bool flag = members[0]?.MasterShip.BaseShip().ShipId == ShipId.Nowaki;
-					bool second = members[1]?.MasterShip.BaseShip().ShipId == ShipId.Maikaze;
-					bool count = members.Count(s => s != null) <= 5;
+					bool flag = members[0]?.MasterShip.BaseShip().ShipId == ShipId.Amatsukaze;
+					bool second = members[1]?.MasterShip.BaseShip()
+							.ShipId is ShipId.Yukikaze or ShipId.Tokitsukaze or ShipId.Hatsukaze;
 
-					isAccepted = flag && second && count;
+					isAccepted = flag && second;
 				}
 					break;
 
@@ -835,6 +835,19 @@ namespace ElectronicObserver.Data.Quest
 						ShipTypes.LightCruiser or
 						ShipTypes.HeavyCruiser or
 						ShipTypes.AviationCruiser;
+				}
+					break;
+
+				case 906: // 2103 B1
+				{
+					isAccepted = members
+						.Count(s => s?.MasterShip.ShipType is ShipTypes.Destroyer or ShipTypes.Escort) >= 3;
+				}
+					break;
+				case 907: // 2103 B2
+				{
+					isAccepted = members
+						.Count(s => s?.MasterShip.ShipType is ShipTypes.Destroyer or ShipTypes.Escort) >= 4;
 				}
 					break;
 			}
