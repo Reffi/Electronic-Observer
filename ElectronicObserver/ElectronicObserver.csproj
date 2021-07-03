@@ -55,6 +55,11 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="Data\ConstantsRes.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>ConstantsRes.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Data\DataRes.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -167,6 +172,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Dirkster.AvalonDock" Version="4.51.1" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.3.0" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.4" />
@@ -243,6 +250,10 @@
 		</COMReference>
 	</ItemGroup>
 	<ItemGroup>
+		<EmbeddedResource Update="Data\ConstantsRes.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>ConstantsRes.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Data\DataRes.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>DataRes.Designer.cs</LastGenOutput>
