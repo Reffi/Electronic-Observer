@@ -279,6 +279,7 @@ Open the download page?
 
 			settings.CefCommandLineArgs.Add("proxy-server", ProxySettings);
 			settings.CefCommandLineArgs.Add("limit-fps", "60");
+			settings.CefCommandLineArgs.Add("num-raster-threads", "4");
 
 			// prevent CEF from taking over media keys
 			if(settings.CefCommandLineArgs.ContainsKey("disable-features"))
