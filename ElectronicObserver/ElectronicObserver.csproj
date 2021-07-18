@@ -80,15 +80,100 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DialogAlbumMasterEquipment.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogAlbumMasterShip.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogAlbumMasterShip.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogAlbumShipParameter.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogAlbumShipParameter.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogAntiAirDefense.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogAntiAirDefense.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogBaseAirCorpsSimulation.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogBaseAirCorpsSimulation.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Properties\Window\Dialog\DialogConfiguration.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DialogConfiguration.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogConfigurationNotifier.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogConfigurationNotifier.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogDevelopmentRecordViewer.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogDevelopmentRecordViewer.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogDropRecordViewer.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogDropRecordViewer.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogEquipmentList.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogEquipmentList.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogExpChecker.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogExpChecker.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogExpeditionCheck.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogExpeditionCheck.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogFleetImageGenerator.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogFleetImageGenerator.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogResourceChart.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogResourceChart.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogShipGraphicViewer.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogShipGraphicViewer.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogShipGroupColumnFilter.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogShipGroupColumnFilter.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogShipGroupCSVOutput.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogShipGroupCSVOutput.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Properties\Window\Dialog\DialogShipGroupFilter.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>DialogShipGroupFilter.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogShipGroupSortOrder.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogShipGroupSortOrder.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogVersion.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogVersion.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\Window\FormBaseAirCorps.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -345,13 +430,81 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>DialogAlbumMasterEquipment.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogAlbumMasterShip.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogAlbumMasterShip.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogAlbumShipParameter.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogAlbumShipParameter.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogAntiAirDefense.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogAntiAirDefense.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogBaseAirCorpsSimulation.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogBaseAirCorpsSimulation.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogConfiguration.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>DialogConfiguration.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogConfigurationNotifier.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogConfigurationNotifier.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogDevelopmentRecordViewer.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogDevelopmentRecordViewer.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogDropRecordViewer.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogDropRecordViewer.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogEquipmentList.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogEquipmentList.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogExpChecker.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogExpChecker.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogExpeditionCheck.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogExpeditionCheck.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogFleetImageGenerator.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogFleetImageGenerator.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogResourceChart.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogResourceChart.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogShipGraphicViewer.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogShipGraphicViewer.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogShipGroupColumnFilter.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogShipGroupColumnFilter.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogShipGroupCSVOutput.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogShipGroupCSVOutput.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogShipGroupFilter.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>DialogShipGroupFilter.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogShipGroupSortOrder.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogShipGroupSortOrder.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogVersion.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogVersion.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\FormBaseAirCorps.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
