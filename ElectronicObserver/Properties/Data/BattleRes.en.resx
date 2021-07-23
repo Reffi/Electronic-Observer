@@ -117,103 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnchorageRepair" xml:space="preserve">
-    <value>Anchorage Repair</value>
+  <data name="Friendly" xml:space="preserve">
+    <value>Friendly</value>
   </data>
-  <data name="AnchorageRepairFinished" xml:space="preserve">
-    <value>20 minutes has passed since the start of anchorage repair.</value>
+  <data name="Enemy" xml:space="preserve">
+    <value>Enemy</value>
   </data>
-  <data name="ConditionText" xml:space="preserve">
-    <value>All ship girls in Fleet {0} [{1}] have restored morale.</value>
+  <data name="Protected" xml:space="preserve">
+    <value>Protected</value>
   </data>
-  <data name="ConditionTitle" xml:space="preserve">
-    <value>Morale Restored</value>
+  <data name="DameconActivated" xml:space="preserve">
+    <value>Emergency Repair Personnel activated.</value>
   </data>
-  <data name="ConstructionText" xml:space="preserve">
-    <value>Construction of {1} in Arsenal dock #{0} is complete.</value>
+  <data name="GoddessActivated" xml:space="preserve">
+    <value>Emergency Repair Goddess activated.</value>
   </data>
-  <data name="ConstructionTitle" xml:space="preserve">
-    <value>Construction Complete</value>
+  <data name="SupportFleet" xml:space="preserve">
+    <value>Support Fleet</value>
   </data>
-  <data name="DamagedText" xml:space="preserve">
-    <value>{0} is critically damaged!</value>
+  <data name="EnemyAirSquadron" xml:space="preserve">
+    <value>Enemy Air Squadron</value>
   </data>
-  <data name="DamagedTitle" xml:space="preserve">
-    <value>! Critical Damage !</value>
+  <data name="FriendlyAirSquadron" xml:space="preserve">
+    <value>Friendly Air Squadron</value>
   </data>
-  <data name="ExpeditionText" xml:space="preserve">
-    <value>Fleet {0} [{1}] has returned from expedition [{2}: {3}]</value>
+  <data name="AirSquadronWave" xml:space="preserve">
+    <value>Air Squadron Wave {0}</value>
   </data>
-  <data name="ExpeditionTitle" xml:space="preserve">
-    <value>Expedition Returned</value>
+  <data name="Base" xml:space="preserve">
+    <value>Base {0}</value>
   </data>
-  <data name="FailedPlaySound" xml:space="preserve">
-    <value>Notification system: failed to play back sound file.</value>
+  <data name="Exercise" xml:space="preserve">
+    <value>Exercise</value>
   </data>
-  <data name="FailedToLoadImage" xml:space="preserve">
-    <value>Notification system: failed to load image file {0}.</value>
+  <data name="ClearProgress" xml:space="preserve">
+    <value>Cleared: {0} / {1} times</value>
   </data>
-  <data name="FailedToLoadSound" xml:space="preserve">
-    <value>Notification system: failed to load sound file {0}.</value>
+  <data name="Empty" xml:space="preserve">
+    <value>(empty)</value>
   </data>
-  <data name="RepairText" xml:space="preserve">
-    <value>Repair of {1} in dock #{0} is complete.</value>
+  <data name="AirSuperiority" xml:space="preserve">
+    <value>Air Superiority</value>
   </data>
-  <data name="RepairTitle" xml:space="preserve">
-    <value>Repair Complete</value>
+  <data name="Los" xml:space="preserve">
+    <value> / LOS [1] {0}, [2] {1}, [3] {2}, [4] {3}</value>
   </data>
-  <data name="RemodelTitle" xml:space="preserve">
-    <value>Remodel Available</value>
+  <data name="AirBaseAirPower" xml:space="preserve">
+    <value> AS {0} (Air Base {1})</value>
   </data>
-  <data name="RemodelText" xml:space="preserve">
-    <value>{0} can now be remodeled to {1}</value>
+  <data name="ToBeDetermined" xml:space="preserve">
+    <value> (To be determined)</value>
   </data>
-  <data name="AdmiralExp" xml:space="preserve">
-    <value>Admiral Exp+</value>
+  <data name="BossDebuffed" xml:space="preserve">
+    <value> : Boss Debuffed</value>
   </data>
-  <data name="ShipExp" xml:space="preserve">
-    <value>Ship Exp+</value>
+  <data name="CombatRation" xml:space="preserve">
+    <value>Combat Ration</value>
   </data>
-  <data name="ExpeditionResult" xml:space="preserve">
-    <value>Expedition result - </value>
+  <data name="Formation" xml:space="preserve">
+    <value>Formation</value>
   </data>
-  <data name="NoResourcesGained" xml:space="preserve">
-    <value>No resources gained</value>
+  <data name="EnemyFormation" xml:space="preserve">
+    <value>Enemy Formation</value>
   </data>
-  <data name="ShipLevelUp" xml:space="preserve">
-    <value>{0} has attained Lv. {1}.</value>
+  <data name="Engagement" xml:space="preserve">
+    <value>Engagement</value>
   </data>
-  <data name="ShipsResupplied" xml:space="preserve">
-    <value>Ships resupplied. Cost: </value>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
   </data>
-  <data name="AirBaseResupplyCost" xml:space="preserve">
-    <value>「{1}」 of Air Base #{0} has been resupplied. Cost: Fuel×{2}, Bauxite×{3}</value>
+  <data name="EnemyContact" xml:space="preserve">
+    <value>Enemy Contact</value>
   </data>
-  <data name="ShipSuccessfullyRemodeled" xml:space="preserve">
-    <value>{0} Lv. {1} has been successfully remodeled.</value>
+  <data name="FriendlyFleet" xml:space="preserve">
+    <value>Friendly Fleet</value>
   </data>
-  <data name="EquipmentHasBenScrapped" xml:space="preserve">
-    <value>{0}{1} has been scrapped.</value>
+  <data name="AaciType" xml:space="preserve">
+    <value>AACI type #{2} ( {0}, {1} )</value>
   </data>
-  <data name="ShipHasBeenScrapped" xml:space="preserve">
-    <value>{0} has been scrapped and removed from the navy list.</value>
+  <data name="Escaped" xml:space="preserve">
+    <value>Escaped</value>
   </data>
-  <data name="SortieingTo" xml:space="preserve">
-    <value>⚓ Sortieing to {0}-{1}-{2}: {3}</value>
-  </data>
-  <data name="HasSortiedTo" xml:space="preserve">
-    <value>#{0} 「{1}」 has sortied to 「{2}-{3} {4}」.</value>
-  </data>
-  <data name="HasBeenSentToExpedition" xml:space="preserve">
-    <value>#{0} 「{1}」 has been sent to expedition 「{2}: {3}」.</value>
-  </data>
-  <data name="StartedRepairingShip" xml:space="preserve">
-    <value>Started repairing {1} ({2}/{3}) on dock #{0}. (Fuel×{4}, Steel×{5}, {6})</value>
-  </data>
-  <data name="BucketUsed" xml:space="preserve">
-    <value>Instant Repair×1</value>
-  </data>
-  <data name="ETA" xml:space="preserve">
-    <value>ETA: </value>
+  <data name="OutputFriendBase" xml:space="preserve">
+    <value>#{0}: Air Base Squadron #{1} HP: {2} / {3}</value>
   </data>
 </root>

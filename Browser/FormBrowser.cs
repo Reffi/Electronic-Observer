@@ -111,27 +111,17 @@ namespace Browser
 		/// <summary>
 		/// </summary>
 		/// <param name="serverUri">ホストプロセスとの通信用URL</param>
-		public FormBrowser(string host, int port)
+		public FormBrowser(string host, int port, string culture)
 		{
 			// Debugger.Launch();
 
 			Host = host;
 			Port = port;
 
-			CultureInfo c = CultureInfo.CurrentCulture;
-			CultureInfo ui = CultureInfo.CurrentUICulture;
-			if (c.Name != "en-US" && c.Name != "ja-JP" && c.Name != "ko-KR")
-			{
-				c = new CultureInfo("en-US");
-			}
-
-			if (ui.Name != "en-US" && ui.Name != "ja-JP" && ui.Name != "ko-KR")
-			{
-				ui = new CultureInfo("en-US");
-			}
+			CultureInfo c = new(culture);
 
 			Thread.CurrentThread.CurrentCulture = c;
-			Thread.CurrentThread.CurrentUICulture = ui;
+			Thread.CurrentThread.CurrentUICulture = c;
 
 			InitializeComponent();
 
@@ -341,7 +331,7 @@ namespace Browser
 			CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
 			Cef.Initialize(settings, false, (IBrowserProcessHandler) null);
 			
-			var requestHandler = new CustomRequestHandler(pixiSettingEnabled: Configuration.PreserveDrawingBuffer);
+			var requestHandler = new CustomRequestHandler(Configuration.PreserveDrawingBuffer, Configuration.UseGadgetRedirect);
 			requestHandler.RenderProcessTerminated += (mes) => AddLog(3, mes);
 			
 			Browser = new ChromiumWebBrowser(KanColleUrl)

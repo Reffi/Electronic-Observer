@@ -85,18 +85,15 @@ namespace ElectronicObserver.Window
 
 		public FormMain()
 		{
-			CultureInfo c = CultureInfo.CurrentCulture;
-			CultureInfo ui = CultureInfo.CurrentUICulture;
-			if (c.Name != "en-US" && c.Name != "ja-JP")
-			{
-				c = new CultureInfo("en-US");
-			}
-			if (ui.Name != "en-US" && ui.Name != "ja-JP")
-			{
-				ui = new CultureInfo("en-US");
-			}
-			Thread.CurrentThread.CurrentCulture = c;
-			Thread.CurrentThread.CurrentUICulture = ui;
+			if (!Directory.Exists("Settings"))
+				Directory.CreateDirectory("Settings");
+
+			Utility.Configuration.Instance.Load();
+
+			CultureInfo cultureInfo = new(Configuration.Config.UI.Culture);
+
+			Thread.CurrentThread.CurrentCulture = cultureInfo;
+			Thread.CurrentThread.CurrentUICulture = cultureInfo;
 			Instance = this;
 			this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 			InitializeComponent();
@@ -193,13 +190,6 @@ namespace ElectronicObserver.Window
 
 		private async void FormMain_Load(object sender, EventArgs e)
 		{
-
-			if (!Directory.Exists("Settings"))
-				Directory.CreateDirectory("Settings");
-
-
-			Utility.Configuration.Instance.Load(this);
-
 			this.MainDockPanel.Styles = Configuration.Config.UI.DockPanelSuiteStyles;
 			this.MainDockPanel.Theme = new WeifenLuo.WinFormsUI.Docking.VS2012Theme();
 			this.BackColor = this.StripMenu.BackColor = Utility.Configuration.Config.UI.BackColor;

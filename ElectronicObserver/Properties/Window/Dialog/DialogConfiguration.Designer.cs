@@ -823,6 +823,25 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ガジェット・リダイレクトの使用 *.
+        /// </summary>
+        public static string FormBrowser_UseGadgetRedirect {
+            get {
+                return ResourceManager.GetString("FormBrowser_UseGadgetRedirect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 外国人ブロックを回避するために、ガジェットのapiコールをリダイレクトします。
+        ///日本にお住まいの方や、日本のVPNをご利用の方は、このオプションを無効にしておくことができます。.
+        /// </summary>
+        public static string FormBrowser_UseGadgetRedirectToolTip {
+            get {
+                return ResourceManager.GetString("FormBrowser_UseGadgetRedirectToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 熟練度を無視.
         /// </summary>
         public static string FormFleet_AirSuperiorityMethod_Disabled {
@@ -1183,6 +1202,24 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         public static string HQ {
             get {
                 return ResourceManager.GetString("HQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 英語.
+        /// </summary>
+        public static string Language_English {
+            get {
+                return ResourceManager.GetString("Language_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 日本語.
+        /// </summary>
+        public static string Language_Japanese {
+            get {
+                return ResourceManager.GetString("Language_Japanese", resourceCulture);
             }
         }
         
@@ -1709,12 +1746,30 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 言語：.
+        /// </summary>
+        public static string UI_LanguageLabel {
+            get {
+                return ResourceManager.GetString("UI_LanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 描画プレビューです。
         ///下のバーから値を調整できます。.
         /// </summary>
         public static string UI_RenderingTestToolTip {
             get {
                 return ResourceManager.GetString("UI_RenderingTestToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to テーマや言語を変更した後は、七四式を再起動してください。.
+        /// </summary>
+        public static string UI_RestartHint {
+            get {
+                return ResourceManager.GetString("UI_RestartHint", resourceCulture);
             }
         }
         

@@ -65,6 +65,11 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>DataRes.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Data\FleetRes.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>FleetRes.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Notifier\NotifierRes.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -74,6 +79,16 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>ObserverRes.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Data\BattleRes.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>BattleRes.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Utility\SoftwareInformation.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>SoftwareInformation.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\Window\Dialog\DialogAlbumMasterEquipment.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -110,6 +125,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DialogConfigurationNotifier.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogConstructionRecordViewer.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogConstructionRecordViewer.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Properties\Window\Dialog\DialogDevelopmentRecordViewer.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -139,6 +159,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>DialogFleetImageGenerator.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\DialogLocalAPILoader2.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>DialogLocalAPILoader2.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\Window\Dialog\DialogResourceChart.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -224,6 +249,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>FormInformation.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\FormJson.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>FormJson.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\Window\FormMain.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -418,6 +448,10 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>DataRes.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Data\FleetRes.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>FleetRes.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Notifier\NotifierRes.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>NotifierRes.Designer.cs</LastGenOutput>
@@ -425,6 +459,14 @@
 		<EmbeddedResource Update="Observer\ObserverRes.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>ObserverRes.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Data\BattleRes.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>BattleRes.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Utility\SoftwareInformation.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>SoftwareInformation.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogAlbumMasterEquipment.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -454,6 +496,10 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>DialogConfigurationNotifier.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogConstructionRecordViewer.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogConstructionRecordViewer.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogDevelopmentRecordViewer.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>DialogDevelopmentRecordViewer.Designer.cs</LastGenOutput>
@@ -477,6 +523,10 @@
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogFleetImageGenerator.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>DialogFleetImageGenerator.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\DialogLocalAPILoader2.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>DialogLocalAPILoader2.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\Dialog\DialogResourceChart.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -545,6 +595,10 @@
 		<EmbeddedResource Update="Properties\Window\FormInformation.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>FormInformation.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\FormJson.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>FormJson.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\FormMain.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>

@@ -209,24 +209,15 @@ namespace ElectronicObserver.ViewModels
 
 			#endregion
 
-			CultureInfo c = CultureInfo.CurrentCulture;
-			CultureInfo ui = CultureInfo.CurrentUICulture;
-			if (c.Name != "en-US" && c.Name != "ja-JP")
-			{
-				c = new CultureInfo("en-US");
-			}
-			if (ui.Name != "en-US" && ui.Name != "ja-JP")
-			{
-				ui = new CultureInfo("en-US");
-			}
-			Thread.CurrentThread.CurrentCulture = c;
-			Thread.CurrentThread.CurrentUICulture = ui;
-
 			Directory.CreateDirectory(@"Settings\Layout");
 
-			// todo the parameter is never used, remove it later
-			Configuration.Instance.Load(null!);
+			Configuration.Instance.Load();
 			Config = Configuration.Config;
+
+			CultureInfo cultureInfo = new(Configuration.Config.UI.Culture);
+
+			Thread.CurrentThread.CurrentCulture = cultureInfo;
+			Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
 			SetTheme();
 
