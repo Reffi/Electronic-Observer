@@ -201,4 +201,94 @@
   <data name="OutputFriendBase" xml:space="preserve">
     <value>#{0}: Air Base Squadron #{1} HP: {2} / {3}</value>
   </data>
+  <data name="CombinedFleetNightBattle" xml:space="preserve">
+    <value>Combined Fleet Night Battle</value>
+  </data>
+  <data name="CombinedFleetRadarAmbush" xml:space="preserve">
+    <value>Combined Fleet Radar Ambush</value>
+  </data>
+  <data name="SuijouButaiDayBattle" xml:space="preserve">
+    <value>Suijou Butai Day Battle</value>
+  </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participant</value>
+  </data>
+  <data name="PhaseSearching" xml:space="preserve">
+    <value>LOS</value>
+  </data>
+  <data name="EnemyCombinedFleetNightDayBattle" xml:space="preserve">
+    <value>Enemy Combined Fleet Night→Day Battle</value>
+  </data>
+  <data name="BattleFinishedPractice" xml:space="preserve">
+    <value>Practiced with {1} {0}'s {2} fleet (Rank: {3}, Admiral exp+{4}, Ship exp+{5}).</value>
+  </data>
+  <data name="BattleFinishedBaseAirRaid" xml:space="preserve">
+    <value>Encountered air raid at {0}-{1}-{2} ({3}, Damage taken: {4}, {5}).</value>
+  </data>
+  <data name="BattleFinishedSortie" xml:space="preserve">
+    <value>Battled with 「{3}」 in {0}-{1}-{2} (Rank: {4}, Admiral exp+{5}, Ship exp+{6}).</value>
+  </data>
+  <data name="HasLeveledUp" xml:space="preserve">
+    <value>{0} has leveled up to lv{1}.</value>
+  </data>
+  <data name="UnknownItem" xml:space="preserve">
+    <value>Unknown item - ID: </value>
+  </data>
+  <data name="BattlePhaseLandBasedJet" xml:space="preserve">
+    <value>Land-based Jet Air Attack</value>
+  </data>
+  <data name="BattlePhaseJet" xml:space="preserve">
+    <value>Jet Air Attack</value>
+  </data>
+  <data name="BattlePhaseLandBasedAir" xml:space="preserve">
+    <value>Land-based Air Attack</value>
+  </data>
+  <data name="BattlePhaseAirBaseRaid" xml:space="preserve">
+    <value>Air Base Air Raid</value>
+  </data>
+  <data name="BattlePhaseAirBattle" xml:space="preserve">
+    <value>Air Battle</value>
+  </data>
+  <data name="BattlePhaseAirRaid" xml:space="preserve">
+    <value>Air Raid</value>
+  </data>
+  <data name="BattlePhaseAirAttackFirst" xml:space="preserve">
+    <value>Air Attack, 1st</value>
+  </data>
+  <data name="BattlePhaseAirAttackSecond" xml:space="preserve">
+    <value>Air Attack, 2nd</value>
+  </data>
+  <data name="BattlePhaseSupportExpedition" xml:space="preserve">
+    <value>Support Expedition</value>
+  </data>
+  <data name="BattlePhaseOpeningAsw" xml:space="preserve">
+    <value>Opening ASW</value>
+  </data>
+  <data name="BattlePhaseOpeningTorpedo" xml:space="preserve">
+    <value>Opening Torpedo Salvo</value>
+  </data>
+  <data name="BattlePhaseShellingFirst" xml:space="preserve">
+    <value>Shelling, 1st Round</value>
+  </data>
+  <data name="BattlePhaseShellingSecond" xml:space="preserve">
+    <value>Shelling, 2nd Round</value>
+  </data>
+  <data name="BattlePhaseShellingThird" xml:space="preserve">
+    <value>Shelling, 3rd Round</value>
+  </data>
+  <data name="BattlePhaseClosingTorpedo" xml:space="preserve">
+    <value>Closing Torpedo Salvo</value>
+  </data>
+  <data name="BattlePhaseNightBattle" xml:space="preserve">
+    <value>Night Battle</value>
+  </data>
+  <data name="BattlePhaseNightBattleFirst" xml:space="preserve">
+    <value>Night Battle, 1st Round</value>
+  </data>
+  <data name="BattlePhaseNightBattleSecond" xml:space="preserve">
+    <value>Night Battle, 2nd Round</value>
+  </data>
+  <data name="BattlePhaseNightSupportExpedition" xml:space="preserve">
+    <value>Night Support Expedition</value>
+  </data>
 </root>
