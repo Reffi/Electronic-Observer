@@ -51,12 +51,14 @@ namespace ElectronicObserver.ViewModels
 		private DockingManager DockingManager { get; }
 		private Configuration.ConfigurationData Config { get; }
 		private System.Windows.Forms.Timer UIUpdateTimer { get; }
-		private string LayoutPath { get; } = @"Settings\Layout\Default.xml";
+		private string DefaultLayoutPath => @"Settings\Layout\Default.xml";
+		// todo: add multi layout support after full wpf release
+		private string LayoutPath => DefaultLayoutPath; // Config.Life.LayoutFilePath;
 		private string PositionPath => Path.ChangeExtension(LayoutPath, ".Position.json");
 		public bool NotificationsSilenced { get; set; }
 		private DateTime PrevPlayTimeRecorded { get; set; } = DateTime.MinValue;
 		public FontFamily Font { get; set; }
-		public double FontSize { get; set; }
+		public string FontSize { get; set; }
 		public SolidColorBrush FontBrush { get; set; }
 		public FontFamily SubFont { get; set; }
 		public double SubFontSize { get; set; }
@@ -139,6 +141,9 @@ namespace ElectronicObserver.ViewModels
 		public FormBrowserHostViewModel FormBrowserHost { get; }
 		public FormLogViewModel FormLog { get; }
 		public FormJsonViewModel FormJson { get; }
+
+		public StripStatusViewModel StripStatus { get; } = new();
+		public int ClockFormat { get; set; }
 
 		public ICommand SaveDataCommand { get; }
 		public ICommand LoadDataCommand { get; }
@@ -704,8 +709,11 @@ namespace ElectronicObserver.ViewModels
 			}
 		}
 
-		private void StripMenu_Help_Update_Click()
+		private async void StripMenu_Help_Update_Click()
 		{
+			// translations and maintenance state
+			await SoftwareUpdater.CheckUpdateAsync();
+			// EO
 			SoftwareInformation.CheckUpdate();
 		}
 
@@ -727,7 +735,7 @@ namespace ElectronicObserver.ViewModels
 		void Logger_LogAdded(Utility.Logger.LogData data)
 		{
 			// bottom bar
-			// StripStatus_Information.Text = data.Message.Replace("\r", " ").Replace("\n", " ");
+			StripStatus.Information = data.Message.Replace("\r", " ").Replace("\n", " ");
 		}
 
 		private void ConfigurationChanged()
@@ -738,14 +746,16 @@ namespace ElectronicObserver.ViewModels
 				StripMenu_View_Json.Enabled = StripMenu_View_Json.Visible =
 					c.Debug.EnableDebugMenu;
 
-			StripStatus.Visible = c.Life.ShowStatusBar;
+			*/
 
+			StripStatus.Visible = c.Life.ShowStatusBar;
+			/*
 			// Load で TopMost を変更するとバグるため(前述)
 			if (UIUpdateTimer.Enabled)
 				TopMost = c.Life.TopMost;
 			
-			ClockFormat = c.Life.ClockFormat;
 			*/
+			ClockFormat = c.Life.ClockFormat;
 			SetTheme();
 			
 			/*
@@ -799,12 +809,16 @@ namespace ElectronicObserver.ViewModels
 				_volumeUpdateState = -1;
 			*/
 		}
-
+		
 
 		private void SetFont()
 		{
 			Font = new(Config.UI.MainFont.FontData.FontFamily.Name);
-			FontSize = Config.UI.MainFont.FontData.Size;
+			FontSize = Config.UI.MainFont.FontData.Size + Config.UI.MainFont.FontData.Unit switch
+			{
+				System.Drawing.GraphicsUnit.Point => "pt",
+				_ => "px"
+			};
 			FontBrush = Config.UI.ForeColor.ToBrush();
 
 			SubFont = new(Config.UI.SubFont.FontData.FontFamily.Name);
@@ -841,7 +855,7 @@ namespace ElectronicObserver.ViewModels
 
 			// 東京標準時
 			DateTime now = Utility.Mathematics.DateTimeHelper.GetJapanStandardTimeNow();
-			/*
+			
 			switch (ClockFormat)
 			{
 				case 0: //時計表示
@@ -866,32 +880,34 @@ namespace ElectronicObserver.ViewModels
 						maintTimer = maintDate - now;
 					}
 
-					string message = eventState switch
+					string message = (eventState, maintDate > now) switch
 					{
-						MaintenanceState.EventStart => maintDate > now ? "Event starts in" : "Event has started!",
-						MaintenanceState.EventEnd => maintDate > now ? "Event ends in" : "Event period has ended.",
-						MaintenanceState.Regular => maintDate > now ? "Maintenance starts in" : "Maintenance has started.",
+						(MaintenanceState.EventStart, true)  => "Event starts in",
+						(MaintenanceState.EventStart, _) => "Event has started!",
+
+						(MaintenanceState.EventEnd, true) => "Event ends in",
+						(MaintenanceState.EventEnd, _) => "Event period has ended.",
+
+						(MaintenanceState.Regular, true) => "Maintenance starts in",
+						(MaintenanceState.Regular, _) => "Maintenance has started.",
+
 						_ => string.Empty,
 					};
 
 					string maintState;
-					if (maintDate > now)
+					maintState = (maintDate > now) switch
 					{
-						var hours = $"{maintTimer.Days}d {maintTimer.Hours}h";
-						if ((int)maintTimer.TotalHours < 24)
-							hours = $"{maintTimer.Hours}h";
-						maintState = $"{message} {hours} {maintTimer.Minutes}m {maintTimer.Seconds}s";
-					}
-					else
-						maintState = message;
+						true => $"{message} {maintTimer:dd\\ hh\\:mm\\:ss}",
+						_ => message
+					};
 
 					var resetMsg =
-						$"Next PVP reset: {(int)pvpTimer.TotalHours:D2}:{pvpTimer.Minutes:D2}:{pvpTimer.Seconds:D2}\r\n" +
-						$"Next Quest reset: {(int)questTimer.TotalHours:D2}:{questTimer.Minutes:D2}:{questTimer.Seconds:D2}\r\n" +
+						$"Next PVP reset: {pvpTimer:hh\\:mm\\:ss}\r\n" +
+						$"Next Quest reset: {questTimer:hh\\:mm\\:ss}\r\n" +
 						$"{maintState}";
 
-					StripStatus_Clock.Text = now.ToString("HH\\:mm\\:ss");
-					StripStatus_Clock.ToolTipText = now.ToString("yyyy\\/MM\\/dd (ddd)\r\n") + resetMsg;
+					StripStatus.Clock = now.ToString("HH\\:mm\\:ss");
+					StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd)\r\n") + resetMsg;
 
 					break;
 
@@ -902,8 +918,8 @@ namespace ElectronicObserver.ViewModels
 							border = border.AddHours(12);
 
 						var ts = border - now;
-						StripStatus_Clock.Text = string.Format("{0:D2}:{1:D2}:{2:D2}", (int)ts.TotalHours, ts.Minutes, ts.Seconds);
-						StripStatus_Clock.ToolTipText = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
+						StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
+						StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
 
 					}
 					break;
@@ -915,14 +931,14 @@ namespace ElectronicObserver.ViewModels
 							border = border.AddHours(24);
 
 						var ts = border - now;
-						StripStatus_Clock.Text = string.Format("{0:D2}:{1:D2}:{2:D2}", (int)ts.TotalHours, ts.Minutes, ts.Seconds);
-						StripStatus_Clock.ToolTipText = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
+						StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
+						StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
 
 					}
 					break;
 			}
 
-
+			/*
 			// WMP コントロールによって音量が勝手に変えられてしまうため、前回終了時の音量の再設定を試みる。
 			// 10回試行してダメなら諦める(例外によるラグを防ぐため)
 			// 起動直後にやらないのはちょっと待たないと音量設定が有効にならないから
