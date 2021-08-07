@@ -10,13 +10,14 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using AvalonDock;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
 using AvalonDock.Themes;
+using DynaJson;
 using ElectronicObserver.Data;
 using ElectronicObserver.Notifier;
 using ElectronicObserver.Observer;
@@ -24,6 +25,7 @@ using ElectronicObserver.Properties;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Resource.Record;
 using ElectronicObserver.Utility;
+using ElectronicObserver.ViewModels.Translations;
 using ElectronicObserver.Window;
 using ElectronicObserver.Window.Dialog;
 using ElectronicObserver.Window.Wpf;
@@ -39,9 +41,13 @@ using ElectronicObserver.Window.Wpf.FleetPreset;
 using ElectronicObserver.Window.Wpf.Headquarters;
 using ElectronicObserver.Window.Wpf.ShipGroup.ViewModels;
 using ElectronicObserver.Window.Wpf.WinformsWrappers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using ModernWpf;
+using Control = System.Windows.Controls.Control;
+using MessageBox = System.Windows.MessageBox;
+using Timer = System.Windows.Forms.Timer;
 
 namespace ElectronicObserver.ViewModels
 {
@@ -50,25 +56,30 @@ namespace ElectronicObserver.ViewModels
 		private Control View { get; }
 		private DockingManager DockingManager { get; }
 		private Configuration.ConfigurationData Config { get; }
+		public FormMainTranslationViewModel FormMain { get; }
 		private System.Windows.Forms.Timer UIUpdateTimer { get; }
+
 		private string DefaultLayoutPath => @"Settings\Layout\Default.xml";
+
 		// todo: add multi layout support after full wpf release
 		private string LayoutPath => DefaultLayoutPath; // Config.Life.LayoutFilePath;
 		private string PositionPath => Path.ChangeExtension(LayoutPath, ".Position.json");
 		public bool NotificationsSilenced { get; set; }
 		private DateTime PrevPlayTimeRecorded { get; set; } = DateTime.MinValue;
 		public FontFamily Font { get; set; }
-		public string FontSize { get; set; }
+		public double FontSize { get; set; }
 		public SolidColorBrush FontBrush { get; set; }
 		public FontFamily SubFont { get; set; }
 		public double SubFontSize { get; set; }
 		public SolidColorBrush SubFontBrush { get; set; }
+
 		public List<Theme> Themes { get; } = new()
 		{
 			new Vs2013LightTheme(),
 			new Vs2013BlueTheme(),
 			new Vs2013DarkTheme(),
 		};
+
 		public Theme CurrentTheme { get; set; }
 
 		private WindowPosition Position { get; set; } = new();
@@ -116,7 +127,9 @@ namespace ElectronicObserver.ViewModels
 		public ObservableCollection<AnchorableViewModel> Views { get; } = new();
 
 		public List<FleetViewModel> Fleets { get; }
+
 		public FleetOverviewViewModel FleetOverview { get; }
+
 		// public ShipGroupViewModel ShipGroup { get; }
 		public FleetPresetViewModel FleetPreset { get; }
 		public DockViewModel Dock { get; }
@@ -145,6 +158,11 @@ namespace ElectronicObserver.ViewModels
 		public StripStatusViewModel StripStatus { get; } = new();
 		public int ClockFormat { get; set; }
 
+		private bool DebugEnabled { get; set; }
+		public Visibility DebugVisibility => DebugEnabled.ToVisibility();
+
+		#region Commands
+
 		public ICommand SaveDataCommand { get; }
 		public ICommand LoadDataCommand { get; }
 		public ICommand SilenceNotificationsCommand { get; }
@@ -165,17 +183,26 @@ namespace ElectronicObserver.ViewModels
 		public ICommand OpenKancolleProgressCommand { get; }
 		public ICommand OpenExtraBrowserCommand { get; }
 
-		public ICommand OpenViewCommand { get; }
-		public ICommand SaveLayoutCommand { get; }
-		public ICommand LoadLayoutCommand { get; }
-		public ICommand ClosingCommand { get; }
-		public ICommand ClosedCommand { get; }
+		public ICommand LoadAPIFromFileCommand { get; }
+		public ICommand LoadInitialAPICommand { get; }
+		public ICommand LoadRecordFromOldCommand { get; }
+		public ICommand LoadDataFromOldCommand { get; }
+		public ICommand DeleteOldAPICommand { get; }
+		public ICommand RenameShipResourceCommand { get; }
 
 		public ICommand ViewHelpCommand { get; }
 		public ICommand ReportIssueCommand { get; }
 		public ICommand JoinDiscordCommand { get; }
 		public ICommand CheckForUpdateCommand { get; }
 		public ICommand ViewVersionCommand { get; }
+
+		public ICommand OpenViewCommand { get; }
+		public ICommand SaveLayoutCommand { get; }
+		public ICommand LoadLayoutCommand { get; }
+		public ICommand ClosingCommand { get; }
+		public ICommand ClosedCommand { get; }
+
+		#endregion
 
 		public FormMainViewModel(DockingManager dockingManager, Control view)
 		{
@@ -204,6 +231,13 @@ namespace ElectronicObserver.ViewModels
 			OpenKancolleProgressCommand = new RelayCommand(StripMenu_Tool_KancolleProgress_Click);
 			OpenExtraBrowserCommand = new RelayCommand(StripMenu_Tool_ExtraBrowser_Click);
 
+			LoadAPIFromFileCommand = new RelayCommand(StripMenu_Debug_LoadAPIFromFile_Click);
+			LoadInitialAPICommand = new RelayCommand(StripMenu_Debug_LoadInitialAPI_Click);
+			LoadRecordFromOldCommand = new RelayCommand(StripMenu_Debug_LoadRecordFromOld_Click);
+			LoadDataFromOldCommand = new RelayCommand(StripMenu_Debug_LoadDataFromOld_Click);
+			DeleteOldAPICommand = new RelayCommand(StripMenu_Debug_DeleteOldAPI_Click);
+			RenameShipResourceCommand = new RelayCommand(StripMenu_Debug_RenameShipResource_Click);
+
 			ViewHelpCommand = new RelayCommand(StripMenu_Help_Help_Click);
 			ReportIssueCommand = new RelayCommand(StripMenu_Help_Issue_Click);
 			JoinDiscordCommand = new RelayCommand(StripMenu_Help_Discord_Click);
@@ -218,10 +252,8 @@ namespace ElectronicObserver.ViewModels
 
 			#endregion
 
-			Directory.CreateDirectory(@"Settings\Layout");
-
-			Configuration.Instance.Load();
 			Config = Configuration.Config;
+			FormMain = App.Current.Services.GetService<FormMainTranslationViewModel>()!;
 
 			CultureInfo cultureInfo = new(Configuration.Config.UI.Culture);
 
@@ -244,10 +276,16 @@ namespace ElectronicObserver.ViewModels
 					Logger_LogAdded(data);
 				}
 			};
-			
+
 			Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
-			Logger.Add(2, SoftwareInformation.SoftwareNameEnglish + " is starting...");
+			string softwareName = CultureInfo.CurrentCulture.Name switch
+			{
+				"en-US" => SoftwareInformation.SoftwareNameEnglish,
+				_ => SoftwareInformation.SoftwareNameJapanese
+			};
+
+			Utility.Logger.Add(2, softwareName + Properties.Window.FormMain.Starting);
 
 			ResourceManager.Instance.Load();
 			RecordManager.Instance.Load();
@@ -333,11 +371,12 @@ namespace ElectronicObserver.ViewModels
 			StripMenu_Help_Help.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormInformation];
 			StripMenu_Help_Version.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.AppIcon];
 			*/
+
 			#endregion
 
 			APIObserver.Instance.Start(Configuration.Config.Connection.Port, View);
 
-			Fleets = new()
+			Fleets = new List<FleetViewModel>()
 			{
 				new(1),
 				new(2),
@@ -348,17 +387,18 @@ namespace ElectronicObserver.ViewModels
 			{
 				Views.Add(fleet);
 			}
-			Views.Add(FleetOverview = new(Fleets));
-			// Views.Add(ShipGroup = new());
-			Views.Add(FleetPreset = new());
-			Views.Add(Dock = new());
-			Views.Add(Arsenal = new());
-			Views.Add(BaseAirCorps = new());
-			Views.Add(Headquarters = new());
-			Views.Add(Compass = new());
-			Views.Add(Battle = new());
 
-			FormFleets = new()
+			Views.Add(FleetOverview = new FleetOverviewViewModel(Fleets));
+			// Views.Add(ShipGroup = new());
+			Views.Add(FleetPreset = new FleetPresetViewModel());
+			Views.Add(Dock = new DockViewModel());
+			Views.Add(Arsenal = new ArsenalViewModel());
+			Views.Add(BaseAirCorps = new BaseAirCorpsViewModel());
+			Views.Add(Headquarters = new HeadquartersViewModel());
+			Views.Add(Compass = new CompassViewModel());
+			Views.Add(Battle = new BattleViewModel());
+
+			FormFleets = new List<FormFleetViewModel>()
 			{
 				new(1),
 				new(2),
@@ -369,22 +409,23 @@ namespace ElectronicObserver.ViewModels
 			{
 				Views.Add(fleet);
 			}
-			Views.Add(FormFleetOverview = new());
-			Views.Add(FormShipGroup = new());
-			Views.Add(FormFleetPreset = new());
-			Views.Add(FormDock = new());
-			Views.Add(FormArsenal = new());
-			Views.Add(FormBaseAirCorps = new());
-			Views.Add(FormHeadquarters = new());
-			Views.Add(FormQuest = new());
-			Views.Add(FormInformation = new());
-			Views.Add(FormCompass = new());
-			Views.Add(FormBattle = new());
-			Views.Add(FormBrowserHost = new() {Visibility = Visibility.Visible});
-			Views.Add(FormLog = new());
-			Views.Add(FormJson = new());
 
-			ConfigurationChanged();     //設定から初期化
+			Views.Add(FormFleetOverview = new FormFleetOverviewViewModel());
+			Views.Add(FormShipGroup = new FormShipGroupViewModel());
+			Views.Add(FormFleetPreset = new FormFleetPresetViewModel());
+			Views.Add(FormDock = new FormDockViewModel());
+			Views.Add(FormArsenal = new FormArsenalViewModel());
+			Views.Add(FormBaseAirCorps = new FormBaseAirCorpsViewModel());
+			Views.Add(FormHeadquarters = new FormHeadquartersViewModel());
+			Views.Add(FormQuest = new FormQuestViewModel());
+			Views.Add(FormInformation = new FormInformationViewModel());
+			Views.Add(FormCompass = new FormCompassViewModel());
+			Views.Add(FormBattle = new FormBattleViewModel());
+			Views.Add(FormBrowserHost = new FormBrowserHostViewModel() {Visibility = Visibility.Visible});
+			Views.Add(FormLog = new FormLogViewModel());
+			Views.Add(FormJson = new FormJsonViewModel());
+
+			ConfigurationChanged(); //設定から初期化
 
 			// LoadLayout();
 
@@ -430,7 +471,7 @@ namespace ElectronicObserver.ViewModels
 
 			NotificationsSilenced = NotifierManager.Instance.GetNotifiers().All(n => n.IsSilenced);
 
-			UIUpdateTimer = new() { Interval = 1000 };
+			UIUpdateTimer = new Timer() {Interval = 1000};
 			UIUpdateTimer.Tick += UIUpdateTimer_Tick;
 			UIUpdateTimer.Start();
 
@@ -446,7 +487,7 @@ namespace ElectronicObserver.ViewModels
 
 		private void StripMenu_File_SaveData_Load_Click()
 		{
-			if (MessageBox.Show(Resources.AskLoad, "Confirmation",
+			if (MessageBox.Show(Resources.AskLoad, Properties.Window.FormMain.ConfirmatonCaption,
 				    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No)
 			    == MessageBoxResult.Yes)
 			{
@@ -457,17 +498,17 @@ namespace ElectronicObserver.ViewModels
 		public void SaveLayout(object? sender)
 		{
 			if (sender is not FormMainWpf window) return;
-			
+
 			XmlLayoutSerializer serializer = new(DockingManager);
 			serializer.Serialize(LayoutPath);
-			
+
 			Position.Top = window.Top;
 			Position.Left = window.Left;
 			Position.Height = window.Height;
 			Position.Width = window.Width;
 			Position.WindowState = window.WindowState;
 
-			File.WriteAllText(PositionPath, JsonSerializer.Serialize(Position, new()
+			File.WriteAllText(PositionPath, JsonSerializer.Serialize(Position, new JsonSerializerOptions()
 			{
 				WriteIndented = true
 			}));
@@ -487,7 +528,8 @@ namespace ElectronicObserver.ViewModels
 			{
 				try
 				{
-					Position = JsonSerializer.Deserialize<WindowPosition>(File.ReadAllText(PositionPath)) ?? new();
+					Position = JsonSerializer.Deserialize<WindowPosition>(File.ReadAllText(PositionPath)) ??
+					           new WindowPosition();
 				}
 				catch
 				{
@@ -543,13 +585,14 @@ namespace ElectronicObserver.ViewModels
 		{
 			if (KCDatabase.Instance.MasterShips.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK,
+					MessageBoxImage.Error);
 				return;
 			}
 
 			if (RecordManager.Instance.ShipDrop.Record.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.NoDevData, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.NoDevData, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -560,13 +603,14 @@ namespace ElectronicObserver.ViewModels
 		{
 			if (KCDatabase.Instance.MasterShips.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK,
+					MessageBoxImage.Error);
 				return;
 			}
 
 			if (RecordManager.Instance.Development.Record.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.NoDevData, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.NoDevData, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -577,13 +621,14 @@ namespace ElectronicObserver.ViewModels
 		{
 			if (KCDatabase.Instance.MasterShips.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.KancolleMustBeLoaded, GeneralRes.NoMasterData, MessageBoxButton.OK,
+					MessageBoxImage.Error);
 				return;
 			}
 
 			if (RecordManager.Instance.Construction.Record.Count == 0)
 			{
-				MessageBox.Show(GeneralRes.NoBuildData, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(GeneralRes.NoBuildData, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -600,7 +645,7 @@ namespace ElectronicObserver.ViewModels
 
 			if (KCDatabase.Instance.MasterShips.Count == 0)
 			{
-				MessageBox.Show("Ship data is not loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(Properties.Window.FormMain.ShipDataNotLoaded, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -612,7 +657,7 @@ namespace ElectronicObserver.ViewModels
 
 			if (KCDatabase.Instance.MasterEquipments.Count == 0)
 			{
-				MessageBox.Show("Equipment data is not loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(Properties.Window.FormMain.EquipmentDataNotLoaded, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
@@ -656,12 +701,444 @@ namespace ElectronicObserver.ViewModels
 
 		#endregion
 
+		#region Debug
+
+		private void StripMenu_Debug_LoadAPIFromFile_Click()
+		{
+
+			/*/
+			using ( var dialog = new DialogLocalAPILoader() ) {
+
+				if ( dialog.ShowDialog( this ) == System.Windows.Forms.DialogResult.OK ) {
+					if ( APIObserver.Instance.APIList.ContainsKey( dialog.APIName ) ) {
+
+						if ( dialog.IsResponse ) {
+							APIObserver.Instance.LoadResponse( dialog.APIPath, dialog.FileData );
+						}
+						if ( dialog.IsRequest ) {
+							APIObserver.Instance.LoadRequest( dialog.APIPath, dialog.FileData );
+						}
+
+					}
+				}
+			}
+			/*/
+			new DialogLocalAPILoader2().Show();
+			//*/
+		}
+
+		private async void StripMenu_Debug_LoadInitialAPI_Click()
+		{
+			using OpenFileDialog ofd = new();
+
+			ofd.Title = "Load API List";
+			ofd.Filter = "API List|*.txt|File|*";
+			ofd.InitialDirectory = Utility.Configuration.Config.Connection.SaveDataPath;
+			if (!string.IsNullOrWhiteSpace(Utility.Configuration.Config.Debug.APIListPath))
+				ofd.FileName = Utility.Configuration.Config.Debug.APIListPath;
+
+			if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+
+				try
+				{
+
+					await Task.Factory.StartNew(() => LoadAPIList(ofd.FileName));
+
+				}
+				catch (Exception ex)
+				{
+
+					MessageBox.Show("Failed to load API List.\r\n" + ex.Message, Properties.Window.FormMain.ErrorCaption,
+						MessageBoxButton.OK, MessageBoxImage.Error);
+
+				}
+
+			}
+		}
+
+		private void LoadAPIList(string path)
+		{
+
+			string parent = Path.GetDirectoryName(path);
+
+			using StreamReader sr = new(path);
+			string line;
+			while ((line = sr.ReadLine()) != null)
+			{
+
+				bool isRequest = false;
+				{
+					int slashindex = line.IndexOf('/');
+					if (slashindex != -1)
+					{
+
+						switch (line.Substring(0, slashindex).ToLower())
+						{
+							case "q":
+							case "request":
+								isRequest = true;
+								goto case "s";
+							case "":
+							case "s":
+							case "response":
+								line = line.Substring(Math.Min(slashindex + 1, line.Length));
+								break;
+						}
+
+					}
+				}
+
+				if (APIObserver.Instance.APIList.ContainsKey(line))
+				{
+					APIBase api = APIObserver.Instance.APIList[line];
+
+					if (isRequest ? api.IsRequestSupported : api.IsResponseSupported)
+					{
+
+						string[] files = Directory.GetFiles(parent,
+							string.Format("*{0}@{1}.json", isRequest ? "Q" : "S", line.Replace('/', '@')),
+							SearchOption.TopDirectoryOnly);
+
+						if (files.Length == 0)
+							continue;
+
+						Array.Sort(files);
+
+						using StreamReader sr2 = new(files[files.Length - 1]);
+						if (isRequest)
+						{
+							View.Dispatcher.Invoke((Action) (() =>
+							{
+								APIObserver.Instance.LoadRequest("/kcsapi/" + line, sr2.ReadToEnd());
+							}));
+						}
+						else
+						{
+							View.Dispatcher.Invoke((Action) (() =>
+							{
+								APIObserver.Instance.LoadResponse("/kcsapi/" + line, sr2.ReadToEnd());
+							}));
+						}
+
+						//System.Diagnostics.Debug.WriteLine( "APIList Loader: API " + line + " File " + files[files.Length-1] + " Loaded." );
+					}
+				}
+			}
+		}
+
+		private void StripMenu_Debug_LoadRecordFromOld_Click()
+		{
+
+			if (KCDatabase.Instance.MasterShips.Count == 0)
+			{
+				MessageBox.Show("Please load normal api_start2 first.", Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK,
+					MessageBoxImage.Information);
+				return;
+			}
+
+
+			using OpenFileDialog ofd = new();
+
+			ofd.Title = "Build Record from Old api_start2";
+			ofd.Filter = "api_start2|*api_start2*.json|JSON|*.json|File|*";
+
+			if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+
+				try
+				{
+					using StreamReader sr = new(ofd.FileName);
+					dynamic json = JsonObject.Parse(sr.ReadToEnd().Remove(0, 7));
+
+					foreach (dynamic elem in json.api_data.api_mst_ship)
+					{
+						if (elem.api_name != "なし" && KCDatabase.Instance.MasterShips.ContainsKey((int) elem.api_id) &&
+						    KCDatabase.Instance.MasterShips[(int) elem.api_id].Name == elem.api_name)
+						{
+							RecordManager.Instance.ShipParameter.UpdateParameter((int) elem.api_id, 1,
+								(int) elem.api_tais[0], (int) elem.api_tais[1], (int) elem.api_kaih[0],
+								(int) elem.api_kaih[1], (int) elem.api_saku[0], (int) elem.api_saku[1]);
+
+							int[] defaultslot = Enumerable.Repeat(-1, 5).ToArray();
+							((int[]) elem.api_defeq).CopyTo(defaultslot, 0);
+							RecordManager.Instance.ShipParameter.UpdateDefaultSlot((int) elem.api_id, defaultslot);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+
+					MessageBox.Show("Failed to load API.\r\n" + ex.Message, Properties.Window.FormMain.ErrorCaption,
+						MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+			}
+		}
+
+		private void StripMenu_Debug_LoadDataFromOld_Click()
+		{
+
+			if (KCDatabase.Instance.MasterShips.Count == 0)
+			{
+				MessageBox.Show("Please load normal api_start2 first.", Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK,
+					MessageBoxImage.Information);
+				return;
+			}
+
+
+			using OpenFileDialog ofd = new();
+
+			ofd.Title = "Restore Abyssal Data from Old api_start2";
+			ofd.Filter = "api_start2|*api_start2*.json|JSON|*.json|File|*";
+			ofd.InitialDirectory = Utility.Configuration.Config.Connection.SaveDataPath;
+
+			if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+
+				try
+				{
+
+					using (StreamReader sr = new(ofd.FileName))
+					{
+
+						dynamic json = JsonObject.Parse(sr.ReadToEnd().Remove(0, 7));
+
+						foreach (dynamic elem in json.api_data.api_mst_ship)
+						{
+
+							var ship = KCDatabase.Instance.MasterShips[(int) elem.api_id];
+
+							if (elem.api_name != "なし" && ship != null && ship.IsAbyssalShip)
+							{
+
+								KCDatabase.Instance.MasterShips[(int) elem.api_id].LoadFromResponse("api_start2", elem);
+							}
+						}
+					}
+
+					Utility.Logger.Add(1, "Restored data from old api_start2");
+
+				}
+				catch (Exception ex)
+				{
+
+					MessageBox.Show("Failed to load API.\r\n" + ex.Message, Properties.Window.FormMain.ErrorCaption,
+						MessageBoxButton.OK, MessageBoxImage.Error);
+				}
+			}
+		}
+
+		private async void StripMenu_Debug_DeleteOldAPI_Click()
+		{
+
+			if (MessageBox.Show("This will delete old API data.\r\nAre you sure?", "Confirmation",
+				    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No)
+			    == MessageBoxResult.Yes)
+			{
+
+				try
+				{
+
+					int count = await Task.Factory.StartNew(() => DeleteOldAPI());
+
+					MessageBox.Show("Delete successful.\r\n" + count + " files deleted.", "Delete Successful",
+						MessageBoxButton.OK, MessageBoxImage.Information);
+
+				}
+				catch (Exception ex)
+				{
+
+					MessageBox.Show("Failed to delete.\r\n" + ex.Message, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK,
+						MessageBoxImage.Error);
+				}
+
+
+			}
+
+		}
+
+		private int DeleteOldAPI()
+		{
+
+
+			//適当極まりない
+			int count = 0;
+
+			var apilist = new Dictionary<string, List<KeyValuePair<string, string>>>();
+
+			foreach (string s in Directory.EnumerateFiles(Utility.Configuration.Config.Connection.SaveDataPath,
+				"*.json", SearchOption.TopDirectoryOnly))
+			{
+
+				int start = s.IndexOf('@');
+				int end = s.LastIndexOf('.');
+
+				start--;
+				string key = s.Substring(start, end - start + 1);
+				string date = s.Substring(0, start);
+
+
+				if (!apilist.ContainsKey(key))
+				{
+					apilist.Add(key, new List<KeyValuePair<string, string>>());
+				}
+
+				apilist[key].Add(new KeyValuePair<string, string>(date, s));
+			}
+
+			foreach (var l in apilist.Values)
+			{
+				var l2 = l.OrderBy(el => el.Key).ToList();
+				for (int i = 0; i < l2.Count - 1; i++)
+				{
+					File.Delete(l2[i].Value);
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+		private async void StripMenu_Debug_RenameShipResource_Click()
+		{
+
+			if (KCDatabase.Instance.MasterShips.Count == 0)
+			{
+				MessageBox.Show("Ship data is not loaded.", Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+
+			if (MessageBox.Show("通信から保存した艦船リソース名を持つファイル及びフォルダを、艦船名に置換します。\r\n" +
+			                    "対象は指定されたフォルダ以下のすべてのファイル及びフォルダです。\r\n" +
+			                    "続行しますか？", "艦船リソースをリネーム", MessageBoxButton.YesNo, MessageBoxImage.Question,
+				    MessageBoxResult.Yes)
+			    == MessageBoxResult.Yes)
+			{
+
+				string path = null;
+
+				using (FolderBrowserDialog dialog = new())
+				{
+					dialog.SelectedPath = Configuration.Config.Connection.SaveDataPath;
+					if (dialog.ShowDialog() == DialogResult.OK)
+					{
+						path = dialog.SelectedPath;
+					}
+				}
+
+				if (path == null) return;
+
+
+
+				try
+				{
+
+					int count = await Task.Factory.StartNew(() => RenameShipResource(path));
+
+					MessageBox.Show(string.Format("リネーム処理が完了しました。\r\n{0} 個のアイテムをリネームしました。", count), "処理完了",
+						MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+				}
+				catch (Exception ex)
+				{
+
+					Utility.ErrorReporter.SendErrorReport(ex, "艦船リソースのリネームに失敗しました。");
+					MessageBox.Show("艦船リソースのリネームに失敗しました。\r\n" + ex.Message, Properties.Window.FormMain.ErrorCaption, MessageBoxButton.OK,
+						MessageBoxImage.Error);
+
+				}
+
+
+
+			}
+
+		}
+
+
+		private int RenameShipResource(string path)
+		{
+
+			int count = 0;
+
+			foreach (var p in Directory.EnumerateFiles(path, "*", SearchOption.AllDirectories))
+			{
+
+				string name = Path.GetFileName(p);
+
+				foreach (var ship in KCDatabase.Instance.MasterShips.Values)
+				{
+
+					if (name.Contains(ship.ResourceName))
+					{
+
+						name = name.Replace(ship.ResourceName,
+							string.Format("{0}({1})", ship.NameWithClass, ship.ShipID)).Replace(' ', '_');
+
+						try
+						{
+
+							File.Move(p, Path.Combine(Path.GetDirectoryName(p), name));
+							count++;
+							break;
+
+						}
+						catch (IOException)
+						{
+							//ファイルが既に存在する：＊にぎりつぶす＊
+						}
+
+					}
+
+				}
+
+			}
+
+			foreach (var p in Directory.EnumerateDirectories(path, "*", SearchOption.AllDirectories))
+			{
+
+				string name = Path.GetFileName(p); //GetDirectoryName だと親フォルダへのパスになってしまうため
+
+				foreach (var ship in KCDatabase.Instance.MasterShips.Values)
+				{
+
+					if (name.Contains(ship.ResourceName))
+					{
+
+						name = name.Replace(ship.ResourceName,
+							string.Format("{0}({1})", ship.NameWithClass, ship.ShipID)).Replace(' ', '_');
+
+						try
+						{
+
+							Directory.Move(p, Path.Combine(Path.GetDirectoryName(p), name));
+							count++;
+							break;
+
+						}
+						catch (IOException)
+						{
+							//フォルダが既に存在する：＊にぎりつぶす＊
+						}
+					}
+
+				}
+
+			}
+
+
+			return count;
+		}
+
+
+		#endregion
+
 		#region Help
 
 		private void StripMenu_Help_Help_Click()
 		{
 
-			if (MessageBox.Show("This will open the EO wiki with your browser.\r\nAre you sure?", "Help",
+			if (MessageBox.Show(Properties.Window.FormMain.OpenEOWiki, Properties.Window.FormMain.HelpCaption,
 				    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes)
 			    == MessageBoxResult.Yes)
 			{
@@ -678,7 +1155,7 @@ namespace ElectronicObserver.ViewModels
 		private void StripMenu_Help_Issue_Click()
 		{
 
-			if (MessageBox.Show("This will open a page with your browser.\r\nAre you sure?", "Report A Problem",
+			if (MessageBox.Show(Properties.Window.FormMain.ReportIssue, Properties.Window.FormMain.ReportIssueCaption,
 				    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes)
 			    == MessageBoxResult.Yes)
 			{
@@ -705,7 +1182,7 @@ namespace ElectronicObserver.ViewModels
 			}
 			catch (Exception ex)
 			{
-				ErrorReporter.SendErrorReport(ex, "Failed to search on Google.");
+				ErrorReporter.SendErrorReport(ex, Properties.Window.FormMain.FailedToOpenBrowser);
 			}
 		}
 
@@ -741,12 +1218,8 @@ namespace ElectronicObserver.ViewModels
 		private void ConfigurationChanged()
 		{
 			var c = Configuration.Config;
-			/*
-			StripMenu_Debug.Enabled = StripMenu_Debug.Visible =
-				StripMenu_View_Json.Enabled = StripMenu_View_Json.Visible =
-					c.Debug.EnableDebugMenu;
-
-			*/
+			
+			DebugEnabled = c.Debug.EnableDebugMenu;
 
 			StripStatus.Visible = c.Life.ShowStatusBar;
 			/*
@@ -757,7 +1230,7 @@ namespace ElectronicObserver.ViewModels
 			*/
 			ClockFormat = c.Life.ClockFormat;
 			SetTheme();
-			
+
 			/*
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
@@ -809,19 +1282,19 @@ namespace ElectronicObserver.ViewModels
 				_volumeUpdateState = -1;
 			*/
 		}
-		
+
 
 		private void SetFont()
 		{
-			Font = new(Config.UI.MainFont.FontData.FontFamily.Name);
-			FontSize = Config.UI.MainFont.FontData.Size + Config.UI.MainFont.FontData.Unit switch
+			Font = new FontFamily(Config.UI.MainFont.FontData.FontFamily.Name);
+			FontSize = Config.UI.MainFont.FontData.Size * Config.UI.MainFont.FontData.Unit switch
 			{
-				System.Drawing.GraphicsUnit.Point => "pt",
-				_ => "px"
+				System.Drawing.GraphicsUnit.Point => 4 / 3.0,
+				_ => 1
 			};
 			FontBrush = Config.UI.ForeColor.ToBrush();
 
-			SubFont = new(Config.UI.SubFont.FontData.FontFamily.Name);
+			SubFont = new FontFamily(Config.UI.SubFont.FontData.FontFamily.Name);
 			SubFontSize = Config.UI.SubFont.FontData.Size;
 			SubFontBrush = Config.UI.SubForeColor.ToBrush();
 		}
@@ -855,7 +1328,7 @@ namespace ElectronicObserver.ViewModels
 
 			// 東京標準時
 			DateTime now = Utility.Mathematics.DateTimeHelper.GetJapanStandardTimeNow();
-			
+
 			switch (ClockFormat)
 			{
 				case 0: //時計表示
@@ -869,7 +1342,7 @@ namespace ElectronicObserver.ViewModels
 						questReset = questReset.AddHours(24);
 					var questTimer = questReset - now;
 
-					TimeSpan maintTimer = new TimeSpan(0);
+					TimeSpan maintTimer = new(0);
 					MaintenanceState eventState = SoftwareUpdater.LatestVersion.EventState;
 					DateTime maintDate = SoftwareUpdater.LatestVersion.MaintenanceDate;
 
@@ -880,30 +1353,31 @@ namespace ElectronicObserver.ViewModels
 						maintTimer = maintDate - now;
 					}
 
-					string message = (eventState, maintDate > now) switch
+					bool eventOrMaintenanceStarted = maintDate <= now;
+
+					string message = (eventState, eventOrMaintenanceStarted) switch
 					{
-						(MaintenanceState.EventStart, true)  => "Event starts in",
-						(MaintenanceState.EventStart, _) => "Event has started!",
+						(MaintenanceState.EventStart, false) => FormMain.EventStartsIn,
+						(MaintenanceState.EventStart, _) => FormMain.EventHasStarted,
 
-						(MaintenanceState.EventEnd, true) => "Event ends in",
-						(MaintenanceState.EventEnd, _) => "Event period has ended.",
+						(MaintenanceState.EventEnd, false) => FormMain.EventEndsIn,
+						(MaintenanceState.EventEnd, _) => FormMain.EventHasEnded,
 
-						(MaintenanceState.Regular, true) => "Maintenance starts in",
-						(MaintenanceState.Regular, _) => "Maintenance has started.",
+						(MaintenanceState.Regular, false) => FormMain.MaintenanceStartsIn,
+						(MaintenanceState.Regular, _) => FormMain.MaintenanceHasStarted,
 
 						_ => string.Empty,
 					};
 
-					string maintState;
-					maintState = (maintDate > now) switch
+					string maintState = eventOrMaintenanceStarted switch
 					{
-						true => $"{message} {maintTimer:dd\\ hh\\:mm\\:ss}",
+						false => string.Format(message, maintTimer.ToString("dd\\ hh\\:mm\\:ss")),
 						_ => message
 					};
 
 					var resetMsg =
-						$"Next PVP reset: {pvpTimer:hh\\:mm\\:ss}\r\n" +
-						$"Next Quest reset: {questTimer:hh\\:mm\\:ss}\r\n" +
+						$"{FormMain.NextExerciseReset} {pvpTimer:hh\\:mm\\:ss}\r\n" +
+						$"{FormMain.NextQuestReset} {questTimer:hh\\:mm\\:ss}\r\n" +
 						$"{maintState}";
 
 					StripStatus.Clock = now.ToString("HH\\:mm\\:ss");
@@ -912,29 +1386,29 @@ namespace ElectronicObserver.ViewModels
 					break;
 
 				case 1: //演習更新まで
-					{
-						var border = now.Date.AddHours(3);
-						while (border < now)
-							border = border.AddHours(12);
+				{
+					var border = now.Date.AddHours(3);
+					while (border < now)
+						border = border.AddHours(12);
 
-						var ts = border - now;
-						StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
-						StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
+					var ts = border - now;
+					StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
+					StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
 
-					}
+				}
 					break;
 
 				case 2: //任務更新まで
-					{
-						var border = now.Date.AddHours(5);
-						if (border < now)
-							border = border.AddHours(24);
+				{
+					var border = now.Date.AddHours(5);
+					if (border < now)
+						border = border.AddHours(24);
 
-						var ts = border - now;
-						StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
-						StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
+					var ts = border - now;
+					StripStatus.Clock = ts.ToString("hh\\:mm\\:ss");
+					StripStatus.ClockToolTip = now.ToString("yyyy\\/MM\\/dd (ddd) HH\\:mm\\:ss");
 
-					}
+				}
 					break;
 			}
 
@@ -986,11 +1460,17 @@ namespace ElectronicObserver.ViewModels
 
 		private void Close(CancelEventArgs e)
 		{
+			string name = CultureInfo.CurrentCulture.Name switch
+			{
+				"en-US" => SoftwareInformation.SoftwareNameEnglish,
+				_ => SoftwareInformation.SoftwareNameJapanese
+			};
+
 			if (Configuration.Config.Life.ConfirmOnClosing)
 			{
 				if (MessageBox.Show(
-					    "Are you sure you want to exit?",
-					    "Electronic Observer",
+					    string.Format(Properties.Window.FormMain.ExitConfirmation, name),
+					    Properties.Window.FormMain.ConfirmatonCaption,
 					    MessageBoxButton.YesNo,
 					    MessageBoxImage.Question,
 					    MessageBoxResult.No)
@@ -1001,10 +1481,10 @@ namespace ElectronicObserver.ViewModels
 				}
 			}
 
-			Logger.Add(2, SoftwareInformation.SoftwareNameEnglish + Resources.IsClosing);
+			Logger.Add(2, name + Resources.IsClosing);
 
 			UIUpdateTimer.Stop();
-			
+
 			if (FormBrowserHost.WinformsControl is FormBrowserHost host)
 			{
 				host.CloseBrowser();
@@ -1019,7 +1499,7 @@ namespace ElectronicObserver.ViewModels
 			{
 				try
 				{
-					uint id = (uint)Process.GetCurrentProcess().Id;
+					uint id = (uint) Process.GetCurrentProcess().Id;
 					Configuration.Config.Control.LastVolume = BrowserLibCore.VolumeManager.GetApplicationVolume(id);
 					Configuration.Config.Control.LastIsMute = BrowserLibCore.VolumeManager.GetApplicationMute(id);
 

@@ -8,7 +8,7 @@ namespace ElectronicObserver.ViewModels
 {
 	public class AnchorableViewModel : ObservableObject
 	{
-		public string Title { get; }
+		public string Title { get; set; }
 		public string ContentId { get; }
 		public Visibility Visibility { get; set; } = Visibility.Collapsed;
 		public bool IsSelected { get; set; }
@@ -16,11 +16,6 @@ namespace ElectronicObserver.ViewModels
 		public ImageSource? IconSource { get; set; }
 
 		public ICommand CloseCommand { get; }
-
-		protected AnchorableViewModel(string title, ImageSource? icon = null) : this(title, title, icon)
-		{
-
-		}
 
 		protected AnchorableViewModel(string title, string contentId, ImageSource? icon = null)
 		{
