@@ -48,7 +48,7 @@
 								<TextBlock Text="{Binding Text}" Foreground="{Binding Foreground}" />
 							</Border>
 						</Grid>
-						<Separator />
+						<Separator Width="120" HorizontalAlignment="Left"/>
 					</StackPanel>
 				</DataTemplate>
 			</ItemsControl.ItemTemplate>
