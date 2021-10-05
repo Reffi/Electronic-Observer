@@ -53,7 +53,7 @@ namespace BrowserHost
 			await Task.Run(() => FormBrowserHost.Instance.ClearCache());
 		}
 
-		public Task<byte[]> GetIconResource()
+		public Task<byte[][]> GetIconResource()
 		{
 			return Task.Run(() => FormBrowserHost.Instance.GetIconResource());
 		}
@@ -61,6 +61,11 @@ namespace BrowserHost
 		public Task<bool> IsServerAlive()
 		{
 			return Task.Run(() => true);
+		}
+
+		public Task<int> GetTheme()
+		{
+			return Task.Run(() => FormBrowserHost.Instance.GetTheme());
 		}
 	}
 }

@@ -21,6 +21,7 @@ using BrowserHost;
 using Grpc.Core;
 using MagicOnion.Hosting;
 using Microsoft.Extensions.Hosting;
+using ModernWpf;
 using WeifenLuo.WinFormsUI.Docking;
 using Translation = ElectronicObserver.Properties.Window.FormBrowserHost;
 
@@ -102,7 +103,7 @@ namespace ElectronicObserver.Window
 			Host = "localhost";
 			Port = Process.GetCurrentProcess().Id;
 
-			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormBrowser]);
+			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)IconContent.FormBrowser]);
 
 			Translate();
 		}
@@ -280,7 +281,7 @@ namespace ElectronicObserver.Window
 			}
 		}
 
-		public byte[] GetIconResource()
+		public byte[][] GetIconResource()
 		{
 
 			string[] keys = 
@@ -296,14 +297,17 @@ namespace ElectronicObserver.Window
 				"Browser_Other",
 			};
 			int unitsize = 16 * 16 * 4;
-
-			byte[] canvas = new byte[unitsize * keys.Length];
+			//  
+			//  unitsize
+			byte[][] canvas = new byte[keys.Length][];
 
 			for (int i = 0; i < keys.Length; i++)
 			{
 				Image img = ResourceManager.Instance.Icons.Images[keys[i]];
 				if (img == null) continue;
 
+				canvas[i] = (byte[]) new ImageConverter().ConvertTo(img, typeof(byte[]));
+				/*
 				using (Bitmap bmp = new Bitmap(img))
 				{
 
@@ -312,11 +316,16 @@ namespace ElectronicObserver.Window
 					bmp.UnlockBits(bmpdata);
 
 				}
+				*/
 			}
 
 			return canvas;
 		}
 
+		public int GetTheme()
+		{
+			return App.Current.Dispatcher.Invoke(() => (int)ThemeManager.Current.ApplicationTheme);
+		}
 
 		public void RequestNavigation(string baseurl)
 		{
@@ -542,7 +551,7 @@ namespace ElectronicObserver.Window
 		{
 			if (BrowserProcess?.HasExited ?? false)
 			{
-				var image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.ConditionVeryTired];
+				var image = ResourceManager.Instance.Icons.Images[(int)IconContent.ConditionVeryTired];
 				e.Graphics.DrawImage(image, new Rectangle(16, 16, 16, 16));
 
 				e.Graphics.DrawString(GeneralRes.BrowserProcessClickStart, Utility.Configuration.Config.UI.MainFont, Brushes.Black, new PointF(48, 16));

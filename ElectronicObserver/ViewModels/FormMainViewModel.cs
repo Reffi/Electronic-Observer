@@ -28,6 +28,7 @@ using ElectronicObserver.Utility;
 using ElectronicObserver.ViewModels.Translations;
 using ElectronicObserver.Window;
 using ElectronicObserver.Window.Dialog;
+using ElectronicObserver.Window.Tools.DialogAlbumMasterShip;
 using ElectronicObserver.Window.Wpf;
 using ElectronicObserver.Window.Wpf.Arsenal;
 using ElectronicObserver.Window.Wpf.BaseAirCorps;
@@ -45,7 +46,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using ModernWpf;
-using Control = System.Windows.Controls.Control;
 using MessageBox = System.Windows.MessageBox;
 using Timer = System.Windows.Forms.Timer;
 
@@ -53,16 +53,16 @@ namespace ElectronicObserver.ViewModels
 {
 	public class FormMainViewModel : ObservableObject
 	{
-		private Control View { get; }
+		private FormMainWpf Window { get; }
 		private DockingManager DockingManager { get; }
 		private Configuration.ConfigurationData Config { get; }
 		public FormMainTranslationViewModel FormMain { get; }
 		private System.Windows.Forms.Timer UIUpdateTimer { get; }
 
-		private string DefaultLayoutPath => @"Settings\Layout\Default.xml";
-
-		// todo: add multi layout support after full wpf release
-		private string LayoutPath => DefaultLayoutPath; // Config.Life.LayoutFilePath;
+		private string LayoutFolder => @"Settings\Layout";
+		private string DefaultLayoutPath => Path.Combine(LayoutFolder, "Default.xml");
+		private string LayoutPath => Config.Life.LayoutFilePath;
+		
 		private string PositionPath => Path.ChangeExtension(LayoutPath, ".Position.json");
 		public bool NotificationsSilenced { get; set; }
 		private DateTime PrevPlayTimeRecorded { get; set; } = DateTime.MinValue;
@@ -127,30 +127,22 @@ namespace ElectronicObserver.ViewModels
 		public ObservableCollection<AnchorableViewModel> Views { get; } = new();
 
 		public List<FleetViewModel> Fleets { get; }
-
 		public FleetOverviewViewModel FleetOverview { get; }
-
+		public FormShipGroupViewModel FormShipGroup { get; }
 		// public ShipGroupViewModel ShipGroup { get; }
 		public FleetPresetViewModel FleetPreset { get; }
+
 		public DockViewModel Dock { get; }
 		public ArsenalViewModel Arsenal { get; }
 		public BaseAirCorpsViewModel BaseAirCorps { get; }
+
 		public HeadquartersViewModel Headquarters { get; }
+		public FormQuestViewModel FormQuest { get; }
+		public FormInformationViewModel FormInformation { get; }
+
 		public CompassViewModel Compass { get; }
 		public BattleViewModel Battle { get; }
 
-		public List<FormFleetViewModel> FormFleets { get; }
-		public FormFleetOverviewViewModel FormFleetOverview { get; }
-		public FormShipGroupViewModel FormShipGroup { get; }
-		public FormFleetPresetViewModel FormFleetPreset { get; }
-		public FormDockViewModel FormDock { get; }
-		public FormArsenalViewModel FormArsenal { get; }
-		public FormBaseAirCorpsViewModel FormBaseAirCorps { get; }
-		public FormHeadquartersViewModel FormHeadquarters { get; }
-		public FormQuestViewModel FormQuest { get; }
-		public FormInformationViewModel FormInformation { get; }
-		public FormCompassViewModel FormCompass { get; }
-		public FormBattleViewModel FormBattle { get; }
 		public FormBrowserHostViewModel FormBrowserHost { get; }
 		public FormLogViewModel FormLog { get; }
 		public FormJsonViewModel FormJson { get; }
@@ -165,6 +157,8 @@ namespace ElectronicObserver.ViewModels
 
 		public ICommand SaveDataCommand { get; }
 		public ICommand LoadDataCommand { get; }
+		public ICommand OpenLayoutCommand { get; }
+		public ICommand SaveLayoutAsCommand { get; }
 		public ICommand SilenceNotificationsCommand { get; }
 		public ICommand OpenConfigurationCommand { get; }
 
@@ -204,15 +198,17 @@ namespace ElectronicObserver.ViewModels
 
 		#endregion
 
-		public FormMainViewModel(DockingManager dockingManager, Control view)
+		public FormMainViewModel(DockingManager dockingManager, FormMainWpf window)
 		{
-			View = view;
+			Window = window;
 			DockingManager = dockingManager;
 
 			#region Commands
 
 			SaveDataCommand = new RelayCommand(StripMenu_File_SaveData_Save_Click);
 			LoadDataCommand = new RelayCommand(StripMenu_File_SaveData_Load_Click);
+			OpenLayoutCommand = new RelayCommand(StripMenu_File_Layout_Open_Click);
+			SaveLayoutAsCommand = new RelayCommand(StripMenu_File_Layout_Change_Click);
 			SilenceNotificationsCommand = new RelayCommand(StripMenu_File_Notification_MuteAll_Click);
 			OpenConfigurationCommand = new RelayCommand(StripMenu_File_Configuration_Click);
 
@@ -260,16 +256,14 @@ namespace ElectronicObserver.ViewModels
 			Thread.CurrentThread.CurrentCulture = cultureInfo;
 			Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-			SetTheme();
-
 			Utility.Logger.Instance.LogAdded += data =>
 			{
-				if (View.CheckAccess())
+				if (Window.CheckAccess())
 				{
 					// Invokeはメッセージキューにジョブを投げて待つので、別のBeginInvokeされたジョブが既にキューにあると、
 					// それを実行してしまい、BeginInvokeされたジョブの順番が保てなくなる
 					// GUIスレッドによる処理は、順番が重要なことがあるので、GUIスレッドからInvokeを呼び出してはいけない
-					View.Dispatcher.Invoke(new Utility.LogAddedEventHandler(Logger_LogAdded), data);
+					Window.Dispatcher.Invoke(new Utility.LogAddedEventHandler(Logger_LogAdded), data);
 				}
 				else
 				{
@@ -290,46 +284,46 @@ namespace ElectronicObserver.ViewModels
 			ResourceManager.Instance.Load();
 			RecordManager.Instance.Load();
 			KCDatabase.Instance.Load();
-			NotifierManager.Instance.Initialize(View);
+			NotifierManager.Instance.Initialize(Window);
 			SyncBGMPlayer.Instance.ConfigurationChanged();
 
 			#region Icon settings
 
-			ConfigurationImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormConfiguration);
+			ConfigurationImageSource = ImageSourceIcons.GetIcon(IconContent.FormConfiguration);
 
-			FleetsImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormFleet);
-			FleetOverviewImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormFleet);
-			ShipGroupImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormShipGroup);
-			FleetPresetImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormFleetPreset);
-			DockImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormDock);
-			ArsenalImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormArsenal);
-			BaseAirCorpsImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBaseAirCorps);
-			HeadquartersImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormHeadQuarters);
-			QuestImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormQuest);
-			InformationImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormInformation);
-			CompassImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormCompass);
-			BattleImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBattle);
-			BrowserHostImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBrowser);
-			LogImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormLog);
-			JsonImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormJson);
+			FleetsImageSource = ImageSourceIcons.GetIcon(IconContent.FormFleet);
+			FleetOverviewImageSource = ImageSourceIcons.GetIcon(IconContent.FormFleet);
+			ShipGroupImageSource = ImageSourceIcons.GetIcon(IconContent.FormShipGroup);
+			FleetPresetImageSource = ImageSourceIcons.GetIcon(IconContent.FormFleetPreset);
+			DockImageSource = ImageSourceIcons.GetIcon(IconContent.FormDock);
+			ArsenalImageSource = ImageSourceIcons.GetIcon(IconContent.FormArsenal);
+			BaseAirCorpsImageSource = ImageSourceIcons.GetIcon(IconContent.FormBaseAirCorps);
+			HeadquartersImageSource = ImageSourceIcons.GetIcon(IconContent.FormHeadQuarters);
+			QuestImageSource = ImageSourceIcons.GetIcon(IconContent.FormQuest);
+			InformationImageSource = ImageSourceIcons.GetIcon(IconContent.FormInformation);
+			CompassImageSource = ImageSourceIcons.GetIcon(IconContent.FormCompass);
+			BattleImageSource = ImageSourceIcons.GetIcon(IconContent.FormBattle);
+			BrowserHostImageSource = ImageSourceIcons.GetIcon(IconContent.FormBrowser);
+			LogImageSource = ImageSourceIcons.GetIcon(IconContent.FormLog);
+			JsonImageSource = ImageSourceIcons.GetIcon(IconContent.FormJson);
 
-			EquipmentListImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormEquipmentList);
-			DropRecordImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormDropRecord);
-			DevelopmentRecordImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormDevelopmentRecord);
-			ConstructionRecordImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormConstructionRecord);
-			ResourceChartImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormResourceChart);
-			AlbumMasterShipImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormAlbumShip);
-			AlbumMasterEquipmentImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormAlbumEquipment);
-			AntiAirDefenseImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormAntiAirDefense);
-			FleetImageGeneratorImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormFleetImageGenerator);
-			BaseAirCorpsSimulationImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBaseAirCorps);
-			ExpCheckerImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormExpChecker);
-			ExpeditionCheckImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormExpeditionCheck);
-			KancolleProgressImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormEquipmentList);
-			ExtraBrowserImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBrowser);
+			EquipmentListImageSource = ImageSourceIcons.GetIcon(IconContent.FormEquipmentList);
+			DropRecordImageSource = ImageSourceIcons.GetIcon(IconContent.FormDropRecord);
+			DevelopmentRecordImageSource = ImageSourceIcons.GetIcon(IconContent.FormDevelopmentRecord);
+			ConstructionRecordImageSource = ImageSourceIcons.GetIcon(IconContent.FormConstructionRecord);
+			ResourceChartImageSource = ImageSourceIcons.GetIcon(IconContent.FormResourceChart);
+			AlbumMasterShipImageSource = ImageSourceIcons.GetIcon(IconContent.FormAlbumShip);
+			AlbumMasterEquipmentImageSource = ImageSourceIcons.GetIcon(IconContent.FormAlbumEquipment);
+			AntiAirDefenseImageSource = ImageSourceIcons.GetIcon(IconContent.FormAntiAirDefense);
+			FleetImageGeneratorImageSource = ImageSourceIcons.GetIcon(IconContent.FormFleetImageGenerator);
+			BaseAirCorpsSimulationImageSource = ImageSourceIcons.GetIcon(IconContent.FormBaseAirCorps);
+			ExpCheckerImageSource = ImageSourceIcons.GetIcon(IconContent.FormExpChecker);
+			ExpeditionCheckImageSource = ImageSourceIcons.GetIcon(IconContent.FormExpeditionCheck);
+			KancolleProgressImageSource = ImageSourceIcons.GetIcon(IconContent.FormEquipmentList);
+			ExtraBrowserImageSource = ImageSourceIcons.GetIcon(IconContent.FormBrowser);
 
-			ViewHelpImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormInformation);
-			ViewVersionImageSource = ImageSourceIcons.GetIcon(ResourceManager.IconContent.AppIcon);
+			ViewHelpImageSource = ImageSourceIcons.GetIcon(IconContent.FormInformation);
+			ViewVersionImageSource = ImageSourceIcons.GetIcon(IconContent.AppIcon);
 
 			/*
 			Icon = ResourceManager.Instance.AppIcon;
@@ -374,7 +368,7 @@ namespace ElectronicObserver.ViewModels
 
 			#endregion
 
-			APIObserver.Instance.Start(Configuration.Config.Connection.Port, View);
+			APIObserver.Instance.Start(Configuration.Config.Connection.Port, Window);
 
 			Fleets = new List<FleetViewModel>()
 			{
@@ -387,40 +381,22 @@ namespace ElectronicObserver.ViewModels
 			{
 				Views.Add(fleet);
 			}
-
 			Views.Add(FleetOverview = new FleetOverviewViewModel(Fleets));
+			Views.Add(FormShipGroup = new FormShipGroupViewModel());
 			// Views.Add(ShipGroup = new());
 			Views.Add(FleetPreset = new FleetPresetViewModel());
+
 			Views.Add(Dock = new DockViewModel());
 			Views.Add(Arsenal = new ArsenalViewModel());
 			Views.Add(BaseAirCorps = new BaseAirCorpsViewModel());
+
 			Views.Add(Headquarters = new HeadquartersViewModel());
+			Views.Add(FormQuest = new FormQuestViewModel());
+			Views.Add(FormInformation = new FormInformationViewModel());
+
 			Views.Add(Compass = new CompassViewModel());
 			Views.Add(Battle = new BattleViewModel());
 
-			FormFleets = new List<FormFleetViewModel>()
-			{
-				new(1),
-				new(2),
-				new(3),
-				new(4),
-			};
-			foreach (FormFleetViewModel fleet in FormFleets)
-			{
-				Views.Add(fleet);
-			}
-
-			Views.Add(FormFleetOverview = new FormFleetOverviewViewModel());
-			Views.Add(FormShipGroup = new FormShipGroupViewModel());
-			Views.Add(FormFleetPreset = new FormFleetPresetViewModel());
-			Views.Add(FormDock = new FormDockViewModel());
-			Views.Add(FormArsenal = new FormArsenalViewModel());
-			Views.Add(FormBaseAirCorps = new FormBaseAirCorpsViewModel());
-			Views.Add(FormHeadquarters = new FormHeadquartersViewModel());
-			Views.Add(FormQuest = new FormQuestViewModel());
-			Views.Add(FormInformation = new FormInformationViewModel());
-			Views.Add(FormCompass = new FormCompassViewModel());
-			Views.Add(FormBattle = new FormBattleViewModel());
 			Views.Add(FormBrowserHost = new FormBrowserHostViewModel() {Visibility = Visibility.Visible});
 			Views.Add(FormLog = new FormLogViewModel());
 			Views.Add(FormJson = new FormJsonViewModel());
@@ -516,6 +492,10 @@ namespace ElectronicObserver.ViewModels
 		public void LoadLayout(object? sender)
 		{
 			if (sender is not FormMainWpf window) return;
+			if (Path.GetExtension(LayoutPath) is ".zip")
+			{
+				Config.Life.LayoutFilePath = DefaultLayoutPath;
+			}
 			if (!File.Exists(LayoutPath)) return;
 
 			DockingManager.Layout = new LayoutRoot();
@@ -541,6 +521,40 @@ namespace ElectronicObserver.ViewModels
 			window.Width = Position.Width;
 			window.Height = Position.Height;
 			window.WindowState = Position.WindowState;
+		}
+
+		private string LayoutFilter => "Layout File|*.xml";
+
+		private void StripMenu_File_Layout_Open_Click()
+		{
+			using OpenFileDialog dialog = new()
+			{
+				Filter = LayoutFilter,
+				Title = Properties.Window.FormMain.OpenLayoutCaption
+			};
+
+			PathHelper.InitOpenFileDialog(Configuration.Config.Life.LayoutFilePath, dialog);
+
+			if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+			Configuration.Config.Life.LayoutFilePath = PathHelper.GetPathFromOpenFileDialog(dialog);
+			LoadLayout(Window);
+		}
+
+		private void StripMenu_File_Layout_Change_Click()
+		{
+			using SaveFileDialog dialog = new()
+			{
+				Filter = LayoutFilter,
+				Title = Properties.Window.FormMain.SaveLayoutCaption
+			};
+
+			PathHelper.InitSaveFileDialog(Configuration.Config.Life.LayoutFilePath, dialog);
+
+			if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+			Configuration.Config.Life.LayoutFilePath = PathHelper.GetPathFromSaveFileDialog(dialog);
+			SaveLayout(Window);
 		}
 
 		private void StripMenu_File_Notification_MuteAll_Click()
@@ -648,7 +662,7 @@ namespace ElectronicObserver.ViewModels
 				return;
 			}
 
-			new DialogAlbumMasterShip().Show();
+			new DialogAlbumMasterShipWpf().Show();
 		}
 
 		private void StripMenu_Tool_AlbumMasterEquipment_Click()
@@ -695,7 +709,7 @@ namespace ElectronicObserver.ViewModels
 
 		private void StripMenu_Tool_ExtraBrowser_Click()
 		{
-			Window.FormBrowserHost.Instance.Browser.OpenExtraBrowser();
+			ElectronicObserver.Window.FormBrowserHost.Instance.Browser.OpenExtraBrowser();
 		}
 
 		#endregion
@@ -807,14 +821,14 @@ namespace ElectronicObserver.ViewModels
 						using StreamReader sr2 = new(files[files.Length - 1]);
 						if (isRequest)
 						{
-							View.Dispatcher.Invoke((Action) (() =>
+							Window.Dispatcher.Invoke((Action) (() =>
 							{
 								APIObserver.Instance.LoadRequest("/kcsapi/" + line, sr2.ReadToEnd());
 							}));
 						}
 						else
 						{
-							View.Dispatcher.Invoke((Action) (() =>
+							Window.Dispatcher.Invoke((Action) (() =>
 							{
 								APIObserver.Instance.LoadResponse("/kcsapi/" + line, sr2.ReadToEnd());
 							}));

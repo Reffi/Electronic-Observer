@@ -132,7 +132,7 @@ namespace ElectronicObserver.Window.Wpf.Battle
 		public ICommand ShowBattleDetailCommand { get; }
 
 		public BattleViewModel() : base("Battle", "Battle",
-			ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormBattle))
+			ImageSourceIcons.GetIcon(IconContent.FormBattle))
 		{
 			FormBattle = App.Current.Services.GetService<FormBattleTranslationViewModel>()!;
 
@@ -873,7 +873,7 @@ namespace ElectronicObserver.Window.Wpf.Battle
 
 					AACutinToolTip = FormBattle.AACI + "\r\n" + string.Join("\r\n", phases2
 						.Select(p => p.PhaseName + (p.Air.IsAACutinAvailable ?
-							$"{p.Air.AACutInShip.NameWithLevel}\r\n{FormBattle.AACIType}{p.Air.AACutInKind} ({Constants.GetAACutinKind(p.Air.AACutInKind)})"
+							$"{p.Air.AACutInShipName}\r\n{FormBattle.AACIType}{p.Air.AACutInKind} ({Constants.GetAACutinKind(p.Air.AACutInKind)})"
 							: FormBattle.DidNotActivate)));
 				}
 				else

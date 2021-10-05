@@ -5,8 +5,8 @@ namespace ElectronicObserver.Window.Wpf.WinformsWrappers
 {
 	public class FormJsonViewModel : WinformsHostViewModel
 	{
-		public FormJsonViewModel() : base("JSON", "FormJson",
-			ImageSourceIcons.GetIcon(ResourceManager.IconContent.FormJson))
+		public FormJsonViewModel() : base("JSON", "Json",
+			ImageSourceIcons.GetIcon(IconContent.FormJson))
 		{
 			// todo remove parameter cause it's never used
 			WinformsControl = new FormJson(null!) { TopLevel = false };

@@ -66,18 +66,23 @@ namespace ElectronicObserver
 
 				// hack: needed for running the winforms version
 				// remove this and the Shutdown call when moving to wpf only
-				ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-				bool forceWpf = false;
-#if DEBUG
-				forceWpf = true;
-#endif
+				// ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 				AppCenter.Start("7fdbafa0-058a-4691-b317-a700be513b95", typeof(Analytics), typeof(Crashes));
 
-				if (forceWpf || e.Args.Contains("-wpf"))
+				if (true)
 				{
-					Directory.CreateDirectory(@"Settings\Layout");
+					try
+					{
+						Directory.CreateDirectory(@"Settings\Layout");
+					}
+					catch (UnauthorizedAccessException)
+					{
+						MessageBox.Show(ElectronicObserver.Properties.Window.FormMain.MissingPermissions, 
+							ElectronicObserver.Properties.Window.FormMain.ErrorCaption, 
+							MessageBoxButton.OK, MessageBoxImage.Error);
+						throw;
+					}
 
 					Configuration.Instance.Load();
 
@@ -85,6 +90,8 @@ namespace ElectronicObserver
 
 					ToolTipService.ShowDurationProperty.OverrideMetadata(
 						typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
+					ToolTipService.InitialShowDelayProperty.OverrideMetadata(
+						typeof(DependencyObject), new FrameworkPropertyMetadata(0));
 					new FormMainWpf().ShowDialog();
 				}
 				else
@@ -101,7 +108,7 @@ namespace ElectronicObserver
 					}
 				}
 
-				Shutdown();
+				// Shutdown();
 			}
 		}
 
@@ -125,6 +132,8 @@ namespace ElectronicObserver
 			services.AddSingleton<FormMainTranslationViewModel>();
 			services.AddSingleton<FormQuestTranslationViewModel>();
 			services.AddSingleton<FormShipGroupTranslationViewModel>();
+
+			services.AddSingleton<DialogAlbumMasterShipTranslationViewModel>();
 
 			return services.BuildServiceProvider();
 		}
