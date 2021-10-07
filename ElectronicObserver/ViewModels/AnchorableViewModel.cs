@@ -14,7 +14,9 @@ namespace ElectronicObserver.ViewModels
 		public bool IsSelected { get; set; }
 		public bool IsActive { get; set; }
 		public ImageSource? IconSource { get; set; }
-
+		public bool IsClosable { get; set; }
+		public bool IsMovable { get; set; }
+		public bool IsFloatable { get; set; }
 		public ICommand CloseCommand { get; }
 
 		protected AnchorableViewModel(string title, string contentId, ImageSource? icon = null)
