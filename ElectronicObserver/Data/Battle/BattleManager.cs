@@ -101,6 +101,8 @@ public class BattleManager : ResponseWrapper
 	/// </summary>
 	public bool IsPractice => (BattleMode & BattleModes.BattlePhaseMask) == BattleModes.Practice;
 
+	public bool IsIgnored { get; set; }
+
 	/// <summary>
 	/// 敵が連合艦隊かどうか
 	/// </summary>
@@ -341,6 +343,7 @@ public class BattleManager : ResponseWrapper
 				Result = null;
 				BattleMode = BattleModes.Undefined;
 				DroppedShipCount = DroppedEquipmentCount = 0;
+				IsIgnored = false;
 				DroppedItemCount.Clear();
 				SpecialAttackCount.Clear();
 				break;
@@ -820,11 +823,26 @@ public class BattleManager : ResponseWrapper
 
 			string path = $"{parent}\\{DateTimeHelper.GetTimeStamp()}@{info}.txt";
 
-			using (var sw = new StreamWriter(path, false, Utility.Configuration.Config.Log.FileEncoding))
-			{
-				sw.Write(BattleDetailDescriptor.GetBattleDetail(this));
-			}
+			string maps_file = @"Settings\ignored_maps.txt";
 
+			if (File.Exists(maps_file) && !IsPractice)
+			{
+				foreach (var line in File.ReadLines(maps_file))
+				{
+					if ($"{Compass.MapAreaID}-{Compass.MapInfoID}" == line)
+					{
+						IsIgnored = true;
+						break;
+					}
+				};
+			}
+			if (!IsIgnored)
+			{
+				using (var sw = new StreamWriter(path, false, Utility.Configuration.Config.Log.FileEncoding))
+				{
+					sw.Write(BattleDetailDescriptor.GetBattleDetail(this));
+				}
+			}
 		}
 		catch (Exception ex)
 		{
