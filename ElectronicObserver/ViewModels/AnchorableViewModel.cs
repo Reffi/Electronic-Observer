@@ -6,6 +6,7 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace ElectronicObserver.ViewModels;
 
+
 public class AnchorableViewModel : ObservableObject
 {
 	public string Title { get; set; }
@@ -14,7 +15,9 @@ public class AnchorableViewModel : ObservableObject
 	public bool IsSelected { get; set; }
 	public bool IsActive { get; set; }
 	public ImageSource? IconSource { get; set; }
-
+	public bool IsClosable { get; set; }
+	public bool IsMovable { get; set; }
+	public bool IsFloatable { get; set; }
 	public virtual ICommand CloseCommand { get; }
 
 	protected AnchorableViewModel(string title, string contentId, ImageSource? icon = null)
