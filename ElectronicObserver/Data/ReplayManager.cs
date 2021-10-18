@@ -45,8 +45,8 @@ public class ReplayManager : ResponseWrapper
 
 	public dynamic DayData = null;
 	public dynamic YasenData = null;
-	public bool isPvp = false;
-	public bool is_ignored = false;
+	public bool IsPractice { get; set; }
+	public bool IsIgnored { get; set; }
 
 	/// <summary>
 	///response wrapper for getting API data
@@ -73,7 +73,7 @@ public class ReplayManager : ResponseWrapper
 				Battle_replay.Battles[0].BaseEXP = 0;
 				Battle_replay.Battles[0].HqEXP = 0;
 				Battle_replay.Fleetnum = db.Fleet.Fleets.Where(fleet => fleet.Value.IsInSortie).Select(fleet => fleet.Value.FleetID).Min();
-				isPvp = false;
+				IsPractice = false;
 				Battle_replay.Battles[0].Data = null;
 				Battle_replay.Battles[0].Yasen = new object();
 				YasenData = null;
@@ -159,7 +159,7 @@ public class ReplayManager : ResponseWrapper
 				break;
 
 			case "api_req_practice/battle": //pvp day
-				isPvp = true;
+				IsPractice = true;
 				Battle_replay.World = 0;
 				Battle_replay.Mapnum = 0;
 				Battle_replay.Battles[0].Node = 0;
@@ -168,7 +168,7 @@ public class ReplayManager : ResponseWrapper
 				break;
 
 			case "api_req_practice/midnight_battle": // pvp night
-				isPvp = true;
+				IsPractice = true;
 				YasenData = data;
 				break;
 
@@ -184,8 +184,8 @@ public class ReplayManager : ResponseWrapper
 				break;
 
 			case "api_port/port":
-				is_ignored = false;
-				isPvp = false;
+				IsIgnored = false;
+				IsPractice = false;
 				break;
 		}
 	}
@@ -298,7 +298,7 @@ public class ReplayManager : ResponseWrapper
 		GetFleet4();
 		GetBattleExp();
 		GetMVP();
-		if (!isPvp)
+		if (!IsPractice)
 		{
 			GetMapHP();
 			GetLBAS();
@@ -329,7 +329,7 @@ public class ReplayManager : ResponseWrapper
 				Directory.CreateDirectory(parent);
 
 			KCDatabase db = KCDatabase.Instance;
-			if (!isPvp)
+			if (!IsPractice)
 			{
 				info = $"{db.Battle.Compass.MapAreaID}-{db.Battle.Compass.MapInfoID}-{db.Battle.Compass.Destination}";
 			}
@@ -339,19 +339,19 @@ public class ReplayManager : ResponseWrapper
 			}
 			string maps_file = @"Settings\ignored_maps.txt";
 
-			if (File.Exists(maps_file) && !isPvp)
+			if (File.Exists(maps_file) && !IsPractice)
 			{
 				foreach (var line in File.ReadLines(maps_file))
 				{
 					if ($"{db.Battle.Compass.MapAreaID}-{db.Battle.Compass.MapInfoID}" == line)
 					{
-						is_ignored = true;
+						IsIgnored = true;
 						break;
 					}
 				};
 			}
 			string path = $"{parent}\\{DateTimeHelper.GetTimeStamp()}@{info}-Replay.txt";
-			if (!is_ignored)
+			if (!IsIgnored)
 			{
 				using (StreamWriter rep_file = File.CreateText(path))
 				{
