@@ -36,6 +36,8 @@
 	<PropertyGroup>
 		<StartupObject>Browser.App</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AssemblyVersion>5.0.0.0</AssemblyVersion>
+		<FileVersion>5.0.0.0</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BrowserLibCore\BrowserLibCore.csproj" />
