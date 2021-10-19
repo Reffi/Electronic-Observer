@@ -488,8 +488,8 @@ public class BattleViewModel : AnchorableViewModel
 		if (bm.IsEnemyCombined && bm.StartsFromDayBattle)
 		{
 			bool willMain = bm.WillNightBattleWithMainFleet();
-			FleetEnemyBackColor = (willMain ? Color.LightSteelBlue : Color.Transparent).ToBrush();
-			FleetEnemyEscortBackColor = (willMain ? Color.Transparent : Color.LightSteelBlue).ToBrush();
+			FleetEnemyBackColor = (willMain ? Color.Maroon : Color.Transparent).ToBrush();
+			FleetEnemyEscortBackColor = (willMain ? Color.Transparent : Color.Maroon).ToBrush();
 		}
 		else
 		{
