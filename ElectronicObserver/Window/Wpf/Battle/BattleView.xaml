@@ -36,7 +36,7 @@
 		</Border.ContextMenu>
 
 		<Grid
-			HorizontalAlignment="Center"
+			HorizontalAlignment="Left"
 			Margin="4"
 			IsSharedSizeScope="True">
 			<Grid.Resources>
