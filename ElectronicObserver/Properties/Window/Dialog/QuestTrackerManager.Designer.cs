@@ -169,6 +169,69 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 7-2-1.
+        /// </summary>
+        public static string QuestTaskType_7_2_1 {
+            get {
+                return ResourceManager.GetString("QuestTaskType_7_2_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7-2-2.
+        /// </summary>
+        public static string QuestTaskType_7_2_2 {
+            get {
+                return ResourceManager.GetString("QuestTaskType_7_2_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7-3-1.
+        /// </summary>
+        public static string QuestTaskType_7_3_1 {
+            get {
+                return ResourceManager.GetString("QuestTaskType_7_3_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7-3-2.
+        /// </summary>
+        public static string QuestTaskType_7_3_2 {
+            get {
+                return ResourceManager.GetString("QuestTaskType_7_3_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 戦闘マスID.
+        /// </summary>
+        public static string QuestTaskType_BattleNodeId {
+            get {
+                return ResourceManager.GetString("QuestTaskType_BattleNodeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ボス殺し.
+        /// </summary>
+        public static string QuestTaskType_BossKill {
+            get {
+                return ResourceManager.GetString("QuestTaskType_BossKill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 遠征.
+        /// </summary>
+        public static string QuestTaskType_Expedition {
+            get {
+                return ResourceManager.GetString("QuestTaskType_Expedition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 任意の改造.
         /// </summary>
         public static string RemodelComparisonType_Any {
@@ -210,24 +273,6 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ボス殺し.
-        /// </summary>
-        public static string TrackableTaskType_BossKill {
-            get {
-                return ResourceManager.GetString("TrackableTaskType_BossKill", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 遠征.
-        /// </summary>
-        public static string TrackableTaskType_Expedition {
-            get {
-                return ResourceManager.GetString("TrackableTaskType_Expedition", resourceCulture);
             }
         }
         

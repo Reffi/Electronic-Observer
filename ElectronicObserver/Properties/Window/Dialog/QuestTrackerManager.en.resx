@@ -144,10 +144,10 @@
   <data name="RemodelComparisonType_Exact" xml:space="preserve">
     <value>Exact remodel</value>
   </data>
-  <data name="TrackableTaskType_BossKill" xml:space="preserve">
+  <data name="QuestTaskType_BossKill" xml:space="preserve">
     <value>Boss kill</value>
   </data>
-  <data name="TrackableTaskType_Expedition" xml:space="preserve">
+  <data name="QuestTaskType_Expedition" xml:space="preserve">
     <value>Expedition</value>
   </data>
   <data name="Flagship" xml:space="preserve">
@@ -186,5 +186,20 @@ Do you want to overwrite these quest trackers?</value>
   </data>
   <data name="CopyTrackersToClipboard" xml:space="preserve">
     <value>Copy trackers to clipboard</value>
+  </data>
+  <data name="QuestTaskType_BattleNodeId" xml:space="preserve">
+    <value>Battle node ID</value>
+  </data>
+  <data name="QuestTaskType_7_2_1" xml:space="preserve">
+    <value>7-2-1</value>
+  </data>
+  <data name="QuestTaskType_7_2_2" xml:space="preserve">
+    <value>7-2-2</value>
+  </data>
+  <data name="QuestTaskType_7_3_1" xml:space="preserve">
+    <value>7-3-1</value>
+  </data>
+  <data name="QuestTaskType_7_3_2" xml:space="preserve">
+    <value>7-3-2</value>
   </data>
 </root>

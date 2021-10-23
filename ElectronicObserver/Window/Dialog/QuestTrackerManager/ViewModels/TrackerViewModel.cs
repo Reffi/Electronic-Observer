@@ -17,8 +17,8 @@ namespace ElectronicObserver.Window.Dialog.QuestTrackerManager.ViewModels;
 
 public partial class TrackerViewModel : ObservableObject
 {
-	public IEnumerable<TrackableTaskType> TaskTypes { get; }
-	public TrackableTaskType TaskTypeType { get; set; } = TrackableTaskType.BossKill;
+	public IEnumerable<QuestTaskType> TaskTypes { get; }
+	public QuestTaskType TaskTypeType { get; set; } = QuestTaskType.BossKill;
 
 	public IEnumerable<IQuestTaskViewModel> Tasks { get; set; }
 	public GroupConditionViewModel GroupConditions { get; }
@@ -54,7 +54,7 @@ public partial class TrackerViewModel : ObservableObject
 		Tasks = MakeTasks();
 		GroupConditions = new(Model.Conditions) { CanBeRemoved = false };
 
-		TaskTypes = Enum.GetValues(typeof(TrackableTaskType)).Cast<TrackableTaskType>();
+		TaskTypes = Enum.GetValues(typeof(QuestTaskType)).Cast<QuestTaskType>();
 		Model.PropertyChanged += (_, e) =>
 		{
 			if (e.PropertyName is not nameof(Model.Quest.Id)) return;
@@ -76,6 +76,7 @@ public partial class TrackerViewModel : ObservableObject
 		{
 			BossKillTaskModel b => (IQuestTaskViewModel)new BossKillTaskViewModel(b),
 			ExpeditionTaskModel e => new ExpeditionTask(e),
+			BattleNodeIdTaskModel b => new BattleNodeIdTaskViewModel(b),
 		});
 	}
 
@@ -84,8 +85,33 @@ public partial class TrackerViewModel : ObservableObject
 	{
 		Model.Tasks.Add(TaskTypeType switch
 		{
-			TrackableTaskType.BossKill => new BossKillTaskModel(),
-			TrackableTaskType.Expedition => new ExpeditionTaskModel(),
+			QuestTaskType.BossKill => new BossKillTaskModel(),
+			QuestTaskType.Expedition => new ExpeditionTaskModel(),
+			QuestTaskType.BattleNodeId => new BattleNodeIdTaskModel(),
+			QuestTaskType.World7Map2Boss1 => new BattleNodeIdTaskModel
+			{
+				Map = new(7, 2),
+				Name = "-1",
+				NodeIds = new List<int> { 7 }
+			},
+			QuestTaskType.World7Map2Boss2 => new BattleNodeIdTaskModel
+			{
+				Map = new(7, 2),
+				Name = "-2",
+				NodeIds = new List<int> { 15 }
+			},
+			QuestTaskType.World7Map3Boss1 => new BattleNodeIdTaskModel
+			{
+				Map = new(7, 3),
+				Name = "-1",
+				NodeIds = new List<int> { 5, 8 },
+			},
+			QuestTaskType.World7Map3Boss2 => new BattleNodeIdTaskModel
+			{
+				Map = new(7, 3),
+				Name = "-2",
+				NodeIds = new List<int> { 18, 23, 24, 25 },
+			},
 		});
 	}
 
@@ -117,6 +143,16 @@ public partial class TrackerViewModel : ObservableObject
 		_ => BattleRank.Any,
 	};
 
+	public void Increment(IFleetData fleet, string resultRank, int compassMapAreaId, int compassMapInfoId, int nodeId)
+	{
+		if (!GroupConditions.ConditionMet(fleet)) return;
+
+		foreach (BattleNodeIdTaskViewModel task in Tasks.OfType<BattleNodeIdTaskViewModel>())
+		{
+			task.Increment(FromString(resultRank), compassMapAreaId, compassMapInfoId, nodeId);
+		}
+	}
+
 	public void Increment(IFleetData fleet, string resultRank, int compassMapAreaId, int compassMapInfoId)
 	{
 		if (!GroupConditions.ConditionMet(fleet)) return;
@@ -135,5 +171,18 @@ public partial class TrackerViewModel : ObservableObject
 		{
 			task.Increment(areaId);
 		}
+	}
+
+	public void SetProgress(IEnumerable<int> progresses)
+	{
+		foreach ((IQuestTask task, int progress) in Model.Tasks.Zip(progresses, (t, p) => (t, p)))
+		{
+			task.Progress = progress;
+		}
+	}
+
+	public IEnumerable<int> GetProgress()
+	{
+		return Model.Tasks.Select(t => t.Progress);
 	}
 }

@@ -129,11 +129,12 @@ public static class DateTimeHelper
 	/// <param name="hours">指定した日時の時間。</param>
 	/// <param name="minutes">指定した日時の分。</param>
 	/// <param name="seconds">指定した日時の秒。</param>
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
 	/// <returns></returns>
-	public static bool IsCrossedDay(DateTime prev, int hours, int minutes, int seconds)
+	public static bool IsCrossedDay(DateTime prev, int hours, int minutes, int seconds, DateTime? currentTime = null)
 	{
 
-		DateTime now = GetJapanStandardTimeNow();
+		DateTime now = GetJapanStandardTimeNow(currentTime);
 
 		TimeSpan nowtime = now.TimeOfDay;
 		TimeSpan bordertime = new TimeSpan(hours, minutes, seconds);
@@ -150,11 +151,12 @@ public static class DateTimeHelper
 	/// <param name="hours">指定した日時の時間。</param>
 	/// <param name="minutes">指定した日時の分。</param>
 	/// <param name="seconds">指定した日時の秒。</param>
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
 	/// <returns></returns>
-	public static bool IsCrossedWeek(DateTime prev, DayOfWeek dayOfWeek, int hours, int minutes, int seconds)
+	public static bool IsCrossedWeek(DateTime prev, DayOfWeek dayOfWeek, int hours, int minutes, int seconds, DateTime? currentTime = null)
 	{
 
-		DateTime now = GetJapanStandardTimeNow();
+		DateTime now = GetJapanStandardTimeNow(currentTime);
 
 		TimeSpan nowtime = now.TimeOfDay;
 		TimeSpan bordertime = new TimeSpan(hours, minutes, seconds);
@@ -179,11 +181,12 @@ public static class DateTimeHelper
 	/// <param name="hours">指定した日時の時間。</param>
 	/// <param name="minutes">指定した日時の分。</param>
 	/// <param name="seconds">指定した日時の秒。</param>
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
 	/// <returns></returns>
-	public static bool IsCrossedMonth(DateTime prev, int days, int hours, int minutes, int seconds)
+	public static bool IsCrossedMonth(DateTime prev, int days, int hours, int minutes, int seconds, DateTime? currentTime = null)
 	{
 
-		DateTime now = GetJapanStandardTimeNow();
+		DateTime now = GetJapanStandardTimeNow(currentTime);
 
 		DateTime border = now.Subtract(new TimeSpan(now.Day, now.Hour, now.Minute, now.Second)).Add(new TimeSpan(days, hours, minutes, seconds));
 		if (now < border)
@@ -202,9 +205,10 @@ public static class DateTimeHelper
 	/// <param name="hours">指定した日時の時間。</param>
 	/// <param name="minutes">指定した日時の分。</param>
 	/// <param name="seconds">指定した日時の秒。</param>
-	public static bool IsCrossedQuarter(DateTime prev, int monthes, int days, int hours, int minutes, int seconds)
+	/// /// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedQuarter(DateTime prev, int monthes, int days, int hours, int minutes, int seconds, DateTime? currentTime = null)
 	{
-		DateTime now = GetJapanStandardTimeNow();
+		DateTime now = GetJapanStandardTimeNow(currentTime);
 		int targetMonth = now.Month / 3 * 3 + monthes;
 		DateTime border = new DateTime(now.Year - (targetMonth < 1 ? 1 : 0), targetMonth < 1 ? targetMonth + 12 : targetMonth, days, hours, minutes, seconds);
 		if (now < border)
@@ -222,9 +226,10 @@ public static class DateTimeHelper
 	/// <param name="hours">指定した日時の時間。</param>
 	/// <param name="minutes">指定した日時の分。</param>
 	/// <param name="seconds">指定した日時の秒。</param>
-	public static bool IsCrossedYear(DateTime prev, int monthes, int days, int hours, int minutes, int seconds)
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedYear(DateTime prev, int monthes, int days, int hours, int minutes, int seconds, DateTime? currentTime = null)
 	{
-		DateTime now = GetJapanStandardTimeNow();
+		DateTime now = GetJapanStandardTimeNow(currentTime);
 		DateTime border = new DateTime(now.Year, monthes, days, hours, minutes, seconds);
 		if (now < border)
 			border = border.AddYears(-1);
@@ -232,6 +237,26 @@ public static class DateTimeHelper
 		return IsCrossed(GetJapanStandardTime(prev), border);
 	}
 
+
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedDailyQuestReset(DateTime previousTime, DateTime? currentTime = null)
+		=> IsCrossedDay(previousTime, 5, 0, 0, currentTime);
+
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedWeeklyQuestReset(DateTime previousTime, DateTime? currentTime = null)
+		=> IsCrossedWeek(previousTime, DayOfWeek.Monday, 5, 0, 0, currentTime);
+
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedMonthlyQuestReset(DateTime previousTime, DateTime? currentTime = null)
+		=> IsCrossedMonth(previousTime, 1, 5, 0, 0, currentTime);
+
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedQuarterlyQuestReset(DateTime previousTime, DateTime? currentTime = null)
+		=> IsCrossedQuarter(previousTime, 0, 1, 5, 0, 0, currentTime);
+
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static bool IsCrossedYearlyQuestReset(DateTime previousTime, int month, DateTime? currentTime = null)
+		=> IsCrossedYear(previousTime, month, 1, 5, 0, 0, currentTime);
 
 
 	/// <summary>
@@ -278,9 +303,10 @@ public static class DateTimeHelper
 	/// <summary>
 	/// 現在の東京標準時を取得します。
 	/// </summary>
-	public static DateTime GetJapanStandardTimeNow()
+	/// <param name="currentTime">Current JST time, used for testing only.</param>
+	public static DateTime GetJapanStandardTimeNow(DateTime? currentTime = null)
 	{
-		return DateTime.UtcNow + new TimeSpan(9, 0, 0);
+		return currentTime ?? DateTime.UtcNow + new TimeSpan(9, 0, 0);
 	}
 
 	/// <summary>
