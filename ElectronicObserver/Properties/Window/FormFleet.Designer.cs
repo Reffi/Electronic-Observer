@@ -19,7 +19,7 @@ namespace ElectronicObserver.Properties.Window {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class FormFleet {
@@ -294,7 +294,7 @@ namespace ElectronicObserver.Properties.Window {
         ///   Looks up a localized string similar to Lv合計: {0} / 平均: {1:0.00}
         ///{2}艦隊
         ///支援攻撃: {3}
-        ///合計火力 {4} / 雷装 {5} / 対空 {6} / 対潜 {7} / 索敵 {8}
+        ///合計火力 {4} ({20})  / 雷装 {5} / 対空 {6} ({21}) / 対潜 {7} ({22}) / 索敵 {8} ({23})
         ///ドラム缶搭載: {9}個 ({10}艦)
         ///大発動艇搭載: {11}個 ({12}艦, +{13:p1})
         ///輸送量(TP): S {14} / A {15}
