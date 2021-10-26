@@ -17,9 +17,9 @@ public partial class ShipTypeConditionViewModel : ObservableObject, IConditionVi
 
 	public bool MustBeFlagship { get; set; }
 
-	public string Display => $"({CountConditionDisplay}) >= {Model.Count} {FlagshipConditionDisplay}";
+	public string Display => $"({CountConditionDisplay}) >= {Model.Count}{FlagshipConditionDisplay}";
 
-	private string CountConditionDisplay => string.Join(Properties.Window.Dialog.QuestTrackerManager.Operator_Or,
+	private string CountConditionDisplay => string.Join($" {Properties.Window.Dialog.QuestTrackerManager.Operator_Or} ",
 		Model.Types.Select(s => s.Display()));
 
 	private string FlagshipConditionDisplay => MustBeFlagship switch
@@ -31,6 +31,8 @@ public partial class ShipTypeConditionViewModel : ObservableObject, IConditionVi
 	public ShipTypeConditionViewModel(ShipTypeConditionModel model)
 	{
 		Model = model;
+
+		MustBeFlagship = Model.MustBeFlagship;
 
 		AllTypes = Enum.GetValues(typeof(ShipTypes)).Cast<ShipTypes>();
 
@@ -66,10 +68,12 @@ public partial class ShipTypeConditionViewModel : ObservableObject, IConditionVi
 
 	public bool ConditionMet(IFleetData fleet)
 	{
-		bool flagshipCondition = !Model.MustBeFlagship ||
-			Model.Types.Contains(fleet.MembersInstance[0].MasterShip.ShipType);
+		List<IShipData> ships = fleet.MembersInstance.Where(s => s is not null).ToList();
 
-		bool countCondition = fleet.MembersInstance
+		bool flagshipCondition = !Model.MustBeFlagship ||
+			Model.Types.Contains(ships[0].MasterShip.ShipType);
+
+		bool countCondition = ships
 			.Count(s => Model.Types.Contains(s.MasterShip.ShipType)) >= Model.Count;
 
 		return flagshipCondition && countCondition;
