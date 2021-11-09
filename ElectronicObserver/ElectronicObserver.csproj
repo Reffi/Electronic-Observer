@@ -399,7 +399,7 @@
 		<PackageReference Include="Dirkster.AvalonDock" Version="4.60.0" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.3.0" />
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.4" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All" />
@@ -412,10 +412,10 @@
 		<PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
 		<PackageReference Include="System.Management" Version="5.0.0" />
 		<PackageReference Include="DiscordRichPresence" Version="1.0.175" />
-		<PackageReference Include="Grpc" Version="2.41.0" />
-		<PackageReference Include="Grpc.Core" Version="2.41.0" />
-		<PackageReference Include="Grpc.Core.Api" Version="2.41.0" />
-		<PackageReference Include="log4net" Version="2.0.12" />
+		<PackageReference Include="Grpc" Version="2.41.1" />
+		<PackageReference Include="Grpc.Core" Version="2.41.1" />
+		<PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
+		<PackageReference Include="log4net" Version="2.0.13" />
 		<PackageReference Include="MagicOnion" Version="3.0.13" />
 		<PackageReference Include="MagicOnion.Abstractions" Version="3.0.13" />
 		<PackageReference Include="MagicOnion.Hosting" Version="3.0.13" />
