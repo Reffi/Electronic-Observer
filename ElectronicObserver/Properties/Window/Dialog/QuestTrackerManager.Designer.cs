@@ -223,11 +223,29 @@ namespace ElectronicObserver.Properties.Window.Dialog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 装備図鑑表示廃棄.
+        /// </summary>
+        public static string QuestTaskType_EquipmentCardTypeScrap {
+            get {
+                return ResourceManager.GetString("QuestTaskType_EquipmentCardTypeScrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 装備カテゴリ廃棄.
         /// </summary>
         public static string QuestTaskType_EquipmentCategoryScrap {
             get {
                 return ResourceManager.GetString("QuestTaskType_EquipmentCategoryScrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 装備アイコンID廃棄.
+        /// </summary>
+        public static string QuestTaskType_EquipmentIconTypeScrap {
+            get {
+                return ResourceManager.GetString("QuestTaskType_EquipmentIconTypeScrap", resourceCulture);
             }
         }
         
