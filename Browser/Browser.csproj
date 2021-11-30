@@ -17,7 +17,7 @@
 		<UpdateRequired>false</UpdateRequired>
 		<MapFileExtensions>true</MapFileExtensions>
 		<ApplicationRevision>0</ApplicationRevision>
-		<ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+		<ApplicationVersion>5.0.0.0</ApplicationVersion>
 		<UseApplicationTrust>false</UseApplicationTrust>
 		<BootstrapperEnabled>true</BootstrapperEnabled>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -26,6 +26,8 @@
 		<UseWPF>true</UseWPF>
 		<SatelliteResourceLanguages>en;ja</SatelliteResourceLanguages>
 		<Nullable>enable</Nullable>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<SelfContained>false</SelfContained>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<OutputPath>..\ElectronicObserver\bin\x64\Debug\</OutputPath>
@@ -36,6 +38,8 @@
 	<PropertyGroup>
 		<StartupObject>Browser.App</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AssemblyVersion>5.0.0.0</AssemblyVersion>
+		<FileVersion>5.0.0.0</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BrowserLibCore\BrowserLibCore.csproj" />
@@ -61,12 +65,13 @@
 		<WCFMetadata Include="Connected Services\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CefSharp.WinForms.NETCore" Version="95.7.141" />
-		<PackageReference Include="CefSharp.Wpf.NETCore" Version="95.7.141" />
-		<PackageReference Include="Grpc" Version="2.41.0" />
-		<PackageReference Include="Grpc.Core" Version="2.41.0" />
-		<PackageReference Include="Grpc.Core.Api" Version="2.41.0" />
-		<PackageReference Include="log4net" Version="2.0.12" />
+		<PackageReference Include="cef.redist.x64" Version="96.0.14" />
+		<PackageReference Include="CefSharp.WinForms.NETCore" Version="96.0.141" />
+		<PackageReference Include="CefSharp.Wpf.NETCore" Version="96.0.141" />
+		<PackageReference Include="Grpc" Version="2.41.1" />
+		<PackageReference Include="Grpc.Core" Version="2.41.1" />
+		<PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
+		<PackageReference Include="log4net" Version="2.0.13" />
 		<PackageReference Include="MagicOnion" Version="3.0.13" />
 		<PackageReference Include="MagicOnion.Abstractions" Version="3.0.13" />
 		<PackageReference Include="MessagePack" Version="2.3.85" />
@@ -76,7 +81,7 @@
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.4" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All" />
@@ -94,29 +99,22 @@
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
 		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
 		<PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
-		<PackageReference Include="Titanium.Web.Proxy" Version="3.1.1397" />
+		<PackageReference Include="Titanium.Web.Proxy" Version="3.1.1406-beta" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="Properties\Resources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Resources.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Update="Properties\Resources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
-	<!--
-		cd $(MSBuildProjectDirectory)
-		cd ..\ElectronicObserver\bin\x64\publish\
-		del vk_swiftshader.dll
-		del vk_swiftshader_icd.json
-		del vulkan-1.dll
-	-->
-	<Target Name="PostPublish" AfterTargets="Publish">
-		<Exec Command="cd $(MSBuildProjectDirectory)&#xD;&#xA;cd ..\ElectronicObserver\bin\x64\publish\&#xD;&#xA;del vk_swiftshader.dll&#xD;&#xA;del vk_swiftshader_icd.json&#xD;&#xA;del vulkan-1.dll" />
-	</Target>
+	<ItemGroup>
+		<PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="95.7.14" />
+	</ItemGroup>
 </Project>

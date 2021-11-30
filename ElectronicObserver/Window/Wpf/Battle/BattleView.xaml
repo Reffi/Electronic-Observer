@@ -36,7 +36,7 @@
 
 		<Grid
 			Visibility="{Binding ViewVisibility}"
-			HorizontalAlignment="Center"
+			HorizontalAlignment="Left"
 			Margin="4"
 			IsSharedSizeScope="True">
 			<Grid.Resources>

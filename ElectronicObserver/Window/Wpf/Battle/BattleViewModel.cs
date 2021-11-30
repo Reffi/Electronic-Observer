@@ -120,7 +120,6 @@ public partial class BattleViewModel : AnchorableViewModel
 
 	public string? DamageEnemyText { get; set; }
 
-
 	#endregion
 
 	public List<HealthBarViewModel> HPBars { get; } = new();
@@ -266,7 +265,6 @@ public partial class BattleViewModel : AnchorableViewModel
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
 				ViewVisibility = (!hideDuringBattle).ToVisibility();
 				break;
-
 
 			case "api_req_sortie/battle":
 			case "api_req_practice/battle":
@@ -465,7 +463,6 @@ public partial class BattleViewModel : AnchorableViewModel
 
 		BaseLayoutPanel.ResumeLayout();
 
-
 		if (Utility.Configuration.Config.UI.IsLayoutFixed)
 			TableTop.Width = TableTop.GetPreferredSize(BaseLayoutPanel.Size).Width;
 		else
@@ -492,8 +489,8 @@ public partial class BattleViewModel : AnchorableViewModel
 		if (bm.IsEnemyCombined && bm.StartsFromDayBattle)
 		{
 			bool willMain = bm.WillNightBattleWithMainFleet();
-			FleetEnemyBackColor = (willMain ? Color.LightSteelBlue : Color.Transparent).ToBrush();
-			FleetEnemyEscortBackColor = (willMain ? Color.Transparent : Color.LightSteelBlue).ToBrush();
+			FleetEnemyBackColor = (willMain ? Color.Maroon : Color.Transparent).ToBrush();
+			FleetEnemyEscortBackColor = (willMain ? Color.Transparent : Color.Maroon).ToBrush();
 		}
 		else
 		{
@@ -644,7 +641,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		SearchingToolTip = null;
 	}
 
-
 	/// <summary>
 	/// 航空戦表示用ヘルパー
 	/// </summary>
@@ -707,8 +703,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		ToolTipInfo.SetToolTip(label, null);
 		*/
 	}
-
-
 
 	private void SetAerialWarfare(PhaseAirBattleBase phaseJet, PhaseAirBattleBase phase1) => SetAerialWarfare(phaseJet, phase1, null);
 
@@ -794,7 +788,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			// SetShootdown(AirStage1Friend, 1, true, needAppendInfo);
 			// SetShootdown(AirStage1Enemy, 1, false, needAppendInfo);
 
-
 			(AirStage1FriendText, AirStage1FriendToolTip, AirStage1FriendForeColor, AirStage1FriendIcon) =
 				SetShootdown(1, true, needAppendInfo);
 
@@ -856,7 +849,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			bool needAppendInfo = phases[0].Stage2Enabled || phases[2].Stage2Enabled;
 			var phases2 = phases.Where(p => p.Stage2Enabled);
 
-
 			// SetShootdown(AirStage2Friend, 2, true, needAppendInfo);
 			// SetShootdown(AirStage2Enemy, 2, false, needAppendInfo);
 
@@ -905,7 +897,7 @@ public partial class BattleViewModel : AnchorableViewModel
 	{
 		AirSuperiorityText = "-";
 		AirSuperiorityToolTip = null;
-
+		AirSuperiorityForeColor = Utility.Configuration.Config.UI.ForeColor.ToBrush();
 		// ClearAircraftLabel(AirStage1Friend);
 		// ClearAircraftLabel(AirStage1Enemy);
 		// ClearAircraftLabel(AirStage2Friend);
@@ -971,8 +963,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			HPBars[index].Visible = false;
 		}
 
-
-
 		// friend main
 		for (int i = 0; i < initial.FriendInitialHPs.Length; i++)
 		{
@@ -1031,7 +1021,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			}
 		}
 
-
 		// enemy main
 		for (int i = 0; i < initial.EnemyInitialHPs.Length; i++)
 		{
@@ -1062,7 +1051,6 @@ public partial class BattleViewModel : AnchorableViewModel
 				DisableHPBar(refindex);
 			}
 		}
-
 
 		// friend escort
 		if (isFriendCombined)
@@ -1123,8 +1111,6 @@ public partial class BattleViewModel : AnchorableViewModel
 
 		MoveHPBar(hasFriend7thShip);
 
-
-
 		// enemy escort
 		if (isEnemyCombined)
 		{
@@ -1173,9 +1159,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			*/
 		}
 
-
-
-
 		if ((isFriendCombined || (hasFriend7thShip && !Utility.Configuration.Config.FormBattle.Display7thAsSingleLine)) && isEnemyCombined)
 		{
 			foreach (var bar in HPBars)
@@ -1196,7 +1179,6 @@ public partial class BattleViewModel : AnchorableViewModel
 					bar.Text = "HP:";
 			}
 		}
-
 
 		{   // support
 			PhaseSupport support = null;
@@ -1301,7 +1283,6 @@ public partial class BattleViewModel : AnchorableViewModel
 
 	}
 
-
 	/// <summary>
 	/// 損害率と戦績予測を設定します。
 	/// </summary>
@@ -1371,7 +1352,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			}
 		}
 
-
 		//夜間触接判定
 		if (pd.TouchAircraftFriend != -1)
 		{
@@ -1430,7 +1410,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		}
 	}
 
-
 	/// <summary>
 	/// 戦闘終了後に、MVP艦の表示を更新します。
 	/// </summary>
@@ -1446,7 +1425,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		var friend = bd.Initial.FriendFleet;
 		var escort = !isCombined ? null : bd.Initial.FriendFleetEscort;
 
-
 		/*// DEBUG
 		{
 			BattleData lastbattle = bm.StartsFromDayBattle ? (BattleData)bm.BattleNight ?? bm.BattleDay : (BattleData)bm.BattleDay ?? bm.BattleNight;
@@ -1458,7 +1436,6 @@ public partial class BattleViewModel : AnchorableViewModel
 			}
 		}
 		//*/
-
 
 		for (int i = 0; i < friend.Members.Count; i++)
 		{
@@ -1507,7 +1484,6 @@ public partial class BattleViewModel : AnchorableViewModel
 
 	}
 
-
 	void ConfigurationChanged()
 	{
 		var config = Utility.Configuration.Config;
@@ -1526,7 +1502,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		SubFont = config.UI.SubFont;
 
 		BaseLayoutPanel.AutoScroll = config.FormBattle.IsScrollable;
-
 
 		bool fixSize = config.UI.IsLayoutFixed;
 		bool showHPBar = config.FormBattle.ShowHPBar;
