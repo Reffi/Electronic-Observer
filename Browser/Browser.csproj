@@ -65,9 +65,8 @@
 		<WCFMetadata Include="Connected Services\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="cef.redist.x64" Version="96.0.14" />
-		<PackageReference Include="CefSharp.WinForms.NETCore" Version="96.0.141" />
-		<PackageReference Include="CefSharp.Wpf.NETCore" Version="96.0.141" />
+		<PackageReference Include="CefSharp.WinForms.NETCore" Version="96.0.140-pre" />
+		<PackageReference Include="CefSharp.Wpf.NETCore" Version="96.0.140-pre" />
 		<PackageReference Include="Grpc" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
@@ -115,6 +114,6 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="95.7.14" />
+		<PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="96.0.14" />
 	</ItemGroup>
 </Project>
