@@ -1490,6 +1490,7 @@ public partial class FormMainViewModel : ObservableObject
 		*/
 		if (c.Life.LockLayout)
 		{
+			Window.ResizeMode = ResizeMode.NoResize;
 			//Shipgroups
 			FormShipGroup.IsClosable = true;
 			FormShipGroup.IsFloatable = false;
@@ -1548,6 +1549,7 @@ public partial class FormMainViewModel : ObservableObject
 		}
 		else
 		{
+			Window.ResizeMode = ResizeMode.CanResize;
 			//FormShipGroup
 			FormShipGroup.IsClosable = true;
 			FormShipGroup.IsFloatable = true;
