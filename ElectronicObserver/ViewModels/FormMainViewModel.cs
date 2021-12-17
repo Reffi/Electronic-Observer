@@ -62,6 +62,9 @@ public partial class FormMainViewModel : ObservableObject
 	public FormMainTranslationViewModel FormMain { get; }
 	private System.Windows.Forms.Timer UIUpdateTimer { get; }
 	public bool Topmost { get; set; }
+	public int GridSplitterSize { get; set; } = 1;
+	public bool CanChangeGridSplitterSize { get; set; }
+	public bool LockLayout { get; set; }
 
 	private string LayoutFolder => @"Settings\Layout";
 	private string DefaultLayoutPath => Path.Combine(LayoutFolder, "Default.xml");
@@ -467,6 +470,21 @@ public partial class FormMainViewModel : ObservableObject
 			ConfigurationChanged();
 		};
 
+		PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName is not nameof(GridSplitterSize)) return;
+
+			LoadLayout(Window);
+		};
+
+		PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName is not nameof(LockLayout)) return;
+
+			Config.Life.LockLayout = LockLayout;
+			ConfigurationChanged();
+		};
+
 		Logger.Add(3, Resources.StartupComplete);
 	}
 
@@ -475,6 +493,12 @@ public partial class FormMainViewModel : ObservableObject
 	{
 		Topmost = !Topmost;
 		Topmost = !Topmost;
+	}
+
+	[ICommand]
+	private void AutoHide(LayoutAnchorable anchorable)
+	{
+		anchorable.ToggleAutoHide();
 	}
 
 	#region File
@@ -1450,6 +1474,13 @@ public partial class FormMainViewModel : ObservableObject
 		StripMenu_File_Layout_LockLayout.Checked = c.Life.LockLayout;
 		MainDockPanel.CanCloseFloatWindowInLock = c.Life.CanCloseFloatWindowInLock;
 		*/
+		LockLayout = c.Life.LockLayout;
+		CanChangeGridSplitterSize = !LockLayout;
+		GridSplitterSize = LockLayout switch
+		{
+			true => 0,
+			_ => 1
+		};
 		Topmost = c.Life.TopMost;
 		/*
 		StripMenu_File_Notification_MuteAll.Checked = Notifier.NotifierManager.Instance.GetNotifiers().All(n => n.IsSilenced);
