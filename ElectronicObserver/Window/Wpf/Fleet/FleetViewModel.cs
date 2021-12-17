@@ -252,6 +252,7 @@ public partial class FleetViewModel : AnchorableViewModel
 				// member.HP.MaximumSize = isLayoutFixed ? new Size(int.MaxValue, (int)ControlHelper.GetDefaultRowStyle().Height - member.HP.Margin.Vertical) : Size.Empty;
 				// member.HP.ResumeUpdate();
 
+				member.Level.NextVisible = showNext;
 				member.Level.TextNext = showNext ? "next:" : null;
 
 				member.Condition.ImageAlign = showConditionIcon ? System.Drawing.ContentAlignment.MiddleLeft : System.Drawing.ContentAlignment.MiddleCenter;
@@ -467,7 +468,7 @@ public partial class FleetViewModel : AnchorableViewModel
 		}
 
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	/*
@@ -536,7 +537,7 @@ public partial class FleetViewModel : AnchorableViewModel
 		sb.Remove(sb.Length - 1, 1);        // remove ","
 		sb.Append(@"}");
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	/// <summary>
@@ -600,7 +601,7 @@ public partial class FleetViewModel : AnchorableViewModel
 			sb.Remove(sb.Length - 1, 1);
 		}
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	/// <summary>
@@ -650,7 +651,7 @@ public partial class FleetViewModel : AnchorableViewModel
 
 		string json = $"[{string.Join(",", ships)}]";
 
-		Clipboard.SetText(json);
+		Clipboard.SetDataObject(json);
 	}
 
 	/// <summary>
@@ -684,7 +685,7 @@ public partial class FleetViewModel : AnchorableViewModel
 		sb.Remove(sb.Length - 1, 1);        // remove ","
 		sb.Append("]");
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	/// <summary>
@@ -730,7 +731,7 @@ public partial class FleetViewModel : AnchorableViewModel
 
 		string json = $"[{string.Join(",", ships)}]";
 
-		Clipboard.SetText(json);
+		Clipboard.SetDataObject(json);
 	}
 
 	[ICommand]
@@ -767,7 +768,7 @@ public partial class FleetViewModel : AnchorableViewModel
 		sb.Remove(sb.Length - 1, 1);        // remove ","
 		sb.Append("]");
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	private void ContextMenuFleet_AntiAirDetails_Click()

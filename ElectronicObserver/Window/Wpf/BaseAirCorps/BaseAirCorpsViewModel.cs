@@ -28,7 +28,7 @@ public class BaseAirCorpsSquadronViewModel : BaseAirCorpsItemControlViewModel
 	public Utility.Storage.SerializableFont Font { get; internal set; }
 	public bool ShowAircraft { get; set; }
 	public bool ShowAircraftLevelByNumber { get; set; }
-	public ShipStatusEquipment.LevelVisibilityFlag LevelVisibility { get; set; }
+	public LevelVisibilityFlag LevelVisibility { get; set; }
 
 	public ObservableCollection<ShipSlotViewModel> SlotList { get; } = new()
 	{
@@ -617,7 +617,7 @@ public class BaseAirCorpsViewModel : AnchorableViewModel
 			sb.AppendLine();
 		}
 
-		Clipboard.SetText(sb.ToString());
+		Clipboard.SetDataObject(sb.ToString());
 	}
 
 	private void ContextMenuBaseAirCorps_DisplayRelocatedEquipments_Click()
