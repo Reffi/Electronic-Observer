@@ -65,6 +65,7 @@ public partial class FormMainViewModel : ObservableObject
 	public int GridSplitterSize { get; set; } = 1;
 	public bool CanChangeGridSplitterSize { get; set; }
 	public bool LockLayout { get; set; }
+	public bool CanAutoHide => !LockLayout;
 
 	private string LayoutFolder => @"Settings\Layout";
 	private string DefaultLayoutPath => Path.Combine(LayoutFolder, "Default.xml");
@@ -620,6 +621,8 @@ public partial class FormMainViewModel : ObservableObject
 		window.Width = Position.Width;
 		window.Height = Position.Height;
 		window.WindowState = Position.WindowState;
+
+		SetAnchorableProperties();
 	}
 
 	private string LayoutFilter => "Layout File|*.xml";
@@ -1488,138 +1491,17 @@ public partial class FormMainViewModel : ObservableObject
 		if (!c.Control.UseSystemVolume)
 			_volumeUpdateState = -1;
 		*/
-		if (c.Life.LockLayout)
-		{
-			Window.ResizeMode = ResizeMode.NoResize;
-			//Shipgroups
-			FormShipGroup.IsClosable = true;
-			FormShipGroup.IsFloatable = false;
-			FormShipGroup.IsMovable = false;
-			//Battle
-			Battle.IsClosable = false;
-			Battle.IsMovable = false;
-			Battle.IsFloatable = false;
-			//Compass
-			Compass.IsClosable = false;
-			Compass.IsMovable = false;
-			Compass.IsFloatable = false;
-			//FleetPreset
-			FleetPreset.IsClosable = false;
-			FleetPreset.IsMovable = false;
-			FleetPreset.IsFloatable = false;
-			//Arsenal
-			Arsenal.IsClosable = false;
-			Arsenal.IsMovable = false;
-			Arsenal.IsFloatable = false;
-			//Dock
-			Dock.IsClosable = false;
-			Dock.IsMovable = false;
-			Dock.IsFloatable = false;
-			//FleetOverview
-			FleetOverview.IsClosable = false;
-			FleetOverview.IsMovable = false;
-			FleetOverview.IsFloatable = false;
-			//BaseAirCorps
-			BaseAirCorps.IsClosable = false;
-			BaseAirCorps.IsMovable = false;
-			BaseAirCorps.IsFloatable = false;
-			//Fleets
-			Fleets.ForEach(LockFleets);
-			//Headquarters
-			Headquarters.IsClosable = false;
-			Headquarters.IsMovable = false;
-			Headquarters.IsFloatable = false;
-			//FormBrowser
-			FormBrowserHost.IsClosable = false;
-			FormBrowserHost.IsMovable = false;
-			FormBrowserHost.IsFloatable = false;
-			//Log
-			FormLog.IsClosable = false;
-			FormLog.IsMovable = false;
-			FormLog.IsFloatable = false;
-			//Quests
-			FormQuest.IsClosable = false;
-			FormQuest.IsMovable = false;
-			FormQuest.IsFloatable = false;
+	}
 
-			//Information
-			FormInformation.IsClosable = false;
-			FormInformation.IsMovable = false;
-			FormInformation.IsFloatable = false;
-		}
-		else
+	private void SetAnchorableProperties()
+	{
+		foreach (AnchorableViewModel view in Views)
 		{
-			Window.ResizeMode = ResizeMode.CanResize;
-			//FormShipGroup
-			FormShipGroup.IsClosable = true;
-			FormShipGroup.IsFloatable = true;
-			FormShipGroup.IsMovable = true;
-			//Battle
-			Battle.IsClosable = true;
-			Battle.IsMovable = true;
-			Battle.IsFloatable = true;
-			//Compass
-			Compass.IsClosable = true;
-			Compass.IsMovable = true;
-			Compass.IsFloatable = true;
-			//FleetPreset
-			FleetPreset.IsClosable = true;
-			FleetPreset.IsMovable = true;
-			FleetPreset.IsFloatable = true;
-			//Arsenal
-			Arsenal.IsClosable = true;
-			Arsenal.IsMovable = true;
-			Arsenal.IsFloatable = true;
-			//Dock
-			Dock.IsClosable = true;
-			Dock.IsMovable = true;
-			Dock.IsFloatable = true;
-			//FleetOverview
-			FleetOverview.IsClosable = true;
-			FleetOverview.IsMovable = true;
-			FleetOverview.IsFloatable = true;
-			//BaseAirCorps
-			BaseAirCorps.IsClosable = true;
-			BaseAirCorps.IsMovable = true;
-			BaseAirCorps.IsFloatable = true;
-			//Fleets
-			Fleets.ForEach(UnlockFleets);
-			//Headquarters
-			Headquarters.IsClosable = true;
-			Headquarters.IsMovable = true;
-			Headquarters.IsFloatable = true;
-			//FormBrowser
-			FormBrowserHost.IsClosable = true;
-			FormBrowserHost.IsMovable = true;
-			FormBrowserHost.IsFloatable = true;
-			//Log
-			FormLog.IsClosable = true;
-			FormLog.IsMovable = true;
-			FormLog.IsFloatable = true;
-			//Quests
-			FormQuest.IsClosable = true;
-			FormQuest.IsMovable = true;
-			FormQuest.IsFloatable = true;
-
-			//Information
-			FormInformation.IsClosable = true;
-			FormInformation.IsMovable = true;
-			FormInformation.IsFloatable = true;
+			view.CanFloat = !LockLayout;
+			view.CanClose = !LockLayout;
 		}
 	}
 
-	private void LockFleets(FleetViewModel f)
-	{
-		f.IsClosable = false;
-		f.IsMovable = false;
-		f.IsFloatable = false;
-	}
-	private void UnlockFleets(FleetViewModel f)
-	{
-		f.IsClosable = true;
-		f.IsMovable = true;
-		f.IsFloatable = true;
-	}
 	private void SetFont()
 	{
 		Font = new FontFamily(Config.UI.MainFont.FontData.FontFamily.Name);
