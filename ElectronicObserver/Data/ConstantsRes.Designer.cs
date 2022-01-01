@@ -2392,6 +2392,33 @@ namespace ElectronicObserver.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 潜水艦隊攻撃 (2・3).
+        /// </summary>
+        public static string SpecialSubmarineTender23 {
+            get {
+                return ResourceManager.GetString("SpecialSubmarineTender23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 潜水艦隊攻撃 (2・4).
+        /// </summary>
+        public static string SpecialSubmarineTender24 {
+            get {
+                return ResourceManager.GetString("SpecialSubmarineTender24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 潜水艦隊攻撃 (3・4).
+        /// </summary>
+        public static string SpecialSubmarineTender34 {
+            get {
+                return ResourceManager.GetString("SpecialSubmarineTender34", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 輝虹.
         /// </summary>
         public static string SRainbow {
