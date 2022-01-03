@@ -4,6 +4,7 @@
 	xmlns:conditions="clr-namespace:ElectronicObserver.Window.Dialog.QuestTrackerManager.ViewModels.Conditions"
 	xmlns:controls="http://schemas.modernwpf.com/2019"
 	xmlns:questTrackerManager="clr-namespace:ElectronicObserver.Window.Dialog.QuestTrackerManager"
+	xmlns:system="clr-namespace:System;assembly=System.Runtime"
 	>
 
 	<ResourceDictionary.MergedDictionaries>
@@ -182,12 +183,115 @@
 		</Border>
 	</DataTemplate>
 
+	<DataTemplate x:Key="AllowedShipTypesConditionTemplate" DataType="{x:Type conditions:AllowedShipTypesConditionViewModel}">
+		<DataTemplate.Resources>
+			<ResourceDictionary Source="Styles.xaml" />
+		</DataTemplate.Resources>
+		<Border
+			Margin="2"
+			BorderBrush="Gray"
+			BorderThickness="1"
+			>
+			<StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<Button
+						Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"
+						CommandParameter="{Binding Model}"
+						Content="ｘ"
+						/>
+
+					<TextBlock Text="{Binding Display}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<Button Command="{Binding AddTypeCommand}" Content="＋" />
+
+					<ComboBox
+						ItemTemplate="{StaticResource EnumDisplayerTemplate}"
+						ItemsSource="{Binding AllTypes}"
+						SelectedItem="{Binding SelectedType}"
+						/>
+
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+					<ItemsControl ItemsSource="{Binding Model.Types}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<DataTemplate.Resources>
+									<ResourceDictionary Source="Styles.xaml" />
+								</DataTemplate.Resources>
+
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+
+									<Button
+										Command="{Binding DataContext.RemoveTypeCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"
+										CommandParameter="{Binding}"
+										Content="ｘ"
+										/>
+								</StackPanel>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</StackPanel>
+			</StackPanel>
+		</Border>
+	</DataTemplate>
+
+	<DataTemplate x:Key="ShipPositionConditionTemplate" DataType="{x:Type conditions:ShipPositionConditionViewModel}">
+		<DataTemplate.Resources>
+			<ResourceDictionary Source="Styles.xaml" />
+		</DataTemplate.Resources>
+		<StackPanel Orientation="Horizontal">
+			<Button
+				Command="{Binding DataContext.RemoveConditionCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"
+				CommandParameter="{Binding Model}"
+				Content="ｘ"
+				/>
+
+			<ComboBox ItemsSource="{Binding Ships}" SelectedItem="{Binding Ship, Mode=TwoWay}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding NameEN}" />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<ComboBox
+				ItemTemplate="{StaticResource EnumDisplayerTemplate}"
+				ItemsSource="{Binding RemodelComparisonTypes}"
+				SelectedItem="{Binding RemodelComparisonType}"
+				/>
+
+			<ComboBox SelectedValue="{Binding Position}">
+				<ComboBox.Items>
+					<system:Int32>1</system:Int32>
+					<system:Int32>2</system:Int32>
+					<system:Int32>3</system:Int32>
+					<system:Int32>4</system:Int32>
+					<system:Int32>5</system:Int32>
+					<system:Int32>6</system:Int32>
+				</ComboBox.Items>
+			</ComboBox>
+
+			<TextBlock Text="{Binding Display}" />
+		</StackPanel>
+	</DataTemplate>
+
 
 	<questTrackerManager:ConditionTemplateSelector
 		x:Key="ConditionTemplateSelector"
+		AllowedShipTypes="{StaticResource AllowedShipTypesConditionTemplate}"
 		Group="{StaticResource GroupConditionTemplate}"
 		PartialShip="{StaticResource PartialShipConditionTemplate}"
 		Ship="{StaticResource ShipConditionTemplate}"
+		ShipPosition="{StaticResource ShipPositionConditionTemplate}"
 		ShipType="{StaticResource ShipTypeConditionTemplate}"
 		/>
 
