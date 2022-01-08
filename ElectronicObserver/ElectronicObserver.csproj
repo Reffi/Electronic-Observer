@@ -38,9 +38,9 @@
 		<Copyright>Copyright ©  2014 Andante</Copyright>
 		<Trademark />
 		<Culture />
-		<AssemblyVersion>5.0.2.0</AssemblyVersion>
-		<FileVersion>5.0.2.0</FileVersion>
-		<Version>5.0.2.0</Version>
+		<AssemblyVersion>5.0.3.0</AssemblyVersion>
+		<FileVersion>5.0.3.0</FileVersion>
+		<Version>5.0.3.0</Version>
 		<AnalysisLevel>preview</AnalysisLevel>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 	</PropertyGroup>
@@ -346,6 +346,9 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>Menus.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Window\Wpf\ShipGroupWinforms\FormShipGroup.cs">
+		  <SubType>Form</SubType>
+		</Compile>
 		<None Include=".editorconfig" />
 		<None Update="Assets.zip">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -397,6 +400,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Dirkster.AvalonDock" Version="4.60.0" />
+		<PackageReference Include="gong-wpf-dragdrop" Version="3.0.0" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.3.0" />
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.3.0" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
@@ -697,6 +701,9 @@
 	  <Page Update="Window\Wpf\Resources.xaml">
 	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 	    <SubType>Designer</SubType>
+	  </Page>
+	  <Page Update="Window\Wpf\ShipGroupWinforms\ShipGroupWinformsView.xaml">
+	    <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
 	  </Page>
 	</ItemGroup>
 </Project>
