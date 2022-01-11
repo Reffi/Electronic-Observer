@@ -65,12 +65,10 @@
 		<WCFMetadata Include="Connected Services\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CefSharp.WinForms.NETCore" Version="96.0.140-pre" />
-		<PackageReference Include="CefSharp.Wpf.NETCore" Version="96.0.140-pre" />
 		<PackageReference Include="Grpc" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
-		<PackageReference Include="log4net" Version="2.0.13" />
+		<PackageReference Include="log4net" Version="2.0.12" />
 		<PackageReference Include="MagicOnion" Version="3.0.13" />
 		<PackageReference Include="MagicOnion.Abstractions" Version="3.0.13" />
 		<PackageReference Include="MessagePack" Version="2.3.85" />
@@ -80,7 +78,8 @@
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
+		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1083-prerelease" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.4" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All" />
@@ -112,8 +111,5 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="96.0.14" />
 	</ItemGroup>
 </Project>
