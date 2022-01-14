@@ -26,7 +26,6 @@
 		<UseWPF>true</UseWPF>
 		<SatelliteResourceLanguages>en;ja</SatelliteResourceLanguages>
 		<Nullable>enable</Nullable>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -65,8 +64,6 @@
 		<WCFMetadata Include="Connected Services\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CefSharp.WinForms.NETCore" Version="96.0.140-pre" />
-		<PackageReference Include="CefSharp.Wpf.NETCore" Version="96.0.140-pre" />
 		<PackageReference Include="Grpc" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core" Version="2.41.1" />
 		<PackageReference Include="Grpc.Core.Api" Version="2.41.1" />
@@ -81,6 +78,7 @@
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1083-prerelease" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.37" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.4" />
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All" />
@@ -112,8 +110,5 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="96.0.14" />
 	</ItemGroup>
 </Project>
