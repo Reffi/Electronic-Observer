@@ -18,6 +18,7 @@ public class AnchorableViewModel : ObservableObject
 
 	public bool CanFloat { get; set; }
 	public bool CanClose { get; set; }
+	public bool CanMove { get; set; }
 
 	public virtual ICommand CloseCommand { get; }
 

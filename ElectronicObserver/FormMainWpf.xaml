@@ -691,6 +691,7 @@
 							<Setter Property="CanClose" Value="{Binding Model.CanClose, Mode=TwoWay}" />
 							<Setter Property="CanHide" Value="False" />
 							<Setter Property="CanFloat" Value="{Binding Model.IsFloatable, Mode=TwoWay}" />
+							<Setter Property="CanMove" Value="{Binding Model.IsMoveable, Mode=TwoWay}" />
 							<Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
 						</Style>
 					</local:ViewStyleSelector.AnchorableStyle>
@@ -699,7 +700,7 @@
 
 			<LayoutRoot>
 				<LayoutPanel>
-					<LayoutAnchorablePane AllowDuplicateContent="False"/>
+					<LayoutAnchorablePane AllowDuplicateContent="False" />
 				</LayoutPanel>
 			</LayoutRoot>
 		</DockingManager>

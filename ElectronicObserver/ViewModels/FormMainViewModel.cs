@@ -1501,6 +1501,11 @@ public partial class FormMainViewModel : ObservableObject
 		{
 			view.CanFloat = !LockLayout;
 			view.CanClose = !LockLayout;
+			view.CanMove = !LockLayout;
+			if (view.Title == "Group")
+			{
+				view.CanClose = true;
+			}
 		}
 	}
 
