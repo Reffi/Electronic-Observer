@@ -215,7 +215,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 		Channel grpChannel = new(Host, Port, ChannelCredentials.Insecure);
 		BrowserHost = StreamingHubClient.Connect<BrowserLibCore.IBrowserHost, BrowserLibCore.IBrowser>(grpChannel, this);
 
-		ConfigurationChanged();
+		await Task.Run(ConfigurationChanged);
 
 		// ウィンドウの親子設定＆ホストプロセスから接続してもらう
 		Task.Run(async () => await BrowserHost.ConnectToBrowser((long)handle)).Wait();
@@ -257,7 +257,15 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			// no webview2 version available
 		}
 
-		if (version is not null) return;
+		if (version is not null)
+		{
+			if (Configuration.UseVulkanWorkaround)
+			{
+				await RenameVulkanFiles(version);
+			}
+
+			return;
+		}
 
 		AddLog(2, FormBrowser.WebView2NotFound);
 
@@ -281,6 +289,51 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 		File.Delete(webView2InstallerName);
 
 		AddLog(2, FormBrowser.WebView2InstallationComplete);
+	}
+
+	private async Task RenameVulkanFiles(string version)
+	{
+		List<string> basePaths = new()
+		{
+			System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles),
+			System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFilesX86),
+			System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData),
+		};
+
+		List<string> vulkanFiles = new()
+		{
+			"vk_swiftshader.dll",
+			"vk_swiftshader_icd.json",
+			"vulkan-1.dll",
+		};
+
+		try
+		{
+			foreach (string basePath in basePaths)
+			{
+				if (string.IsNullOrEmpty(basePath)) continue;
+
+				try
+				{
+					foreach (string vulkanFile in vulkanFiles)
+					{
+						string path = Path.Combine(basePath, @"Microsoft\EdgeWebView\Application", version, vulkanFile);
+
+						if (!File.Exists(path)) continue;
+
+						File.Move(path, Path.ChangeExtension(path, "eoworkaround"));
+					}
+				}
+				catch (UnauthorizedAccessException)
+				{
+					AddLog(2, Properties.Resources.MissingPermissionsToRenameVulkanFiles);
+				}
+			}
+		}
+		catch
+		{
+			// it's probably safe to just ignore all other exceptions
+		}
 	}
 
 	/// <summary>
@@ -495,7 +548,10 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			_ => Visibility.Collapsed
 		};
 
-		ThemeManager.Current.ApplicationTheme = (ApplicationTheme)await BrowserHost.GetTheme();
+		await App.Current.Dispatcher.BeginInvoke(async () =>
+		{
+			ThemeManager.Current.ApplicationTheme = (ApplicationTheme)await BrowserHost.GetTheme();
+		});
 
 		// SizeAdjuster.BackColor = System.Drawing.Color.FromArgb(unchecked((int)Configuration.BackColor));
 		// ToolMenu.BackColor = System.Drawing.Color.FromArgb(unchecked((int)Configuration.BackColor));
