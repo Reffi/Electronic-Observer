@@ -30,7 +30,7 @@ public partial class BattleViewModel : AnchorableViewModel
 	private SolidColorBrush WinRankColor_Win { get; } = Utility.Configuration.Config.UI.ForeColor.ToBrush();
 	private SolidColorBrush WinRankColor_Lose { get; } = Utility.Configuration.Config.UI.Color_Red.ToBrush();
 
-	public Visibility ViewVisibility { get; set; } = Visibility.Collapsed;
+	public bool ViewVisible { get; set; }
 
 	#region Row 0
 
@@ -101,10 +101,14 @@ public partial class BattleViewModel : AnchorableViewModel
 	public string? FleetFriendToolTip { get; set; }
 	public ImageSource? FleetFriendIcon { get; set; }
 
-	public Visibility FleetFriendEscortVisible { get; set; }
+	public bool PlayerFleetVisible { get; set; }
+
+	private bool IsPlayerCombinedFleet { get; set; }
+	public bool FleetFriendEscortVisible => IsPlayerCombinedFleet && PlayerFleetVisible;
 
 	public SolidColorBrush? FleetEnemyEscortBackColor { get; set; }
-	public Visibility FleetEnemyEscortVisible { get; set; }
+	private bool IsEnemyCombinedFleet { get; set; }
+	public bool FleetEnemyEscortVisible => IsEnemyCombinedFleet && ViewVisible;
 
 	public SolidColorBrush? FleetEnemyForeColor { get; set; }
 	public SolidColorBrush? FleetEnemyBackColor { get; set; }
@@ -226,7 +230,8 @@ public partial class BattleViewModel : AnchorableViewModel
 	[ICommand]
 	private void ShowBattleResult()
 	{
-		ViewVisibility = Visibility.Visible;
+		ViewVisible = true;
+		PlayerFleetVisible = true;
 	}
 
 	private void Updated(string apiname, dynamic data)
@@ -247,13 +252,17 @@ public partial class BattleViewModel : AnchorableViewModel
 			case "api_port/port":
 				// BaseLayoutPanel.Visible = false;
 				// ToolTipInfo.RemoveAll();
-				ViewVisibility = Visibility.Collapsed;
+				ViewVisible = false;
+				PlayerFleetVisible = false;
 				break;
 
 			case "api_req_map/start":
 			case "api_req_map/next":
 				if (!bm.Compass.HasAirRaid)
-					goto case "api_port/port";
+				{
+					ViewVisible = false;
+					break;
+				}
 
 				SetFormation(bm);
 				ClearSearchingResult();
@@ -263,7 +272,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = true;
 				break;
 
 			case "api_req_sortie/battle":
@@ -280,7 +290,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -293,7 +304,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -309,7 +321,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -324,7 +337,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -350,7 +364,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -371,7 +386,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -386,7 +402,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -399,7 +416,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -415,7 +433,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -440,7 +459,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetDamageRate(bm);
 
 				// BaseLayoutPanel.Visible = !hideDuringBattle;
-				ViewVisibility = (!hideDuringBattle).ToVisibility();
+				ViewVisible = !hideDuringBattle;
+				PlayerFleetVisible = !hideDuringBattle;
 			}
 			break;
 
@@ -452,7 +472,8 @@ public partial class BattleViewModel : AnchorableViewModel
 				SetMVPShip(bm);
 
 				// BaseLayoutPanel.Visible = true;
-				ViewVisibility = Visibility.Visible;
+				ViewVisible = true;
+				PlayerFleetVisible = true;
 			}
 			break;
 
@@ -940,6 +961,9 @@ public partial class BattleViewModel : AnchorableViewModel
 		bool isBaseAirRaid = bd.IsBaseAirRaid;
 		bool hasFriend7thShip = bd.Initial.FriendMaxHPs.Count(hp => hp > 0) == 7;
 
+		IsPlayerCombinedFleet = isFriendCombined;
+		IsEnemyCombinedFleet = isEnemyCombined;
+
 		var initial = bd.Initial;
 		var resultHPs = bd.ResultHPs;
 		var attackDamages = bd.AttackDamages;
@@ -1056,7 +1080,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		if (isFriendCombined)
 		{
 			// FleetFriendEscort.Visible = true;
-			FleetFriendEscortVisible = Visibility.Visible;
 
 			for (int i = 0; i < initial.FriendInitialHPsEscort.Length; i++)
 			{
@@ -1102,7 +1125,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		else
 		{
 			// FleetFriendEscort.Visible = false;
-			FleetFriendEscortVisible = Visibility.Collapsed;
 			/*
 			foreach (var i in BattleIndex.FriendEscort.Skip(Math.Max(bd.Initial.FriendFleet.Members.Count - 6, 0)))
 				DisableHPBar(i);
@@ -1115,7 +1137,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		if (isEnemyCombined)
 		{
 			// FleetEnemyEscort.Visible = true;
-			FleetEnemyEscortVisible = Visibility.Visible;
 
 			for (int i = 0; i < 6; i++)
 			{
@@ -1152,7 +1173,6 @@ public partial class BattleViewModel : AnchorableViewModel
 		else
 		{
 			// FleetEnemyEscort.Visible = false;
-			FleetEnemyEscortVisible = Visibility.Collapsed;
 			/*
 			foreach (var i in BattleIndex.EnemyEscort)
 				DisableHPBar(i);
@@ -1495,7 +1515,7 @@ public partial class BattleViewModel : AnchorableViewModel
 			hpBar.SetBarColorScheme(colorScheme);
 			hpBar.ColorMorphing = config.UI.BarColorMorphing;
 		}
-		
+
 
 		/*
 		MainFont = TableTop.Font = TableBottom.Font = Font = config.UI.MainFont;
