@@ -499,6 +499,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			ApplyStyleSheet();
 			ApplyZoom();
 			SetCookie();
+			DestroyDMMreloadDialog();
 		}
 	}
 
