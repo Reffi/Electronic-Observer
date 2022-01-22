@@ -40,7 +40,7 @@
 		<Culture />
 		<AssemblyVersion>5.1.0.0</AssemblyVersion>
 		<FileVersion>5.1.0.0</FileVersion>
-		<Version>5.0.3.0</Version>
+		<Version>5.1.0.0</Version>
 		<AnalysisLevel>preview</AnalysisLevel>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 	</PropertyGroup>
@@ -226,6 +226,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>QuestTrackerManager.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Window\Dialog\ShipPicker.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>ShipPicker.resx</DependentUpon>
 		</Compile>
 		<Compile Update="Properties\Window\FormBaseAirCorps.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -613,6 +618,10 @@
 		<EmbeddedResource Update="Properties\Window\Dialog\QuestTrackerManager.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>QuestTrackerManager.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Properties\Window\Dialog\ShipPicker.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>ShipPicker.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Window\FormBaseAirCorps.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>

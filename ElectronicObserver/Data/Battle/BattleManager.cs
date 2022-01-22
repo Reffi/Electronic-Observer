@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ElectronicObserver.Data.Battle.Detail;
 using ElectronicObserver.Properties.Data;
 using ElectronicObserver.Resource.Record;
+using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Utility.Mathematics;
 using ElectronicObserverTypes;
 
@@ -100,8 +101,6 @@ public class BattleManager : ResponseWrapper
 	/// 演習かどうか
 	/// </summary>
 	public bool IsPractice => (BattleMode & BattleModes.BattlePhaseMask) == BattleModes.Practice;
-
-	public bool IsIgnored { get; set; }
 
 	/// <summary>
 	/// 敵が連合艦隊かどうか
@@ -343,7 +342,6 @@ public class BattleManager : ResponseWrapper
 				Result = null;
 				BattleMode = BattleModes.Undefined;
 				DroppedShipCount = DroppedEquipmentCount = 0;
-				IsIgnored = false;
 				DroppedItemCount.Clear();
 				SpecialAttackCount.Clear();
 				break;
@@ -450,9 +448,18 @@ public class BattleManager : ResponseWrapper
 				ShipDataMaster ship = KCDatabase.Instance.MasterShips[shipID];
 				DroppedShipCount++;
 
-				var defaultSlot = ship.DefaultSlot;
+				IEnumerable<EquipmentDataMaster?>? defaultSlot = ship.DefaultSlot?.Select(i => i switch
+				{
+					<= 1 => null,
+					_ => KCDatabase.Instance.MasterEquipments[i]
+				});
+
 				if (defaultSlot != null)
-					DroppedEquipmentCount += defaultSlot.Count(id => id != -1);
+				{
+					DroppedEquipmentCount += defaultSlot
+						.Where(e => e is not null)
+						.Count(e => e!.UsesSlotSpace());
+				}
 
 				if (showLog)
 					Utility.Logger.Add(2, string.Format(LoggerRes.ShipAdded, ship.ShipTypeName, ship.NameWithClass));
@@ -477,7 +484,7 @@ public class BattleManager : ResponseWrapper
 			{
 
 				EquipmentDataMaster eq = KCDatabase.Instance.MasterEquipments[eqID];
-				if(eq.CategoryType != EquipmentTypes.Supplies || eq.CategoryType != EquipmentTypes.Ration || eq.CategoryType != EquipmentTypes.DamageControl)
+				if(eq.UsesSlotSpace())
 				{
 					DroppedEquipmentCount++;
 				}
@@ -826,26 +833,11 @@ public class BattleManager : ResponseWrapper
 
 			string path = $"{parent}\\{DateTimeHelper.GetTimeStamp()}@{info}.txt";
 
-			string maps_file = @"Settings\ignored_maps.txt";
+			using (var sw = new StreamWriter(path, false, Utility.Configuration.Config.Log.FileEncoding))
+			{
+				sw.Write(BattleDetailDescriptor.GetBattleDetail(this));
+			}
 
-			if (File.Exists(maps_file) && !IsPractice)
-			{
-				foreach (var line in File.ReadLines(maps_file))
-				{
-					if ($"{Compass.MapAreaID}-{Compass.MapInfoID}" == line)
-					{
-						IsIgnored = true;
-						break;
-					}
-				};
-			}
-			if (!IsIgnored)
-			{
-				using (var sw = new StreamWriter(path, false, Utility.Configuration.Config.Log.FileEncoding))
-				{
-					sw.Write(BattleDetailDescriptor.GetBattleDetail(this));
-				}
-			}
 		}
 		catch (Exception ex)
 		{
