@@ -15,6 +15,7 @@ using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Browser.ExtraBrowser;
 using BrowserLibCore;
 using Grpc.Core;
@@ -102,12 +103,17 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 	private bool IsKanColleLoaded { get; set; }
 
 	public string? LastScreenShotPath { get; set; }
+	public BitmapSource? LastScreenshot { get; set; }
 
 	private VolumeManager? VolumeManager { get; set; }
-	public int Volume { get; set; }
-	public ImageSource? MuteStateImage { get; set; }
+	public int RealVolume { get; set; }
+	// gets set to 0 when in muted state, and to RealVolume when in un-muted state
+	public int WorkaroundVolume { get; set; }
+	public bool IsMuted { get; set; }
+
 	public CoreWebView2Frame? gameframe { get; private set; }
 	public CoreWebView2Frame? kancolleframe { get; private set; }
+
 	public bool ZoomFit { get; set; }
 	public string CurrentZoom { get; set; } = "";
 	public int CurrentVolume { get; set; }
@@ -136,7 +142,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 	/// <param name="serverUri">ホストプロセスとの通信用URL</param>
 	public BrowserViewModel(string host, int port, string culture)
 	{
-		// Debugger.Launch();
+		// System.Diagnostics.Debugger.Launch();
 
 		FormBrowser = App.Current.Services.GetService<FormBrowserTranslationViewModel>()!;
 		ScreenshotCommand = new RelayCommand(ToolMenu_Other_ScreenShot_Click);
@@ -198,7 +204,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 
 		PropertyChanged += (sender, args) =>
 		{
-			if (args.PropertyName is not nameof(Volume)) return;
+			if (args.PropertyName is not nameof(RealVolume)) return;
 
 			ToolMenu_Other_Volume_ValueChanged();
 		};
@@ -587,7 +593,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 		DestroyDMMreloadDialog();
 
 		//起動直後はまだ音声が鳴っていないのでミュートできないため、この時点で有効化
-		SetVolumeState();
+		InitializeVolumeState();
 	}
 
 	// hack: it makes an infinite loop in the wpf version for some reason
@@ -768,6 +774,8 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			await Browser.CoreWebView2.CapturePreviewAsync(browserImageFormat, memoryStream).ConfigureAwait(false);
 
 			Bitmap image = (Bitmap)Bitmap.FromStream(memoryStream, true);
+			
+			await App.Current.Dispatcher.BeginInvoke(() => LastScreenshot = image.ToBitmapSource());
 
 			if (savemode is 1 or 3)
 			{
@@ -844,7 +852,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 		VolumeManager = VolumeManager.CreateInstanceByProcessName("msedgewebview2");
 	}
 
-	private void SetVolumeState()
+	private void InitializeVolumeState()
 	{
 		bool mute;
 		float volume;
@@ -868,13 +876,38 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			volume = 100;
 		}
 
-		MuteStateImage = mute switch
-		{
-			true => Icons?.Mute,
-			_ => Icons?.Unmute,
-		};
+		RealVolume = (int)volume;
+		IsMuted = mute;
+		Configuration.Volume = volume;
+		Configuration.IsMute = mute;
+		ConfigurationUpdated();
+	}
 
-		Volume = (int)volume;
+	private void SetVolumeState()
+	{
+		bool mute;
+		float volume;
+
+		try
+		{
+			if (VolumeManager == null)
+			{
+				TryGetVolumeManager();
+			}
+
+			// mute = VolumeManager?.IsMute ?? false;
+			volume = (VolumeManager?.Volume ?? 1) * 100;
+			mute = volume == 0;
+		}
+		catch (Exception)
+		{
+			// 音量データ取得不能時
+			VolumeManager = null;
+			mute = false;
+			volume = 100;
+		}
+
+		WorkaroundVolume = (int)volume;
 		Configuration.Volume = volume;
 		Configuration.IsMute = mute;
 		ConfigurationUpdated();
@@ -944,20 +977,20 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			}
 			else
 			{
-				//VolumeManager.ToggleMute();
-				if (Volume >= 1)
+				// VolumeManager.ToggleMute();
+
+				if (IsMuted)
 				{
-					VolumeManager.Volume = (float)0 / 100;
-					CurrentVolume = Volume;
+					IsMuted = false;
+					WorkaroundVolume = RealVolume;
 				}
 				else
 				{
-					if (CurrentVolume == 0)
-					{
-						CurrentVolume = 50;
-					}
-					VolumeManager.Volume = (float)CurrentVolume / 100;
+					IsMuted = true;
+					WorkaroundVolume = 0;
 				}
+
+				VolumeManager.Volume = (float)WorkaroundVolume / 100;
 			}
 		}
 		catch (Exception)
@@ -979,7 +1012,10 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 		{
 			if (VolumeManager is not null)
 			{
-				VolumeManager.Volume = (float)Volume / 100;
+				IsMuted = false;
+				VolumeManager.IsMute = false;
+				WorkaroundVolume = RealVolume;
+				VolumeManager.Volume = (float)WorkaroundVolume / 100;
 				// control.BackColor = System.Drawing.SystemColors.Window;
 			}
 			else
@@ -1084,12 +1120,11 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 
 	private void ToolMenu_Other_LastScreenShot_CopyToClipboard_Click()
 	{
-		if (LastScreenShotPath is null || !File.Exists(LastScreenShotPath)) return;
+		if (LastScreenshot is null) return;
 
 		try
 		{
-			using var img = new System.Drawing.Bitmap(LastScreenShotPath);
-			Clipboard.SetImage(img.ToBitmapSource());
+			Clipboard.SetImage(LastScreenshot);
 			AddLog(2, string.Format(FormBrowser.LastScreenshotCopiedToClipboard, LastScreenShotPath));
 		}
 		catch (Exception ex)

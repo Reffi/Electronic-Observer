@@ -97,131 +97,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConditionType_Group" xml:space="preserve">
-    <value>グループ</value>
+  <data name="Unknown" xml:space="preserve">
+    <value>不明</value>
   </data>
-  <data name="ConditionType_Ship" xml:space="preserve">
-    <value>艦</value>
+  <data name="Japanese" xml:space="preserve">
+    <value>日本</value>
   </data>
-  <data name="ConditionType_ShipType" xml:space="preserve">
-    <value>艦種</value>
+  <data name="German" xml:space="preserve">
+    <value>ドイツ</value>
   </data>
-  <data name="Operator_And" xml:space="preserve">
-    <value>かつ</value>
+  <data name="Italian" xml:space="preserve">
+    <value>イタリア</value>
   </data>
-  <data name="Operator_Or" xml:space="preserve">
-    <value>または</value>
+  <data name="American" xml:space="preserve">
+    <value>アメリカ</value>
   </data>
-  <data name="BattleRank_Any" xml:space="preserve">
-    <value>X</value>
+  <data name="British" xml:space="preserve">
+    <value>イギリス</value>
   </data>
-  <data name="RemodelComparisonType_Any" xml:space="preserve">
-    <value>任意の改造</value>
+  <data name="French" xml:space="preserve">
+    <value>フランス</value>
   </data>
-  <data name="RemodelComparisonType_AtLeast" xml:space="preserve">
-    <value>最小改造</value>
+  <data name="Russian" xml:space="preserve">
+    <value>ロシア</value>
   </data>
-  <data name="RemodelComparisonType_Exact" xml:space="preserve">
-    <value>正確改造</value>
+  <data name="Swedish" xml:space="preserve">
+    <value>スウェーデン</value>
   </data>
-  <data name="QuestTaskType_BossKill" xml:space="preserve">
-    <value>ボス殺し</value>
+  <data name="Dutch" xml:space="preserve">
+    <value>オランダ</value>
   </data>
-  <data name="QuestTaskType_Expedition" xml:space="preserve">
-    <value>遠征</value>
-  </data>
-  <data name="Flagship" xml:space="preserve">
-    <value>旗艦</value>
-  </data>
-  <data name="Copy" xml:space="preserve">
-    <value>コピー</value>
-  </data>
-  <data name="ShowDetails" xml:space="preserve">
-    <value>詳細を見る</value>
-  </data>
-  <data name="MustBeFlagship" xml:space="preserve">
-    <value>旗艦であること</value>
-  </data>
-  <data name="File" xml:space="preserve">
-    <value>ファイル</value>
-  </data>
-  <data name="Load" xml:space="preserve">
-    <value>クリップボードからロード</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>クエスト・トラッカー・マネージャー</value>
-  </data>
-  <data name="Warning" xml:space="preserve">
-    <value>警告</value>
-  </data>
-  <data name="TrackerOverwrite" xml:space="preserve">
-    <value>既存のクエストトラッカーが検出されました。複製されたクエストトラッカーは現在のものを上書きし、このクエストトラッカーの進行状況は失われます。影響を受けるクエストトラッカーは以下の通りです：
-
-{0}
-
-これらのクエストトラッカーを上書きしますか？</value>
-  </data>
-  <data name="UnknownQuest" xml:space="preserve">
-    <value>不明任務</value>
-  </data>
-  <data name="CopyTrackersToClipboard" xml:space="preserve">
-    <value>トラッカーをクリップボードにコピー</value>
-  </data>
-  <data name="QuestTaskType_BattleNodeId" xml:space="preserve">
-    <value>戦闘マスID</value>
-  </data>
-  <data name="QuestTaskType_7_2_1" xml:space="preserve">
-    <value>7-2-1</value>
-  </data>
-  <data name="QuestTaskType_7_2_2" xml:space="preserve">
-    <value>7-2-2</value>
-  </data>
-  <data name="QuestTaskType_7_3_1" xml:space="preserve">
-    <value>7-3-1</value>
-  </data>
-  <data name="QuestTaskType_7_3_2" xml:space="preserve">
-    <value>7-3-2</value>
-  </data>
-  <data name="QuestTaskType_EquipmentScrap" xml:space="preserve">
-    <value>装備廃棄</value>
-  </data>
-  <data name="QuestTaskType_EquipmentCategoryScrap" xml:space="preserve">
-    <value>装備カテゴリ廃棄</value>
-  </data>
-  <data name="QuestTaskType_EquipmentCardTypeScrap" xml:space="preserve">
-    <value>装備図鑑表示廃棄</value>
-  </data>
-  <data name="QuestTaskType_EquipmentIconTypeScrap" xml:space="preserve">
-    <value>装備アイコンID廃棄</value>
-  </data>
-  <data name="ConditionType_PartialShip" xml:space="preserve">
-    <value>艦（一部）</value>
-  </data>
-  <data name="QuestTaskType_NodeReach" xml:space="preserve">
-    <value>ノード到達</value>
-  </data>
-  <data name="ConditionType_AllowedShipTypes" xml:space="preserve">
-    <value>許可艦種</value>
-  </data>
-  <data name="ConditionType_ShipPosition" xml:space="preserve">
-    <value>艦位置</value>
-  </data>
-  <data name="Position" xml:space="preserve">
-    <value>位置</value>
-  </data>
-  <data name="QuestTaskType_MapFirstClear" xml:space="preserve">
-    <value>作戦初回クリア</value>
-  </data>
-  <data name="QuestTaskType_Exercise" xml:space="preserve">
-    <value>演習</value>
-  </data>
-  <data name="QuestTaskType_World1Map6ResourceNode" xml:space="preserve">
-    <value>1-6N</value>
-  </data>
-  <data name="ConditionType_ShipNationality" xml:space="preserve">
-    <value>艦国籍</value>
-  </data>
-  <data name="Kanmusu" xml:space="preserve">
-    <value>艦娘</value>
+  <data name="Australian" xml:space="preserve">
+    <value>オーストラリア</value>
   </data>
 </root>
