@@ -45,6 +45,7 @@ using ElectronicObserver.Window.Wpf.Headquarters;
 using ElectronicObserver.Window.Wpf.ShipGroup.ViewModels;
 using ElectronicObserver.Window.Wpf.ShipGroupWinforms;
 using ElectronicObserver.Window.Wpf.WinformsWrappers;
+using ElectronicObserver.Window.Dialog.VersionInformation;
 using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -1400,8 +1401,8 @@ public partial class FormMainViewModel : ObservableObject
 
 	private void StripMenu_Help_Version_Click()
 	{
-		using DialogVersion dialog = new();
-		dialog.ShowDialog();
+		VersionInformationWindow? window = new VersionInformationWindow();
+		window.Show();
 	}
 
 	#endregion
