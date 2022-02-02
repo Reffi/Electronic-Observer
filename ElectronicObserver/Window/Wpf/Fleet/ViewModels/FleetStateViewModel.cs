@@ -246,7 +246,7 @@ public class FleetStateViewModel : ObservableObject
 						FormFleet.Fatigued + DateTimeHelper.ToTimeRemainString(state.Timer),
 						DateTimeHelper.ToTimeRemainString(state.Timer),
 						iconIndex,
-						colorInPortBG);
+						colorInPortBG,colorInPortFG);
 
 					state.Label.ToolTip = string.Format(FormFleet.RecoveryTimeToolTip,
 						DateTimeHelper.TimeToCSVString(state.Timer), DateTimeHelper.ToTimeRemainString(TimeSpan.FromSeconds(db.Fleet.ConditionBorderAccuracy)));
