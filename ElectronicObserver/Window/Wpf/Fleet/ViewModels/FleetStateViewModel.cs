@@ -258,7 +258,7 @@ public class FleetStateViewModel : ObservableObject
 				{       //戦意高揚
 					var state = GetStateLabel(index);
 
-					state.SetInformation(FleetStates.Sparkled, FormFleet.FightingSpiritHigh, "", (int)IconContent.ConditionSparkle, colorInPortBG);
+					state.SetInformation(FleetStates.Sparkled, FormFleet.FightingSpiritHigh, "", (int)IconContent.ConditionSparkle, colorInPortBG,colorInPortFG);
 					state.Label.ToolTip = string.Format(FormFleet.SparkledTooltip, cond, Math.Ceiling((cond - 49) / 3.0));
 
 					index++;
@@ -271,7 +271,7 @@ public class FleetStateViewModel : ObservableObject
 			{
 				var state = GetStateLabel(index);
 
-				state.SetInformation(FleetStates.Ready, FormFleet.ReadyToSortie, "", (int)IconContent.FleetReady, colorInPortBG);
+				state.SetInformation(FleetStates.Ready, FormFleet.ReadyToSortie, "", (int)IconContent.FleetReady, colorInPortBG,colorInPortFG);
 				state.Label.ToolTip = null;
 
 				index++;
