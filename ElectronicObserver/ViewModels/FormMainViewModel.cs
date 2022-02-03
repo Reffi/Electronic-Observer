@@ -29,6 +29,7 @@ using ElectronicObserver.ViewModels.Translations;
 using ElectronicObserver.Window;
 using ElectronicObserver.Window.Dialog;
 using ElectronicObserver.Window.Dialog.QuestTrackerManager;
+using ElectronicObserver.Window.Dialog.VersionInformation;
 using ElectronicObserver.Window.Integrate;
 using ElectronicObserver.Window.Tools.DialogAlbumMasterEquipment;
 using ElectronicObserver.Window.Tools.DialogAlbumMasterShip;
@@ -45,7 +46,6 @@ using ElectronicObserver.Window.Wpf.Headquarters;
 using ElectronicObserver.Window.Wpf.ShipGroup.ViewModels;
 using ElectronicObserver.Window.Wpf.ShipGroupWinforms;
 using ElectronicObserver.Window.Wpf.WinformsWrappers;
-using ElectronicObserver.Window.Dialog.VersionInformation;
 using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -58,7 +58,7 @@ namespace ElectronicObserver.ViewModels;
 
 public partial class FormMainViewModel : ObservableObject
 {
-	private FormMainWpf Window { get; }
+	public FormMainWpf Window { get; }
 	private DockingManager DockingManager { get; }
 	private Configuration.ConfigurationData Config { get; }
 	public FormMainTranslationViewModel FormMain { get; }
@@ -754,9 +754,8 @@ public partial class FormMainViewModel : ObservableObject
 	{
 		DialogEquipmentList equipmentList = new DialogEquipmentList();
 		RefreshTopMost();
-		equipmentList.Show();
+		equipmentList.ShowExt(this);
 	}
-
 	private void StripMenu_Tool_DropRecord_Click()
 	{
 		if (KCDatabase.Instance.MasterShips.Count == 0)
@@ -773,7 +772,7 @@ public partial class FormMainViewModel : ObservableObject
 			return;
 		}
 
-		new DialogDropRecordViewer().Show();
+		new DialogDropRecordViewer().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_DevelopmentRecord_Click()
@@ -792,7 +791,7 @@ public partial class FormMainViewModel : ObservableObject
 			return;
 		}
 
-		new DialogDevelopmentRecordViewer().Show();
+		new DialogDevelopmentRecordViewer().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_ConstructionRecord_Click()
@@ -811,14 +810,14 @@ public partial class FormMainViewModel : ObservableObject
 			return;
 		}
 
-		new DialogConstructionRecordViewer().Show();
+		new DialogConstructionRecordViewer().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_ResourceChart_Click()
 	{
 		DialogResourceChart resourceChart = new();
 		RefreshTopMost();
-		resourceChart.Show();
+		resourceChart.ShowExt(this);
 	}
 
 	private void StripMenu_Tool_AlbumMasterShip_Click()
@@ -833,7 +832,7 @@ public partial class FormMainViewModel : ObservableObject
 
 		DialogAlbumMasterShipWpf albumMasterShip = new();
 		RefreshTopMost();
-		albumMasterShip.Show();
+		albumMasterShip.ShowDialogExt(this);
 	}
 
 	private void StripMenu_Tool_AlbumMasterEquipment_Click()
@@ -848,37 +847,37 @@ public partial class FormMainViewModel : ObservableObject
 
 		DialogAlbumMasterEquipmentWpf dialogAlbumMasterEquipment = new();
 		RefreshTopMost();
-		dialogAlbumMasterEquipment.Show();
+		dialogAlbumMasterEquipment.ShowDialogExt(this);
 	}
 
 	private void StripMenu_Tool_AntiAirDefense_Click()
 	{
-		new DialogAntiAirDefense().Show();
+		new DialogAntiAirDefense().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_FleetImageGenerator_Click()
 	{
-		new DialogFleetImageGenerator(1).Show();
+		new DialogFleetImageGenerator(1).ShowExt(this);
 	}
 
 	private void StripMenu_Tool_BaseAirCorpsSimulation_Click()
 	{
-		new DialogBaseAirCorpsSimulation().Show();
+		new DialogBaseAirCorpsSimulation().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_ExpChecker_Click()
 	{
-		new DialogExpChecker().Show();
+		new DialogExpChecker().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_ExpeditionCheck_Click()
 	{
-		new DialogExpeditionCheck().Show();
+		new DialogExpeditionCheck().ShowExt(this);
 	}
 
 	private void StripMenu_Tool_KancolleProgress_Click()
 	{
-		new DialogKancolleProgressWpf().Show();
+		new DialogKancolleProgressWpf().ShowDialogExt(this);
 	}
 
 	private void StripMenu_Tool_ExtraBrowser_Click()
@@ -896,7 +895,7 @@ public partial class FormMainViewModel : ObservableObject
 			return;
 		}
 
-		new QuestTrackerManagerWindow().Show();
+		new QuestTrackerManagerWindow().ShowDialogExt(this);
 	}
 
 	#endregion
@@ -923,7 +922,7 @@ public partial class FormMainViewModel : ObservableObject
 			}
 		}
 		/*/
-		new DialogLocalAPILoader2().Show();
+		new DialogLocalAPILoader2().ShowExt(this);
 		//*/
 	}
 
@@ -1402,14 +1401,14 @@ public partial class FormMainViewModel : ObservableObject
 	private void StripMenu_Help_Version_Click()
 	{
 		VersionInformationWindow? window = new VersionInformationWindow();
-		window.Show();
+		window.ShowDialogExt(this);
 	}
 
 	#endregion
 
 	private void CallPumpkinHead(string apiname, dynamic data)
 	{
-		new DialogHalloween().Show();
+		new DialogHalloween().ShowExt(this);
 		APIObserver.Instance.APIList["api_port/port"].ResponseReceived -= CallPumpkinHead;
 	}
 
