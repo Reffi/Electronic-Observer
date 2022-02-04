@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using ElectronicObserver.Utility;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Org.BouncyCastle.Asn1.X509;
 using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace ElectronicObserver.ViewModels;
 
