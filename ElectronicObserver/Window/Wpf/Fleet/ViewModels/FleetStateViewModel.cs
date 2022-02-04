@@ -195,7 +195,7 @@ public class FleetStateViewModel : ObservableObject
 					state.SetInformation(FleetStates.Docking,
 						FormFleet.OnDock + DateTimeHelper.ToTimeRemainString(state.Timer),
 						DateTimeHelper.ToTimeRemainString(state.Timer),
-						(int)IconContent.FleetDocking);
+						(int)IconContent.FleetDocking,colorInPortBG,colorInPortFG);
 
 					state.Label.ToolTip = FormFleet.DockCompletionTime + DateTimeHelper.TimeToCSVString(state.Timer);
 
