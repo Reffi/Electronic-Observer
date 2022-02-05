@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-
+﻿using System.Windows.Forms;
 namespace ElectronicObserver.ViewModels;
 
 public static class DialogExtensions
@@ -11,13 +8,22 @@ public static class DialogExtensions
 		window.Owner = formMainViewModel.Window;
 		window.ShowDialog();
 	}
-	public static void ShowExt(this System.Windows.Forms.Form form, FormMainViewModel formMainViewModel)
+	public static DialogResult ShowDialogExt(this System.Windows.Forms.Form form, FormMainViewModel formMainViewModel)
 	{
-		WindowInteropHelper helper = new WindowInteropHelper(formMainViewModel.Window);
-		SetParent(form.Handle, helper.Handle);
-		form.ShowInTaskbar = true;
-		form.Show();
+		DialogResult result;
+		bool topmost = formMainViewModel.Topmost;
+		if (formMainViewModel.Topmost)
+		{
+			formMainViewModel.Topmost = false;
+			result = form.ShowDialog();
+			formMainViewModel.Topmost = topmost;
+			return result;
+		}
+		else
+		{
+			result = form.ShowDialog();
+			return result;
+		}
+
 	}
-	[DllImport("User32.dll")]
-	static extern IntPtr SetParent(IntPtr hWnd, IntPtr hParent);
 }
