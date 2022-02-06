@@ -195,7 +195,7 @@ public class FleetStateViewModel : ObservableObject
 					state.SetInformation(FleetStates.Docking,
 						FormFleet.OnDock + DateTimeHelper.ToTimeRemainString(state.Timer),
 						DateTimeHelper.ToTimeRemainString(state.Timer),
-						(int)IconContent.FleetDocking,colorInPortBG,colorInPortFG);
+						(int)IconContent.FleetDocking);
 
 					state.Label.ToolTip = FormFleet.DockCompletionTime + DateTimeHelper.TimeToCSVString(state.Timer);
 
@@ -246,7 +246,7 @@ public class FleetStateViewModel : ObservableObject
 						FormFleet.Fatigued + DateTimeHelper.ToTimeRemainString(state.Timer),
 						DateTimeHelper.ToTimeRemainString(state.Timer),
 						iconIndex,
-						colorInPortBG,colorInPortFG);
+						colorInPortBG);
 
 					state.Label.ToolTip = string.Format(FormFleet.RecoveryTimeToolTip,
 						DateTimeHelper.TimeToCSVString(state.Timer), DateTimeHelper.ToTimeRemainString(TimeSpan.FromSeconds(db.Fleet.ConditionBorderAccuracy)));
@@ -258,7 +258,7 @@ public class FleetStateViewModel : ObservableObject
 				{       //戦意高揚
 					var state = GetStateLabel(index);
 
-					state.SetInformation(FleetStates.Sparkled, FormFleet.FightingSpiritHigh, "", (int)IconContent.ConditionSparkle, colorInPortBG,colorInPortFG);
+					state.SetInformation(FleetStates.Sparkled, FormFleet.FightingSpiritHigh, "", (int)IconContent.ConditionSparkle, colorInPortBG);
 					state.Label.ToolTip = string.Format(FormFleet.SparkledTooltip, cond, Math.Ceiling((cond - 49) / 3.0));
 
 					index++;
@@ -271,7 +271,7 @@ public class FleetStateViewModel : ObservableObject
 			{
 				var state = GetStateLabel(index);
 
-				state.SetInformation(FleetStates.Ready, FormFleet.ReadyToSortie, "", (int)IconContent.FleetReady, colorInPortBG,colorInPortFG);
+				state.SetInformation(FleetStates.Ready, FormFleet.ReadyToSortie, "", (int)IconContent.FleetReady, colorInPortBG);
 				state.Label.ToolTip = null;
 
 				index++;
