@@ -38,9 +38,9 @@
 		<Copyright>Copyright ©  2014 Andante</Copyright>
 		<Trademark />
 		<Culture />
-		<AssemblyVersion>5.1.1.0</AssemblyVersion>
-		<FileVersion>5.1.1.0</FileVersion>
-		<Version>5.1.1.0</Version>
+		<AssemblyVersion>5.1.2.0</AssemblyVersion>
+		<FileVersion>5.1.2.0</FileVersion>
+		<Version>5.1.2.0</Version>
 		<AnalysisLevel>preview</AnalysisLevel>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 	</PropertyGroup>
@@ -402,6 +402,15 @@
 		<ProjectReference Include="..\DockPanelSuite\WinFormsUI\WinFormsUI.csproj" />
 		<ProjectReference Include="..\ElectronicObserverTypes\ElectronicObserverTypes.csproj" />
 		<ProjectReference Include="..\KancolleProgress\KancolleProgress.csproj" />
+	</ItemGroup>
+	<!--
+	dotnet 6.0.2 sdk bug workaround
+	https://github.com/dotnet/core/issues/7176
+	-->
+	<ItemGroup>
+		<FrameworkReference
+			Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+			TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Dirkster.AvalonDock" Version="4.60.0" />

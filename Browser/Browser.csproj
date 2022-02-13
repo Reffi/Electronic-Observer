@@ -37,14 +37,29 @@
 	<PropertyGroup>
 		<StartupObject>Browser.App</StartupObject>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<AssemblyVersion>5.1.1.0</AssemblyVersion>
-		<FileVersion>5.1.1.0</FileVersion>
-		<Version>5.1.1.0</Version>
-		<Copyright>Copyright ©  2015 Andante</Copyright>
+		<Title>EOBrowser</Title>
+		<Description />
+		<Configuration />
+		<Company />
 		<Product>ElectronicObserver</Product>
+		<Copyright>Copyright ©  2015 Andante</Copyright>
+		<Trademark />
+		<Culture />
+		<AssemblyVersion>5.1.2.0</AssemblyVersion>
+		<FileVersion>5.1.2.0</FileVersion>
+		<Version>5.1.2.0</Version>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BrowserLibCore\BrowserLibCore.csproj" />
+	</ItemGroup>
+	<!--
+	dotnet 6.0.2 sdk bug workaround
+	https://github.com/dotnet/core/issues/7176
+	-->
+	<ItemGroup>
+		<FrameworkReference
+			Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+			TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<BootstrapperPackage Include=".NETFramework,Version=v4.5">
