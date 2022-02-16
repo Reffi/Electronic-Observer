@@ -1488,6 +1488,11 @@ public partial class FormMainViewModel : ObservableObject
 		};
 		SetAnchorableProperties();
 		Topmost = c.Life.TopMost;
+		Window.ResizeMode = LockLayout switch
+		{
+			true => ResizeMode.NoResize,
+			_ => ResizeMode.CanResize
+		};
 		/*
 		StripMenu_File_Notification_MuteAll.Checked = Notifier.NotifierManager.Instance.GetNotifiers().All(n => n.IsSilenced);
 
