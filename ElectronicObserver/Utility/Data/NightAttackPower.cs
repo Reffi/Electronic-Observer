@@ -2,6 +2,7 @@
 using System.Linq;
 using ElectronicObserver.Data;
 using ElectronicObserverTypes;
+using ElectronicObserverTypes.Extensions;
 
 namespace ElectronicObserver.Utility.Data;
 
@@ -47,6 +48,7 @@ public static class NightAttackPower
 		// Ark - secondary - FP doesn't count
 		// Ark - upgrades don't count, maybe only swordfish upgrades (didn't check)
 		// Ark - crit bonus from proficiency counts from all planes
+		// Ark - fits are ignored
 		// needs swordfish to attack
 		_ when ship.IsSpecialNightCarrier() => ship.SurfaceShipBasePower(),
 		_ when ship.IsArkRoyal() => ship.ArkRoyalBasePower(),
