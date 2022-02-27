@@ -381,8 +381,7 @@ public class BrowserViewModel : ObservableObject, BrowserLibCore.IBrowser
 			$"--proxy-server=\"{ProxySettings}\"",
 			"--disable-features=\"HardwareMediaKeyHandling\"",
 			"--lang=\"ja\"",
-			"--log-file=\"BrowserLog.log\"",
-			"--enable-features=\"CanvasOopRasterization,EnableDrDc\""
+			"--log-file=\"BrowserLog.log\""
 		};
 
 		if (Configuration.ForceColorProfile)
