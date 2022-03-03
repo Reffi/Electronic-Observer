@@ -120,8 +120,7 @@ public class ProgressSpecialBattle : ProgressBattle
 
 		switch (QuestID)
 		{
-			// |249|月|「第五戦隊」出撃せよ！|2-5ボスS勝利1|要「那智」「妙高」「羽黒」
-			case 249:
+			case 249: //Bm1「第五戦隊」出撃せよ！
 			{
 				bool nachi = false, myoukou = false, haguro = false;
 				foreach (var ship in members)
@@ -142,17 +141,13 @@ public class ProgressSpecialBattle : ProgressBattle
 				isAccepted = nachi && myoukou && haguro;
 			}
 			break;
-
-			// |257|月|「水雷戦隊」南西へ！|1-4ボスS勝利1|要軽巡旗艦、軽巡3隻まで、他駆逐艦　他艦種禁止
-			case 257:
+			case 257: //Bm3 「水雷戦隊」南西へ！
 				isAccepted =
 					memberstype[0] == ShipTypes.LightCruiser &&
 					memberstype.Count(t => t == ShipTypes.LightCruiser) <= 3 &&
 					memberstype.All(t => t == ShipTypes.Destroyer || t == ShipTypes.LightCruiser || t == Empty);
 				break;
-
-			// |259|月|「水上打撃部隊」南方へ！|5-1ボスS勝利1|要(大和型or長門型or伊勢型or扶桑型)3/軽巡1　巡戦禁止、戦艦追加禁止
-			case 259:
+			case 259: //Bm4 「水上打撃部隊」南方へ！
 			{
 				int battleships = 0;
 				bool hasLightCruiser = false;
@@ -188,59 +183,43 @@ public class ProgressSpecialBattle : ProgressBattle
 				isAccepted = battleships == 3 && hasLightCruiser;
 			}
 			break;
-
-			// |264|月|「空母機動部隊」西へ！|4-2ボスS勝利1|要(空母or軽母or装母)2/駆逐2
-			case 264:
+			case 264: //Bm6 「空母機動部隊」西へ！
 				isAccepted =
 					memberstype.Count(t => t == ShipTypes.AircraftCarrier || t == ShipTypes.LightAircraftCarrier || t == ShipTypes.ArmoredAircraftCarrier) >= 2 &&
 					memberstype.Count(t => t == ShipTypes.Destroyer) >= 2;
 				break;
-
-			// |266|月|「水上反撃部隊」突入せよ！|2-5ボスS勝利1|要駆逐旗艦、重巡1軽巡1駆逐4
-			case 266:
+			case 266: //Bm7 「水上反撃部隊」突入せよ！
 				isAccepted =
 					memberstype[0] == ShipTypes.Destroyer &&
 					memberstype.Count(t => t == ShipTypes.HeavyCruiser) == 1 &&
 					memberstype.Count(t => t == ShipTypes.LightCruiser) == 1 &&
 					memberstype.Count(t => t == ShipTypes.Destroyer) == 4;
 				break;
+			case 280: //Bm8 兵站線確保！海上警備を強化実施せよ！
 
-			// |280|月|兵站線確保！海上警備を強化実施せよ！|1-2・1-3・1-4・2-1ボスS勝利各1|要(軽母or軽巡or雷巡or練巡)1/(駆逐or海防)3
-			// |284|季|南西諸島方面「海上警備行動」発令！|1-4・2-1・2-2・2-3ボスS勝利各1|要(軽母or軽巡or雷巡or練巡)1/(駆逐or海防)3
-			case 280:
-			case 284:
+			case 284: //Bq11 南西諸島方面「海上警備行動」発令！
 				isAccepted =
 					memberstype.Any(t => t == ShipTypes.LightAircraftCarrier || t == ShipTypes.LightCruiser || t == ShipTypes.TorpedoCruiser || t == ShipTypes.TrainingCruiser) &&
 					memberstype.Count(t => t == ShipTypes.Destroyer || t == ShipTypes.Escort) >= 3;
 				break;
-
-			// |854|季|戦果拡張任務！「Z作戦」前段作戦|2-4・6-1・6-3ボスA勝利各1/6-4ボスS勝利1|要第一艦隊
-			case 854:
+			case 854: //Bq2 戦果拡張任務！「Z作戦」前段作戦
 				isAccepted =
 					fleet.FleetID == 1;
 				break;
-
-			// |861|季|強行輸送艦隊、抜錨！|1-6終点到達2|要(航空戦艦or補給艦)2
-			case 861:
+			case 861: //Bq3 強行輸送艦隊、抜錨！
 				isAccepted =
 					memberstype.Count(t => t == ShipTypes.AviationBattleship || t == ShipTypes.FleetOiler) >= 2;
 				break;
-
-			// |862|季|前線の航空偵察を実施せよ！|6-3ボスA勝利2|要水母1軽巡2
-			case 862:
+			case 862: //Bq4 前線の航空偵察を実施せよ！
 				isAccepted =
 					memberstype.Count(t => t == ShipTypes.SeaplaneTender) >= 1 &&
 					memberstype.Count(t => t == ShipTypes.LightCruiser) >= 2;
 				break;
-
-			// |873|季|北方海域警備を実施せよ！|3-1・3-2・3-3ボスA勝利各1|要軽巡1, 1エリア達成で50%,2エリアで80%
-			case 873:
+			case 873: //Bq5 北方海域警備を実施せよ！
 				isAccepted =
 					memberstype.Any(t => t == ShipTypes.LightCruiser);
 				break;
-
-			// |875|季|精鋭「三一駆」、鉄底海域に突入せよ！|5-4ボスS勝利2|要長波改二/(高波改or沖波改or朝霜改)
-			case 875:
+			case 875: //Bq6 「三一駆」、鉄底海域に突入せよ！
 				isAccepted =
 					members.Any(s => s?.ShipID == 543) &&
 					members.Any(s =>
@@ -256,9 +235,7 @@ public class ProgressSpecialBattle : ProgressBattle
 						}
 					});
 				break;
-
-			// |888|季|新編成「三川艦隊」、鉄底海峡に突入せよ！|5-1・5-3・5-4ボスS勝利各1|要(鳥海or青葉or衣笠or加古or古鷹or天龍or夕張)4
-			case 888:
+			case 888: //Bq7 「三川艦隊」、鉄底海峡に突入せよ！
 				isAccepted =
 					members.Count(s =>
 					{
@@ -277,22 +254,17 @@ public class ProgressSpecialBattle : ProgressBattle
 						}
 					}) >= 4;
 				break;
-
-			case 872:   // |872|季|戦果拡張任務！「Z作戦」後段作戦|5-5・6-2・6-5・7-2(第二)ボスS勝利各1|要第一艦隊
-				isAccepted = fleet.FleetID == 1 && CheckGaugeIndex72(bm.Compass);
-				break;
-
-			case 893:   // |893|季|泊地周辺海域の安全確保を徹底せよ！|1-5・7-1・7-2(第一＆第二)ボスS勝利各3|3エリア達成時点で80%
+			case 893: //Bq8 泊地周辺海域の安全確保を徹底せよ！
 				isAccepted = CheckGaugeIndex72(bm.Compass);
 				break;
-
-			// |894|季|空母戦力の投入による兵站線戦闘哨戒|1-3・1-4・2-1・2-2・2-3ボスS勝利各1?|要空母系
-			case 894:
+			case 894: // Bq9 空母戦力の投入による兵站線戦闘哨戒
 				isAccepted =
 					memberstype.Any(t => t == ShipTypes.LightAircraftCarrier || t == ShipTypes.AircraftCarrier || t == ShipTypes.ArmoredAircraftCarrier);
 				break;
-
-			case 903: // Bq13
+			case 872: //Bq10 戦果拡張任務！「Z作戦」後段作戦
+				isAccepted = fleet.FleetID == 1 && CheckGaugeIndex72(bm.Compass);
+				break;
+			case 903: //Bq13 拡張「六水戦」、最前線へ！
 			{
 				bool melonFlag =
 					members[0].ShipID == (int)ShipId.YuubariKaiNi ||
@@ -315,7 +287,11 @@ public class ProgressSpecialBattle : ProgressBattle
 			}
 			break;
 
-			case 905: // By2
+			case 904: // By1 02 精鋭「十九駆」、躍り出る！
+				isAccepted = members.Any(s => s?.ShipID == 195) && members.Any(s => s?.ShipID == 627);
+				break;
+
+			case 905: // By2 02 「海防艦」、海を護る！
 			{
 				List<IShipData> ships = members.Where(s => s != null).ToList()!;
 
@@ -325,7 +301,7 @@ public class ProgressSpecialBattle : ProgressBattle
 				isAccepted = escorts && memberCount;
 			}
 			break;
-			case 912: // By4
+			case 912: //By3 03 工作艦「明石」護衛任務
 			{
 				bool akashi = members[0].MasterShip.ShipId switch
 				{
@@ -338,6 +314,62 @@ public class ProgressSpecialBattle : ProgressBattle
 				isAccepted = akashi && destroyers;
 			}
 			break;
+			case 914: // By4 03 重巡戦隊、西へ！
+				isAccepted = memberstype.Count(t => t == ShipTypes.HeavyCruiser) >= 3 &&
+							 memberstype.Count(t => t == ShipTypes.Destroyer) >= 1;
+				break;
+
+			case 928: //By5 09 歴戦「第十方面艦隊」、全力出撃！
+				isAccepted = members.Count(s =>
+				{
+					switch (s?.MasterShip?.NameReading)
+					{
+						case "はぐろ":
+						case "あしがら":
+						case "みょうこう":
+						case "たかお":
+						case "かみかぜ":
+							return true;
+						default:
+							return false;
+					}
+				}) >= 2 && CheckGaugeIndex72(bm.Compass) && CheckGaugeIndex73(bm.Compass);
+				break;
+
+					case 944: //By6 06 鎮守府近海海域の哨戒を実施せよ！
+				isAccepted =
+					new[] {
+						ShipTypes.Destroyer,
+						ShipTypes.HeavyCruiser
+					}.Contains(memberstype.FirstOrDefault()) &&
+					memberstype.Count(t => t == ShipTypes.Destroyer || t == ShipTypes.Escort) >= 3;
+				break;
+					case 945: //By7 06 南西方面の兵站航路の安全を図れ！
+				isAccepted =
+					new[] {
+						ShipTypes.Destroyer,
+						ShipTypes.LightCruiser,
+						ShipTypes.TrainingCruiser
+					}.Contains(memberstype.FirstOrDefault()) &&
+					memberstype.Count(t => t == ShipTypes.Destroyer || t == ShipTypes.Escort) >= 3;
+				break;
+					case 946: //By8 06 空母機動部隊、出撃！敵艦隊を迎撃せよ！
+				isAccepted =
+					new[] {
+						ShipTypes.AircraftCarrier,
+						ShipTypes.LightAircraftCarrier,
+						ShipTypes.ArmoredAircraftCarrier
+					}.Contains(memberstype.FirstOrDefault()) &&
+					memberstype.Count(t => t == ShipTypes.HeavyCruiser || t == ShipTypes.AviationCruiser) >= 2;
+				break;
+					case 947: //By9 06 AL 作戦
+				isAccepted =
+					memberstype.Count(t => t == ShipTypes.LightAircraftCarrier) >= 2;
+				break;
+					case 948: //By10 06 機動部隊決戦
+				isAccepted =
+					memberstype.Count(t => t == ShipTypes.AircraftCarrier || t == ShipTypes.LightAircraftCarrier || t == ShipTypes.ArmoredAircraftCarrier) >= 2;
+				break;
 
 			// B140
 			case 901:
@@ -675,10 +707,6 @@ public class ProgressSpecialBattle : ProgressBattle
 					}) >= 2);
 				break;*/
 
-			case 904:   // |904|年(2月)|精鋭「十九駆」、躍り出る！|2-5・3-4・4-5・5-3ボスS勝利各1|要綾波改二/敷波改二
-				isAccepted = members.Any(s => s?.ShipID == 195) && members.Any(s => s?.ShipID == 627);
-				break;
-
 			/*case 905:   // |905|年(2月)|「海防艦」、海を護る！|1-1・1-2・1-3・1-5ボスA勝利各1/1-6終点到達1|要海防艦3, 5隻以下の編成
 				isAccepted = members.Count(s => s != null) <= 5 && memberstype.Count(t => t == ShipTypes.Escort) >= 3;
 				break;
@@ -705,11 +733,6 @@ public class ProgressSpecialBattle : ProgressBattle
 				isAccepted = gotlandFlag && destroyer;
 			}
 			break;
-
-			case 914:   // |914|３|重巡戦隊、西へ！|4-1・4-2・4-3・4-4ボスA勝利各1|要重巡3/駆逐1
-				isAccepted = memberstype.Count(t => t == ShipTypes.HeavyCruiser) >= 3 &&
-							 memberstype.Count(t => t == ShipTypes.Destroyer) >= 1;
-				break;
 
 			case 924:   // B152
 			{
@@ -759,23 +782,6 @@ public class ProgressSpecialBattle : ProgressBattle
 			}
 			break;
 
-			case 928:   //|928|９|歴戦「第十方面艦隊」、全力出撃！|4-2・7-2(第二)・7-3(第二)ボスS勝利各2|要(羽黒/足柄/妙高/高雄/神風)2
-				isAccepted = members.Count(s =>
-				{
-					switch (s?.MasterShip?.NameReading)
-					{
-						case "はぐろ":
-						case "あしがら":
-						case "みょうこう":
-						case "たかお":
-						case "かみかぜ":
-							return true;
-						default:
-							return false;
-					}
-				}) >= 2 && CheckGaugeIndex72(bm.Compass) && CheckGaugeIndex73(bm.Compass);
-				break;
-
 			case 936: // B164
 			{
 				isAccepted =
@@ -794,37 +800,41 @@ public class ProgressSpecialBattle : ProgressBattle
 			break;
 
 
-			case 840:   //|840|週|【節分任務】令和三年節分作戦|2-(1~3)ボスA勝利各1|要(軽母or軽巡or雷巡or練巡)旗艦/(駆逐or海防)3, 期間限定(2021/01/13～????/??/??)
+			case 840:   //|840 【節分任務】節分作戦二〇二二
 				isAccepted =
 					new[] {
 							ShipTypes.LightAircraftCarrier,
-							ShipTypes.LightCruiser,
-							ShipTypes.TorpedoCruiser,
-							ShipTypes.TrainingCruiser }
+							ShipTypes.LightCruiser }
 						.Contains(memberstype.FirstOrDefault()) &&
 					memberstype.Count(t => t == ShipTypes.Destroyer || t == ShipTypes.Escort) >= 3;
 				break;
 
-			case 841:   //|841|週|【節分任務】令和三年西方海域節分作戦|4-(1~3)ボスS勝利各1|要(水母2or航巡2or重巡2)旗艦, 期間限定(2021/01/13～????/??/??)
+			case 841:   //|841 【節分任務】南西海域節分作戦二〇二二
 				isAccepted =
 					new[] {
 						ShipTypes.SeaplaneTender,
 						ShipTypes.HeavyCruiser,
 						ShipTypes.AviationCruiser
 					}.Contains(memberstype.FirstOrDefault()) &&
-					memberstype.Count(t => t == memberstype.FirstOrDefault()) >= 2;
+					memberstype.Count(t => t == memberstype.FirstOrDefault()) >= 2 && CheckGaugeIndex72(bm.Compass) && CheckGaugeIndex73(bm.Compass);
 				break;
-			case 843:   //|843|週|【節分拡張任務】令和三年節分作戦、全力出撃！|5-2・5-5・6-4ボスS勝利各1|要(戦艦系or空母系)旗艦/駆逐2, 期間限定(2021/01/13～????/??/??)
+			case 843:   //|843 【節分拡張任務】節分作戦二〇二二、全力出撃！
 				isAccepted =
-					new[] {
-						ShipTypes.Battlecruiser,
-						ShipTypes.Battleship,
-						ShipTypes.AviationBattleship,
-						ShipTypes.LightAircraftCarrier,
-						ShipTypes.AircraftCarrier,
-						ShipTypes.ArmoredAircraftCarrier,
-					}.Contains(memberstype.FirstOrDefault()) &&
-					memberstype.Count(t => t == ShipTypes.Destroyer) >= 2;
+					memberstype.Count(t => t == ShipTypes.AircraftCarrier || t == ShipTypes.LightAircraftCarrier || t == ShipTypes.ArmoredAircraftCarrier) >= 2 ||
+					memberstype.Count(t => t == ShipTypes.Battleship || t == ShipTypes.AviationBattleship) >= 2;
+					members.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "おおよど":
+							case "せんだい":
+							case "じんつう":
+							case "なか":
+								return true;
+							default:
+								return false;
+						}
+					});
 				break;
 
 			case 234:   // 2102 LQ1
