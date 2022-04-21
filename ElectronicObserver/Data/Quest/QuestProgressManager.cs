@@ -91,7 +91,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_get_member/questlist"].ResponseReceived += QuestUpdated;
 
-		ao.APIList["api_req_map/start"].ResponseReceived += StartSortie;
+		ao.ApiReqMap_Start.ResponseReceived += StartSortie;
 
 		ao.APIList["api_req_map/next"].ResponseReceived += NextSortie;
 
@@ -102,7 +102,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_mission/result"].ResponseReceived += ExpeditionCompleted;
 
-		ao.APIList["api_req_nyukyo/start"].RequestReceived += StartRepair;
+		ao.ApiReqNyukyo_Start.RequestReceived += StartRepair;
 
 		ao.APIList["api_req_hokyu/charge"].ResponseReceived += Supplied;
 
@@ -110,7 +110,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_kousyou/createship"].RequestReceived += ShipConstructed;
 
-		ao.APIList["api_req_kousyou/destroyship"].RequestReceived += ShipDestructed;
+		ao.ApiReqKousyou_Destroyship.RequestReceived += ShipDestructed;
 
 		// 装備廃棄はイベント前に装備データが削除されてしまうので destroyitem2 から直接呼ばれる
 
@@ -118,7 +118,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_kaisou/powerup"].ResponseReceived += Modernized;
 
-		ao.APIList["api_port/port"].ResponseReceived += TimerSave;
+		ao.ApiPort_Port.ResponseReceived += TimerSave;
 
 
 		_prevTime = DateTime.Now;
@@ -131,7 +131,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_get_member/questlist"].ResponseReceived -= QuestUpdated;
 
-		ao.APIList["api_req_map/start"].ResponseReceived -= StartSortie;
+		ao.ApiReqMap_Start.ResponseReceived -= StartSortie;
 
 		ao.APIList["api_req_map/next"].ResponseReceived -= NextSortie;
 
@@ -142,7 +142,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_mission/result"].ResponseReceived -= ExpeditionCompleted;
 
-		ao.APIList["api_req_nyukyo/start"].RequestReceived -= StartRepair;
+		ao.ApiReqNyukyo_Start.RequestReceived -= StartRepair;
 
 		ao.APIList["api_req_hokyu/charge"].ResponseReceived -= Supplied;
 
@@ -150,7 +150,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_kousyou/createship"].RequestReceived -= ShipConstructed;
 
-		ao.APIList["api_req_kousyou/destroyship"].ResponseReceived -= ShipDestructed;
+		ao.ApiReqKousyou_Destroyship.ResponseReceived -= ShipDestructed;
 
 		// 装備廃棄は(ry
 
@@ -158,7 +158,7 @@ public sealed class QuestProgressManager : DataStorage
 
 		ao.APIList["api_req_kaisou/powerup"].ResponseReceived -= Modernized;
 
-		ao.APIList["api_port/port"].ResponseReceived -= TimerSave;
+		ao.ApiPort_Port.ResponseReceived -= TimerSave;
 
 	}
 

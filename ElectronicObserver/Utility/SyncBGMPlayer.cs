@@ -130,9 +130,9 @@ public sealed class SyncBGMPlayer
 		#region API register
 		APIObserver o = APIObserver.Instance;
 
-		o["api_port/port"].ResponseReceived += PlayPort;
+		o.ApiPort_Port.ResponseReceived += PlayPort;
 
-		o["api_req_map/start"].ResponseReceived += PlaySortie;
+		o.ApiReqMap_Start.ResponseReceived += PlaySortie;
 		o["api_req_map/next"].ResponseReceived += PlaySortie;
 
 		o["api_req_sortie/battle"].ResponseReceived += PlayBattleDay;

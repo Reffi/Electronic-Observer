@@ -614,7 +614,7 @@ public class ShipParameterRecord : RecordBase
 
 		ao["api_start2/getData"].ResponseReceived += GameStart;
 
-		ao["api_port/port"].ResponseReceived += ParameterLoaded;
+		ao.ApiPort_Port.ResponseReceived += ParameterLoaded;
 
 		ao["api_get_member/ship3"].ResponseReceived += EquipmentChanged;
 
@@ -642,16 +642,16 @@ public class ShipParameterRecord : RecordBase
 
 		ao["api_req_map/next"].ResponseReceived += SortieNext;
 
-		ao["api_req_map/start"].ResponseReceived += SortieStart;
+		ao.ApiReqMap_Start.ResponseReceived += SortieStart;
 		ao["api_get_member/slot_item"].ResponseReceived += SortieEnd;
 
 		ao["api_req_kousyou/getship"].ResponseReceived += ConstructionReceived;
 
-		ao["api_req_kaisou/remodeling"].RequestReceived += RemodelingStart;
+		ao.ApiReqKaisou_Remodeling.RequestReceived += RemodelingStart;
 		ao["api_get_member/slot_item"].ResponseReceived += RemodelingEnd;
 
 		ao["api_req_quest/clearitemget"].ResponseReceived += QuestRewardReceived;
-		ao["api_get_member/ship2"].ResponseReceived += QuestRewardReceivedEnd;
+		ao.ApiGetMember_Ship2.ResponseReceived += QuestRewardReceivedEnd;
 	}
 
 

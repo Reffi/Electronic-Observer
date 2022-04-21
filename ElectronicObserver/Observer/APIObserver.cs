@@ -36,6 +36,82 @@ public sealed class APIObserver
 
 	public APIDictionary APIList { get; private set; }
 
+	#region API members
+
+	/// <summary>
+	/// Send ship to dock <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L838" />
+	/// </summary>
+	public APIBase ApiReqNyukyo_Start => this["api_req_nyukyo/start"];
+
+	/// <summary>
+	/// Use bucket on docked ship (this doesn't happen if you use a bucket while docking) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L846" />
+	/// </summary>
+	public APIBase ApiReqNyukyo_Speedchange => this["api_req_nyukyo/speedchange"];
+
+	/// <summary>
+	/// Fleet reorganization <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1198" />
+	/// </summary>
+	public APIBase ApiReqHensei_Change => this["api_req_hensei/change"];
+
+	/// <summary>
+	/// Ship scrap <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L767" />
+	/// </summary>
+	public APIBase ApiReqKousyou_Destroyship => this["api_req_kousyou/destroyship"];
+
+	/// <summary>
+	/// Change fleet name <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1239" />
+	/// </summary>
+	public APIBase ApiReqMember_Updatedeckname => this["api_req_member/updatedeckname"];
+
+	/// <summary>
+	/// Ship remodel <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1499" />
+	/// </summary>
+	public APIBase ApiReqKaisou_Remodeling => this["api_req_kaisou/remodeling"];
+
+	/// <summary>
+	/// Sortie start <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1579" />
+	/// </summary>
+	public APIBase ApiReqMap_Start => this["api_req_map/start"];
+
+	/// <summary>
+	/// Make a combined fleet <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L3375" />
+	/// </summary>
+	public APIBase ApiReqHensei_Combined => this["api_req_hensei/combined"];
+
+	/// <summary>
+	/// Ship hole-punch <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1460" />
+	/// </summary>
+	public APIBase ApiReqKaisou_OpenExslot => this["api_req_kaisou/open_exslot"];
+
+	/// <summary>
+	/// Get to main screen (home port) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L603" />
+	/// </summary>
+	public APIBase ApiPort_Port => this["api_port/port"];
+
+	/// <summary>
+	/// 艦船情報 (?) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L2382" />
+	/// </summary>
+	public APIBase ApiGetMember_Ship2 => this["api_get_member/ship2"];
+
+	/// <summary>
+	/// Go to dock screen (also happens after docking a ship, doesn't happen after bucketing a ship that's already in docks) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L826" />
+	/// </summary>
+	public APIBase ApiGetMember_Ndock => this["api_get_member/ndock"];
+
+	#endregion
+
 	public string? ServerAddress { get; private set; }
 	public int ProxyPort { get; private set; }
 

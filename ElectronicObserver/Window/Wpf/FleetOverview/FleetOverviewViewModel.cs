@@ -49,25 +49,25 @@ public class FleetOverviewViewModel : AnchorableViewModel
 		//api register
 		APIObserver o = APIObserver.Instance;
 
-		o["api_req_nyukyo/start"].RequestReceived += Updated;
-		o["api_req_nyukyo/speedchange"].RequestReceived += Updated;
-		o["api_req_hensei/change"].RequestReceived += Updated;
-		o["api_req_kousyou/destroyship"].RequestReceived += Updated;
-		o["api_req_member/updatedeckname"].RequestReceived += Updated;
-		o["api_req_map/start"].RequestReceived += Updated;
-		o["api_req_hensei/combined"].RequestReceived += Updated;
-		o["api_req_kaisou/open_exslot"].RequestReceived += Updated;
+		o.ApiReqNyukyo_Start.RequestReceived += Updated;
+		o.ApiReqNyukyo_Speedchange.RequestReceived += Updated;
+		o.ApiReqHensei_Change.RequestReceived += Updated;
+		o.ApiReqKousyou_Destroyship.RequestReceived += Updated;
+		o.ApiReqMember_Updatedeckname.RequestReceived += Updated;
+		o.ApiReqMap_Start.RequestReceived += Updated;
+		o.ApiReqHensei_Combined.RequestReceived += Updated;
+		o.ApiReqKaisou_OpenExslot.RequestReceived += Updated;
 
-		o["api_port/port"].ResponseReceived += Updated;
-		o["api_get_member/ship2"].ResponseReceived += Updated;
-		o["api_get_member/ndock"].ResponseReceived += Updated;
+		o.ApiPort_Port.ResponseReceived += Updated;
+		o.ApiGetMember_Ship2.ResponseReceived += Updated;
+		o.ApiGetMember_Ndock.ResponseReceived += Updated;
 		o["api_req_kousyou/getship"].ResponseReceived += Updated;
 		o["api_req_hokyu/charge"].ResponseReceived += Updated;
-		o["api_req_kousyou/destroyship"].ResponseReceived += Updated;
+		o.ApiReqKousyou_Destroyship.ResponseReceived += Updated;
 		o["api_get_member/ship3"].ResponseReceived += Updated;
 		o["api_req_kaisou/powerup"].ResponseReceived += Updated; //requestのほうは面倒なのでこちらでまとめてやる
 		o["api_get_member/deck"].ResponseReceived += Updated;
-		o["api_req_map/start"].ResponseReceived += Updated;
+		o.ApiReqMap_Start.ResponseReceived += Updated;
 		o["api_req_map/next"].ResponseReceived += Updated;
 		o["api_get_member/ship_deck"].ResponseReceived += Updated;
 		o["api_req_hensei/preset_select"].ResponseReceived += Updated;

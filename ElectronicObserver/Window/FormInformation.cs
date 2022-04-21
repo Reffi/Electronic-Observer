@@ -50,7 +50,7 @@ public partial class FormInformation : DockContent
 
 		APIObserver o = APIObserver.Instance;
 
-		o["api_port/port"].ResponseReceived += Updated;
+		o.ApiPort_Port.ResponseReceived += Updated;
 		o["api_req_member/get_practice_enemyinfo"].ResponseReceived += Updated;
 		o["api_get_member/picture_book"].ResponseReceived += Updated;
 		o["api_get_member/mapinfo"].ResponseReceived += Updated;
@@ -60,7 +60,7 @@ public partial class FormInformation : DockContent
 		o["api_req_sortie/battleresult"].ResponseReceived += Updated;
 		o["api_req_combined_battle/battleresult"].ResponseReceived += Updated;
 		o["api_req_hokyu/charge"].ResponseReceived += Updated;
-		o["api_req_map/start"].ResponseReceived += Updated;
+		o.ApiReqMap_Start.ResponseReceived += Updated;
 		o["api_req_map/next"].ResponseReceived += Updated;
 		o["api_req_practice/battle"].ResponseReceived += Updated;
 		o["api_get_member/sortie_conditions"].ResponseReceived += Updated;

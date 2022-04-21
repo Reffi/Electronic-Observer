@@ -149,8 +149,8 @@ public partial class ShipGroupViewModel : AnchorableViewModel
 
 		APIObserver o = APIObserver.Instance;
 
-		o.APIList["api_port/port"].ResponseReceived += APIUpdated;
-		o.APIList["api_get_member/ship2"].ResponseReceived += APIUpdated;
+		o.ApiPort_Port.ResponseReceived += APIUpdated;
+		o.ApiGetMember_Ship2.ResponseReceived += APIUpdated;
 		o.APIList["api_get_member/ship_deck"].ResponseReceived += APIUpdated;
 
 		Groups = new(Db.ShipGroup.ShipGroups.Values);
