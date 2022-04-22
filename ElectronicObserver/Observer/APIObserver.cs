@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using DynaJson;
 using ElectronicObserver.Data;
 using ElectronicObserver.Observer.kcsapi;
+using ElectronicObserver.Observer.kcsapi.api_get_member;
+using ElectronicObserver.Observer.kcsapi.api_req_sortie;
 using ElectronicObserver.Utility;
 using ElectronicObserver.Utility.Mathematics;
 using Titanium.Web.Proxy;
@@ -109,6 +111,187 @@ public sealed class APIObserver
 	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L826" />
 	/// </summary>
 	public APIBase ApiGetMember_Ndock => this["api_get_member/ndock"];
+
+	/// <summary>
+	/// Get ship from construction <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L740" />
+	/// </summary>
+	public APIBase ApiReqKousyou_Getship => this["api_req_kousyou/getship"];
+
+	/// <summary>
+	/// Resupply <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1163" />
+	/// </summary>
+	public APIBase ApiReqHokyu_Charge => this["api_req_hokyu/charge"];
+
+	/// <summary>
+	/// Happens when adding or removing equipment on a ship (doesn't happen when switching equipment between slots) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1505" />
+	/// </summary>
+	public APIBase ApiGetMember_Ship3 => this["api_get_member/ship3"];
+
+	/// <summary>
+	/// Ship modernization <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1125" />
+	/// </summary>
+	public APIBase ApiReqKaisou_Powerup => this["api_req_kaisou/powerup"];
+
+	/// <summary>
+	/// After sending out an expedition <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1188" />
+	/// </summary>
+	public APIBase ApiGetMember_Deck => this["api_get_member/deck"];
+
+	/// <summary>
+	/// After finishing a sortie <br />
+	/// After finishing a quest that rewards ships or equipment <br />
+	/// After remodeling a ship <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L685" />
+	/// </summary>
+	public APIBase ApiGetMember_SlotItem => this["api_get_member/slot_item"];
+
+	/// <summary>
+	/// Sortie advance <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1627" />
+	/// </summary>
+	public APIBase ApiReqMap_Next => this["api_req_map/next"];
+
+	/// <summary>
+	/// Sortie advance (right before api_req_map/next) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L2392" />
+	/// </summary>
+	public APIBase ApiGetMember_ShipDeck => this["api_get_member/ship_deck"];
+
+	/// <summary>
+	/// Load fleet preset <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1225" />
+	/// </summary>
+	public APIBase ApiReqHensei_PresetSelect => this["api_req_hensei/preset_select"];
+
+	/// <summary>
+	/// Drag and drop equipment between slots <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1473" />
+	/// </summary>
+	public APIBase ApiReqKaisou_SlotExchangeIndex => this["api_req_kaisou/slot_exchange_index"];
+
+	/// <summary>
+	/// Login <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L553" />
+	/// </summary>
+	public APIBase ApiGetMember_RequireInfo => this["api_get_member/require_info"];
+
+	/// <summary>
+	/// Equipment transfer between ships <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1482" />
+	/// </summary>
+	public APIBase ApiReqKaisou_SlotDeprive => this["api_req_kaisou/slot_deprive"];
+
+	/// <summary>
+	/// Marriage <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L3390" />
+	/// </summary>
+	public APIBase ApiReqKaisou_Marriage => this["api_req_kaisou/marriage"];
+
+	/// <summary>
+	/// Anchorage repair <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L3520" />
+	/// </summary>
+	public APIBase ApiReqMap_AnchorageRepair => this["api_req_map/anchorage_repair"];
+
+	/// <summary>
+	/// Go to quest screen <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L892" />
+	/// </summary>
+	public questlist ApiGetMember_QuestList => (questlist)this["api_get_member/questlist"];
+
+	/// <summary>
+	/// Normal fleet battle finish <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L2326" />
+	/// </summary>
+	public battleresult ApiReqSortie_BattleResult => (battleresult)this["api_req_sortie/battleresult"];
+
+	/// <summary>
+	/// Combined fleet battle finish <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L3324" />
+	/// </summary>
+	public kcsapi.api_req_combined_battle.battleresult ApiReqCombinedFleet_BattleResult =>
+		(kcsapi.api_req_combined_battle.battleresult)this["api_req_combined_battle/battleresult"];
+
+	/// <summary>
+	/// Practice battle finish <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1427" />
+	/// </summary>
+	public kcsapi.api_req_practice.battle_result ApiReqPractice_BattleResult =>
+		(kcsapi.api_req_practice.battle_result)this["api_req_practice/battle_result"];
+
+	/// <summary>
+	/// Expedition finish <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1138" />
+	/// </summary>
+	public kcsapi.api_req_mission.result ApiReqMission_Result =>
+		(kcsapi.api_req_mission.result)this["api_req_mission/result"];
+
+	/// <summary>
+	/// Equipment development <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L749" />
+	/// </summary>
+	public kcsapi.api_req_kousyou.createitem ApiReqKousyou_CreateItem =>
+		(kcsapi.api_req_kousyou.createitem)this["api_req_kousyou/createitem"];
+
+	/// <summary>
+	/// Ship construction <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L720" />
+	/// </summary>
+	public kcsapi.api_req_kousyou.createship ApiReqKousyou_CreateShip =>
+		(kcsapi.api_req_kousyou.createship)this["api_req_kousyou/createship"];
+
+	/// <summary>
+	/// Equipment upgrade <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L811" />
+	/// </summary>
+	public kcsapi.api_req_kousyou.remodel_slot ApiReqKousyou_RemodelSlot =>
+		(kcsapi.api_req_kousyou.remodel_slot)this["api_req_kousyou/remodel_slot"];
+
+	/// <summary>
+	/// Login <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L9" />
+	/// </summary>
+	public kcsapi.api_start2.getData ApiStart2_GetData => (kcsapi.api_start2.getData)this["api_start2/getData"];
+
+	/// <summary>
+	/// Use torch on a ship that's in construction <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L733" />
+	/// </summary>
+	public kcsapi.api_req_kousyou.createship_speedchange ApiReqKousyou_CreateShipSpeedChange =>
+		(kcsapi.api_req_kousyou.createship_speedchange)this["api_req_kousyou/createship_speedchange"];
+
+	/// <summary>
+	/// Equipment scrap <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L775" />
+	/// </summary>
+	public kcsapi.api_req_kousyou.destroyitem2 ApiReqKousyou_DestroyItem2 =>
+		(kcsapi.api_req_kousyou.destroyitem2)this["api_req_kousyou/destroyitem2"];
+
+	/// <summary>
+	/// Change admiral comment <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L1245" />
+	/// </summary>
+	public kcsapi.api_req_member.updatecomment ApiReqMember_UpdateComment =>
+		(kcsapi.api_req_member.updatecomment)this["api_req_member/updatecomment"];
+
+	/// <summary>
+	/// 艦隊司令部情報 (?) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L568" />
+	/// </summary>
+	public basic ApiGetMember_Basic => (basic)this["api_get_member/basic"];
+
+	/// <summary>
+	/// After remodeling <br />
+	/// After building a ship <br />
+	/// After finishing a quest that rewards resources (fuel, ammo, steel, bauxite, bucket, torch, nail, screw) <br />
+	/// <seealso href="https://github.com/andanteyk/ElectronicObserver/blob/develop/ElectronicObserver/Other/Information/apilist.txt#L703" />
+	/// </summary>
+	public material ApiGetMember_Material => (material)this["api_get_member/material"];
 
 	#endregion
 

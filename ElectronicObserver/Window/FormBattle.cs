@@ -145,9 +145,9 @@ public partial class FormBattle : DockContent
 
 		o.ApiPort_Port.ResponseReceived += Updated;
 		o.ApiReqMap_Start.ResponseReceived += Updated;
-		o["api_req_map/next"].ResponseReceived += Updated;
+		o.ApiReqMap_Next.ResponseReceived += Updated;
 		o["api_req_sortie/battle"].ResponseReceived += Updated;
-		o["api_req_sortie/battleresult"].ResponseReceived += Updated;
+		o.ApiReqSortie_BattleResult.ResponseReceived += Updated;
 		o["api_req_battle_midnight/battle"].ResponseReceived += Updated;
 		o["api_req_battle_midnight/sp_midnight"].ResponseReceived += Updated;
 		o["api_req_sortie/airbattle"].ResponseReceived += Updated;
@@ -166,10 +166,10 @@ public partial class FormBattle : DockContent
 		o["api_req_combined_battle/each_battle"].ResponseReceived += Updated;
 		o["api_req_combined_battle/each_battle_water"].ResponseReceived += Updated;
 		o["api_req_combined_battle/ld_shooting"].ResponseReceived += Updated;
-		o["api_req_combined_battle/battleresult"].ResponseReceived += Updated;
+		o.ApiReqCombinedFleet_BattleResult.ResponseReceived += Updated;
 		o["api_req_practice/battle"].ResponseReceived += Updated;
 		o["api_req_practice/midnight_battle"].ResponseReceived += Updated;
-		o["api_req_practice/battle_result"].ResponseReceived += Updated;
+		o.ApiReqPractice_BattleResult.ResponseReceived += Updated;
 
 		Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 

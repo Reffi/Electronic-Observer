@@ -994,22 +994,22 @@ public partial class FormFleet : DockContent
 		o.ApiPort_Port.ResponseReceived += Updated;
 		o.ApiGetMember_Ship2.ResponseReceived += Updated;
 		o.ApiGetMember_Ndock.ResponseReceived += Updated;
-		o["api_req_kousyou/getship"].ResponseReceived += Updated;
-		o["api_req_hokyu/charge"].ResponseReceived += Updated;
+		o.ApiReqKousyou_Getship.ResponseReceived += Updated;
+		o.ApiReqHokyu_Charge.ResponseReceived += Updated;
 		o.ApiReqKousyou_Destroyship.ResponseReceived += Updated;
-		o["api_get_member/ship3"].ResponseReceived += Updated;
-		o["api_req_kaisou/powerup"].ResponseReceived += Updated;        //requestのほうは面倒なのでこちらでまとめてやる
-		o["api_get_member/deck"].ResponseReceived += Updated;
-		o["api_get_member/slot_item"].ResponseReceived += Updated;
+		o.ApiGetMember_Ship3.ResponseReceived += Updated;
+		o.ApiReqKaisou_Powerup.ResponseReceived += Updated;        //requestのほうは面倒なのでこちらでまとめてやる
+		o.ApiGetMember_Deck.ResponseReceived += Updated;
+		o.ApiGetMember_SlotItem.ResponseReceived += Updated;
 		o.ApiReqMap_Start.ResponseReceived += Updated;
-		o["api_req_map/next"].ResponseReceived += Updated;
-		o["api_get_member/ship_deck"].ResponseReceived += Updated;
-		o["api_req_hensei/preset_select"].ResponseReceived += Updated;
-		o["api_req_kaisou/slot_exchange_index"].ResponseReceived += Updated;
-		o["api_get_member/require_info"].ResponseReceived += Updated;
-		o["api_req_kaisou/slot_deprive"].ResponseReceived += Updated;
-		o["api_req_kaisou/marriage"].ResponseReceived += Updated;
-		o["api_req_map/anchorage_repair"].ResponseReceived += Updated;
+		o.ApiReqMap_Next.ResponseReceived += Updated;
+		o.ApiGetMember_ShipDeck.ResponseReceived += Updated;
+		o.ApiReqHensei_PresetSelect.ResponseReceived += Updated;
+		o.ApiReqKaisou_SlotExchangeIndex.ResponseReceived += Updated;
+		o.ApiGetMember_RequireInfo.ResponseReceived += Updated;
+		o.ApiReqKaisou_SlotDeprive.ResponseReceived += Updated;
+		o.ApiReqKaisou_Marriage.ResponseReceived += Updated;
+		o.ApiReqMap_AnchorageRepair.ResponseReceived += Updated;
 
 		//追加するときは FormFleetOverview にも同様に追加してください
 

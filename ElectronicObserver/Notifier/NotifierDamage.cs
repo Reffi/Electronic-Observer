@@ -89,12 +89,12 @@ public class NotifierDamage : NotifierBase
 		o.ApiPort_Port.ResponseReceived += CloseAll;
 
 		o.ApiReqMap_Start.ResponseReceived += InSortie;
-		o["api_req_map/next"].ResponseReceived += InSortie;
+		o.ApiReqMap_Next.ResponseReceived += InSortie;
 
 		o["api_get_member/mapinfo"].ResponseReceived += BeforeSortie;
 
-		o["api_req_sortie/battleresult"].ResponseReceived += BattleFinished;
-		o["api_req_combined_battle/battleresult"].ResponseReceived += BattleFinished;
+		o.ApiReqSortie_BattleResult.ResponseReceived += BattleFinished;
+		o.ApiReqCombinedFleet_BattleResult.ResponseReceived += BattleFinished;
 
 		o["api_req_sortie/battle"].ResponseReceived += BattleStarted;
 		o["api_req_battle_midnight/battle"].ResponseReceived += BattleStarted;

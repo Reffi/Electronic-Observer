@@ -133,7 +133,7 @@ public sealed class SyncBGMPlayer
 		o.ApiPort_Port.ResponseReceived += PlayPort;
 
 		o.ApiReqMap_Start.ResponseReceived += PlaySortie;
-		o["api_req_map/next"].ResponseReceived += PlaySortie;
+		o.ApiReqMap_Next.ResponseReceived += PlaySortie;
 
 		o["api_req_sortie/battle"].ResponseReceived += PlayBattleDay;
 		o["api_req_combined_battle/battle"].ResponseReceived += PlayBattleDay;
@@ -161,15 +161,15 @@ public sealed class SyncBGMPlayer
 
 		o["api_req_practice/midnight_battle"].ResponseReceived += PlayPracticeNight;
 
-		o["api_req_sortie/battleresult"].ResponseReceived += PlayBattleResult;
-		o["api_req_combined_battle/battleresult"].ResponseReceived += PlayBattleResult;
-		o["api_req_practice/battle_result"].ResponseReceived += PlayBattleResult;
+		o.ApiReqSortie_BattleResult.ResponseReceived += PlayBattleResult;
+		o.ApiReqCombinedFleet_BattleResult.ResponseReceived += PlayBattleResult;
+		o.ApiReqPractice_BattleResult.ResponseReceived += PlayBattleResult;
 
 		o["api_get_member/record"].ResponseReceived += PlayRecord;
 
 		o["api_get_member/payitem"].ResponseReceived += PlayItem;
 
-		o["api_get_member/questlist"].ResponseReceived += PlayQuest;
+		o.ApiGetMember_QuestList.ResponseReceived += PlayQuest;
 
 		o["api_get_member/picture_book"].ResponseReceived += PlayAlbum;
 

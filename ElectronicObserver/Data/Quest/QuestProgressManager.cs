@@ -89,34 +89,34 @@ public sealed class QuestProgressManager : DataStorage
 
 		var ao = APIObserver.Instance;
 
-		ao.APIList["api_get_member/questlist"].ResponseReceived += QuestUpdated;
+		ao.ApiGetMember_QuestList.ResponseReceived += QuestUpdated;
 
 		ao.ApiReqMap_Start.ResponseReceived += StartSortie;
 
-		ao.APIList["api_req_map/next"].ResponseReceived += NextSortie;
+		ao.ApiReqMap_Next.ResponseReceived += NextSortie;
 
-		ao.APIList["api_req_sortie/battleresult"].ResponseReceived += BattleFinished;
-		ao.APIList["api_req_combined_battle/battleresult"].ResponseReceived += BattleFinished;
+		ao.ApiReqSortie_BattleResult.ResponseReceived += BattleFinished;
+		ao.ApiReqCombinedFleet_BattleResult.ResponseReceived += BattleFinished;
 
-		ao.APIList["api_req_practice/battle_result"].ResponseReceived += PracticeFinished;
+		ao.ApiReqPractice_BattleResult.ResponseReceived += PracticeFinished;
 
-		ao.APIList["api_req_mission/result"].ResponseReceived += ExpeditionCompleted;
+		ao.ApiReqMission_Result.ResponseReceived += ExpeditionCompleted;
 
 		ao.ApiReqNyukyo_Start.RequestReceived += StartRepair;
 
-		ao.APIList["api_req_hokyu/charge"].ResponseReceived += Supplied;
+		ao.ApiReqHokyu_Charge.ResponseReceived += Supplied;
 
-		ao.APIList["api_req_kousyou/createitem"].ResponseReceived += EquipmentDeveloped;
+		ao.ApiReqKousyou_CreateItem.ResponseReceived += EquipmentDeveloped;
 
-		ao.APIList["api_req_kousyou/createship"].RequestReceived += ShipConstructed;
+		ao.ApiReqKousyou_CreateShip.RequestReceived += ShipConstructed;
 
 		ao.ApiReqKousyou_Destroyship.RequestReceived += ShipDestructed;
 
 		// 装備廃棄はイベント前に装備データが削除されてしまうので destroyitem2 から直接呼ばれる
 
-		ao.APIList["api_req_kousyou/remodel_slot"].ResponseReceived += EquipmentRemodeled;
+		ao.ApiReqKousyou_RemodelSlot.ResponseReceived += EquipmentRemodeled;
 
-		ao.APIList["api_req_kaisou/powerup"].ResponseReceived += Modernized;
+		ao.ApiReqKaisou_Powerup.ResponseReceived += Modernized;
 
 		ao.ApiPort_Port.ResponseReceived += TimerSave;
 
@@ -129,34 +129,34 @@ public sealed class QuestProgressManager : DataStorage
 
 		var ao = APIObserver.Instance;
 
-		ao.APIList["api_get_member/questlist"].ResponseReceived -= QuestUpdated;
+		ao.ApiGetMember_QuestList.ResponseReceived -= QuestUpdated;
 
 		ao.ApiReqMap_Start.ResponseReceived -= StartSortie;
 
-		ao.APIList["api_req_map/next"].ResponseReceived -= NextSortie;
+		ao.ApiReqMap_Next.ResponseReceived -= NextSortie;
 
-		ao.APIList["api_req_sortie/battleresult"].ResponseReceived -= BattleFinished;
-		ao.APIList["api_req_combined_battle/battleresult"].ResponseReceived -= BattleFinished;
+		ao.ApiReqSortie_BattleResult.ResponseReceived -= BattleFinished;
+		ao.ApiReqCombinedFleet_BattleResult.ResponseReceived -= BattleFinished;
 
-		ao.APIList["api_req_practice/battle_result"].ResponseReceived -= PracticeFinished;
+		ao.ApiReqPractice_BattleResult.ResponseReceived -= PracticeFinished;
 
-		ao.APIList["api_req_mission/result"].ResponseReceived -= ExpeditionCompleted;
+		ao.ApiReqMission_Result.ResponseReceived -= ExpeditionCompleted;
 
 		ao.ApiReqNyukyo_Start.RequestReceived -= StartRepair;
 
-		ao.APIList["api_req_hokyu/charge"].ResponseReceived -= Supplied;
+		ao.ApiReqHokyu_Charge.ResponseReceived -= Supplied;
 
-		ao.APIList["api_req_kousyou/createitem"].ResponseReceived -= EquipmentDeveloped;
+		ao.ApiReqKousyou_CreateItem.ResponseReceived -= EquipmentDeveloped;
 
-		ao.APIList["api_req_kousyou/createship"].RequestReceived -= ShipConstructed;
+		ao.ApiReqKousyou_CreateShip.RequestReceived -= ShipConstructed;
 
 		ao.ApiReqKousyou_Destroyship.ResponseReceived -= ShipDestructed;
 
 		// 装備廃棄は(ry
 
-		ao.APIList["api_req_kousyou/remodel_slot"].ResponseReceived -= EquipmentRemodeled;
+		ao.ApiReqKousyou_RemodelSlot.ResponseReceived -= EquipmentRemodeled;
 
-		ao.APIList["api_req_kaisou/powerup"].ResponseReceived -= Modernized;
+		ao.ApiReqKaisou_Powerup.ResponseReceived -= Modernized;
 
 		ao.ApiPort_Port.ResponseReceived -= TimerSave;
 
