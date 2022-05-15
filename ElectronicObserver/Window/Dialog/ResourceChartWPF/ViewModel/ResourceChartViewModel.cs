@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using ElectronicObserver.Common;
 using ElectronicObserver.ViewModels.Translations;
@@ -10,7 +11,7 @@ public partial class ResourceChartViewModel : WindowViewModelBase
 {
 	public ResourceChartViewModel()
 	{
-		DialogResourceChart = App.Current.Services.GetService<DialogResourceChartTranslationViewModel>()!;
+		DialogResourceChart = Ioc.Default.GetService<DialogResourceChartTranslationViewModel>()!;
 	}
 
 	public bool ShowFuel { get; set; } = true;
@@ -26,7 +27,7 @@ public partial class ResourceChartViewModel : WindowViewModelBase
 	public DateTime DateEnd { get; set; }
 	public DateTime MinDate { get; set; }
 	public DateTime MaxDate { get; set; }
-	public string Today => $"Today : {DateTime.Now:yyyy/MM/dd}";
+	public string Today => $"{DialogResourceChart.Today} : {DateTime.Now:yyyy/MM/dd}";
 	public DialogResourceChartTranslationViewModel DialogResourceChart { get; }
 
 	public string? ToolTip { get; set; }
