@@ -28,7 +28,7 @@ namespace ElectronicObserver;
 /// </summary>
 public partial class App : Application
 {
-	public new static App Current => (App)Application.Current;
+	public new static App? Current => (App)Application.Current;
 
 	public App()
 	{
@@ -202,7 +202,7 @@ public partial class App : Application
 			.Property(w => w.Width)
 			.Property(w => w.WindowState)
 			.PersistOn(nameof(System.Windows.Window.Closed))
-			.PersistOn(nameof(System.Windows.Window.Closed));
+			.StopTrackingOn(nameof(System.Windows.Window.Closed));
 
 		// EventLockPlannerWindow extends System.Windows.Window so the config above applies to it
 		tracker
