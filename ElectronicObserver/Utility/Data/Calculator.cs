@@ -1741,7 +1741,8 @@ public static class Calculator
 	/// <summary>
 	/// 対空カットイン固定ボーナス
 	/// </summary>
-	public static readonly ReadOnlyDictionary<int, int> AACutinFixedBonus = new ReadOnlyDictionary<int, int>(new Dictionary<int, int>() {
+	public static ReadOnlyDictionary<int, int> AACutinFixedBonus { get; } = new(new Dictionary<int, int>
+	{
 		{  1, 7 },
 		{  2, 6 },
 		{  3, 4 },
@@ -1782,13 +1783,18 @@ public static class Calculator
 		{ 39, 10 },
 		{ 40, 10 },
 		{ 41, 9 },
+		{ 42, 10 },
+		{ 43, 8 },
+		{ 44, 6 },
+		{ 45, 5 },
 	});
 
 
 	/// <summary>
 	/// 対空カットイン変動ボーナス
 	/// </summary>
-	public static readonly ReadOnlyDictionary<int, double> AACutinVariableBonus = new ReadOnlyDictionary<int, double>(new Dictionary<int, double>() {
+	public static ReadOnlyDictionary<int, double> AACutinVariableBonus { get; } = new(new Dictionary<int, double>
+	{
 		{  1, 1.7 },
 		{  2, 1.7 },
 		{  3, 1.6 },
@@ -1829,6 +1835,10 @@ public static class Calculator
 		{ 39, 1.7 },
 		{ 40, 1.7 },
 		{ 41, 1.65 },
+		{ 42, 1.65 },
+		{ 43, 1.6 },
+		{ 44, 1.6 },
+		{ 45, 1.55 },
 	});
 
 
@@ -2471,6 +2481,13 @@ public enum DayAttackKind
 	SpecialSubmarineTender24 = 302,
 
 
+	/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
+	SpecialYamato3Ships = 400,
+
+	/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
+	SpecialYamato2Ships = 401,
+
+
 	/// <summary> 砲撃 </summary>
 	Shelling = 1000,
 
@@ -2584,6 +2601,13 @@ public enum NightAttackKind
 
 	/// <summary> 潜水艦隊攻撃 (参加潜水艦ポジション2・4) </summary>
 	SpecialSubmarineTender24 = 302,
+
+
+	/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
+	SpecialYamato3Ships = 400,
+
+	/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
+	SpecialYamato2Ships = 401,
 
 
 	/// <summary> 砲撃 </summary>
