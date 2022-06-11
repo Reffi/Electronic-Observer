@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using ElectronicObserver.Services;
 using ElectronicObserver.Window.Dialog.ShipPicker;
 using ElectronicObserverTypes;
 using ElectronicObserverTypes.Extensions;
-
+using WanaKanaNet;
 namespace ElectronicObserver.Window.Tools.EventLockPlanner;
 
 public class ShipFilterViewModel : ObservableObject
 {
 	public ShipFilterTranslationViewModel ShipFilter { get; }
+	public TransliterationService TransliterationService { get; }
 
 	public List<Filter> TypeFilters { get; }
 
@@ -27,10 +29,12 @@ public class ShipFilterViewModel : ObservableObject
 	public bool CanEquipDaihatsu { get; set; }
 	public bool CanEquipTank { get; set; }
 	public bool HasExpansionSlot { get; set; }
+	public string? NameFilter { get; set; } = "";
 
 	public ShipFilterViewModel()
 	{
 		ShipFilter = Ioc.Default.GetService<ShipFilterTranslationViewModel>()!;
+		TransliterationService = Ioc.Default.GetService<TransliterationService>()!;
 
 		TypeFilters = Enum.GetValues<ShipTypeGroup>()
 			.Select(t => new Filter(t)
@@ -62,7 +66,7 @@ public class ShipFilterViewModel : ObservableObject
 		if (CanEquipDaihatsu && !ship.MasterShip.EquippableCategoriesTyped.Contains(EquipmentTypes.LandingCraft)) return false;
 		if (CanEquipTank && !ship.MasterShip.EquippableCategoriesTyped.Contains(EquipmentTypes.SpecialAmphibiousTank)) return false;
 		if (HasExpansionSlot && !ship.IsExpansionSlotAvailable) return false;
-
+		if (!string.IsNullOrEmpty(NameFilter) && !TransliterationService.Matches(ship.MasterShip, NameFilter, WanaKana.ToRomaji(NameFilter))) return false;
 		// other filters
 
 		return true;
