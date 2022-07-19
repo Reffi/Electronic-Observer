@@ -181,4 +181,16 @@
   <data name="LookUpQuestOnStartpage" xml:space="preserve">
     <value>任務名で_Startpage検索</value>
   </data>
+  <data name="ShowQuestCode" xml:space="preserve">
+    <value>任務コードの表示</value>
+  </data>
+  <data name="SizeAdjustment" xml:space="preserve">
+    <value>サイズ調整</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>ヘッダー</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>列</value>
+  </data>
 </root>

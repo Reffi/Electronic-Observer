@@ -36,6 +36,9 @@ public partial class QuestViewModel : AnchorableViewModel
 
 	public QuestItemViewModel? SelectedQuest { get; set; }
 
+	public int HeaderMinSize { get; set; }
+	public int RowMinSize { get; set; }
+
 	public bool WebSearchEnabled => SelectedQuest is not null;
 	public bool WikiSearchEnabled => SelectedQuest is not null;
 
@@ -72,6 +75,8 @@ public partial class QuestViewModel : AnchorableViewModel
 	public bool MenuMain_ShowWeekly { get; set; }
 	public bool MenuMain_ShowMonthly { get; set; }
 	public bool MenuMain_ShowOther { get; set; }
+
+	public bool ShowQuestCode { get; set; }
 
 	public ColumnViewModel StateColumn { get; } = new();
 	public ColumnViewModel TypeColumn { get; } = new();
@@ -131,6 +136,29 @@ public partial class QuestViewModel : AnchorableViewModel
 		}
 
 		PropertyChanged += VisibleQuestsChanged;
+
+		PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName is not nameof(ShowQuestCode)) return;
+
+			Configuration.Config.FormQuest.ShowQuestCode = ShowQuestCode;
+
+			Updated();
+		};
+
+		PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName is not nameof(HeaderMinSize)) return;
+
+			Configuration.Config.FormQuest.HeaderMinSize = HeaderMinSize;
+		};
+
+		PropertyChanged += (sender, args) =>
+		{
+			if (args.PropertyName is not nameof(RowMinSize)) return;
+
+			Configuration.Config.FormQuest.RowMinSize = RowMinSize;
+		};
 	}
 
 	private void ColumnWidthChanged(object? sender, PropertyChangedEventArgs e)
@@ -179,12 +207,17 @@ public partial class QuestViewModel : AnchorableViewModel
 		FontSize = c.UI.MainFont.FontData.ToSize();
 		FontBrush = c.UI.ForeColor.ToBrush();
 
+		HeaderMinSize = c.FormQuest.HeaderMinSize;
+		RowMinSize = c.FormQuest.RowMinSize;
+
 		MenuMain_ShowRunningOnly = c.FormQuest.ShowRunningOnly;
 		MenuMain_ShowOnce = c.FormQuest.ShowOnce;
 		MenuMain_ShowDaily = c.FormQuest.ShowDaily;
 		MenuMain_ShowWeekly = c.FormQuest.ShowWeekly;
 		MenuMain_ShowMonthly = c.FormQuest.ShowMonthly;
 		MenuMain_ShowOther = c.FormQuest.ShowOther;
+
+		ShowQuestCode = c.FormQuest.ShowQuestCode;
 
 		int columnCount = 5;
 
@@ -350,7 +383,11 @@ public partial class QuestViewModel : AnchorableViewModel
 			// row.Cells[QuestView_Name.Index].Style.BackColor = color;
 			// row.Cells[QuestView_Name.Index].Style.SelectionBackColor = color;
 
-			row.QuestView_Name = q.NameWithCode;
+			row.QuestView_Name = ShowQuestCode switch
+			{
+				true => q.NameWithCode,
+				_ => q.Name
+			};
 
 			/*
 			row.Cells[QuestView_Progress.Index].Style.BackColor = color;
