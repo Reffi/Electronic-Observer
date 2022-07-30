@@ -268,13 +268,13 @@ public static class ShipDataExtensions
 
 	public static bool HasHighAngleConcentrated(this IShipData ship, int count = 1) => ship.AllSlotInstance
 		.Count(e => e?.MasterEquipment.EquipmentId is
-			(EquipmentId)464)
+			EquipmentId.SecondaryGun_10cmTwinHighangleGunMountBatteryConcentratedDeployment)
 		>= count;
 
 	public static bool HasYamatoRadar(this IShipData ship, int count = 1) => ship.AllSlotInstance
 		.Count(e => e?.MasterEquipment.EquipmentId is
 			EquipmentId.RadarLarge_15mDuplexRangefinder_Type21AirRADARKai2 or
-			(EquipmentId)460)
+			EquipmentId.RadarLarge_15mDuplexRangefinderKai_Type21RadarKaiNi_SkilledFDC)
 		>= count;
 
 	public static bool HasSonar(this IShipData ship, int count = 1) => ship.AllSlotInstance
@@ -467,7 +467,12 @@ public static class ShipDataExtensions
 		{
 			>= 100 => ship.HasSonar() && ship.HasAntiSubmarineAircraft(),
 			>= 65 => ship.HasSpecialAntiSubmarineAircraft(),
-			>= 50 => ship.HasSonar() && ship.HasSpecialAntiSubmarineAircraft(),
+			>= 50 => ship.MasterShip.ShipId switch
+			{
+				ShipId.SuzuyaCVLKaiNi or ShipId.KumanoCVLKaiNi => false,
+
+				_ => ship.HasSonar() && ship.HasSpecialAntiSubmarineAircraft(),
+			},
 
 			_ => false,
 		},

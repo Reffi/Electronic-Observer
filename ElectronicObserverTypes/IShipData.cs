@@ -72,12 +72,12 @@ public interface IShipData
 	/// <summary>
 	/// 装備スロット(装備データ)
 	/// </summary>
-	IList<IEquipmentData> SlotInstance { get; }
+	IList<IEquipmentData?> SlotInstance { get; }
 
 	/// <summary>
 	/// 装備スロット(装備マスターデータ)
 	/// </summary>
-	IList<IEquipmentDataMaster> SlotInstanceMaster { get; }
+	IList<IEquipmentDataMaster?> SlotInstanceMaster { get; }
 
 	/// <summary>
 	/// 補強装備スロット(ID)
@@ -93,12 +93,12 @@ public interface IShipData
 	/// <summary>
 	/// 補強装備スロット(装備データ)
 	/// </summary>
-	IEquipmentData ExpansionSlotInstance { get; }
+	IEquipmentData? ExpansionSlotInstance { get; }
 
 	/// <summary>
 	/// 補強装備スロット(装備マスターデータ)
 	/// </summary>
-	IEquipmentDataMaster ExpansionSlotInstanceMaster { get; }
+	IEquipmentDataMaster? ExpansionSlotInstanceMaster { get; }
 
 	/// <summary>
 	/// 全てのスロット(ID)
