@@ -344,7 +344,7 @@
 						</Image.OpacityMask>
 					</Image>
 
-					<Grid Grid.Column="1">
+					<Grid Grid.Column="1" HorizontalAlignment="Right">
 						<Grid.RowDefinitions>
 							<RowDefinition />
 							<RowDefinition Height="Auto" />
@@ -401,6 +401,7 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" SharedSizeGroup="Stats" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
@@ -431,9 +432,11 @@
 
 					<ItemsControl Grid.Row="2" ItemsSource="{Binding Slots, IsAsync=True}" />
 
-					<Separator Grid.Row="3" VerticalAlignment="Bottom" />
+					<ContentControl Grid.Row="3" Content="{Binding ExpansionSlot}" />
 
-					<Grid Grid.Row="4">
+					<Separator Grid.Row="4" VerticalAlignment="Bottom" />
+
+					<Grid Grid.Row="5">
 						<Grid.Resources>
 							<Style TargetType="local:ShipParameter">
 								<Setter Property="Margin" Value="10 2" />
@@ -553,8 +556,7 @@
 							/>
 					</Grid>
 
-					<Separator Grid.Row="5" VerticalAlignment="Bottom" />
-
+					<Separator Grid.Row="6" VerticalAlignment="Bottom" />
 				</Grid>
 
 				<Image
@@ -601,6 +603,7 @@
 
 				<TextBlock
 					Grid.Column="2"
+					MaxWidth="{Binding ViewModel.MaxEquipmentNameWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FleetImageGeneratorWindow}}"
 					FontSize="{Binding ViewModel.EquipmentNameFontSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:FleetImageGeneratorWindow}}"
 					Text="{Binding Name}"
 					/>
