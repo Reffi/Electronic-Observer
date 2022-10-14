@@ -13,6 +13,7 @@ using ElectronicObserver.Utility;
 using ElectronicObserver.ViewModels.Translations;
 using ElectronicObserver.Window.Dialog.ShipPicker;
 using ElectronicObserver.Window.Settings;
+using ElectronicObserver.Window.Settings.Connection;
 using ElectronicObserver.Window.Tools.AirControlSimulator;
 using ElectronicObserver.Window.Tools.AirDefense;
 using ElectronicObserver.Window.Tools.AutoRefresh;
@@ -158,6 +159,7 @@ public partial class App : Application
 			.AddSingleton<IKCDatabase>(KCDatabase.Instance)
 			// config translations
 			.AddSingleton<ConfigurationTranslationViewModel>()
+			.AddSingleton<ConfigurationConnectionTranslationViewModel>()
 			// view translations
 			.AddSingleton<FormArsenalTranslationViewModel>()
 			.AddSingleton<FormBaseAirCorpsTranslationViewModel>()
@@ -201,6 +203,7 @@ public partial class App : Application
 			.AddSingleton<ToolService>()
 			.AddSingleton<TransliterationService>()
 			.AddSingleton<GameAssetDownloaderService>()
+			.AddSingleton<FileService>()
 			// external
 			.AddSingleton(JotTracker())
 
