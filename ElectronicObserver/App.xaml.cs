@@ -16,9 +16,12 @@ using ElectronicObserver.ViewModels.Translations;
 using ElectronicObserver.Window.Dialog.ShipPicker;
 using ElectronicObserver.Window.Settings;
 using ElectronicObserver.Window.Settings.Behavior;
+using ElectronicObserver.Window.Settings.BGM;
 using ElectronicObserver.Window.Settings.Connection;
 using ElectronicObserver.Window.Settings.Debugging;
 using ElectronicObserver.Window.Settings.Log;
+using ElectronicObserver.Window.Settings.Notification;
+using ElectronicObserver.Window.Settings.Notification.Base;
 using ElectronicObserver.Window.Settings.SubWindow;
 using ElectronicObserver.Window.Settings.UI;
 using ElectronicObserver.Window.Settings.Window;
@@ -190,6 +193,10 @@ public partial class App : Application
 			.AddSingleton<ConfigurationDebugTranslationViewModel>()
 			.AddSingleton<ConfigurationWindowTranslationViewModel>()
 			.AddSingleton<ConfigurationSubWindowTranslationViewModel>()
+			.AddSingleton<ConfigurationNotificationTranslationViewModel>()
+			.AddSingleton<ConfigurationNotificationBaseTranslationViewModel>()
+			.AddSingleton<ConfigurationBGMTranslationViewModel>()
+			.AddSingleton<SoundHandleEditTranslationViewModel>()
 			// view translations
 			.AddSingleton<FormArsenalTranslationViewModel>()
 			.AddSingleton<FormBaseAirCorpsTranslationViewModel>()
@@ -294,6 +301,11 @@ public partial class App : Application
 			.Configure<BaseAirCorpsSimulationContentDialog>()
 			.Property(w => w.ViewModel.MaxAircraftLevelFleet)
 			.Property(w => w.ViewModel.MaxAircraftLevelAirBase);
+
+		tracker
+			.Configure<ConfigurationWindow>()
+			.Property(w => w.ViewModel.BGM.ColumnProperties)
+			.Property(w => w.ViewModel.BGM.SortDescriptions);
 
 		return tracker;
 	}
