@@ -23,6 +23,11 @@ using ElectronicObserver.Window.Settings.Log;
 using ElectronicObserver.Window.Settings.Notification;
 using ElectronicObserver.Window.Settings.Notification.Base;
 using ElectronicObserver.Window.Settings.SubWindow;
+using ElectronicObserver.Window.Settings.SubWindow.Arsenal;
+using ElectronicObserver.Window.Settings.SubWindow.Compass;
+using ElectronicObserver.Window.Settings.SubWindow.Dock;
+using ElectronicObserver.Window.Settings.SubWindow.Fleet;
+using ElectronicObserver.Window.Settings.SubWindow.Headquarters;
 using ElectronicObserver.Window.Settings.UI;
 using ElectronicObserver.Window.Settings.Window;
 using ElectronicObserver.Window.Tools.AirControlSimulator;
@@ -197,6 +202,11 @@ public partial class App : Application
 			.AddSingleton<ConfigurationNotificationBaseTranslationViewModel>()
 			.AddSingleton<ConfigurationBGMTranslationViewModel>()
 			.AddSingleton<SoundHandleEditTranslationViewModel>()
+			.AddSingleton<ConfigurationFleetTranslationViewModel>()
+			.AddSingleton<ConfigurationArsenalTranslationViewModel>()
+			.AddSingleton<ConfigurationDockTranslationViewModel>()
+			.AddSingleton<ConfigurationHeadquartersTranslationViewModel>()
+			.AddSingleton<ConfigurationCompassTranslationViewModel>()
 			// view translations
 			.AddSingleton<FormArsenalTranslationViewModel>()
 			.AddSingleton<FormBaseAirCorpsTranslationViewModel>()
